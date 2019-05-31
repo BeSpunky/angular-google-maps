@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { ZenModule } from '@bespunky/angular-zen';
 
-import { AngularGoogleMapsComponent } from './angular-google-maps.component';
-
 @NgModule({
-    declarations: [AngularGoogleMapsComponent],
+    declarations: [],
     imports: [
         ZenModule
     ],
-    exports: [AngularGoogleMapsComponent]
+    exports: []
 })
 export class AngularGoogleMapsModule { }
