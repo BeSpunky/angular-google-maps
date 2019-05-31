@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@bespunky/angular-google-maps": [
+        "dist/bespunky/angular-google-maps"
+      ],
+      "@bespunky/angular-google-maps/*": [
+        "dist/bespunky/angular-google-maps/*"
+      ]
+    }
   }
 }
