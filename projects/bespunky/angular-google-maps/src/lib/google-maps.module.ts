@@ -8,4 +8,4 @@ import { ZenModule } from '@bespunky/angular-zen';
     ],
     exports: []
 })
-export class AngularGoogleMapsModule { }
+export class GoogleMapsModule { }
