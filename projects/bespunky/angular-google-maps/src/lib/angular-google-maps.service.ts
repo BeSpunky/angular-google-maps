@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class AngularGoogleMapsService {
+export class AngularGoogleMapsService
+{
 
-  constructor() { }
+    constructor() { }
 }
