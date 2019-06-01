@@ -13,16 +13,17 @@ export class GoogleMapsApiService
 
     constructor(private loader: GoogleMapsApiLoader)
     {
+        this.isReady = false;
+
+        this.waitForApi = { promise: null, resolve: null, reject: null };
+
         const apiPromise = new Promise<void>((resolve, reject) =>
         {
-            this.waitForApi = {
-                promise: apiPromise,
-                resolve,
-                reject
-            };
+            this.waitForApi.resolve = resolve;
+            this.waitForApi.reject = reject;
         });
 
-        this.isReady = false;
+        this.waitForApi.promise = apiPromise.then(() => { this.isReady = true; return; });
     }
 
     // TODO: Refactor and move to another non-exported service? so users won't be able to call the method.
