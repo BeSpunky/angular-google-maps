@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { GoogleMapsModule } from '@bespunky/angular-google-maps';
 
 import { AppComponent } from './app.component';
 
@@ -8,7 +9,10 @@ import { AppComponent } from './app.component';
         AppComponent
     ],
     imports: [
-        BrowserModule
+        BrowserModule,
+        GoogleMapsModule.forRoot({
+            apiUrl: { key: '' },
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

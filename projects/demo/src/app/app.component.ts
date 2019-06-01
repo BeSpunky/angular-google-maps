@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GoogleMapsApiService } from '@bespunky/angular-google-maps';
 
 @Component({
     selector: 'app-root',
@@ -8,4 +9,9 @@ import { Component } from '@angular/core';
 export class AppComponent
 {
     title = 'demo';
+
+    constructor(private api: GoogleMapsApiService)
+    {
+        api.whenReady.then(() => this.title = 'loaded api');
+    }
 }
