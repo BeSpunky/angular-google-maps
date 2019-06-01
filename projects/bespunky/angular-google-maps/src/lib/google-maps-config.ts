@@ -51,5 +51,5 @@ export class GoogleMapsConfig
 {
     public apiUrl: string | GoogleApiUrl;
 
-    public recycleMapObject: boolean;
+    public recycleMapObject?: boolean;
 }
