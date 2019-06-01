@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, NgZone } from '@angular/core';
+
+import { GoogleMapsApiService } from '../api/google-maps-api.service';
+import { Defaults } from '../config/defaults';
+import { ZoomLevel } from '../types/zoom-level.enum';
 
 @Component({
     selector: 'bs-google-map',
@@ -7,11 +11,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GoogleMapComponent implements OnInit
 {
+    @ViewChild('map', { static: true })
+    private mapElement: ElementRef;
 
-    constructor() { }
+    @Input() center?: google.maps.LatLng;
+    @Input() zoom?: ZoomLevel;
+
+    private whenReady: Promise<void>;
+    private map: google.maps.Map;
+
+    constructor(private api: GoogleMapsApiService, private zone: NgZone)
+    {
+        this.whenReady = this.api.whenReady;
+    }
 
     ngOnInit()
     {
+        this.zone.runOutsideAngular(() =>
+        {
+            this.whenReady.then(() =>
+            {
+                this.map = new google.maps.Map(this.mapElement.nativeElement, {
+                    center: this.center || Defaults.Center,
+                    zoom:   this.zoom   || Defaults.ZoomLevel
+                });
+            });
+        });
     }
-
 }
