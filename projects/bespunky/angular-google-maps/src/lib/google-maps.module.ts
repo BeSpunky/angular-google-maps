@@ -4,7 +4,7 @@ import { ZenModule } from '@bespunky/angular-zen';
 import { LazyGoogleMapsApiLoader } from './loaders/lazy-google-maps-api-loader';
 import { GoogleMapsApiLoader } from './loaders/google-maps-api-loader';
 import { GoogleMapsApiService } from './api/google-maps-api.service';
-import { GoogleMapsConfig } from './google-maps-config';
+import { GoogleMapsConfig } from './config/google-maps-config';
 import { GoogleMapComponent } from './google-map/google-map.component';
 
 @NgModule({
