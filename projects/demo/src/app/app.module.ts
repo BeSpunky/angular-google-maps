@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
     imports: [
         BrowserModule,
         GoogleMapsModule.forRoot({
-            apiUrl: { key: '' },
+            apiUrl: { key: 'AIzaSyCbRqlAlzwFodU8EMnS3CJDwr1UuRiGjQY' },
         })
     ],
     providers: [],
