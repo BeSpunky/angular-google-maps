@@ -27,6 +27,7 @@ export class GoogleMapsApiService
     }
 
     // TODO: Refactor and move to another non-exported service? so users won't be able to call the method.
+    /** @internal */
     load(): Promise<void>
     {
         this.loader.load()
