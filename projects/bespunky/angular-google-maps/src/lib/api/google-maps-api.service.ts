@@ -25,7 +25,8 @@ export class GoogleMapsApiService
         this.isReady = false;
     }
 
-    public load(): Promise<void>
+    // TODO: Refactor and move to another non-exported service? so users won't be able to call the method.
+    load(): Promise<void>
     {
         this.loader.load()
                    .then(this.waitForApi.resolve)
