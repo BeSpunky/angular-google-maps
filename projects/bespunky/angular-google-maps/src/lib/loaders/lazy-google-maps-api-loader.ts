@@ -1,8 +1,12 @@
+import { Injectable } from '@angular/core';
 import { LazyScriptLoaderService } from '@bespunky/angular-zen';
 
 import { GoogleMapsApiLoader } from './google-maps-api-loader';
 import { GoogleMapsConfig, HttpProtocol, DefaultApiLocation, DefaultApiUrlFormat } from '../google-maps-config';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class LazyGoogleMapsApiLoader extends GoogleMapsApiLoader
 {
     constructor(private config: GoogleMapsConfig, private loader: LazyScriptLoaderService) { super(); }

@@ -1,7 +1,11 @@
+import { Injectable } from '@angular/core';
 import { WindowRef } from '@bespunky/angular-zen';
 
 import { GoogleMapsApiLoader } from './google-maps-api-loader';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class NoOpGoogleMapsApiLoader extends GoogleMapsApiLoader
 {
     constructor(private windowRef: WindowRef) { super(); }
