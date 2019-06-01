@@ -9,10 +9,6 @@ import { GoogleMapsConfig } from './google-maps-config';
 @NgModule({
     declarations: [],
     imports: [ ZenModule ],
-    providers: [
-        GoogleMapsApiService,
-        { provide: GoogleMapsApiLoader, useClass: LazyGoogleMapsApiLoader }
-    ],
     exports: []
 })
 export class GoogleMapsModule
@@ -34,6 +30,8 @@ export class GoogleMapsModule
         return {
             ngModule: GoogleMapsModule,
             providers: [
+                GoogleMapsApiService,
+                { provide: GoogleMapsApiLoader, useClass: LazyGoogleMapsApiLoader },
                 { provide: GoogleMapsConfig, useValue: config }
             ]
         };
