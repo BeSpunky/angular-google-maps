@@ -5,11 +5,12 @@ import { LazyGoogleMapsApiLoader } from './loaders/lazy-google-maps-api-loader';
 import { GoogleMapsApiLoader } from './loaders/google-maps-api-loader';
 import { GoogleMapsApiService } from './api/google-maps-api.service';
 import { GoogleMapsConfig } from './google-maps-config';
+import { GoogleMapComponent } from './google-map/google-map.component';
 
 @NgModule({
-    declarations: [],
-    imports: [ ZenModule ],
-    exports: []
+    declarations: [GoogleMapComponent],
+    imports:      [ZenModule],
+    exports:      [GoogleMapComponent]
 })
 export class GoogleMapsModule
 {
