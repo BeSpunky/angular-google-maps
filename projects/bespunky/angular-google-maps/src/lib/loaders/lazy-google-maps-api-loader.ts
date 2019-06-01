@@ -31,7 +31,7 @@ export class LazyGoogleMapsApiLoader extends GoogleMapsApiLoader
         if (apiUrl.region)    settings.push({ key: 'region',    value: apiUrl.region });
 
         // If settings were specified, join them with '&' signs
-        const settingsString = settings.length ? '&' + settings.map(setting => `${setting.key}=${setting.value}`).join('&') : null;
+        const settingsString = settings.length ? '&' + settings.map(setting => `${setting.key}=${setting.value}`).join('&') : '';
 
         return DefaultApiUrlFormat.replace('{protocol}',  apiUrl.protocol || HttpProtocol.Https)
                                   .replace('{location}',  apiUrl.location || DefaultApiLocation)
