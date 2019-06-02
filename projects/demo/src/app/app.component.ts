@@ -14,4 +14,9 @@ export class AppComponent
     {
         api.whenReady.then(() => this.title = 'loaded api');
     }
+
+    public onClick()
+    {
+        alert('clicked');
+    }
 }
