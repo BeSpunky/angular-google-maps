@@ -1,41 +1,88 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, NgZone } from '@angular/core';
+import * as _ from 'lodash';
+import { Component, OnInit, ElementRef, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 import { GoogleMapsApiService } from '../api/google-maps-api.service';
-import { Defaults } from '../config/defaults';
 import { ZoomLevel } from '../types/zoom-level.enum';
+import { GoogleMap } from './google-map';
+import { MapEvent } from '../types/map-event.enum';
 
 @Component({
     selector: 'bs-google-map',
     templateUrl: './google-map.component.html',
     styleUrls: ['./google-map.component.css']
 })
-export class GoogleMapComponent implements OnInit
+export class GoogleMapComponent implements OnInit, OnDestroy, OnChanges
 {
     @ViewChild('map', { static: true })
-    private mapElement: ElementRef;
+    private element: ElementRef;
 
-    @Input() center?: google.maps.LatLng;
-    @Input() zoom?: ZoomLevel;
+    @Input() private map?: GoogleMap;
+    @Input() public center?: google.maps.LatLng;
+    @Input() public zoom?: ZoomLevel;
 
-    private whenReady: Promise<void>;
-    private map: google.maps.Map;
+    @Output() public boundsChanged      = new EventEmitter();
+    @Output() public centerChanged      = new EventEmitter();
+    @Output() public zoomChanged        = new EventEmitter();
+    @Output() public click              = new EventEmitter();
+    @Output() public rightClick         = new EventEmitter();
+    @Output() public doubleClick        = new EventEmitter();
+    @Output() public mouseMove          = new EventEmitter();
+    @Output() public mouseOver          = new EventEmitter();
+    @Output() public mouseOut           = new EventEmitter();
+    @Output() public drag               = new EventEmitter();
+    @Output() public dragStart          = new EventEmitter();
+    @Output() public dragEnd            = new EventEmitter();
+    @Output() public headingChanged     = new EventEmitter();
+    @Output() public maptTypeChanged    = new EventEmitter();
+    @Output() public projectionChanged  = new EventEmitter();
+    @Output() public resize             = new EventEmitter();
+    @Output() public tilesLoaded        = new EventEmitter();
+    @Output() public tiltChanged        = new EventEmitter();
+    @Output() public idle               = new EventEmitter();
 
-    constructor(private api: GoogleMapsApiService, private zone: NgZone)
-    {
-        this.whenReady = this.api.whenReady;
-    }
+    constructor(private api: GoogleMapsApiService) { }
 
     ngOnInit()
     {
-        this.zone.runOutsideAngular(() =>
+        this.map = this.map || new GoogleMap(this.element, this.api);
+
+        this.registerEmitters();
+    }
+
+    ngOnChanges(changes: SimpleChanges)
+    {
+        for (const propertyName in changes)
         {
-            this.whenReady.then(() =>
+            // This will use the setters methods of the map class to set the new values of @Input() values
+            if (this.map[propertyName])
+                this.map[propertyName] = changes[propertyName].currentValue;
+        }
+    }
+
+    ngOnDestroy()
+    {
+        this.unregisterEmitters();
+    }
+
+    private registerEmitters()
+    {
+        // tslint:disable-next-line:forin
+        for (const eventName in MapEvent)
+        {
+            const handler = function()
             {
-                this.map = new google.maps.Map(this.mapElement.nativeElement, {
-                    center: this.center || Defaults.Center,
-                    zoom:   this.zoom   || Defaults.ZoomLevel
-                });
-            });
-        });
+                const emitter: EventEmitter<any> = this[_.camelCase(eventName)];
+
+                emitter.emit(...arguments);
+            };
+
+            this.map.listenTo(MapEvent[eventName], handler.bind(this));
+        }
+    }
+
+    private unregisterEmitters()
+    {
+        for (const eventName in MapEvent)
+            this.map.stopListeningTo(eventName);
     }
 }

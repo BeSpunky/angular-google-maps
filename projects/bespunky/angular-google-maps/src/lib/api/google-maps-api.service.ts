@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
+import { GoogleMapsConfig } from '../config/google-maps-config';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class GoogleMapsApiService
 
     public isReady: boolean;
 
-    constructor(private loader: GoogleMapsApiLoader)
+    constructor(public config: GoogleMapsConfig, private loader: GoogleMapsApiLoader, private zone: NgZone)
     {
         this.isReady = false;
 
@@ -40,5 +41,10 @@ export class GoogleMapsApiService
     public get whenReady(): Promise<void>
     {
         return this.waitForApi.promise;
+    }
+
+    public runOutsideAngular(fn: () => any): any
+    {
+        return this.zone.runOutsideAngular(() => this.whenReady.then(fn));
     }
 }
