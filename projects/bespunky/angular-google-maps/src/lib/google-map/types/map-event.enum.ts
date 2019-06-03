@@ -1,4 +1,4 @@
-import { GoogleMapsEventsMap } from './google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../../types/google-maps-events-map.type';
 
 export enum MapEvent
 {

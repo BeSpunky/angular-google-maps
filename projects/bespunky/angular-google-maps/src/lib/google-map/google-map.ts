@@ -3,8 +3,8 @@ import { ElementRef } from '@angular/core';
 import { IGoogleMapsEventfullObject } from '../core/igoogle-maps-eventfull-object';
 import { GoogleMapsApiService } from '../api/google-maps-api.service';
 import { Defaults } from '../config/defaults';
-import { ZoomLevel } from '../types/zoom-level.enum';
-import { MapEvent } from '../types/map-event.enum';
+import { ZoomLevel } from './types/zoom-level.enum';
+import { MapEvent } from './types/map-event.enum';
 
 export class GoogleMap implements IGoogleMapsEventfullObject
 {

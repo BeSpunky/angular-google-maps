@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { Component, OnInit, ElementRef, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 import { GoogleMapsApiService } from '../api/google-maps-api.service';
-import { ZoomLevel } from '../types/zoom-level.enum';
+import { ZoomLevel } from './types/zoom-level.enum';
 import { GoogleMap } from './google-map';
 import { MapEventsMap } from '../types/map-event.enum';
 
