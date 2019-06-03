@@ -5,6 +5,7 @@ import { GoogleMapsApiService } from '../api/google-maps-api.service';
 import { Defaults } from '../config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { MapEvent } from './types/map-event.enum';
+import { GoogleMapMarker } from '../google-map-marker/google-map-marker';
 
 export class GoogleMap implements IGoogleMapsEventfullObject
 {
@@ -60,5 +61,17 @@ export class GoogleMap implements IGoogleMapsEventfullObject
     public set zoom(zoomLevel: ZoomLevel | number)
     {
         this.api.runOutsideAngular(() => this.map.setZoom(zoomLevel));
+    }
+
+    public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapMarker>
+    {
+        return this.api.runOutsideAngular(() =>
+        {
+            const marker = new GoogleMapMarker(this.api, options);
+
+            marker.nativeMarker.setMap(this.map);
+
+            return marker;
+        });
     }
 }
