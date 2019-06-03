@@ -16,7 +16,7 @@ export class GoogleMapComponent implements OnInit, OnDestroy, OnChanges
     @ViewChild('map', { static: true })
     private element: ElementRef;
 
-    @Input() private map?: GoogleMap;
+    @Input() public map?: GoogleMap;
     @Input() public center?: google.maps.LatLng;
     @Input() public zoom?: ZoomLevel;
 
