@@ -16,13 +16,13 @@ export * from './lib/loaders/no-op-google-maps-api-loader';
 export * from './lib/config/defaults';
 
 // Map
-export * from './lib/google-map/google-map.component';
+export * from './lib/google-map/component/google-map.component';
 export * from './lib/google-map/google-map';
 export * from './lib/google-map/types/zoom-level.enum';
 export * from './lib/google-map/types/map-event.enum';
 
 // Markers
-export * from './lib/google-map-marker/google-map-marker.component';
+export * from './lib/google-map-marker/component/google-map-marker.component';
 export * from './lib/google-map-marker/google-map-marker';
 export * from './lib/google-map-marker/types/marker-event.enum';
 

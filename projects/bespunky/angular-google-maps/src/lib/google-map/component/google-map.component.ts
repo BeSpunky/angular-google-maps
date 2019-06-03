@@ -1,10 +1,11 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ElementRef, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
 
-import { GoogleMapsApiService } from '../api/google-maps-api.service';
-import { ZoomLevel } from './types/zoom-level.enum';
-import { GoogleMap } from './google-map';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
+import { ZoomLevel } from '../types/zoom-level.enum';
+import { GoogleMap } from '../google-map';
 import { MapEventsMap } from '../types/map-event.enum';
+import { GoogleMapMarker } from '../../google-map-marker/google-map-marker';
 
 @Component({
     selector: 'bs-google-map',
@@ -41,6 +42,9 @@ export class GoogleMapComponent implements OnInit, OnDestroy, OnChanges
     @Output() public idle               = new EventEmitter();
 
     constructor(private api: GoogleMapsApiService) { }
+
+    // <map (marker.drag)="onMarkerDrag($event)"
+    public marker: GoogleMapMarker;
 
     ngOnInit()
     {

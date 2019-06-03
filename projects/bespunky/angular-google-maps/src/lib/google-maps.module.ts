@@ -5,8 +5,8 @@ import { LazyGoogleMapsApiLoader } from './loaders/lazy-google-maps-api-loader';
 import { GoogleMapsApiLoader } from './loaders/google-maps-api-loader';
 import { GoogleMapsApiService } from './api/google-maps-api.service';
 import { GoogleMapsConfig } from './config/google-maps-config';
-import { GoogleMapComponent } from './google-map/google-map.component';
-import { GoogleMapMarkerComponent } from './google-map-marker/google-map-marker.component';
+import { GoogleMapComponent } from './google-map/component/google-map.component';
+import { GoogleMapMarkerComponent } from './google-map-marker/component/google-map-marker.component';
 
 @NgModule({
     declarations: [GoogleMapComponent, GoogleMapMarkerComponent],
