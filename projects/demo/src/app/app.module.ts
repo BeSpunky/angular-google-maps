@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { GoogleMapsModule } from '@bespunky/angular-google-maps';
+import { GoogleMapsModule, GoogleMapsLibrary } from '@bespunky/angular-google-maps';
 
 import { AppComponent } from './app.component';
 
@@ -11,7 +11,10 @@ import { AppComponent } from './app.component';
     imports: [
         BrowserModule,
         GoogleMapsModule.forRoot({
-            apiUrl: { key: 'AIzaSyCbRqlAlzwFodU8EMnS3CJDwr1UuRiGjQY' },
+            apiUrl: {
+                key: 'AIzaSyCbRqlAlzwFodU8EMnS3CJDwr1UuRiGjQY',
+                libraries: [GoogleMapsLibrary.Drawing]
+            },
         })
     ],
     providers: [],
