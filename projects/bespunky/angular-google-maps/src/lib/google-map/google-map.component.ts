@@ -4,7 +4,7 @@ import { Component, OnInit, ElementRef, ViewChild, Input, OnChanges, SimpleChang
 import { GoogleMapsApiService } from '../api/google-maps-api.service';
 import { ZoomLevel } from '../types/zoom-level.enum';
 import { GoogleMap } from './google-map';
-import { MapEvent } from '../types/map-event.enum';
+import { MapEventsMap } from '../types/map-event.enum';
 
 @Component({
     selector: 'bs-google-map',
@@ -46,7 +46,7 @@ export class GoogleMapComponent implements OnInit, OnDestroy, OnChanges
     {
         this.map = this.map || new GoogleMap(this.element, this.api);
 
-        this.registerEmitters();
+        this.api.hookEmitters(this, MapEventsMap, this.map);
     }
 
     ngOnChanges(changes: SimpleChanges)
@@ -61,28 +61,6 @@ export class GoogleMapComponent implements OnInit, OnDestroy, OnChanges
 
     ngOnDestroy()
     {
-        this.unregisterEmitters();
-    }
-
-    private registerEmitters()
-    {
-        // tslint:disable-next-line:forin
-        for (const eventName in MapEvent)
-        {
-            const handler = function()
-            {
-                const emitter: EventEmitter<any> = this[_.camelCase(eventName)];
-
-                emitter.emit(...arguments);
-            };
-
-            this.map.listenTo(MapEvent[eventName], handler.bind(this));
-        }
-    }
-
-    private unregisterEmitters()
-    {
-        for (const eventName in MapEvent)
-            this.map.stopListeningTo(eventName);
+        this.api.unhookEmitters(MapEventsMap, this.map);
     }
 }

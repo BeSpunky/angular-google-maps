@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf, ModuleWithProviders, NgZone } from '@angular/core';
+import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { ZenModule } from '@bespunky/angular-zen';
 
 import { LazyGoogleMapsApiLoader } from './loaders/lazy-google-maps-api-loader';
@@ -6,25 +6,22 @@ import { GoogleMapsApiLoader } from './loaders/google-maps-api-loader';
 import { GoogleMapsApiService } from './api/google-maps-api.service';
 import { GoogleMapsConfig } from './config/google-maps-config';
 import { GoogleMapComponent } from './google-map/google-map.component';
-import { GoogleMapMarkerComponent } from './google-map-marker/google-map-marker/google-map-marker.component';
+import { GoogleMapMarkerComponent } from './google-map-marker/google-map-marker.component';
 
 @NgModule({
     declarations: [GoogleMapComponent, GoogleMapMarkerComponent],
     imports:      [ZenModule],
-    exports:      [GoogleMapComponent]
+    exports:      [GoogleMapComponent, GoogleMapMarkerComponent]
 })
 export class GoogleMapsModule
 {
-    constructor(@Optional() @SkipSelf() googleMapsModule: GoogleMapsModule, private zone: NgZone, private api: GoogleMapsApiService)
+    constructor(@Optional() @SkipSelf() googleMapsModule: GoogleMapsModule, private api: GoogleMapsApiService)
     {
         if (googleMapsModule)
             throw new Error('GoogleMapsModule was previously loaded somewhere. Make sure there is only place where you import it.');
 
-        zone.runOutsideAngular(() =>
-        {
-            api.load().then(this.onApiLoaded)
-                      .catch(this.onApiLoadError);
-        });
+        api.load().then(this.onApiLoaded)
+                  .catch(this.onApiLoadError);
     }
 
     static forRoot(config: GoogleMapsConfig): ModuleWithProviders

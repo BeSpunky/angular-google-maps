@@ -1,11 +1,12 @@
 import { ElementRef } from '@angular/core';
 
+import { IGoogleMapsEventfullObject } from '../core/igoogle-maps-eventfull-object';
 import { GoogleMapsApiService } from '../api/google-maps-api.service';
 import { Defaults } from '../config/defaults';
 import { ZoomLevel } from '../types/zoom-level.enum';
 import { MapEvent } from '../types/map-event.enum';
 
-export class GoogleMap
+export class GoogleMap implements IGoogleMapsEventfullObject
 {
     private whenReady: Promise<void>;
     private map: google.maps.Map;
@@ -26,9 +27,9 @@ export class GoogleMap
         });
     }
 
-    public get nativeMap(): google.maps.Map
+    public get nativeMap(): Promise<google.maps.Map>
     {
-        return this.map;
+        return this.whenReady.then(() => this.map);
     }
 
     public listenTo(eventName: MapEvent | string, handler: () => void): Promise<google.maps.MapsEventListener>
@@ -43,7 +44,7 @@ export class GoogleMap
 
     public getCenter(): Promise<google.maps.LatLng>
     {
-        return this.whenReady.then(() => this.map.getCenter());
+        return this.whenReady.then(this.map.getCenter);
     }
 
     public set center(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
@@ -53,7 +54,7 @@ export class GoogleMap
 
     public getZoom(): Promise<number>
     {
-        return this.whenReady.then(() => this.map.getZoom());
+        return this.whenReady.then(this.map.getZoom);
     }
 
     public set zoom(zoomLevel: ZoomLevel | number)

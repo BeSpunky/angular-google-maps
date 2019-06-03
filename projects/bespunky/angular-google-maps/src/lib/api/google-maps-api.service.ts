@@ -1,7 +1,10 @@
-import { Injectable, NgZone } from '@angular/core';
+import * as _ from 'lodash';
+import { Injectable, NgZone, EventEmitter } from '@angular/core';
 
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
+import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
+import { IGoogleMapsEventfullObject } from '../core/igoogle-maps-eventfull-object';
 
 @Injectable({
     providedIn: 'root'
@@ -31,11 +34,14 @@ export class GoogleMapsApiService
     /** @internal */
     load(): Promise<void>
     {
-        this.loader.load()
-                   .then(this.waitForApi.resolve)
-                   .catch(this.waitForApi.reject);
+        return this.zone.runOutsideAngular(() =>
+        {
+            this.loader.load()
+                .then(this.waitForApi.resolve)
+                .catch(this.waitForApi.reject);
 
-        return this.waitForApi.promise;
+            return this.waitForApi.promise;
+        });
     }
 
     public get whenReady(): Promise<void>
@@ -45,6 +51,30 @@ export class GoogleMapsApiService
 
     public runOutsideAngular(fn: () => any): any
     {
-        return this.zone.runOutsideAngular(() => this.whenReady.then(fn));
+        return this.zone.runOutsideAngular(() =>
+        {
+            this.whenReady.then(fn);
+        });
+    }
+
+    public hookEmitters(emittingComponent: any, eventsMap: GoogleMapsEventsMap, eventRaiser: IGoogleMapsEventfullObject)
+    {
+        for (const event of eventsMap)
+        {
+            const emitter: EventEmitter<any> = emittingComponent[_.camelCase(event.name)];
+
+            if (!emitter) continue;
+
+            // Hook the emitter to the listener and emit everytime the event is fired.
+            // Note: Passing `emitter.emit` directly as a handler throws a strange error.
+            //       Wrapping it in a functino that calls emit solved the problem.
+            eventRaiser.listenTo(event.reference, () => emitter.emit());
+        }
+    }
+
+    public unhookEmitters(eventsMap: GoogleMapsEventsMap, emittingObject: IGoogleMapsEventfullObject)
+    {
+        for (const event of eventsMap)
+            emittingObject.stopListeningTo(event.reference);
     }
 }

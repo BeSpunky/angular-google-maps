@@ -1,3 +1,5 @@
+import { GoogleMapsEventsMap } from './google-maps-events-map.type';
+
 export enum MapEvent
 {
     BoundsChanged     = 'bounds_changed',
@@ -20,3 +22,6 @@ export enum MapEvent
     TiltChanged       = 'tilt_changed',
     Idle              = 'idle'
 }
+
+// Used for iteration of known events (e.g. in case of registering listeners)
+export const MapEventsMap: GoogleMapsEventsMap = Object.keys(MapEvent).map(eventName => ({ name: eventName, reference: MapEvent[eventName] }));
