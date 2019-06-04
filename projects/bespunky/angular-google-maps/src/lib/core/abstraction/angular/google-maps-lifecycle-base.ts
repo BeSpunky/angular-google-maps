@@ -1,7 +1,7 @@
 import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { GoogleMapsEventsMap } from '../../types/google-maps-events-map.type';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-import { IGoogleMapsNativeObjectWrapper } from '../native/i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
 
 export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
 {

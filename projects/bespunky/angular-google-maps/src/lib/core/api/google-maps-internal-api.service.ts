@@ -6,9 +6,10 @@ import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
-import { IGoogleMapsNativeObjectWrapper } from '../abstraction/native/i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectWrapper } from '../abstraction/angular/i-google-maps-native-object-wrapper';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/angular/events/google-maps-event-data';
+import { GoogleMapsLifecycleBase } from '../abstraction/angular/google-maps-lifecycle-base';
 
 
 @Injectable({
@@ -55,7 +56,7 @@ export class GoogleMapsInternalApiService
         });
     }
 
-    public hookEmitters(emittingComponent: any, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectWrapper)
+    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectWrapper)
     {
         for (const event of eventsMap)
         {
@@ -66,12 +67,10 @@ export class GoogleMapsInternalApiService
             if (!emitter || emitter.observers.length === 0) continue;
 
             // Hook the emitter to the listener and emit everytime the event is fired.
-            // Note: Passing `emitter.emit` directly as a handler throws a strange error.
-            //       Wrapping it in a functino that calls emit solved the problem.
             // tslint:disable-next-line:only-arrow-functions
             nativeWrapper.listenTo(event.reference, function()
             {
-                const eventData = new GoogleMapsEventData(event.name, emittingComponent, null, arguments);
+                const eventData = new GoogleMapsEventData(event.name, emittingComponent.nativeWrapper, null, arguments);
 
                 emitter.emit(eventData);
             });
