@@ -1,16 +1,17 @@
 import { IGoogleMapsNativeObjectWrapper } from '../native/i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
 export abstract class GoogleMapsNativeObjectWrapper implements IGoogleMapsNativeObjectWrapper
 {
-    abstract readonly native: any;
+    abstract readonly native: Promise<IGoogleMapsNativeObject>;
 
     listenTo(eventName: string, handler: () => void): void
     {
-        this.native.addListener(eventName, handler);
+        this.native.then(nativeObject => nativeObject.addListener(eventName, handler));
     }
 
     stopListeningTo(eventName: string): void
     {
-        google.maps.event.clearListeners(this.native, eventName);
+        this.native.then(nativeObject => google.maps.event.clearListeners(nativeObject, eventName));
     }
 }

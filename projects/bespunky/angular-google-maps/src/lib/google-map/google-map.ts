@@ -3,7 +3,6 @@ import { ElementRef } from '@angular/core';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
-import { MapEvent } from './types/map-event.enum';
 import { GoogleMapMarker } from './overlays/marker/google-map-marker';
 import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/google-maps-native-object-wrapper';
 
@@ -35,17 +34,6 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper
         return this.whenReady.then(() => this.map);
     }
 
-    /**
-     * Overrides the `listenTo()` method of the base class in order to wait for the map before attempting to register.
-     *
-     * @param eventName The name of the event for which to register the handler.
-     * @param handler   The function to call when the event is fired.
-     */
-    public listenTo(eventName: MapEvent | string, handler: () => void)
-    {
-        this.whenReady.then(() => this.map.addListener(eventName, handler));
-    }
-
     public getCenter(): Promise<google.maps.LatLng>
     {
         return this.whenReady.then(this.map.getCenter);
@@ -69,6 +57,6 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper
     public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapMarker>
     {
         // Marker creation will cause rendering. Run outside...
-        return this.api.runOutsideAngular(() => new GoogleMapMarker(this, options));
+        return this.api.runOutsideAngular(() => new GoogleMapMarker(this, this.api, options));
     }
 }
