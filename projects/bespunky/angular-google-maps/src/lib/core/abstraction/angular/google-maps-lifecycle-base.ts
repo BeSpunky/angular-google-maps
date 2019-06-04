@@ -6,7 +6,7 @@ import { IGoogleMapsNativeObjectWrapper } from '../native/i-google-maps-native-o
 export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
 {
     private wrapperInitialized: { promise: Promise<void>, resolve: () => void, reject: () => any };
-    protected nativeWrapper: IGoogleMapsNativeObjectWrapper;
+    public nativeWrapper: IGoogleMapsNativeObjectWrapper;
 
     constructor(protected eventsMap: GoogleMapsEventsMap, protected api: GoogleMapsInternalApiService)
     {
@@ -26,8 +26,6 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
 
     ngOnInit()
     {
-        console.log('Init:', this);
-
         this.nativeWrapper = this.initNativeWrapper();
 
         this.wrapperInitialized.resolve();
@@ -37,7 +35,6 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
 
     ngOnDestroy()
     {
-        console.log('Destroy:', this);
         this.api.unhookEmitters(this.eventsMap, this.nativeWrapper);
     }
 
@@ -45,10 +42,7 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
     {
         // `ngOnChanges()` is called before `ngOnInit()`, meaning before the wrapper has initialized.
         // Wait for full component initialization and delegate the changes.
-        this.wrapperInitialized.promise.then(() =>
-        {
-            this.api.delegateInputChangesToNativeObject(changes, this.nativeWrapper);
-        });
+        this.wrapperInitialized.promise.then(() => this.api.delegateInputChangesToNativeObject(changes, this.nativeWrapper));
     }
 
     protected abstract initNativeWrapper(): IGoogleMapsNativeObjectWrapper;

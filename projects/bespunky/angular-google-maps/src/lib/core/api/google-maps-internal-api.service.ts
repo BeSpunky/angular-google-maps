@@ -75,12 +75,13 @@ export class GoogleMapsInternalApiService
             nativeWrapper.stopListeningTo(event.reference);
     }
 
+    // Expects `wrapper` to have setters for the properties which, in turn, call the approperiate native function in the native object
     public delegateInputChangesToNativeObject(changes: SimpleChanges, wrapper: IGoogleMapsNativeObjectWrapper)
     {
         for (const propertyName in changes)
         {
-            // This will use the setters methods of the map class to set the new values of @Input() values
-            if (wrapper[propertyName])
+            // If the wrapper has a setter for the property name, this will set the new values of @Input() values to the native object's properties
+            if (propertyName in wrapper)
                 wrapper[propertyName] = changes[propertyName].currentValue;
         }
     }

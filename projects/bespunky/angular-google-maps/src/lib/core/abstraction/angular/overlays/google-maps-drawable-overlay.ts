@@ -21,15 +21,15 @@ export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWr
 
     public addToMap(map: GoogleMap)
     {
-        // Wait for the map object to create, then for the marker to create, then set the map to the marker
-        map.native.then((nativeMap) => this.native.then(nativeMarker => nativeMarker.setMap(nativeMap)));
+        // Wait for the map object to create, then for the drawable to create, then set the map to the drawable
+        map.native.then((nativeMap) => this.native.then(nativeDrawable => nativeDrawable.setMap(nativeMap)));
 
         this.map = map;
     }
 
     public removeFromMap()
     {
-        this.native.then(nativeMarker => nativeMarker.setMap(null));
+        this.native.then(nativeDrawable => nativeDrawable.setMap(null));
 
         this.map = null;
     }

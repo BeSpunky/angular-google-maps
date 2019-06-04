@@ -5,6 +5,7 @@ import { GoogleMapMarker } from '../google-map-marker';
 import { MarkerEventsMap } from '../types/marker-event.enum';
 import { GoogleMapsInternalApiService } from '../../../../core/api/google-maps-internal-api.service';
 import { GoogleMapsLifecycleBase } from '../../../../core/abstraction/angular/google-maps-lifecycle-base';
+import { GoogleMap } from '../../../google-map';
 
 @Directive({
     selector: 'bs-google-map-marker, [bsGoogleMapMarker]',
@@ -65,6 +66,6 @@ export class GoogleMapMarkerDirective extends GoogleMapsLifecycleBase
 
     protected initNativeWrapper()
     {
-        return this.marker || new GoogleMapMarker(this.mapComponent.map, this.api.openApi);
+        return this.marker || new GoogleMapMarker(this.mapComponent.nativeWrapper as GoogleMap, this.api.openApi);
     }
 }
