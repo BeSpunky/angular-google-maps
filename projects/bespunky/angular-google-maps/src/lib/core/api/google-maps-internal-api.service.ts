@@ -8,6 +8,7 @@ import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/native/i-google-maps-native-object-wrapper';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
+import { GoogleMapsEventData } from '../abstraction/angular/events/google-maps-event-data';
 
 
 @Injectable({
@@ -60,12 +61,20 @@ export class GoogleMapsInternalApiService
         {
             const emitter: EventEmitter<any> = emittingComponent[_.camelCase(event.name)];
 
-            if (!emitter) continue;
+            // Avoid failures and optimize by skipping registration if no emitter object was
+            // instantiated in the component or no event binding was done by the user (i.e. template)
+            if (!emitter || emitter.observers.length === 0) continue;
 
             // Hook the emitter to the listener and emit everytime the event is fired.
             // Note: Passing `emitter.emit` directly as a handler throws a strange error.
             //       Wrapping it in a functino that calls emit solved the problem.
-            nativeWrapper.listenTo(event.reference, () => emitter.emit());
+            // tslint:disable-next-line:only-arrow-functions
+            nativeWrapper.listenTo(event.reference, function()
+            {
+                const eventData = new GoogleMapsEventData(event.name, emittingComponent, null, arguments);
+
+                emitter.emit(eventData);
+            });
         }
     }
 
