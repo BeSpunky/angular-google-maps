@@ -19,4 +19,9 @@ export class AppComponent
     {
         alert('clicked');
     }
+
+    public onMarkerClick()
+    {
+        alert('marker clicked');
+    }
 }

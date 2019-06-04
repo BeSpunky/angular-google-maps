@@ -1,26 +1,29 @@
 import * as _ from 'lodash';
-import { Component, OnInit, ElementRef, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 
-import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { ZoomLevel } from '../types/zoom-level.enum';
 import { GoogleMap } from '../google-map';
 import { MapEventsMap } from '../types/map-event.enum';
-import { GoogleMapMarker } from '../../google-map-marker/google-map-marker';
+import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
+import { IGoogleMapsNativeObjectWrapper } from '../../core/abstraction/native/i-google-maps-native-object-wrapper';
+import { GoogleMapsLifecycleBase } from '../../core/abstraction/angular/google-maps-lifecycle-base';
 
 @Component({
     selector: 'bs-google-map',
     templateUrl: './google-map.component.html',
-    styleUrls: ['./google-map.component.css']
+    styleUrls: ['./google-map.component.css'],
 })
-export class GoogleMapComponent implements OnInit, OnDestroy, OnChanges
+export class GoogleMapComponent extends GoogleMapsLifecycleBase
 {
     @ViewChild('map', { static: true })
     private element: ElementRef;
 
-    @Input() public map?: GoogleMap;
+    // Bound properties
+    @Input() public map: GoogleMap;
     @Input() public center?: google.maps.LatLng;
     @Input() public zoom?: ZoomLevel;
 
+    // Events
     @Output() public boundsChanged      = new EventEmitter();
     @Output() public centerChanged      = new EventEmitter();
     @Output() public zoomChanged        = new EventEmitter();
@@ -41,30 +44,13 @@ export class GoogleMapComponent implements OnInit, OnDestroy, OnChanges
     @Output() public tiltChanged        = new EventEmitter();
     @Output() public idle               = new EventEmitter();
 
-    constructor(private api: GoogleMapsApiService) { }
-
-    // <map (marker.drag)="onMarkerDrag($event)"
-    public marker: GoogleMapMarker;
-
-    ngOnInit()
+    constructor(protected api: GoogleMapsInternalApiService)
     {
-        this.map = this.map || new GoogleMap(this.element, this.api);
-
-        this.api.hookEmitters(this, MapEventsMap, this.map);
+        super(MapEventsMap, api);
     }
 
-    ngOnChanges(changes: SimpleChanges)
+    protected initNativeWrapper(): IGoogleMapsNativeObjectWrapper
     {
-        for (const propertyName in changes)
-        {
-            // This will use the setters methods of the map class to set the new values of @Input() values
-            if (this.map[propertyName])
-                this.map[propertyName] = changes[propertyName].currentValue;
-        }
-    }
-
-    ngOnDestroy()
-    {
-        this.api.unhookEmitters(MapEventsMap, this.map);
+        return this.map || new GoogleMap(this.element, this.api.openApi);
     }
 }

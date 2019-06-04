@@ -1,13 +1,13 @@
 import { ElementRef } from '@angular/core';
 
-import { IGoogleMapsEventfullObject } from '../core/igoogle-maps-eventfull-object';
-import { GoogleMapsApiService } from '../api/google-maps-api.service';
-import { Defaults } from '../config/defaults';
+import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
+import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { MapEvent } from './types/map-event.enum';
-import { GoogleMapMarker } from '../google-map-marker/google-map-marker';
+import { GoogleMapMarker } from './overlays/marker/google-map-marker';
+import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/google-maps-native-object-wrapper';
 
-export class GoogleMap implements IGoogleMapsEventfullObject
+export class GoogleMap extends GoogleMapsNativeObjectWrapper
 {
     private whenReady: Promise<void>;
     private map: google.maps.Map;
@@ -17,6 +17,8 @@ export class GoogleMap implements IGoogleMapsEventfullObject
                 initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
                 initialZoom?: ZoomLevel | number)
     {
+        super();
+
         this.whenReady = this.api.whenReady;
 
         this.api.runOutsideAngular(() =>
@@ -28,19 +30,20 @@ export class GoogleMap implements IGoogleMapsEventfullObject
         });
     }
 
-    public get nativeMap(): Promise<google.maps.Map>
+    public get native(): Promise<google.maps.Map>
     {
         return this.whenReady.then(() => this.map);
     }
 
-    public listenTo(eventName: MapEvent | string, handler: () => void): Promise<google.maps.MapsEventListener>
+    /**
+     * Overrides the `listenTo()` method of the base class in order to wait for the map before attempting to register.
+     *
+     * @param eventName The name of the event for which to register the handler.
+     * @param handler   The function to call when the event is fired.
+     */
+    public listenTo(eventName: MapEvent | string, handler: () => void)
     {
-        return this.whenReady.then(() => this.map.addListener(eventName, handler));
-    }
-
-    public stopListeningTo(eventName: MapEvent | string)
-    {
-        google.maps.event.clearListeners(this.map, eventName);
+        this.whenReady.then(() => this.map.addListener(eventName, handler));
     }
 
     public getCenter(): Promise<google.maps.LatLng>
@@ -65,13 +68,7 @@ export class GoogleMap implements IGoogleMapsEventfullObject
 
     public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapMarker>
     {
-        return this.api.runOutsideAngular(() =>
-        {
-            const marker = new GoogleMapMarker(this.api, options);
-
-            marker.nativeMarker.setMap(this.map);
-
-            return marker;
-        });
+        // Marker creation will cause rendering. Run outside...
+        return this.api.runOutsideAngular(() => new GoogleMapMarker(this, options));
     }
 }

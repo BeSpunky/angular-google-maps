@@ -1,2 +1,4 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<bs-google-map (doubleClick)="onClick()"></bs-google-map>
+<bs-google-map (doubleClick)="onClick()">
+    <bs-google-map-marker (click)="onMarkerClick($event)"></bs-google-map-marker>
+</bs-google-map>

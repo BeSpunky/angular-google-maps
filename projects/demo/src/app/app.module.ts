@@ -12,8 +12,7 @@ import { AppComponent } from './app.component';
         BrowserModule,
         GoogleMapsModule.forRoot({
             apiUrl: {
-                key: 'AIzaSyCbRqlAlzwFodU8EMnS3CJDwr1UuRiGjQY',
-                libraries: [GoogleMapsLibrary.Drawing]
+                key: 'AIzaSyCbRqlAlzwFodU8EMnS3CJDwr1UuRiGjQY'
             },
         })
     ],

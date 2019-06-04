@@ -1,8 +1,9 @@
 import { Output, EventEmitter } from '@angular/core';
 
-import { IGoogleMapsEventfullObject } from '../core/igoogle-maps-eventfull-object';
+import { GoogleMap } from '../../google-map';
+import { GoogleMapsDrawableOverlay } from '../../../core/abstraction/angular/overlays/google-maps-drawable-overlay';
 
-export class GoogleMapMarker implements IGoogleMapsEventfullObject
+export class GoogleMapMarker extends GoogleMapsDrawableOverlay
 {
     private marker: google.maps.Marker;
 
@@ -49,23 +50,15 @@ export class GoogleMapMarker implements IGoogleMapsEventfullObject
     /** Fired when the marker's zIndex property changes.    */
     @Output() public zIndexChanged = new EventEmitter();
 
-    constructor(options?: google.maps.ReadonlyMarkerOptions)
+    constructor(public map: GoogleMap, options?: google.maps.ReadonlyMarkerOptions)
     {
+        super(map);
+
         this.marker = new google.maps.Marker(options);
     }
 
-    public get nativeMarker(): google.maps.Marker
+    public get native(): google.maps.Marker
     {
         return this.marker;
-    }
-
-    listenTo(eventName: string, handler: () => void)
-    {
-        this.marker.addListener(eventName, handler);
-    }
-
-    stopListeningTo(eventName: string)
-    {
-        google.maps.event.clearListeners(this.marker, eventName);
     }
 }

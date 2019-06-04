@@ -4,6 +4,6 @@ describe('GoogleMapMarker', () =>
 {
     it('should create an instance', () =>
     {
-        expect(new GoogleMapMarker()).toBeTruthy();
+        expect(new GoogleMapMarker(null)).toBeTruthy();
     });
 });

@@ -1,15 +1,16 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Directive, Input, Output, EventEmitter } from '@angular/core';
 
+import { GoogleMapComponent } from '../../../component/google-map.component';
 import { GoogleMapMarker } from '../google-map-marker';
-import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { MarkerEventsMap } from '../types/marker-event.enum';
+import { GoogleMapsInternalApiService } from '../../../../core/api/google-maps-internal-api.service';
+import { GoogleMapsLifecycleBase } from '../../../../core/abstraction/angular/google-maps-lifecycle-base';
 
-@Component({
-    selector: 'bs-google-map-marker',
-    templateUrl: './google-map-marker.component.html',
-    styleUrls: ['./google-map-marker.component.css']
+@Directive({
+    selector: 'bs-google-map-marker, [bsGoogleMapMarker]',
+    exportAs: 'marker'
 })
-export class GoogleMapMarkerComponent implements OnInit
+export class GoogleMapMarkerDirective extends GoogleMapsLifecycleBase
 {
     @Input() public marker?: GoogleMapMarker;
 
@@ -56,13 +57,13 @@ export class GoogleMapMarkerComponent implements OnInit
     /** Fired when the marker's zIndex property changes.    */
     @Output() public zIndexChanged     = new EventEmitter();
 
-    constructor(private api: GoogleMapsApiService)
+    constructor(private mapComponent: GoogleMapComponent, protected api: GoogleMapsInternalApiService)
     {
-        this.marker = this.marker || new GoogleMapMarker();
+        super(MarkerEventsMap, api);
     }
 
-    ngOnInit()
+    protected initNativeWrapper()
     {
-        this.api.hookEmitters(this, MarkerEventsMap, this.marker);
+        return this.marker || new GoogleMapMarker(this.mapComponent.map);
     }
 }
