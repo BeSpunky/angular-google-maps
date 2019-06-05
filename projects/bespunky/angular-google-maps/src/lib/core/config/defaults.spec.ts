@@ -6,4 +6,10 @@ describe('Defaults', () =>
     {
         expect(new Defaults()).toBeTruthy();
     });
+
+    it('should return a value for each property', () =>
+    {
+        for (const prop in Defaults)
+            expect(Defaults[prop]).not.toBeUndefined();
+    });
 });
