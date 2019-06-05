@@ -1,4 +1,6 @@
 import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { promiseLater } from '@bespunky/angular-zen';
+
 import { GoogleMapsEventsMap } from '../../types/google-maps-events-map.type';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
@@ -13,15 +15,7 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
         // initNativeWrapper cannot be called here because the map extending component hasn't been initialized yet.
         // If the component hasn't initialized yet, the wrapper hasn't either.
         // A promise is to initialize it is instantiated here and resolved after full component init (see `ngOnInit()`).
-        this.wrapperInitialized = { promise: null, resolve: null, reject: null };
-
-        const promise = new Promise<void>((resolve, reject) =>
-        {
-            this.wrapperInitialized.resolve = resolve;
-            this.wrapperInitialized.reject = reject;
-        });
-
-        this.wrapperInitialized.promise = promise;
+        this.wrapperInitialized = promiseLater();
     }
 
     ngOnInit()

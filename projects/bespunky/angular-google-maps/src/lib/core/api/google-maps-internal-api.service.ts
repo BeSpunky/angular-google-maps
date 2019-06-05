@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
-import { Injectable, NgZone, EventEmitter, SimpleChanges, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Injectable, NgZone, EventEmitter, SimpleChanges, Inject } from '@angular/core';
+import { promiseLater } from '@bespunky/angular-zen';
 
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
@@ -20,8 +21,6 @@ export class GoogleMapsInternalApiService
 {
     public waitForApi: { promise: Promise<void>, resolve: () => void, reject: () => any };
 
-    public isReady: boolean;
-
     constructor(public config: GoogleMapsConfig,
                 public openApi: GoogleMapsApiService,
                 private loader: GoogleMapsApiLoader,
@@ -30,20 +29,10 @@ export class GoogleMapsInternalApiService
                 @Inject(GoogleMapsApiReadyPromise)
                 waitForApiReadyPromise: BehaviorSubject<Promise<void>>)
     {
-        this.isReady = false;
-
-        this.waitForApi = { promise: null, resolve: null, reject: null };
-
-        const apiPromise = new Promise<void>((resolve, reject) =>
-        {
-            this.waitForApi.resolve = resolve;
-            this.waitForApi.reject = reject;
-        });
-
-        this.waitForApi.promise = apiPromise.then(() => { this.isReady = true; });
+        this.waitForApi = promiseLater();
 
         // Write the created promise to the token so it can be fetched by other services
-        waitForApiReadyPromise.next(apiPromise);
+        waitForApiReadyPromise.next(this.waitForApi.promise);
     }
 
     load(): Promise<void>
