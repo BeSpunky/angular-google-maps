@@ -11,15 +11,8 @@ export class EventDataTransformService
 
     auto(event: any): any[] | IGoogleMapsMouseEvent // TODO: | <IOtherEvents>
     {
-        if (Array.isArray(event))
-        {
-            const data = [];
-
-            for (const arg in event)
-                data.push(this.auto(arg));
-
-            return data;
-        }
+        // If this is an array, run detection for each element and create a new array
+        if (Array.isArray(event)) event.map(this.auto);
 
         if (event as google.maps.MouseEvent) return this.mouseEvent(event);
 
