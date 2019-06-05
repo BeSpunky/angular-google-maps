@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { IGoogleMapsMouseEvent } from '../../core/abstraction/angular/events/i-google-maps-mouse-event';
+import { isGoogleMapsMouseEvent } from '../../core/abstraction/type-guards/mouse-event-type-guard';
 
 @Injectable({
     providedIn: 'root'
@@ -9,25 +10,25 @@ export class EventDataTransformService
 {
     constructor() { }
 
-    auto(event: any): any[] | IGoogleMapsMouseEvent // TODO: | <IOtherEvents>
+    public auto(event: any): any[] | IGoogleMapsMouseEvent // TODO: | <IOtherEvents>
     {
         // If this is an array, run detection for each element and create a new array
-        if (Array.isArray(event)) event.map(this.auto);
+        if (Array.isArray(event)) return event.map(this.auto.bind(this));
 
-        if (event as google.maps.MouseEvent) return this.mouseEvent(event);
+        // TODO: Add here any transformation calls. Must be from most derivative type to last derivative.
+        //       Example: PolyMouseEvent extends MouseEvents. The check for PolyMouseEvent should preceed the one for MouseEvent.
 
-        // TODO: if (event as google.maps.PolyMouseEvent) return this.polyMouseEvent(event);
-        //       PolyMouseEvent extends MouseEvents. Will a poly event branch out to mouseEvent()? Should this preceed the MouseEvent assertion? 
+        if (isGoogleMapsMouseEvent(event)) return this.mouseEvent(event);
 
         return this.default(event);
     }
 
-    default(event: any): any
+    public default(event: any): any
     {
         return event;
     }
 
-    mouseEvent(event: google.maps.MouseEvent): IGoogleMapsMouseEvent
+    public mouseEvent(event: google.maps.MouseEvent): IGoogleMapsMouseEvent
     {
         return {
             position: { lat: event.latLng.lat(), lng: event.latLng.lng() }
