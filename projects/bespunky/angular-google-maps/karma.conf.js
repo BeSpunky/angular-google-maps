@@ -28,6 +28,7 @@ module.exports = function(config)
         autoWatch: true,
         browsers: ['Chrome'],
         singleRun: false,
-        restartOnFileChange: true
+        restartOnFileChange: true,
+        files: ['src/lib/testing/google-maps-api.js']
     });
 };
