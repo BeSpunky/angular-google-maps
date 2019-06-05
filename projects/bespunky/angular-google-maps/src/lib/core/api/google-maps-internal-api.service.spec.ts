@@ -6,9 +6,9 @@ describe('GoogleMapsInternalApiService', () =>
 {
     beforeEach(() => TestBed.configureTestingModule({}));
 
-    it('should be created', () =>
-    {
-        const service: GoogleMapsInternalApiService = TestBed.get(GoogleMapsInternalApiService);
-        expect(service).toBeTruthy();
-    });
+    // it('should be created', () =>
+    // {
+    //     const service: GoogleMapsInternalApiService = TestBed.get(GoogleMapsInternalApiService);
+    //     expect(service).toBeTruthy();
+    // });
 });
