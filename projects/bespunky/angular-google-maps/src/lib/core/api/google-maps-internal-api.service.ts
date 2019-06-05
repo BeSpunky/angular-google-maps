@@ -10,6 +10,7 @@ import { IGoogleMapsNativeObjectWrapper } from '../abstraction/angular/i-google-
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/angular/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/angular/google-maps-lifecycle-base';
+import { EventDataTransformService } from '../../utils/transform/event-data-transform.service';
 
 
 @Injectable({
@@ -24,6 +25,7 @@ export class GoogleMapsInternalApiService
     constructor(public config: GoogleMapsConfig,
                 public openApi: GoogleMapsApiService,
                 private loader: GoogleMapsApiLoader,
+                private eventTransform: EventDataTransformService,
                 private zone: NgZone,
                 @Inject(GoogleMapsApiReadyPromise)
                 waitForApiReadyPromise: BehaviorSubject<Promise<void>>)
@@ -66,11 +68,14 @@ export class GoogleMapsInternalApiService
             // instantiated in the component or no event binding was done by the user (i.e. template)
             if (!emitter || emitter.observers.length === 0) continue;
 
+            const transfrom = this.eventTransform;
             // Hook the emitter to the listener and emit everytime the event is fired.
             // tslint:disable-next-line:only-arrow-functions
             nativeWrapper.listenTo(event.reference, function()
             {
-                const eventData = new GoogleMapsEventData(event.name, emittingComponent.nativeWrapper, null, arguments);
+                const args = transfrom.auto([...arguments]);
+
+                const eventData = new GoogleMapsEventData(event.name, emittingComponent.nativeWrapper, args , arguments);
 
                 emitter.emit(eventData);
             });

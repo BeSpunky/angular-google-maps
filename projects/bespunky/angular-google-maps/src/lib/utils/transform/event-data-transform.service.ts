@@ -9,9 +9,22 @@ export class EventDataTransformService
 {
     constructor() { }
 
-    auto(event: any): IGoogleMapsMouseEvent // TODO: | <IOtherEvents>
+    auto(event: any): any[] | IGoogleMapsMouseEvent // TODO: | <IOtherEvents>
     {
-        // if (1) return this.mouseEvent(event);
+        if (Array.isArray(event))
+        {
+            const data = [];
+
+            for (const arg in event)
+                data.push(this.auto(arg));
+
+            return data;
+        }
+
+        if (event as google.maps.MouseEvent) return this.mouseEvent(event);
+
+        // TODO: if (event as google.maps.PolyMouseEvent) return this.polyMouseEvent(event);
+        //       PolyMouseEvent extends MouseEvents. Will a poly event branch out to mouseEvent()? Should this preceed the MouseEvent assertion? 
 
         return this.default(event);
     }
