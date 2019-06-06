@@ -47,7 +47,7 @@ export class GoogleMapsInternalApiService
         });
     }
 
-    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectWrapper)
+    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap)
     {
         for (const event of eventsMap)
         {
@@ -57,24 +57,26 @@ export class GoogleMapsInternalApiService
             // instantiated in the component or no event binding was done by the user (i.e. template)
             if (!emitter || emitter.observers.length === 0) continue;
 
+            const nativeWrapper = emittingComponent.nativeWrapper;
             const transfrom = this.eventTransform;
+
             // Hook the emitter to the listener and emit everytime the event is fired.
             // tslint:disable-next-line:only-arrow-functions
             nativeWrapper.listenTo(event.reference, function()
             {
                 const args = transfrom.auto([...arguments]);
 
-                const eventData = new GoogleMapsEventData(event.name, emittingComponent.nativeWrapper, args , arguments);
+                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, args, arguments);
 
                 emitter.emit(eventData);
             });
         }
     }
 
-    public unhookEmitters(eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectWrapper)
+    public unhookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap)
     {
         for (const event of eventsMap)
-            nativeWrapper.stopListeningTo(event.reference);
+            emittingComponent.nativeWrapper.stopListeningTo(event.reference);
     }
 
     // Expects `wrapper` to have setters for the properties which, in turn, call the approperiate native function in the native object
