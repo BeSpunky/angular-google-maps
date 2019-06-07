@@ -1,11 +1,13 @@
+import { BehaviorSubject } from 'rxjs';
+import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsModule } from '../../google-maps.module';
 import { GoogleMapsConfig } from '../config/google-maps-config';
-import { BehaviorSubject } from 'rxjs';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { NgZone } from '@angular/core';
+import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
+import { NoOpGoogleMapsApiLoader } from '../loaders/no-op-google-maps-api-loader';
 
 describe('GoogleMapsApiService', () =>
 {
@@ -25,6 +27,8 @@ describe('GoogleMapsApiService', () =>
         TestBed.configureTestingModule({
             imports: [GoogleMapsModule.forRoot(config)],
             providers: [
+                // Replace the script loader service so google api script will not be downloaded
+                { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader },
                 { provide: GoogleMapsApiReadyPromise, useValue: waitToken }
             ]
         });

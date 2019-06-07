@@ -4,13 +4,13 @@ import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange } from '@angu
 
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
 import { GoogleMapsConfig } from '../config/google-maps-config';
-import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsModule } from '../../google-maps.module';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsLifecycleBase } from '../abstraction/angular/google-maps-lifecycle-base';
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/angular/i-google-maps-native-object-wrapper';
 import { GoogleMapsEventData } from '../abstraction/angular/events/google-maps-event-data';
+import { NoOpGoogleMapsApiLoader } from '../loaders/no-op-google-maps-api-loader';
 
 const EventsMapStub = [
     { name: 'Event1', reference: 'native_event1' },
@@ -64,6 +64,8 @@ describe('GoogleMapsInternalApiService', () =>
         TestBed.configureTestingModule({
             imports: [GoogleMapsModule.forRoot(config)],
             providers: [
+                // Replace the script loader service so google api script will not be downloaded
+                { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader },
                 { provide: GoogleMapsApiReadyPromise, useValue: waitToken }
             ]
         });
