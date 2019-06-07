@@ -1,19 +1,20 @@
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 
 import { GoogleMapComponent } from '../../../component/google-map.component';
-import { GoogleMapMarker } from '../google-map-marker';
+import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { MarkerEventsMap } from '../types/marker-event.enum';
 import { GoogleMapsInternalApiService } from '../../../../core/api/google-maps-internal-api.service';
 import { GoogleMapsLifecycleBase } from '../../../../core/abstraction/angular/google-maps-lifecycle-base';
-import { GoogleMap } from '../../../google-map';
+import { IGoogleMap } from '../../../i-google-map';
+import { GoogleMapsMarker } from '../google-maps-marker';
 
 @Directive({
-    selector: 'bs-google-map-marker, [bsGoogleMapMarker]',
+    selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
     exportAs: 'marker'
 })
-export class GoogleMapMarkerDirective extends GoogleMapsLifecycleBase
+export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
 {
-    @Input() public marker?: GoogleMapMarker;
+    @Input() public marker?: IGoogleMapsMarker;
     @Input() public position?: google.maps.LatLngBoundsLiteral;
 
   /** Fired when the marker's animation property changes. */
@@ -66,6 +67,6 @@ export class GoogleMapMarkerDirective extends GoogleMapsLifecycleBase
 
     protected initNativeWrapper()
     {
-        return this.marker || new GoogleMapMarker(this.mapComponent.nativeWrapper as GoogleMap, this.api.openApi);
+        return this.marker || new GoogleMapsMarker(this.mapComponent.nativeWrapper as IGoogleMap, this.api.openApi);
     }
 }

@@ -3,7 +3,7 @@ import { ElementRef } from '@angular/core';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
-import { GoogleMapMarker } from './overlays/marker/google-map-marker';
+import { GoogleMapsMarker } from './overlays/marker/google-maps-marker';
 import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/google-maps-native-object-wrapper';
 import { IGoogleMap } from './i-google-map';
 
@@ -55,9 +55,9 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleM
         this.api.runOutsideAngular(() => this.map.setZoom(zoomLevel));
     }
 
-    public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapMarker>
+    public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
     {
         // Marker creation will cause rendering. Run outside...
-        return this.api.runOutsideAngular(() => new GoogleMapMarker(this, this.api, options));
+        return this.api.runOutsideAngular(() => new GoogleMapsMarker(this, this.api, options));
     }
 }

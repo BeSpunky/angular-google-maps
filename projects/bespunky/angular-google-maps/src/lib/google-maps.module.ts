@@ -6,14 +6,14 @@ import { GoogleMapsApiLoader } from './core/loaders/google-maps-api-loader';
 import { GoogleMapsApiService } from './core/api/google-maps-api.service';
 import { GoogleMapsConfig } from './core/config/google-maps-config';
 import { GoogleMapComponent } from './google-map/component/google-map.component';
-import { GoogleMapMarkerDirective } from './google-map/overlays/marker/directive/google-map-marker.directive';
+import { GoogleMapsMarkerDirective } from './google-map/overlays/marker/directive/google-maps-marker.directive';
 import { GoogleMapsInternalApiService } from './core/api/google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromiseProvider } from './core/api/google-maps-api-ready.token';
 
 @NgModule({
-    declarations: [GoogleMapComponent, GoogleMapMarkerDirective],
+    declarations: [GoogleMapComponent, GoogleMapsMarkerDirective],
     imports:      [ZenModule],
-    exports:      [GoogleMapComponent, GoogleMapMarkerDirective]
+    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective]
 })
 export class GoogleMapsModule
 {

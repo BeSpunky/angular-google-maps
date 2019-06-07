@@ -1,6 +1,6 @@
 import { IGoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/i-google-maps-native-object-wrapper';
-import { GoogleMapMarker } from './overlays/marker/google-map-marker';
 import { ZoomLevel } from './types/zoom-level.enum';
+import { IGoogleMapsMarker } from './overlays/marker/i-google-maps-marker';
 
 export interface IGoogleMap extends IGoogleMapsNativeObjectWrapper
 {
@@ -10,5 +10,5 @@ export interface IGoogleMap extends IGoogleMapsNativeObjectWrapper
     getZoom(): Promise<number>;
     setZoom(zoomLevel: ZoomLevel | number): void;
 
-    createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapMarker>;
+    createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker>;
 }

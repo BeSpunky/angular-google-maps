@@ -1,8 +1,8 @@
-import { GoogleMapMarker } from './google-map-marker';
+import { GoogleMapsMarker } from './google-maps-marker';
 import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
 import { GoogleMap } from '../../google-map';
 
-describe('GoogleMapMarker', () =>
+describe('GoogleMapsMarker', () =>
 {
     it('should create an instance', () =>
     {
