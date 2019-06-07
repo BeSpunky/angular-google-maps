@@ -47,7 +47,6 @@ describe('GoogleMapsInternalApiService', () =>
 {
     let config: GoogleMapsConfig;
     let service: GoogleMapsInternalApiService;
-    let waitForApiPromiseCreation: BehaviorSubject<Promise<void>>;
     let tokenNextSpy: jasmine.Spy;
     let zone: NgZone;
     let loader: GoogleMapsApiLoader;
@@ -70,7 +69,6 @@ describe('GoogleMapsInternalApiService', () =>
             ]
         });
 
-        waitForApiPromiseCreation = TestBed.get(GoogleMapsApiReadyPromise);
         service = TestBed.get(GoogleMapsInternalApiService);
         zone = TestBed.get(NgZone);
         loader = TestBed.get(GoogleMapsApiLoader);
