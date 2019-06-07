@@ -1,10 +1,10 @@
-import { GoogleMap } from '../../../../google-map/google-map';
 import { IGoogleMapsNativeObjectWrapper } from '../i-google-maps-native-object-wrapper';
+import { IGoogleMap } from '../../../../google-map/i-google-map';
 
 export interface IGoogleMapsDrawableOverlay extends IGoogleMapsNativeObjectWrapper
 {
-    readonly containingMap: GoogleMap;
+    readonly containingMap: IGoogleMap;
 
-    addToMap(map: GoogleMap): void;
+    addToMap(map: IGoogleMap): void;
     removeFromMap(): void;
 }

@@ -5,8 +5,9 @@ import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { GoogleMapMarker } from './overlays/marker/google-map-marker';
 import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/google-maps-native-object-wrapper';
+import { IGoogleMap } from './i-google-map';
 
-export class GoogleMap extends GoogleMapsNativeObjectWrapper
+export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleMap
 {
     private whenReady: Promise<void>;
     private map: google.maps.Map;
@@ -39,7 +40,7 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper
         return this.whenReady.then(this.map.getCenter);
     }
 
-    public set center(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
+    public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
     {
         this.api.runOutsideAngular(() => this.map.setCenter(lngLat));
     }
@@ -49,7 +50,7 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper
         return this.whenReady.then(this.map.getZoom);
     }
 
-    public set zoom(zoomLevel: ZoomLevel | number)
+    public setZoom(zoomLevel: ZoomLevel | number)
     {
         this.api.runOutsideAngular(() => this.map.setZoom(zoomLevel));
     }
