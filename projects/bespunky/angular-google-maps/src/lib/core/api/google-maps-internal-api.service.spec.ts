@@ -36,7 +36,7 @@ class MockComponent extends GoogleMapsLifecycleBase implements OnInit
         return {
             listenTo: (eventName: string, handler: () => void) => this.listeners.push(handler),
             stopListeningTo: (eventName) => this.listeners = [],
-            set fakeProperty(value: any) { native.fakeProperty = value; },
+            setFakeProperty(value: any) { native.fakeProperty = value; },
             native,
             custom: null,
         } as IGoogleMapsNativeObjectWrapper;
@@ -198,7 +198,7 @@ describe('GoogleMapsInternalApiService', () =>
             const newValue = 10;
             const changes: SimpleChanges = { fakeProperty: new SimpleChange(1, newValue, true) };
 
-            const setterSpy = spyOnProperty(componentMock.nativeWrapper as any, 'fakeProperty', 'set').and.callThrough();
+            const setterSpy = spyOn(componentMock.nativeWrapper as any, 'setFakeProperty').and.callThrough();
 
             service.delegateInputChangesToNativeObject(changes, componentMock.nativeWrapper);
 
