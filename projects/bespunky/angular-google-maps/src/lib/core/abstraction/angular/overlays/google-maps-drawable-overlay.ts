@@ -1,37 +1,48 @@
-import { GoogleMap } from '../../../../google-map/google-map';
 import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
 import { IGoogleMapsNativeDrawableOverlay } from '../../native/overlays/i-google-maps-native-drawable-overlay';
-import { GoogleMapsNativeObjectWrapper } from '../google-maps-native-object-wrapper';
 import { IGoogleMap } from '../../../../google-map/i-google-map';
+import { GoogleMapsNativeObjectWrapper } from '../google-maps-native-object-wrapper';
+import { GoogleMapsApiService } from '../../../api/google-maps-api.service';
 
 export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWrapper implements IGoogleMapsDrawableOverlay
 {
     abstract readonly native: Promise<IGoogleMapsNativeDrawableOverlay>;
 
-    constructor(protected map: IGoogleMap)
+    constructor(protected map: IGoogleMap, protected api: GoogleMapsApiService)
     {
         super();
 
-        if (map) this.addToMap(map);
+        if (map) this.setContainingMap(map);
     }
 
-    public get containingMap(): IGoogleMap
+    public getContainingMap(): IGoogleMap
     {
         return this.map;
     }
 
-    public addToMap(map: IGoogleMap)
+    public async setContainingMap(map: IGoogleMap)
     {
-        // Wait for the map object to create, then for the drawable to create, then set the map to the drawable
-        map.native.then((nativeMap) => this.native.then(nativeDrawable => nativeDrawable.setMap(nativeMap)));
-
         this.map = map;
+
+        // Wait for the map object to create, then for the drawable to create, then set the map to the drawable
+        this.api.runOutsideAngular(async () =>
+        {
+            const nativeMap      = await map.native;
+            const nativeDrawable = await this.native;
+
+            nativeDrawable.setMap(nativeMap);
+        });
     }
 
-    public removeFromMap()
+    public async removeFromMap()
     {
-        this.native.then(nativeDrawable => nativeDrawable.setMap(null));
-
         this.map = null;
+
+        this.api.runOutsideAngular(async () =>
+        {
+            const nativeDrawable = await this.native;
+
+            nativeDrawable.setMap(null);
+        });
     }
 }

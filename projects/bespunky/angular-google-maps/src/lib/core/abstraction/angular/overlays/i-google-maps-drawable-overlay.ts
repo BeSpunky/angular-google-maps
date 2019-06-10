@@ -3,8 +3,8 @@ import { IGoogleMap } from '../../../../google-map/i-google-map';
 
 export interface IGoogleMapsDrawableOverlay extends IGoogleMapsNativeObjectWrapper
 {
-    readonly containingMap: IGoogleMap;
+    getContainingMap(): IGoogleMap;
+    setContainingMap(map: IGoogleMap): void;
 
-    addToMap(map: IGoogleMap): void;
     removeFromMap(): void;
 }
