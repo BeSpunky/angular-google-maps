@@ -3,14 +3,12 @@ import { TestBed } from '@angular/core/testing';
 import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
-import { GoogleMapsConfig } from '../config/google-maps-config';
-import { GoogleMapsModule } from '../../google-maps.module';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsLifecycleBase } from '../abstraction/angular/google-maps-lifecycle-base';
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/angular/i-google-maps-native-object-wrapper';
 import { GoogleMapsEventData } from '../abstraction/angular/events/google-maps-event-data';
-import { NoOpGoogleMapsApiLoader } from '../loaders/no-op-google-maps-api-loader';
+import { createDefaultTestModuleConfig } from '../../testing/utils';
 
 const EventsMapStub = [
     { name: 'Event1', reference: 'native_event1' },
@@ -35,7 +33,7 @@ class MockComponent extends GoogleMapsLifecycleBase implements OnInit
 
         return {
             listenTo: (eventName: string, handler: () => void) => this.listeners.push(handler),
-            stopListeningTo: (eventName) => this.listeners = [],
+            stopListeningTo: () => this.listeners = [],
             setFakeProperty(value: any) { native.fakeProperty = value; },
             native,
             custom: null,
@@ -45,7 +43,6 @@ class MockComponent extends GoogleMapsLifecycleBase implements OnInit
 
 describe('GoogleMapsInternalApiService', () =>
 {
-    let config: GoogleMapsConfig;
     let service: GoogleMapsInternalApiService;
     let tokenNextSpy: jasmine.Spy;
     let zone: NgZone;
@@ -58,16 +55,10 @@ describe('GoogleMapsInternalApiService', () =>
 
         tokenNextSpy = spyOn(waitToken, 'next').and.callThrough();
 
-        config = { apiUrl: { key: 'dummykey' } };
+        const moduleConfig = createDefaultTestModuleConfig();
+        moduleConfig.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken });
 
-        TestBed.configureTestingModule({
-            imports: [GoogleMapsModule.forRoot(config)],
-            providers: [
-                // Replace the script loader service so google api script will not be downloaded
-                { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader },
-                { provide: GoogleMapsApiReadyPromise, useValue: waitToken }
-            ]
-        });
+        TestBed.configureTestingModule(moduleConfig);
 
         service = TestBed.get(GoogleMapsInternalApiService);
         zone = TestBed.get(NgZone);

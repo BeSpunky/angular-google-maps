@@ -4,9 +4,7 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
 import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-import { GoogleMapsModule } from '../../../google-maps.module';
-import { NoOpGoogleMapsApiLoader } from '../../loaders/no-op-google-maps-api-loader';
-import { GoogleMapsApiLoader } from '../../loaders/google-maps-api-loader';
+import { createDefaultTestModuleConfig } from '../../../testing/utils';
 
 const EventsMapStub = [{ name: 'Event1', reference: 'event1' }];
 
@@ -36,13 +34,7 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
 
     beforeEach(() =>
     {
-        TestBed.configureTestingModule({
-            imports: [GoogleMapsModule.forRoot({ apiUrl: 'dummyapiurl' })],
-            providers: [
-                // Replace the script loader service so google api script will not be downloaded
-                { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader }
-            ]
-        });
+        TestBed.configureTestingModule(createDefaultTestModuleConfig());
 
         api = TestBed.get(GoogleMapsInternalApiService);
         mockComponent = new MockComponent(api);

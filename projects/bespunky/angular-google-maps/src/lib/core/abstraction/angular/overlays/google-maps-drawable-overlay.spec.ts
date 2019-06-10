@@ -5,10 +5,7 @@ import { IGoogleMapsNativeDrawableOverlay } from '../../native/overlays/i-google
 import { IGoogleMap } from '../../../../google-map/i-google-map';
 import { IGoogleMapsMarker } from '../../../../google-map/overlays/marker/i-google-maps-marker';
 import { GoogleMapsApiService } from '../../../api/google-maps-api.service';
-import { GoogleMapsConfig } from '../../../config/google-maps-config';
-import { GoogleMapsModule } from '../../../../google-maps.module';
-import { GoogleMapsApiLoader } from '../../../loaders/google-maps-api-loader';
-import { NoOpGoogleMapsApiLoader } from '../../../loaders/no-op-google-maps-api-loader';
+import { createDefaultTestModuleConfig } from '../../../../testing/utils';
 
 const NativeMapMock = {
     zoom: 4
@@ -52,7 +49,6 @@ class DrawableOverlayMock extends GoogleMapsDrawableOverlay
 
 describe('GoogleMapsDrawableOverlay (abstract)', () =>
 {
-    let config: GoogleMapsConfig;
     let api: GoogleMapsApiService;
     let runOutsideAngularSpy: jasmine.Spy;
     let nativeOverlayMock: NativeDrawableOverlayMock;
@@ -61,15 +57,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
 
     beforeEach(() =>
     {
-        config = { apiUrl: { key: 'dummykey' } };
-
-        TestBed.configureTestingModule({
-            imports: [GoogleMapsModule.forRoot(config)],
-            providers: [
-                // Replace the script loader service so google api script will not be downloaded
-                { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader },
-            ]
-        });
+        TestBed.configureTestingModule(createDefaultTestModuleConfig());
 
         api = TestBed.get(GoogleMapsApiService);
 

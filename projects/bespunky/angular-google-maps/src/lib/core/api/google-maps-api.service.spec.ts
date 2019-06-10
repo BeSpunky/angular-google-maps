@@ -3,15 +3,11 @@ import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { GoogleMapsApiService } from './google-maps-api.service';
-import { GoogleMapsModule } from '../../google-maps.module';
-import { GoogleMapsConfig } from '../config/google-maps-config';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
-import { NoOpGoogleMapsApiLoader } from '../loaders/no-op-google-maps-api-loader';
+import { createDefaultTestModuleConfig } from '../../testing/utils';
 
 describe('GoogleMapsApiService', () =>
 {
-    let config: GoogleMapsConfig;
     let service: GoogleMapsApiService;
     let waitForApiPromiseCreation: BehaviorSubject<Promise<void>>;
     let tokenSubscribeSpy: jasmine.Spy;
@@ -22,16 +18,10 @@ describe('GoogleMapsApiService', () =>
 
         tokenSubscribeSpy = spyOn(waitToken, 'subscribe').and.callThrough();
 
-        config = { apiUrl: { key: 'dummykey' } };
+        const moduleConfig = createDefaultTestModuleConfig();
+        moduleConfig.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken });
 
-        TestBed.configureTestingModule({
-            imports: [GoogleMapsModule.forRoot(config)],
-            providers: [
-                // Replace the script loader service so google api script will not be downloaded
-                { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader },
-                { provide: GoogleMapsApiReadyPromise, useValue: waitToken }
-            ]
-        });
+        TestBed.configureTestingModule(moduleConfig);
 
         waitForApiPromiseCreation = TestBed.get(GoogleMapsApiReadyPromise);
 
