@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { createDefaultTestModuleConfig } from '../testing/utils';
+import { createDefaultTestModuleConfig, expectPositionEquals } from '../testing/utils';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMap } from './google-map';
 import { Defaults } from '../core/config/defaults';
@@ -57,8 +57,7 @@ describe('GoogleMap', () =>
             const customMap = new GoogleMap(mapElement, api, customCenter, customZoom);
             const nativeMap = await customMap.native;
 
-            expect(nativeMap.getCenter().lat()).toBeCloseTo(customCenter.lat, 6);
-            expect(nativeMap.getCenter().lng()).toBeCloseTo(customCenter.lng, 6);
+            expectPositionEquals(await nativeMap.getCenter(), customCenter);
             expect(nativeMap.getZoom()).toBe(customZoom);
         });
 
@@ -83,10 +82,7 @@ describe('GoogleMap', () =>
 
             expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
 
-            const newCenter = await map.getCenter();
-
-            expect(newCenter.lat()).toBeCloseTo(center.lat, 6);
-            expect(newCenter.lng()).toBeCloseTo(center.lng, 6);
+            expectPositionEquals(await map.getCenter(), center);
         });
 
         it('should wait for api and set the map\'s zoom outside of angular', async () =>
