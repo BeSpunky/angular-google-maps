@@ -35,9 +35,11 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleM
         return this.whenReady.then(() => this.map);
     }
 
-    public getCenter(): Promise<google.maps.LatLng>
+    public async getCenter(): Promise<google.maps.LatLng>
     {
-        return this.whenReady.then(this.map.getCenter);
+        await this.whenReady;
+
+        return this.map.getCenter();
     }
 
     public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
@@ -45,9 +47,11 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleM
         this.api.runOutsideAngular(() => this.map.setCenter(lngLat));
     }
 
-    public getZoom(): Promise<number>
+    public async getZoom(): Promise<number>
     {
-        return this.whenReady.then(this.map.getZoom);
+        await this.whenReady;
+
+        return this.map.getZoom();
     }
 
     public setZoom(zoomLevel: ZoomLevel | number)
