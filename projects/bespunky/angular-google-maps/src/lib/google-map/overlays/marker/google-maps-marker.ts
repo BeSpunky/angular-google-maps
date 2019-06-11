@@ -25,9 +25,11 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay implements IGoog
         return this.whenReady.then(() => this.marker);
     }
 
-    public getPosition(): Promise<google.maps.LatLng>
+    public async getPosition(): Promise<google.maps.LatLng>
     {
-        return this.whenReady.then(() => this.marker.getPosition());
+        await this.whenReady;
+
+        return this.marker.getPosition();
     }
 
     public setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral)
