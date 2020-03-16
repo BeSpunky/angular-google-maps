@@ -8,9 +8,7 @@ describe('NoOpGoogleMapsApiLoader', () =>
 
     beforeEach(() =>
     {
-        windowRef = {
-            nativeWindow: {}
-        };
+        windowRef = new WindowRef({});
 
         loader = new NoOpGoogleMapsApiLoader(windowRef);
     });

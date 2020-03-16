@@ -1,12 +1,12 @@
 import { of } from 'rxjs';
-import { LazyScriptLoaderService } from '@bespunky/angular-zen';
+import { LazyLoaderService } from '@bespunky/angular-zen';
 import { LazyGoogleMapsApiLoader } from './lazy-google-maps-api-loader';
 import { GoogleMapsConfig, GoogleMapsLibrary, DefaultApiLocation, HttpProtocol, GoogleApiUrl } from '../config/google-maps-config';
 
 describe('LazyGoogleMapsApiLoader', () =>
 {
     let config: GoogleMapsConfig;
-    let scriptLoaderSpy: jasmine.SpyObj<LazyScriptLoaderService>;
+    let scriptLoaderSpy: jasmine.SpyObj<LazyLoaderService>;
     let lazyApiLoader: LazyGoogleMapsApiLoader;
     let buildApiUrlSpy: jasmine.Spy;
 
