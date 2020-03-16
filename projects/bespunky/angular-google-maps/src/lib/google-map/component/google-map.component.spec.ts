@@ -13,7 +13,7 @@ import { GoogleMapsEventData } from '../../core/abstraction/angular/events/googl
 })
 class TestHostComponent
 {
-    @ViewChild(GoogleMapComponent, { static: false })
+    @ViewChild(GoogleMapComponent)
     public mapComponent: GoogleMapComponent;
 
     public map: GoogleMap;

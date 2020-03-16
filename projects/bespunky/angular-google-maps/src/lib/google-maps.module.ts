@@ -26,7 +26,7 @@ export class GoogleMapsModule
                        .catch(this.onApiLoadError);
     }
 
-    static forRoot(config: GoogleMapsConfig): ModuleWithProviders
+    static forRoot(config: GoogleMapsConfig): ModuleWithProviders<GoogleMapsModule>
     {
         return {
             ngModule: GoogleMapsModule,
