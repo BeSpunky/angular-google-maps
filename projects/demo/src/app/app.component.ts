@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GoogleMapsApiService, GoogleMapMarker } from '@bespunky/angular-google-maps';
+import { GoogleMapsApiService, GoogleMapsMarker } from '@bespunky/angular-google-maps';
 
 @Component({
     selector: 'app-root',
@@ -20,7 +20,7 @@ export class AppComponent
         alert('clicked');
     }
 
-    public onMarkerClick(marker: GoogleMapMarker)
+    public onMarkerClick(marker: GoogleMapsMarker)
     {
         alert('marker clicked');
         console.log(marker);
