@@ -3,7 +3,7 @@ import { ElementRef } from '@angular/core';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
-import { GoogleMapsMarker } from './overlays/marker/google-maps-marker';
+import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
 import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/google-maps-native-object-wrapper';
 import { IGoogleMap } from './i-google-map';
 

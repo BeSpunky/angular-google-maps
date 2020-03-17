@@ -22,7 +22,7 @@ export * from './lib/google-map/types/zoom-level.enum';
 export * from './lib/google-map/types/map-event.enum';
 
 // Markers
-export * from './lib/google-map/overlays/marker/directive/google-maps-marker.directive';
-export * from './lib/google-map/overlays/marker/google-maps-marker';
-export * from './lib/google-map/overlays/marker/types/marker-event.enum';
+export * from './lib/overlays/marker/directive/google-maps-marker.directive';
+export * from './lib/overlays/marker/google-maps-marker';
+export * from './lib/overlays/marker/types/marker-event.enum';
 

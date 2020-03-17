@@ -1,6 +1,6 @@
-import { IGoogleMap } from '../../i-google-map';
-import { GoogleMapsDrawableOverlay } from '../../../core/abstraction/angular/overlays/google-maps-drawable-overlay';
-import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
+import { IGoogleMap } from '../../google-map/i-google-map';
+import { GoogleMapsDrawableOverlay } from '../../core/abstraction/angular/overlays/google-maps-drawable-overlay';
+import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { IGoogleMapsMarker } from './i-google-maps-marker';
 
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay implements IGoogleMapsMarker

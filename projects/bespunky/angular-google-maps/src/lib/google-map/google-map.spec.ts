@@ -6,7 +6,7 @@ import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMap } from './google-map';
 import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
-import { GoogleMapsMarker } from './overlays/marker/google-maps-marker';
+import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
 
 const elementStub: any = document.createElement('div');
 

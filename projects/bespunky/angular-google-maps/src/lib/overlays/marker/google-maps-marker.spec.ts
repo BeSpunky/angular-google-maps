@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
-import { createDefaultTestModuleConfig, expectPositionEquals } from '../../../testing/utils';
+import { createDefaultTestModuleConfig, expectPositionEquals } from '../../testing/utils';
 import { GoogleMapsMarker } from './google-maps-marker';
-import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
-import { GoogleMap } from '../../google-map';
+import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
+import { GoogleMap } from '../../google-map/google-map';
 import { ElementRef } from '@angular/core';
 
 const elementStub = document.createElement('div');

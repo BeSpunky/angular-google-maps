@@ -3,7 +3,7 @@ import { tick, fakeAsync, TestBed } from '@angular/core/testing';
 import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
 import { IGoogleMapsNativeDrawableOverlay } from '../../native/overlays/i-google-maps-native-drawable-overlay';
 import { IGoogleMap } from '../../../../google-map/i-google-map';
-import { IGoogleMapsMarker } from '../../../../google-map/overlays/marker/i-google-maps-marker';
+import { IGoogleMapsMarker } from '../../../../overlays/marker/i-google-maps-marker';
 import { GoogleMapsApiService } from '../../../api/google-maps-api.service';
 import { createDefaultTestModuleConfig } from '../../../../testing/utils';
 

@@ -1,6 +1,6 @@
 import { IGoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/i-google-maps-native-object-wrapper';
 import { ZoomLevel } from './types/zoom-level.enum';
-import { IGoogleMapsMarker } from './overlays/marker/i-google-maps-marker';
+import { IGoogleMapsMarker } from '../overlays/marker/i-google-maps-marker';
 
 export interface IGoogleMap extends IGoogleMapsNativeObjectWrapper
 {

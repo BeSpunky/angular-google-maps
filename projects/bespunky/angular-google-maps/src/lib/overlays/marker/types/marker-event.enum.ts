@@ -1,4 +1,4 @@
-import { GoogleMapsEventsMap } from '../../../../core/types/google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../../../core/types/google-maps-events-map.type';
 
 export enum MarkerEvent
 {

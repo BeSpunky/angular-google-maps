@@ -1,11 +1,11 @@
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 
-import { GoogleMapComponent } from '../../../component/google-map.component';
+import { GoogleMapComponent } from '../../../google-map/component/google-map.component';
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { MarkerEventsMap } from '../types/marker-event.enum';
-import { GoogleMapsInternalApiService } from '../../../../core/api/google-maps-internal-api.service';
-import { GoogleMapsLifecycleBase } from '../../../../core/abstraction/angular/google-maps-lifecycle-base';
-import { IGoogleMap } from '../../../i-google-map';
+import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
+import { GoogleMapsLifecycleBase } from '../../../core/abstraction/angular/google-maps-lifecycle-base';
+import { IGoogleMap } from '../../../google-map/i-google-map';
 import { GoogleMapsMarker } from '../google-maps-marker';
 
 @Directive({

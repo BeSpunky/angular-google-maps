@@ -6,7 +6,7 @@ import { GoogleMapsApiLoader } from './core/loaders/google-maps-api-loader';
 import { GoogleMapsApiService } from './core/api/google-maps-api.service';
 import { GoogleMapsConfig } from './core/config/google-maps-config';
 import { GoogleMapComponent } from './google-map/component/google-map.component';
-import { GoogleMapsMarkerDirective } from './google-map/overlays/marker/directive/google-maps-marker.directive';
+import { GoogleMapsMarkerDirective } from './overlays/marker/directive/google-maps-marker.directive';
 import { GoogleMapsInternalApiService } from './core/api/google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromiseProvider } from './core/api/google-maps-api-ready.token';
 

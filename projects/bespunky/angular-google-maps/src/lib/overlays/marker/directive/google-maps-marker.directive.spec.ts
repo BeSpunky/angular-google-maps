@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Component, ViewChild } from '@angular/core';
 
-import { createDefaultTestModuleConfig } from '../../../../testing/utils';
+import { createDefaultTestModuleConfig } from '../../../testing/utils';
 import { GoogleMapsMarkerDirective } from './google-maps-marker.directive';
-import { GoogleMapComponent } from '../../../component/google-map.component';
-import { GoogleMapsApiService } from '../../../../core/api/google-maps-api.service';
-import { GoogleMapsInternalApiService } from '../../../../core/api/google-maps-internal-api.service';
-import { GoogleMap } from '../../../google-map';
-import { GoogleMapsEventData } from '../../../../core/abstraction/angular/events/google-maps-event-data';
+import { GoogleMapComponent } from '../../../google-map/component/google-map.component';
+import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
+import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
+import { GoogleMap } from '../../../google-map/google-map';
+import { GoogleMapsEventData } from '../../../core/abstraction/angular/events/google-maps-event-data';
 import { GoogleMapsMarker } from '../google-maps-marker';
 import { MarkerEvent } from '../types/marker-event.enum';
 
