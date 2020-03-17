@@ -1,4 +1,4 @@
-import { IGoogleMapsNativeObjectWrapper } from '../core/abstraction/angular/i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectWrapper } from '../core/abstraction/base/i-google-maps-native-object-wrapper';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { IGoogleMapsMarker } from '../overlays/marker/i-google-maps-marker';
 

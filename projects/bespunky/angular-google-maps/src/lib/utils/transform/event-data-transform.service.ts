@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IGoogleMapsMouseEvent } from '../../core/abstraction/angular/events/i-google-maps-mouse-event';
+import { IGoogleMapsMouseEvent } from '../../core/abstraction/events/i-google-maps-mouse-event';
 import { isGoogleMapsMouseEvent } from '../../core/abstraction/type-guards/mouse-event-type-guard';
 
 @Injectable({

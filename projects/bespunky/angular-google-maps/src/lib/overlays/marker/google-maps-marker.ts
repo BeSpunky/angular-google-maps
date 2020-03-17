@@ -1,5 +1,5 @@
 import { IGoogleMap } from '../../google-map/i-google-map';
-import { GoogleMapsDrawableOverlay } from '../../core/abstraction/angular/overlays/google-maps-drawable-overlay';
+import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-maps-drawable-overlay';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { IGoogleMapsMarker } from './i-google-maps-marker';
 

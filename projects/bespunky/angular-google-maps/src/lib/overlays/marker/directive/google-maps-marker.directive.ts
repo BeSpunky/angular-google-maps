@@ -4,7 +4,7 @@ import { GoogleMapComponent } from '../../../google-map/component/google-map.com
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { MarkerEventsMap } from '../types/marker-event.enum';
 import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
-import { GoogleMapsLifecycleBase } from '../../../core/abstraction/angular/google-maps-lifecycle-base';
+import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { GoogleMapsMarker } from '../google-maps-marker';
 

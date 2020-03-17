@@ -5,9 +5,9 @@ import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange } from '@angu
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
-import { GoogleMapsLifecycleBase } from '../abstraction/angular/google-maps-lifecycle-base';
-import { IGoogleMapsNativeObjectWrapper } from '../abstraction/angular/i-google-maps-native-object-wrapper';
-import { GoogleMapsEventData } from '../abstraction/angular/events/google-maps-event-data';
+import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
+import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
+import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { createDefaultTestModuleConfig } from '../../testing/utils';
 
 const EventsMapStub = [

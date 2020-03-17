@@ -1,5 +1,5 @@
-import { IGoogleMapsNativeObjectWrapper } from '../i-google-maps-native-object-wrapper';
-import { IGoogleMap } from '../../../../google-map/i-google-map';
+import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
+import { IGoogleMap } from '../../../google-map/i-google-map';
 
 export interface IGoogleMapsDrawableOverlay extends IGoogleMapsNativeObjectWrapper
 {

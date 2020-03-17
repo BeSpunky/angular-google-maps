@@ -1,4 +1,4 @@
-import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/angular/overlays/i-google-maps-drawable-overlay';
+import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
 
 export interface IGoogleMapsMarker extends IGoogleMapsDrawableOverlay
 {

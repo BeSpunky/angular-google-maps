@@ -5,8 +5,8 @@ import { ZoomLevel } from '../types/zoom-level.enum';
 import { GoogleMap } from '../google-map';
 import { MapEventsMap } from '../types/map-event.enum';
 import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
-import { IGoogleMapsNativeObjectWrapper } from '../../core/abstraction/angular/i-google-maps-native-object-wrapper';
-import { GoogleMapsLifecycleBase } from '../../core/abstraction/angular/google-maps-lifecycle-base';
+import { IGoogleMapsNativeObjectWrapper } from '../../core/abstraction/base/i-google-maps-native-object-wrapper';
+import { GoogleMapsLifecycleBase } from '../../core/abstraction/base/google-maps-lifecycle-base';
 
 @Component({
     selector: 'bs-google-map',

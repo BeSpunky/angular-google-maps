@@ -7,10 +7,10 @@ import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
-import { IGoogleMapsNativeObjectWrapper } from '../abstraction/angular/i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { GoogleMapsEventData } from '../abstraction/angular/events/google-maps-event-data';
-import { GoogleMapsLifecycleBase } from '../abstraction/angular/google-maps-lifecycle-base';
+import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
+import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
 import { EventDataTransformService } from '../../utils/transform/event-data-transform.service';
 
 

@@ -1,8 +1,8 @@
 import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
-import { IGoogleMapsNativeDrawableOverlay } from '../../native/overlays/i-google-maps-native-drawable-overlay';
-import { IGoogleMap } from '../../../../google-map/i-google-map';
-import { GoogleMapsNativeObjectWrapper } from '../google-maps-native-object-wrapper';
-import { GoogleMapsApiService } from '../../../api/google-maps-api.service';
+import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
+import { IGoogleMap } from '../../../google-map/i-google-map';
+import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 
 export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWrapper implements IGoogleMapsDrawableOverlay
 {

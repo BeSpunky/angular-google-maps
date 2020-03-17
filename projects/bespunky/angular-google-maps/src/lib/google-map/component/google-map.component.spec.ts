@@ -6,7 +6,7 @@ import { GoogleMapComponent } from './google-map.component';
 import { createDefaultTestModuleConfig } from '../../testing/utils';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
-import { GoogleMapsEventData } from '../../core/abstraction/angular/events/google-maps-event-data';
+import { GoogleMapsEventData } from '../../core/abstraction/events/google-maps-event-data';
 import { GoogleMap } from '../google-map';
 import { MapEvent } from '../types/map-event.enum';
 

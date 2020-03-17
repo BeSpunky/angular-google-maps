@@ -1,5 +1,5 @@
 import { IGoogleMapsEventData } from './i-google-maps-event-data';
-import { GoogleMapsNativeObjectWrapper } from '../google-maps-native-object-wrapper';
+import { GoogleMapsNativeObjectWrapper } from '../base/google-maps-native-object-wrapper';
 
 export class GoogleMapsEventData implements IGoogleMapsEventData
 {
