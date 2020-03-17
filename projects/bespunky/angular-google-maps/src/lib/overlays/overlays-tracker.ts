@@ -4,7 +4,7 @@ import { GoogleMapsMarker } from './marker/google-maps-marker';
 
 export class OverlaysTracker
 {
-    public markers: IGoogleMapsMarker[];
+    public markers: IGoogleMapsMarker[] = [];
     // TODO: Add here any new featured overlays (e.g. polygons, polylines, etc.)
 
     public add(overlay: IGoogleMapsDrawableOverlay)
