@@ -15,7 +15,7 @@ import { GoogleMapsMarker } from '../google-maps-marker';
 export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
 {
     @Input() public marker?: IGoogleMapsMarker;
-    @Input() public position?: google.maps.LatLngBoundsLiteral;
+    @Input() public position?: google.maps.LatLng | google.maps.LatLngLiteral;
 
   /** Fired when the marker's animation property changes. */
     @Output() public animationChanged                               = new EventEmitter();
