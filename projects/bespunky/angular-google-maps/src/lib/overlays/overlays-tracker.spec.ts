@@ -6,7 +6,6 @@ import { createDefaultTestModuleConfig } from '../testing/utils';
 import { TestBed } from '@angular/core/testing';
 import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
 
-
 describe('OverlayTracker', () =>
 {
     let overlays = new OverlaysTracker();
@@ -47,7 +46,8 @@ describe('OverlayTracker', () =>
 
     it('should throw an error if the overlay type is not supported', () =>
     {
-        const dummyOverlay = {};
+        // Define a type that doesn't exist
+        const dummyOverlay = { getType: () => -1000 };
 
         expect(() => overlays.add(dummyOverlay as IGoogleMapsDrawableOverlay)).toThrowError(/supported/);
     });
