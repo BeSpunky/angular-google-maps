@@ -6,11 +6,15 @@ import { ZoomLevel } from './types/zoom-level.enum';
 import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
 import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/base/google-maps-native-object-wrapper';
 import { IGoogleMap } from './i-google-map';
+import { OverlaysTracker } from '../overlays/overlays-tracker';
+import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
 
 export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleMap
 {
     private whenReady: Promise<void>;
     private map: google.maps.Map;
+    
+    public overlays = new OverlaysTracker();
 
     constructor(private mapElement: ElementRef,
                 private api: GoogleMapsApiService,
@@ -62,6 +66,26 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleM
     public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
     {
         // Marker creation will cause rendering. Run outside...
-        return this.api.runOutsideAngular(() => new GoogleMapsMarker(this, this.api, options));
+        return this.createOverlay(() => new GoogleMapsMarker(this, this.api, options));
+    }
+
+    // TODO: Add here create methods for any new featured overlay type (e.g. polygons, polylines, etc.)
+
+    private async createOverlay<TOverlay extends IGoogleMapsDrawableOverlay>(createObject: () => TOverlay): Promise<TOverlay>
+    {
+        // Overlay creation will cause rendering. Run outside...
+        const overlay = await this.api.runOutsideAngular(createObject);
+
+        this.overlays.add(overlay);
+
+        return overlay;
+    }
+
+    private async removeOverlay(overlay: IGoogleMapsDrawableOverlay)
+    {
+        // Overlay removal will cause rendering. Run outside...
+        await this.api.runOutsideAngular(() => overlay.removeFromMap());
+
+        this.overlays.remove(overlay);
     }
 }

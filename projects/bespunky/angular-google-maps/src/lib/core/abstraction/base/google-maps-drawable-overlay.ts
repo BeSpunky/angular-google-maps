@@ -20,6 +20,13 @@ export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWr
         return this.map;
     }
 
+    /**
+     * Assigns the overlay to the specified map. If possible, prefer using the appropriate `GoogleMap.createXXX()` method instead.
+     * If not possible, it is the responsability of the caller to add the overlay to the `OverlayTracker` in the `GoogleMap.overlays` object.
+     * Otherwise, inconsistencies and unexpected behaviours might occur.
+     *
+     * @param {IGoogleMap} map The map to dispaly the overlay on.
+     */
     public async setContainingMap(map: IGoogleMap)
     {
         this.map = map;
@@ -34,6 +41,11 @@ export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWr
         });
     }
 
+    /**
+     * Removes the overlay from the specified map. If possible, prefer using the `GoogleMap.removeOverlay()` method instead.
+     * If not possible, it is the responsability of the caller to remove the overlay from the `OverlayTracker` in the `GoogleMap.overlays` object.
+     * Otherwise, inconsistencies and unexpected behaviours might occur.
+     */
     public async removeFromMap()
     {
         this.map = null;

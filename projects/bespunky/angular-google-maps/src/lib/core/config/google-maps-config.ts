@@ -51,5 +51,6 @@ export class GoogleMapsConfig
 {
     public apiUrl: string | GoogleApiUrl;
 
+    // NOT IMPLEMENTED YET
     public recycleMapObject?: boolean;
 }
