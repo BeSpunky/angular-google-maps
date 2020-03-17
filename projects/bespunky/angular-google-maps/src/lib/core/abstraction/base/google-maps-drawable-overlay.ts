@@ -3,16 +3,26 @@ import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
+import { OverlayType } from './overlay-type.enum';
 
 export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWrapper implements IGoogleMapsDrawableOverlay
 {
-    abstract readonly native: Promise<IGoogleMapsNativeDrawableOverlay>;
+    public abstract readonly native: Promise<IGoogleMapsNativeDrawableOverlay>;
 
-    constructor(protected map: IGoogleMap, protected api: GoogleMapsApiService)
+    private readonly type: OverlayType;
+
+    constructor(type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService)
     {
         super();
 
+        this.type = type;
+
         if (map) this.setContainingMap(map);
+    }
+
+    public getType(): OverlayType
+    {
+        return this.type;
     }
 
     public getContainingMap(): IGoogleMap

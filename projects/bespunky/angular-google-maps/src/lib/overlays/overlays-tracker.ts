@@ -1,11 +1,15 @@
 import { IGoogleMapsMarker } from './marker/i-google-maps-marker';
 import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
-import { GoogleMapsMarker } from './marker/google-maps-marker';
+import { OverlayType } from '../core/abstraction/base/overlay-type.enum';
 
 export class OverlaysTracker
 {
     public markers: IGoogleMapsMarker[] = [];
-    // TODO: Add here any new featured overlays (e.g. polygons, polylines, etc.)
+
+    private map = {
+        [OverlayType.Marker]: this.markers
+        // TODO: Add here any new supported overlay type collection
+    };
 
     public add(overlay: IGoogleMapsDrawableOverlay)
     {
@@ -23,9 +27,9 @@ export class OverlaysTracker
 
     private detectCollection(overlay: IGoogleMapsDrawableOverlay): IGoogleMapsDrawableOverlay[]
     {
-        if (overlay instanceof GoogleMapsMarker) return this.markers;
+        const collection = this.map[overlay.getType()];
 
-        // TODO: Add here any new featured overlays (e.g. polygons, polylines, etc.)
+        if (collection) return collection;
 
         throw new Error('Overlay type not supported by OverlayTracker.');
     }
