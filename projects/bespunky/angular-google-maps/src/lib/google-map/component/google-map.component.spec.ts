@@ -5,8 +5,10 @@ import { By } from '@angular/platform-browser';
 import { GoogleMapComponent } from './google-map.component';
 import { createDefaultTestModuleConfig } from '../../testing/utils';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { GoogleMap } from '../google-map';
+import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
 import { GoogleMapsEventData } from '../../core/abstraction/angular/events/google-maps-event-data';
+import { GoogleMap } from '../google-map';
+import { MapEvent } from '../types/map-event.enum';
 
 @Component({
     template: '<bs-google-map [map]="map" [center]="center" (click)="onClick($event)"></bs-google-map>'
@@ -31,6 +33,7 @@ describe('GoogleMapComponent', () =>
     let hostComponent: TestHostComponent;
     let component: GoogleMapComponent;
     let api: GoogleMapsApiService;
+    let internalApi: GoogleMapsInternalApiService;
 
     beforeEach(async(() =>
     {
@@ -38,7 +41,7 @@ describe('GoogleMapComponent', () =>
         moduleConfig.declarations = [TestHostComponent];
 
         TestBed.configureTestingModule(moduleConfig)
-            .compileComponents();
+               .compileComponents();
     }));
 
     beforeEach(() =>
@@ -50,6 +53,7 @@ describe('GoogleMapComponent', () =>
 
         component = hostFixture.componentInstance.mapComponent;
         api = TestBed.get(GoogleMapsApiService);
+        internalApi = TestBed.get(GoogleMapsInternalApiService);
     });
 
     it('should create an instance', () => expect(component).toBeTruthy());
@@ -96,6 +100,15 @@ describe('GoogleMapComponent', () =>
 
     it('should emit events when native objects raise events', async () =>
     {
+        // The click event is the one being tested as it is the only one bound in the TestHostComponent's template.
+        // To test more events, add handlers to the tempalte.
+        
+        const map = await component.nativeWrapper.native;
 
+        spyOn(component.click, 'emit');
+
+        new google.maps.event.trigger(map, MapEvent.Click);
+
+        expect(component.click.emit).toHaveBeenCalled();
     });
 });
