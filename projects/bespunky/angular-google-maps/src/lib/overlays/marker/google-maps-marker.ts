@@ -2,6 +2,7 @@ import { IGoogleMap } from '../../google-map/i-google-map';
 import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-maps-drawable-overlay';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { IGoogleMapsMarker } from './i-google-maps-marker';
+import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay implements IGoogleMapsMarker
 {
@@ -10,7 +11,7 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay implements IGoog
 
     constructor(public map: IGoogleMap, api: GoogleMapsApiService, options?: google.maps.ReadonlyMarkerOptions)
     {
-        super(map, api);
+        super(OverlayType.Marker, map, api);
 
         this.whenReady = this.api.whenReady;
 
