@@ -6,14 +6,11 @@ import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay implements IGoogleMapsMarker
 {
-    private whenReady: Promise<void>;
     private marker: google.maps.Marker;
 
     constructor(public map: IGoogleMap, api: GoogleMapsApiService, options?: google.maps.ReadonlyMarkerOptions)
     {
         super(OverlayType.Marker, map, api);
-
-        this.whenReady = this.api.whenReady;
 
         this.whenReady.then(() =>
         {

@@ -11,7 +11,6 @@ import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-ma
 
 export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleMap
 {
-    private whenReady: Promise<void>;
     private map: google.maps.Map;
     
     public overlays = new OverlaysTracker();
@@ -21,9 +20,7 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleM
                 initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
                 initialZoom?: ZoomLevel | number)
     {
-        super();
-
-        this.whenReady = this.api.whenReady;
+        super(api);
 
         this.api.runOutsideAngular(() =>
         {
