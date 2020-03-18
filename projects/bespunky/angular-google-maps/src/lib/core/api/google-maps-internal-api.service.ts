@@ -49,6 +49,9 @@ export class GoogleMapsInternalApiService
 
     public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap)
     {
+        const nativeWrapper = emittingComponent.nativeWrapper;
+        const transfrom = this.eventTransform;
+        
         for (const event of eventsMap)
         {
             const emitter: EventEmitter<any> = emittingComponent[_.camelCase(event.name)];
@@ -56,9 +59,6 @@ export class GoogleMapsInternalApiService
             // Avoid failures and optimize by skipping registration if no emitter object was
             // instantiated in the component or no event binding was done by the user (i.e. template)
             if (!emitter || emitter.observers.length === 0) continue;
-
-            const nativeWrapper = emittingComponent.nativeWrapper;
-            const transfrom = this.eventTransform;
 
             // Hook the emitter to the listener and emit everytime the event is fired.
             // tslint:disable-next-line:only-arrow-functions
