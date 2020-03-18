@@ -7,6 +7,7 @@ import { MapEventsMap } from '../types/map-event.enum';
 import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectWrapper } from '../../core/abstraction/base/i-google-maps-native-object-wrapper';
 import { GoogleMapsLifecycleBase } from '../../core/abstraction/base/google-maps-lifecycle-base';
+import { IGoogleMap } from '../i-google-map';
 
 @Component({
     selector: 'bs-google-map',
@@ -49,7 +50,7 @@ export class GoogleMapComponent extends GoogleMapsLifecycleBase
         super(MapEventsMap, api);
     }
 
-    protected initNativeWrapper(): IGoogleMapsNativeObjectWrapper
+    protected initNativeWrapper(): IGoogleMap
     {
         return this.map || new GoogleMap(this.element, this.api.openApi);
     }
