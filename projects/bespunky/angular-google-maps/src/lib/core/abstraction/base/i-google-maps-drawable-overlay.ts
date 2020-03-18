@@ -4,7 +4,8 @@ import { OverlayType } from './overlay-type.enum';
 
 export interface IGoogleMapsDrawableOverlay extends IGoogleMapsNativeObjectWrapper
 {
-    getType(): OverlayType;
+    /** Useful when reflection is complex or not possible. */
+    readonly type: OverlayType;
     
     getContainingMap(): IGoogleMap;
     setContainingMap(map: IGoogleMap): void;

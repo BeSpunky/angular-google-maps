@@ -47,7 +47,7 @@ describe('OverlayTracker', () =>
     it('should throw an error if the overlay type is not supported', () =>
     {
         // Define a type that doesn't exist
-        const dummyOverlay = { getType: () => -1000 };
+        const dummyOverlay = { type:  -1000 };
 
         expect(() => overlays.add(dummyOverlay as IGoogleMapsDrawableOverlay)).toThrowError(/supported/);
     });

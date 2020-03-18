@@ -9,20 +9,11 @@ export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWr
 {
     public abstract readonly native: Promise<IGoogleMapsNativeDrawableOverlay>;
 
-    private readonly type: OverlayType;
-
-    constructor(type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService)
+    constructor(public readonly type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService)
     {
         super();
 
-        this.type = type;
-
         if (map) this.setContainingMap(map);
-    }
-
-    public getType(): OverlayType
-    {
-        return this.type;
     }
 
     public getContainingMap(): IGoogleMap

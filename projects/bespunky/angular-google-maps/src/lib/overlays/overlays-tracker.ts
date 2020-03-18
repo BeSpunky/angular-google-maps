@@ -27,7 +27,7 @@ export class OverlaysTracker
 
     private detectCollection(overlay: IGoogleMapsDrawableOverlay): IGoogleMapsDrawableOverlay[]
     {
-        const collection = this.map[overlay.getType()];
+        const collection = this.map[overlay.type];
 
         if (collection) return collection;
 
