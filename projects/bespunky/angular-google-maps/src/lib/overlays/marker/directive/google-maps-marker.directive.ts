@@ -65,7 +65,7 @@ export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
         super(MarkerEventsMap, api);
     }
 
-    protected initNativeWrapper()
+    protected initNativeWrapper(): IGoogleMapsMarker
     {
         return this.marker || new GoogleMapsMarker(this.mapComponent.nativeWrapper as IGoogleMap, this.api.openApi);
     }
