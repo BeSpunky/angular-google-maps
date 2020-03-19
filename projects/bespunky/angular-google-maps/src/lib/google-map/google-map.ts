@@ -62,7 +62,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         return overlay;
     }
 
-    private async removeOverlay(overlay: IGoogleMapsDrawableOverlay)
+    public async removeOverlay(overlay: IGoogleMapsDrawableOverlay)
     {
         // Overlay removal will cause rendering. Run outside...
         await this.api.runOutsideAngular(() => overlay.removeFromMap());
