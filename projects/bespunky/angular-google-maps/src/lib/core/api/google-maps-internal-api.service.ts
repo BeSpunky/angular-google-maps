@@ -7,6 +7,7 @@ import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
+import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
@@ -54,13 +55,13 @@ export class GoogleMapsInternalApiService
      *
      * @param {GoogleMapsLifecycleBase} emittingComponent The component/directive emitting the events using Angular `EventEmitter`s.
      * @param {GoogleMapsEventsMap} eventsMap The map of native events supported by the native object to unregister from.
-     * @param {IGoogleMapsNativeObjectWrapper} [nativeWrapper=emittingComponent.nativeWrapper] (Optional) The wrapper of the native object that defines the events. Default is `emittingComponent.nativeWrapper`.
+     * @param {IGoogleMapsNativeObjectEmittingWrapper} [nativeWrapper=emittingComponent.nativeWrapper] (Optional) The wrapper of the native object that defines the events. Default is `emittingComponent.nativeWrapper`.
      * Pass a value to this argument only if the emitting component is not the one containing the native object.
      * Example: Data layer native object raises events that should be emitted by the individual feature directives.
      * 
      * @see `google-maps-feature.directive.ts` for more info.
      */
-    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectWrapper = emittingComponent.nativeWrapper)
+    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper)
     {
         const transfrom = this.eventTransform;
         
@@ -101,11 +102,11 @@ export class GoogleMapsInternalApiService
      * 
      * @see `google-maps-feature.directive.ts` for more info.
      *
-     * @param {GoogleMapsLifecycleBase} nativeWrapper The native wrapper for which event handlers were previously registered and hooked to another component.
+     * @param {IGoogleMapsNativeObjectEmittingWrapper} nativeWrapper The native wrapper for which event handlers were previously registered and hooked to another component.
      * @param {GoogleMapsEventsMap} eventMap The map of native events supported by the native object to unregister from.
      */
-    public unhookEmitters(nativeWrapper: IGoogleMapsNativeObjectWrapper, eventMap: GoogleMapsEventsMap): void;
-    public unhookEmitters(emittingComponentOrNativeWrapper: GoogleMapsLifecycleBase | IGoogleMapsNativeObjectWrapper, eventsMap: GoogleMapsEventsMap)
+    public unhookEmitters(nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper, eventMap: GoogleMapsEventsMap): void;
+    public unhookEmitters(emittingComponentOrNativeWrapper: GoogleMapsLifecycleBase | IGoogleMapsNativeObjectEmittingWrapper, eventsMap: GoogleMapsEventsMap)
     {
         const nativeWrapper = emittingComponentOrNativeWrapper instanceof GoogleMapsLifecycleBase ? emittingComponentOrNativeWrapper.nativeWrapper : emittingComponentOrNativeWrapper;
 

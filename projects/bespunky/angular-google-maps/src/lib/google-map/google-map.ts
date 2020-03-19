@@ -4,15 +4,13 @@ import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
-import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/base/google-maps-native-object-wrapper';
+import { GoogleMapsNativeObjectEmittingWrapper } from '../core/abstraction/base/google-maps-native-object-emitting-wrapper';
 import { IGoogleMap } from './i-google-map';
 import { OverlaysTracker } from '../overlays/overlays-tracker';
 import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
 
-export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleMap
+export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
-    private map: google.maps.Map;
-    
     public overlays = new OverlaysTracker();
 
     constructor(private mapElement: ElementRef,
@@ -20,44 +18,34 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleM
                 initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
                 initialZoom?: ZoomLevel | number)
     {
-        super(api);
-
-        this.api.runOutsideAngular(() =>
-        {
-            this.map = new google.maps.Map(this.mapElement.nativeElement, {
-                center: initialCenter || Defaults.Center,
-                zoom:   initialZoom   || Defaults.ZoomLevel
-            });
-        });
-    }
-
-    public get native(): Promise<google.maps.Map>
-    {
-        return this.whenReady.then(() => this.map);
+        super(api, () => new google.maps.Map(mapElement.nativeElement, {
+            center: initialCenter || Defaults.Center,
+            zoom:   initialZoom   || Defaults.ZoomLevel
+        }));
     }
 
     public async getCenter(): Promise<google.maps.LatLng>
     {
         await this.whenReady;
 
-        return this.map.getCenter();
+        return this.nativeObject.getCenter();
     }
 
     public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
     {
-        this.api.runOutsideAngular(() => this.map.setCenter(lngLat));
+        this.api.runOutsideAngular(() => this.nativeObject.setCenter(lngLat));
     }
 
     public async getZoom(): Promise<number>
     {
         await this.whenReady;
 
-        return this.map.getZoom();
+        return this.nativeObject.getZoom();
     }
 
     public setZoom(zoomLevel: ZoomLevel | number)
     {
-        this.api.runOutsideAngular(() => this.map.setZoom(zoomLevel));
+        this.api.runOutsideAngular(() => this.nativeObject.setZoom(zoomLevel));
     }
 
     public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
