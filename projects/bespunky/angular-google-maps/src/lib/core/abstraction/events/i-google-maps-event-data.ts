@@ -1,9 +1,9 @@
-import { GoogleMapsNativeObjectWrapper } from '../base/google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectWrapper } from '../base/i-google-maps-native-object-wrapper';
 
 export interface IGoogleMapsEventData
 {
     eventName: string;
-    emitter: GoogleMapsNativeObjectWrapper;
+    emitter: IGoogleMapsNativeObjectWrapper;
     args: any;
     nativeArgs: any;
 }
