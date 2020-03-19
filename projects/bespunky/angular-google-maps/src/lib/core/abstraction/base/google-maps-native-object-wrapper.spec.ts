@@ -1,30 +1,49 @@
-import { fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, tick, TestBed } from '@angular/core/testing';
 
 import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
-import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
+import { createDefaultTestModuleConfig } from '../../../testing/utils';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 
-const mockNative: IGoogleMapsNativeObject = {
-    addListener: (eventName: string, handler: () => void) => 'listenerAdded'
-};
-
-class MockWrapper extends GoogleMapsNativeObjectWrapper
-{
-    get native(): Promise<IGoogleMapsNativeObject>
-    {
-        return new Promise(resolve => resolve(mockNative));
-    }
-}
+class MockWrapper extends GoogleMapsNativeObjectWrapper<object> { }
 
 describe('GoogleMapsNativeObjectWrapper', () =>
 {
+    let api: GoogleMapsApiService;
+    let create: { dummyNative: () => object };
+    let runOutsideAngularSpy: jasmine.Spy;
+    let createObjectSpy: jasmine.Spy;
+    let mockNative: object;
     let mockWrapper: MockWrapper;
 
-    beforeEach(() => mockWrapper = new MockWrapper());
+    beforeEach(() =>
+    {
+        TestBed.configureTestingModule(createDefaultTestModuleConfig());
+
+        api = TestBed.inject(GoogleMapsApiService);
+        
+        mockNative = {};
+        create = { dummyNative: () => mockNative };
+
+        runOutsideAngularSpy = spyOn(api, 'runOutsideAngular').and.callFake(fn => fn());
+        createObjectSpy = spyOn(create, 'dummyNative');
+
+        mockWrapper = new MockWrapper(api, create.dummyNative);
+    });
 
     it('should create an instance when instantiated by a derived class', () =>
     {
         expect(mockWrapper).toBeTruthy();
     });
+
+    it('should instantiate the inner native object outside of Angular', fakeAsync(() =>
+    {
+        expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
+        expect(createObjectSpy).toHaveBeenCalledTimes(1);
+
+        tick();
+
+        expect((mockWrapper.native as any).nativeObject).toBe(mockNative);
+    }));
 
     it('should return a promise of a native object when calling the `native` getter', fakeAsync((done: DoneFn) =>
     {
@@ -34,28 +53,6 @@ describe('GoogleMapsNativeObjectWrapper', () =>
 
         tick();
 
-        nativePromise.then(native => expect(native.addListener instanceof Function).toBeTruthy());
-    }));
-
-    it('should wait for the native object then register a listener when calling `listenTo()`', fakeAsync(() =>
-    {
-        spyOn(mockNative, 'addListener').and.callThrough();
-
-        mockWrapper.listenTo('dummyEvent', () => true);
-
-        tick();
-
-        expect(mockNative.addListener).toHaveBeenCalledTimes(1);
-    }));
-
-    it('should wait for the native object then unregister all listeners when calling `stopListeningTo()', fakeAsync(() =>
-    {
-        spyOn(google.maps.event, 'clearListeners').and.callFake((native, eventName) => true);
-
-        mockWrapper.stopListeningTo('dummyEvent');
-
-        tick();
-
-        expect(google.maps.event.clearListeners).toHaveBeenCalledTimes(1);
+        nativePromise.then(native => expect(native).toBe(mockNative));
     }));
 });

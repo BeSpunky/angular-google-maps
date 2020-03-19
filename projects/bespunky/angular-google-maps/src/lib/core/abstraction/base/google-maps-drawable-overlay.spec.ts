@@ -8,6 +8,73 @@ import { IGoogleMapsMarker } from '../../../overlays/marker/i-google-maps-marker
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { OverlayType } from './overlay-type.enum';
 
+describe('GoogleMapsDrawableOverlay (abstract)', () =>
+{
+    let api: GoogleMapsApiService;
+    let runOutsideAngularSpy: jasmine.Spy;
+    let mockMap: MockGoogleMap;
+    let mockNativeOverlay: NativeDrawableOverlayMock;
+    let mockOverlay: DrawableOverlayMock;
+
+    beforeEach(() =>
+    {
+        TestBed.configureTestingModule(createDefaultTestModuleConfig());
+
+        api = TestBed.get(GoogleMapsApiService);
+
+        runOutsideAngularSpy = spyOn(api, 'runOutsideAngular').and.callFake(fn => fn());
+
+        mockMap           = new MockGoogleMap();
+        mockNativeOverlay = new NativeDrawableOverlayMock();
+        mockOverlay       = new DrawableOverlayMock(mockMap, api);
+    });
+
+    it('should be created', () => expect(mockOverlay).toBeTruthy());
+
+    function expectMap(nativeMap: any, mapWrapper: IGoogleMap, outsideAngularCalls?: number)
+    {
+        expect(mockNativeOverlay.nativeMap).toBe(nativeMap);
+        expect((mockOverlay as any).map).toBe(mapWrapper);
+
+        if (outsideAngularCalls)
+            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(outsideAngularCalls);
+    }
+
+    it('should wait for the map and add the overlay to the map passed-in at instantiation', async () =>
+    {
+        await mockMap.native;
+        await mockOverlay.native;
+
+        expectMap(NativeMapMock, mockMap);
+    });
+
+    it('should retrieve the map when calling `getContainingMap()`', () => expect(mockOverlay.getContainingMap()).toBe(mockMap));
+
+    it('should set a new containing map to the overlay outside of angular when calling `setContainingMap()`', fakeAsync(() =>
+    {
+        const secondMap = new MockGoogleMap(); // First one is `mockMap`
+
+        runOutsideAngularSpy.calls.reset();
+
+        mockOverlay.setContainingMap(secondMap);
+
+        tick();
+
+        expectMap(NativeMapMock, secondMap, 1);
+    }));
+
+    it('should detach the map from the overlay outside of angular when calling `removeFromMap()`', fakeAsync(() =>
+    {
+        runOutsideAngularSpy.calls.reset();
+
+        mockOverlay.removeFromMap();
+
+        tick();
+
+        expectMap(null, null, 1);
+    }));
+});
+
 const NativeMapMock = {
     zoom: 4
 };
@@ -35,82 +102,10 @@ class NativeDrawableOverlayMock implements IGoogleMapsNativeDrawableOverlay
     addListener(eventName: string, handler: () => void): void      { throw new Error('Method not implemented.'); }
 }
 
-class DrawableOverlayMock extends GoogleMapsDrawableOverlay
+class DrawableOverlayMock extends GoogleMapsDrawableOverlay<google.maps.Marker>
 {
-    constructor(map: IGoogleMap, protected api: GoogleMapsApiService, private promiseNative: Promise<IGoogleMapsNativeDrawableOverlay>)
+    constructor(map: IGoogleMap, protected api: GoogleMapsApiService)
     {
-        super(OverlayType.Marker, map, api);
-    }
-
-    get native(): Promise<IGoogleMapsNativeDrawableOverlay>
-    {
-        return this.promiseNative;
+        super(OverlayType.Marker, map, api, () => new google.maps.Marker());
     }
 }
-
-describe('GoogleMapsDrawableOverlay (abstract)', () =>
-{
-    let api: GoogleMapsApiService;
-    let runOutsideAngularSpy: jasmine.Spy;
-    let nativeOverlayMock: NativeDrawableOverlayMock;
-    let overlayWrapperMock: DrawableOverlayMock;
-    let mapWrapperMock: MockGoogleMap;
-
-    beforeEach(() =>
-    {
-        TestBed.configureTestingModule(createDefaultTestModuleConfig());
-
-        api = TestBed.get(GoogleMapsApiService);
-
-        runOutsideAngularSpy = spyOn(api, 'runOutsideAngular').and.callFake(fn => fn());
-
-        nativeOverlayMock = new NativeDrawableOverlayMock();
-        mapWrapperMock = new MockGoogleMap();
-        overlayWrapperMock = new DrawableOverlayMock(mapWrapperMock, api, Promise.resolve(nativeOverlayMock));
-    });
-
-    it('should be created', () => expect(overlayWrapperMock).toBeTruthy());
-
-    function expectMap(nativeMap: any, mapWrapper: IGoogleMap, outsideAngularCalls?: number)
-    {
-        expect(nativeOverlayMock.nativeMap).toBe(nativeMap);
-        expect((overlayWrapperMock as any).map).toBe(mapWrapper);
-
-        if (outsideAngularCalls)
-            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(outsideAngularCalls);
-    }
-
-    it('should wait for the map and add the overlay to the map passed-in at instantiation', async () =>
-    {
-        await mapWrapperMock.native;
-        await overlayWrapperMock.native;
-
-        expectMap(NativeMapMock, mapWrapperMock);
-    });
-
-    it('should retrieve the map when calling `getContainingMap()`', () => expect(overlayWrapperMock.getContainingMap()).toBe(mapWrapperMock));
-
-    it('should set a new containing map to the overlay outside of angular when calling `setContainingMap()`', fakeAsync(() =>
-    {
-        const secondMap = new MockGoogleMap(); // First one is `mapWrapperMock`
-
-        runOutsideAngularSpy.calls.reset();
-
-        overlayWrapperMock.setContainingMap(secondMap);
-
-        tick();
-
-        expectMap(NativeMapMock, secondMap, 1);
-    }));
-
-    it('should detach the map from the overlay outside of angular when calling `removeFromMap()`', fakeAsync(() =>
-    {
-        runOutsideAngularSpy.calls.reset();
-
-        overlayWrapperMock.removeFromMap();
-
-        tick();
-
-        expectMap(null, null, 1);
-    }));
-});

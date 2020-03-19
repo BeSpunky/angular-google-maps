@@ -2,29 +2,9 @@ import { SimpleChange, SimpleChanges } from '@angular/core';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
-import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { createDefaultTestModuleConfig } from '../../../testing/utils';
-
-const EventsMapStub = [{ name: 'Event1', reference: 'event1' }];
-
-class MockComponent extends GoogleMapsLifecycleBase
-{
-    constructor(protected api: GoogleMapsInternalApiService)
-    {
-        super(EventsMapStub, api);
-    }
-
-    protected initNativeWrapper(): IGoogleMapsNativeObjectWrapper
-    {
-        return {
-            listenTo: () => true,
-            stopListeningTo: () => true,
-            native: {},
-            custom: null
-        } as IGoogleMapsNativeObjectWrapper;
-    }
-}
+import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
@@ -67,7 +47,7 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
             mockComponent.ngOnInit();
         });
 
-        it('should set the native wrapper', () => expect(mockComponent.nativeWrapper).toBeDefined());
+        it('should initialize the native wrapper', () => expect(mockComponent.nativeWrapper).toBeDefined());
 
         it('should resolve the wait for init promise', () => expect(later.resolve).toHaveBeenCalledTimes(1));
 
@@ -113,3 +93,23 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
         }));
     });
 });
+
+const EventsMapStub = [{ name: 'Event1', reference: 'event1' }];
+
+class MockComponent extends GoogleMapsLifecycleBase
+{
+    constructor(protected api: GoogleMapsInternalApiService)
+    {
+        super(EventsMapStub, api);
+    }
+
+    protected initNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
+    {
+        return {
+            listenTo: () => true,
+            stopListeningTo: () => true,
+            native: {},
+            custom: null
+        };
+    }
+}
