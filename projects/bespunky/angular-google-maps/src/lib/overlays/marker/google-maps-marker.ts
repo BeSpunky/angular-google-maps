@@ -13,9 +13,7 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
 
     public async getPosition(): Promise<google.maps.LatLng>
     {
-        const marker = await this.native;
-        
-        return marker.getPosition();
+        return (await this.native).getPosition();
     }
 
     public setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral)

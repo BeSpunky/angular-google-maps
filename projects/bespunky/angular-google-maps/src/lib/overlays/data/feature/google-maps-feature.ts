@@ -12,16 +12,12 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectWrapper<google.maps
     
     public async getId(): Promise<string | number>
     {
-        const feature = await this.native;
-
-        return feature.getId();
+        return (await this.native).getId();
     }
     
     public async getGeometry(): Promise<google.maps.Data.Geometry>
     {
-        const feature = await this.native;
-
-        return feature.getGeometry();
+        return (await this.native).getGeometry();
     }
     
     public setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
@@ -31,9 +27,7 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectWrapper<google.maps
     
     public async getProperty(name: string): Promise<any>
     {
-        const feature = await this.native;
-
-        return feature.getProperty(name);
+        return (await this.native).getProperty(name);
     }
     
     public setProperty(name: string, value: any): Promise<any>
@@ -43,7 +37,7 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectWrapper<google.maps
     
     public async toGeoJson(): Promise<any>
     {
-        await this.whenReady;
+        await this.native;
 
         return new Promise(resolve => this.nativeObject.toGeoJson(resolve));
     }

@@ -14,7 +14,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     public overlays = new OverlaysTracker();
 
     constructor(private mapElement: ElementRef,
-                private api: GoogleMapsApiService,
+                protected api: GoogleMapsApiService,
                 initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
                 initialZoom?: ZoomLevel | number)
     {
@@ -26,9 +26,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
 
     public async getCenter(): Promise<google.maps.LatLng>
     {
-        await this.whenReady;
-
-        return this.nativeObject.getCenter();
+        return (await this.native).getCenter();
     }
 
     public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
@@ -38,9 +36,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
 
     public async getZoom(): Promise<number>
     {
-        await this.whenReady;
-
-        return this.nativeObject.getZoom();
+        return (await this.native).getZoom();
     }
 
     public setZoom(zoomLevel: ZoomLevel | number)

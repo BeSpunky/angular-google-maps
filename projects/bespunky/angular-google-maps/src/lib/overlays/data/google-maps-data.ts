@@ -30,9 +30,9 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         });
     }
     
-    public findFeature(id: string | number): Promise<google.maps.Data.Feature>
+    public async findFeature(id: string | number): Promise<google.maps.Data.Feature>
     {
-        return this.whenReady.then(() => this.nativeObject.getFeatureById(id));
+        return (await this.native).getFeatureById(id);
     }
     
     public async loadGeoJson(url: string, options?: google.maps.Data.GeoJsonOptions): Promise<google.maps.Data.Feature[]>
@@ -45,7 +45,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     
     public async toGeoJson(): Promise<any>
     {
-        await this.whenReady;
+        await this.native;
 
         return new Promise(resolve => this.nativeObject.toGeoJson(resolve));
     }
