@@ -9,21 +9,6 @@ import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-inte
 import { GoogleMap } from '../../../google-map/google-map';
 import { GoogleMapsMarker } from '../google-maps-marker';
 
-@Component({
-    template: `<bs-google-map [map]="map" [center]="center">
-                   <bs-google-maps-marker [position]="center"></bs-google-maps-marker>
-               </bs-google-map>`
-})
-class TestHostComponent
-{
-    @ViewChild(GoogleMapComponent)
-    public mapComponent: GoogleMapComponent;
-    @ViewChild(GoogleMapsMarkerDirective)
-    public markerDirective: GoogleMapsMarkerDirective;
-
-    public map: GoogleMap;
-}
-
 /**
  * -- NOTE --
  * Events hooking and property delegation are not tested in components deriving from `GoogleMapsLifecycleBase`.
@@ -83,3 +68,18 @@ describe('GoogleMapsMarkerDirective', () =>
         expect((directive as any).initNativeWrapper() instanceof GoogleMapsMarker).toBeTruthy();
     });
 });
+
+@Component({
+    template: `<bs-google-map [map]="map" [center]="center">
+                   <bs-google-maps-marker [position]="center"></bs-google-maps-marker>
+               </bs-google-map>`
+})
+class TestHostComponent
+{
+    @ViewChild(GoogleMapComponent)
+    public mapComponent: GoogleMapComponent;
+    @ViewChild(GoogleMapsMarkerDirective)
+    public markerDirective: GoogleMapsMarkerDirective;
+
+    public map: GoogleMap;
+}
