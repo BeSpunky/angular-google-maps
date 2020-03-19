@@ -14,7 +14,7 @@ import { GoogleMapsDataDirective } from './overlays/data/directive/google-maps-d
 @NgModule({
     declarations: [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective],
     imports:      [ZenModule],
-    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective]
+    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective]
 })
 export class GoogleMapsModule
 {
