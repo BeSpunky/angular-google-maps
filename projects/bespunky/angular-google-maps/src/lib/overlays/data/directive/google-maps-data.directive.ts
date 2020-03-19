@@ -13,7 +13,7 @@ import { DataEventsMap } from '../types/data-event.enum';
 })
 export class GoogleMapsDataDirective extends GoogleMapsLifecycleBase
 {
-    @Input() private dataLayer?: IGoogleMapsData;
+    @Input() public dataLayer?: IGoogleMapsData;
 
     /** This event is fired when a feature is added to the collection. */
     @Output() public addFeature                                 = new EventEmitter()
