@@ -3,12 +3,12 @@ import { promiseLater } from '@bespunky/angular-zen';
 
 import { GoogleMapsEventsMap } from '../../types/google-maps-events-map.type';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 
 export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
 {
     private waitForComponentInit: { promise: Promise<void>, resolve: () => void, reject: () => any };
-    public nativeWrapper: IGoogleMapsNativeObjectWrapper;
+    public nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper;
 
     constructor(protected eventsMap: GoogleMapsEventsMap, protected api: GoogleMapsInternalApiService)
     {
@@ -39,5 +39,5 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
         this.waitForComponentInit.promise.then(() => this.api.delegateInputChangesToNativeObject(changes, this.nativeWrapper));
     }
 
-    protected abstract initNativeWrapper(): IGoogleMapsNativeObjectWrapper;
+    protected abstract initNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper;
 }

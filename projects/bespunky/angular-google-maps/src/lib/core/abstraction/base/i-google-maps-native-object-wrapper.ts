@@ -6,7 +6,4 @@ export interface IGoogleMapsNativeObjectWrapper
      * Might be usefull for identifying the object within collections and events.
      */
     custom: any;
-
-    listenTo(eventName: string, handler: () => void): void;
-    stopListeningTo(eventName: string): void;
 }

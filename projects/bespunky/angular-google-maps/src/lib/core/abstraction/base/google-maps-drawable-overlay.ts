@@ -1,17 +1,15 @@
+import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
 import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 import { IGoogleMap } from '../../../google-map/i-google-map';
-import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { OverlayType } from './overlay-type.enum';
 
-export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWrapper implements IGoogleMapsDrawableOverlay
+export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay> extends GoogleMapsNativeObjectEmittingWrapper<TNative> implements IGoogleMapsDrawableOverlay
 {
-    public abstract readonly native: Promise<IGoogleMapsNativeDrawableOverlay>;
-
-    constructor(public readonly type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService)
+    constructor(public readonly type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService, createObject: () => TNative)
     {
-        super(api);
+        super(api, createObject);
 
         if (map) this.setContainingMap(map);
     }
@@ -35,7 +33,7 @@ export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWr
         // Wait for the map object to create, then for the drawable to create, then set the map to the drawable
         this.api.runOutsideAngular(async () =>
         {
-            const nativeMap      = await map.native;
+            const nativeMap = await map.native;
             const nativeDrawable = await this.native;
 
             nativeDrawable.setMap(nativeMap);
