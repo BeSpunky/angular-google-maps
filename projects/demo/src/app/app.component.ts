@@ -18,7 +18,9 @@ export class AppComponent
 
     public onClick(event: GoogleMapsEventData)
     {
-        const feature = new google.maps.Data.Feature({ geometry: new google.maps.Data.Polygon(event.args[0].position) });
+        if (!(event instanceof GoogleMapsEventData)) return;
+
+        const feature = new google.maps.Data.Feature({ geometry: new google.maps.Data.Point(event.args[0].position) });
 
         (this.data.nativeWrapper as GoogleMapsData).addFeature(feature);
     }
