@@ -2,6 +2,7 @@
  * Provides util functions to quicker setup of tests.
  */
 
+import { DebugElement, ElementRef, Type } from '@angular/core';
 import { TestModuleMetadata, TestBed, ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapsModule } from '../google-maps.module';
@@ -10,7 +11,6 @@ import { GoogleMapsApiLoader } from '../core/loaders/google-maps-api-loader';
 import { NoOpGoogleMapsApiLoader } from '../core/loaders/no-op-google-maps-api-loader';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMapsInternalApiService } from '../core/api/google-maps-internal-api.service';
-import { DebugElement, ElementRef } from '@angular/core';
 
 /** The default dummy config to use when loading the `GoogleMapsModule` for testing. */
 export const defaultTestApiConfig: GoogleMapsConfig = {
@@ -65,7 +65,7 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
     /**
      * (Optional) The type of component being tested. If specified, will declare the component, compile it, and extract
      * the fixture, component, debugElement, and the native element objects. */
-    componentType?: new (...params: any[]) => TComponent,
+    componentType?: Type<TComponent>,
     /** (Optional) A function used to apply additional changes to the module definition before creating the TestBed. */
     customize?: (moduleDef: TestModuleMetadata) => void;
     /** (Optional) Configures the automation of jasmine spies. */
