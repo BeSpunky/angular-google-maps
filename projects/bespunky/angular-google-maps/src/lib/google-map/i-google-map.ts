@@ -5,10 +5,10 @@ import { IGoogleMapsMarker } from '../overlays/marker/i-google-maps-marker';
 export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper
 {
     getCenter(): Promise<google.maps.LatLng>;
-    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): void;
+    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>;
 
     getZoom(): Promise<number>;
-    setZoom(zoomLevel: ZoomLevel | number): void;
+    setZoom(zoomLevel: ZoomLevel | number): Promise<void>;
 
     createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker>;
 }

@@ -6,9 +6,14 @@ import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
-    constructor(public map: IGoogleMap, api: GoogleMapsApiService, options?: google.maps.ReadonlyMarkerOptions)
+    constructor(public map: IGoogleMap, api: GoogleMapsApiService, private options?: google.maps.ReadonlyMarkerOptions)
     {
-        super(OverlayType.Marker, map, api, () => new google.maps.Marker(options));
+        super(OverlayType.Marker, map, api);
+    }
+
+    protected createNativeObject(): google.maps.Marker
+    {
+        return new google.maps.Marker(this.options);
     }
 
     public async getPosition(): Promise<google.maps.LatLng>
@@ -16,8 +21,8 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
         return (await this.native).getPosition();
     }
 
-    public setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral)
+    public setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
     {
-        this.api.runOutsideAngular(() => this.nativeObject.setPosition(position));
+        return this.api.runOutsideAngular(() => this.nativeObject.setPosition(position));
     }
 }

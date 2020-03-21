@@ -7,7 +7,7 @@ import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
-import { createDefaultTestModuleConfig } from '../../testing/utils';
+import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 
 describe('GoogleMapsInternalApiService', () =>
@@ -24,12 +24,12 @@ describe('GoogleMapsInternalApiService', () =>
 
         tokenNextSpy = spyOn(waitToken, 'next').and.callThrough();
 
-        const moduleConfig = createDefaultTestModuleConfig();
-        moduleConfig.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken });
+        const testConfig: IGoogleMapsTestingModuleConfigOptions = {
+            customize: (moduleDef) => moduleDef.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken })
+        };
 
-        TestBed.configureTestingModule(moduleConfig);
+        ({ internalApi: service } = configureGoogleMapsTestingModule(testConfig));
 
-        service = TestBed.get(GoogleMapsInternalApiService);
         zone = TestBed.get(NgZone);
         loader = TestBed.get(GoogleMapsApiLoader);
 
@@ -178,12 +178,19 @@ class MockComponent extends GoogleMapsLifecycleBase implements OnInit
 
     public event1: EventEmitter<void> = new EventEmitter();
 
+    public dummyWrapperInput: IGoogleMapsNativeObjectEmittingWrapper;
+
     constructor(api: GoogleMapsInternalApiService)
     {
         super(EventsMapStub, api);
     }
 
-    protected initNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
+    protected get nativeWrapperInput(): IGoogleMapsNativeObjectEmittingWrapper
+    {
+        return this.dummyWrapperInput;
+    }
+
+    protected createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
     {
         const native = {
             raiseEvent: (args: any) => this.listeners.forEach(handler => handler(args)),
@@ -191,8 +198,16 @@ class MockComponent extends GoogleMapsLifecycleBase implements OnInit
         };
 
         return {
-            listenTo: (eventName: string, handler: () => void) => this.listeners.push(handler),
-            stopListeningTo: () => this.listeners = [],
+            listenTo: (eventName: string, handler: () => void) =>
+            {
+                this.listeners.push(handler);
+                return Promise.resolve();
+            },
+            stopListeningTo: () =>
+            {
+                this.listeners = [];
+                return Promise.resolve();
+            },
             setFakeProperty(value: any) { native.fakeProperty = value; },
             native,
             custom: null,

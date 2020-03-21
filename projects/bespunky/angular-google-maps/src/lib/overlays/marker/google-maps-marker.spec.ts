@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 
-import { createDefaultTestModuleConfig, expectPositionEquals } from '../../testing/utils';
+import { configureGoogleMapsTestingModule } from '../../testing/setup';
+import { expectPositionEquals } from '../../testing/expectations';
 import { GoogleMapsMarker } from './google-maps-marker';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { GoogleMap } from '../../google-map/google-map';
@@ -11,15 +11,14 @@ const elementStub = document.createElement('div');
 describe('GoogleMapsMarker', () =>
 {
     let api: GoogleMapsApiService;
+    let runOutsideAngular: jasmine.Spy;
     let marker: GoogleMapsMarker;
     let map: GoogleMap;
     let position: google.maps.LatLng;
 
     beforeEach(() =>
     {
-        TestBed.configureTestingModule(createDefaultTestModuleConfig());
-
-        api = TestBed.get(GoogleMapsApiService);
+        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
 
         position = new google.maps.LatLng(11, 11);
 
@@ -30,15 +29,6 @@ describe('GoogleMapsMarker', () =>
     describe('basically', () =>
     {
         it('should create an instance', () => expect(marker).toBeTruthy());
-
-        it('should create a native marker when api is ready', async () =>
-        {
-            await api.whenReady;
-
-            expect((marker as any).marker instanceof google.maps.Marker).toBeTruthy();
-        });
-
-        it('should wait for api and retrieve the native marker when calling the `native` getter', async () => expect(await marker.native instanceof google.maps.Marker).toBeTruthy());
     });
 
     describe('upon calling getter functions', () =>
@@ -48,17 +38,7 @@ describe('GoogleMapsMarker', () =>
 
     describe('upon calling setter functions', () =>
     {
-        let runOutsideAngularSpy: jasmine.Spy;
-
-        beforeEach(() =>
-        {
-            runOutsideAngularSpy = spyOn(api, 'runOutsideAngular').and.callFake(async (fn: () => void) =>
-            {
-                await api.whenReady;
-
-                return fn();
-            });
-        });
+        beforeEach(() => runOutsideAngular.calls.reset());
 
         it('should wait for api and set the position of the marker outside angular', async () =>
         {
@@ -66,7 +46,7 @@ describe('GoogleMapsMarker', () =>
 
             marker.setPosition(pos);
 
-            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
 
             await api.whenReady;
 

@@ -49,8 +49,13 @@ export class GoogleMapComponent extends GoogleMapsLifecycleBase
         super(MapEventsMap, api);
     }
 
-    protected initNativeWrapper(): IGoogleMap
+    protected get nativeWrapperInput(): IGoogleMap
     {
-        return this.map || new GoogleMap(this.element, this.api.openApi);
+        return this.map;
+    }
+    
+    protected createNativeWrapper(): IGoogleMap
+    {
+        return new GoogleMap(this.element, this.api.openApi);
     }
 }

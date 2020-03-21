@@ -8,11 +8,11 @@ export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsN
 
     protected nativeObject: TNative;
 
-    constructor(protected api: GoogleMapsApiService, createObject: () => TNative)
+    constructor(protected api: GoogleMapsApiService)
     {
         this.api.runOutsideAngular(() =>
         {
-            this.nativeObject = createObject();
+            this.nativeObject = this.createNativeObject();
         });
     }
 
@@ -20,4 +20,6 @@ export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsN
     {
         return this.api.whenReady.then(() => this.nativeObject);
     }
+
+    protected abstract createNativeObject(): TNative;
 }

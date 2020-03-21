@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 
-import { createDefaultTestModuleConfig, expectPositionEquals } from '../testing/utils';
+import { configureGoogleMapsTestingModule } from '../testing/setup';
+import { expectPositionEquals } from '../testing/expectations';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMap } from './google-map';
 import { Defaults } from '../core/config/defaults';
@@ -16,15 +16,11 @@ describe('GoogleMap', () =>
     let map: GoogleMap;
     let api: GoogleMapsApiService;
     let mapElement: ElementRef;
-    let runOutsideAngularSpy: jasmine.Spy;
+    let runOutsideAngular: jasmine.Spy;
 
     beforeEach(() =>
     {
-        TestBed.configureTestingModule(createDefaultTestModuleConfig());
-
-        api = TestBed.get(GoogleMapsApiService);
-
-        runOutsideAngularSpy = spyOn(api, 'runOutsideAngular').and.callFake((fn: () => void) => fn());
+        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
 
         mapElement = new ElementRef(elementStub);
         map = new GoogleMap(mapElement, api);
@@ -38,7 +34,7 @@ describe('GoogleMap', () =>
         {
             const nativeMap = await map.native;
 
-            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
             expect(nativeMap instanceof google.maps.Map).toBeTruthy();
 
             expectPositionEquals(nativeMap.getCenter(), Defaults.Center);
@@ -66,7 +62,7 @@ describe('GoogleMap', () =>
 
     describe('upon calling set functions', () =>
     {
-        beforeEach(() => runOutsideAngularSpy.calls.reset());
+        beforeEach(() => runOutsideAngular.calls.reset());
 
         it('should wait for api and set the map\'s center outside of angular', async () =>
         {
@@ -74,7 +70,7 @@ describe('GoogleMap', () =>
 
             map.setCenter(center);
 
-            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
 
             expectPositionEquals(await map.getCenter(), center);
         });
@@ -85,26 +81,27 @@ describe('GoogleMap', () =>
 
             map.setZoom(zoom);
 
-            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
             expect(await map.getZoom()).toBe(zoom);
         });
     });
 
     describe('overlay management', () =>
     {
-        const dummyOverlay = {};
+        const dummyOverlay = jasmine.createSpyObj('overlay', ['setContainingMap', 'removeFromMap']);
 
-        beforeEach(() => runOutsideAngularSpy.calls.reset());
+        beforeEach(() => runOutsideAngular.calls.reset());
 
         it('should create an overlay outside of angular and add it to the overlay tracker when calling `createOverlay()`', async () =>
         {
             const overlayTrackerSpy = spyOn(map.overlays, 'add');
             
-            const createOverlay: (createObject: () => any) => Promise<any> = (map as any).createOverlay;
+            // Get a hold of the private `createOverlay()` method and strong type it
+            const createOverlay = (map as any).createOverlay as (createObject: () => any) => Promise<any>;
 
-            const overlay = await createOverlay(() => dummyOverlay);
+            const overlay = await createOverlay.call(map, () => dummyOverlay);
 
-            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
             expect(overlayTrackerSpy).toHaveBeenCalledTimes(1);
             expect(overlay).toBe(dummyOverlay);
         });
@@ -113,10 +110,10 @@ describe('GoogleMap', () =>
         {
             // There should be an overlay stored in the tracker from the previous test
             const overlayTrackerSpy = spyOn(map.overlays, 'remove');
-            
+
             await map.removeOverlay(dummyOverlay as IGoogleMapsDrawableOverlay);
 
-            expect(runOutsideAngularSpy).toHaveBeenCalledTimes(1);
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
             expect(overlayTrackerSpy).toHaveBeenCalledTimes(1);
         });
 

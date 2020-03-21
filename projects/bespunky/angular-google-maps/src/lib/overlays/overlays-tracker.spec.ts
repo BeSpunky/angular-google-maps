@@ -2,8 +2,7 @@ import { OverlaysTracker } from "./overlays-tracker";
 import { GoogleMapsMarker } from './marker/google-maps-marker';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { IGoogleMap } from '../google-map/i-google-map';
-import { createDefaultTestModuleConfig } from '../testing/utils';
-import { TestBed } from '@angular/core/testing';
+import { configureGoogleMapsTestingModule } from '../testing/setup';
 import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
 
 describe('OverlayTracker', () =>
@@ -13,11 +12,7 @@ describe('OverlayTracker', () =>
 
     beforeEach(() =>
     {
-        const moduleConfig = createDefaultTestModuleConfig();
-        
-        TestBed.configureTestingModule(moduleConfig);
-
-        api = TestBed.inject(GoogleMapsApiService);
+        ({ api } = configureGoogleMapsTestingModule());
     });
 
     it('should create an instance', () => expect(overlays).toBeDefined());
@@ -59,7 +54,7 @@ class StubGoogleMap implements IGoogleMap
     {
         throw new Error("Method not implemented.");
     }
-    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): void
+    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
     {
         throw new Error("Method not implemented.");
     }
@@ -67,7 +62,7 @@ class StubGoogleMap implements IGoogleMap
     {
         throw new Error("Method not implemented.");
     }
-    setZoom(zoomLevel: number): void
+    setZoom(zoomLevel: number): Promise<void>
     {
         throw new Error("Method not implemented.");
     }
@@ -77,11 +72,11 @@ class StubGoogleMap implements IGoogleMap
     }
     native: any;
     custom: any;
-    listenTo(eventName: string, handler: () => void): void
+    listenTo(eventName: string, handler: () => void): Promise<void>
     {
         throw new Error("Method not implemented.");
     }
-    stopListeningTo(eventName: string): void
+    stopListeningTo(eventName: string): Promise<void>
     {
         throw new Error("Method not implemented.");
     }

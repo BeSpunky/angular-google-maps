@@ -1,13 +1,9 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { ComponentFixture } from '@angular/core/testing';
 
-import { createDefaultTestModuleConfig } from '../../../testing/utils';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup';
+import { LifecycleTestsHostComponentBase, createLifecycleTestingHostComponentTemplate } from '../../../testing/lifecycle-components';
 import { GoogleMapsMarkerDirective } from './google-maps-marker.directive';
-import { GoogleMapComponent } from '../../../google-map/component/google-map.component';
-import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
-import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
-import { GoogleMap } from '../../../google-map/google-map';
-import { GoogleMapsMarker } from '../google-maps-marker';
 
 /**
  * -- NOTE --
@@ -19,67 +15,23 @@ import { GoogleMapsMarker } from '../google-maps-marker';
  */
 describe('GoogleMapsMarkerDirective', () =>
 {
-    let hostFixture  : ComponentFixture<TestHostComponent>;
+    let hostFixture: ComponentFixture<TestHostComponent>;
     let hostComponent: TestHostComponent;
-    let directive    : GoogleMapsMarkerDirective;
-    let api          : GoogleMapsApiService;
-    let internalApi  : GoogleMapsInternalApiService;
-
-    beforeEach(async(() =>
-    {
-        const moduleConfig = createDefaultTestModuleConfig();
-        moduleConfig.declarations = [TestHostComponent];
-
-        TestBed.configureTestingModule(moduleConfig)
-               .compileComponents();
-    }));
+    let directive: GoogleMapsMarkerDirective;
 
     beforeEach(() =>
     {
-        hostFixture = TestBed.createComponent(TestHostComponent);
-        hostComponent = hostFixture.componentInstance;
-
+        ({ fixture: hostFixture, component: hostComponent } = configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
+        
         hostFixture.detectChanges();
 
-        api = TestBed.get(GoogleMapsApiService);
-        internalApi = TestBed.get(GoogleMapsInternalApiService);
-       
-        directive = hostComponent.markerDirective;
+        directive = hostComponent.testedComponent as GoogleMapsMarkerDirective;
     });
 
     it('should create an instance', () => expect(directive).toBeTruthy());
-
-    it('should init the native wrapper using the map object if passed-in', () =>
-    {
-        directive.marker = new GoogleMapsMarker(hostComponent.map, api);
-
-        hostFixture.detectChanges();
-
-        expect((directive as any).initNativeWrapper()).toBe(directive.marker);
-    });
-
-    it('should init the native wrapper using a map object if non was passed-in', () =>
-    {
-        directive.marker = undefined;
-
-        hostFixture.detectChanges();
-
-        expect(directive.marker).toBeUndefined();
-        expect((directive as any).initNativeWrapper() instanceof GoogleMapsMarker).toBeTruthy();
-    });
 });
 
 @Component({
-    template: `<bs-google-map [map]="map" [center]="center">
-                   <bs-google-maps-marker [position]="center"></bs-google-maps-marker>
-               </bs-google-map>`
+    template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-marker [position]="center" #testedComponent></bs-google-maps-marker>')
 })
-class TestHostComponent
-{
-    @ViewChild(GoogleMapComponent)
-    public mapComponent: GoogleMapComponent;
-    @ViewChild(GoogleMapsMarkerDirective)
-    public markerDirective: GoogleMapsMarkerDirective;
-
-    public map: GoogleMap;
-}
+class TestHostComponent extends LifecycleTestsHostComponentBase { }

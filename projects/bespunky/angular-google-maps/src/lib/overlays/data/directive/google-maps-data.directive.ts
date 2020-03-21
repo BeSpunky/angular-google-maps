@@ -45,8 +45,13 @@ export class GoogleMapsDataDirective extends GoogleMapsLifecycleBase
         super(DataEventsMap, api);
     }
 
-    protected initNativeWrapper(): IGoogleMapsData
+    protected get nativeWrapperInput(): IGoogleMapsData
     {
-        return this.dataLayer || new GoogleMapsData(this.mapComponent.nativeWrapper as IGoogleMap, this.api.openApi);
+        return this.dataLayer;
+    }
+
+    protected createNativeWrapper(): IGoogleMapsData
+    {
+        return new GoogleMapsData(this.mapComponent.map, this.api.openApi);
     }
 }

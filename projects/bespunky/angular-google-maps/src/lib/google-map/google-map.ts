@@ -15,13 +15,18 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
 
     constructor(private mapElement: ElementRef,
                 protected api: GoogleMapsApiService,
-                initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
-                initialZoom?: ZoomLevel | number)
+                private initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
+                private initialZoom?: ZoomLevel | number)
     {
-        super(api, () => new google.maps.Map(mapElement.nativeElement, {
-            center: initialCenter || Defaults.Center,
-            zoom:   initialZoom   || Defaults.ZoomLevel
-        }));
+        super(api);
+    }
+
+    protected createNativeObject(): google.maps.Map
+    {
+        return new google.maps.Map(this.mapElement.nativeElement, {
+            center: this.initialCenter || Defaults.Center,
+            zoom  : this.initialZoom   || Defaults.ZoomLevel
+        });
     }
 
     public async getCenter(): Promise<google.maps.LatLng>
@@ -29,9 +34,9 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         return (await this.native).getCenter();
     }
 
-    public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
+    public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
     {
-        this.api.runOutsideAngular(() => this.nativeObject.setCenter(lngLat));
+        return this.api.runOutsideAngular(() => this.nativeObject.setCenter(lngLat));
     }
 
     public async getZoom(): Promise<number>
@@ -39,9 +44,9 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         return (await this.native).getZoom();
     }
 
-    public setZoom(zoomLevel: ZoomLevel | number)
+    public setZoom(zoomLevel: ZoomLevel | number): Promise<void>
     {
-        this.api.runOutsideAngular(() => this.nativeObject.setZoom(zoomLevel));
+        return this.api.runOutsideAngular(() => this.nativeObject.setZoom(zoomLevel));
     }
 
     public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>

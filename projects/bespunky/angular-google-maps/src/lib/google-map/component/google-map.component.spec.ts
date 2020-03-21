@@ -1,12 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { async, ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapComponent } from './google-map.component';
-import { createDefaultTestModuleConfig } from '../../testing/utils';
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
-import { GoogleMap } from '../google-map';
+import { configureGoogleMapsTestingModule } from '../../testing/setup';
+import { LifecycleTestsHostComponentBase, createLifecycleTestingHostComponentTemplate } from '../../testing/lifecycle-components';
 
 /**
  * -- NOTE --
@@ -21,63 +18,23 @@ describe('GoogleMapComponent', () =>
     let hostFixture: ComponentFixture<TestHostComponent>;
     let hostComponent: TestHostComponent;
     let component: GoogleMapComponent;
-    let api: GoogleMapsApiService;
-    let internalApi: GoogleMapsInternalApiService;
 
     beforeEach(async(() =>
     {
-        const moduleConfig = createDefaultTestModuleConfig();
-        moduleConfig.declarations = [TestHostComponent];
+        ({ fixture: hostFixture, component: hostComponent } = configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
+        
+        hostFixture.detectChanges();
 
-        TestBed.configureTestingModule(moduleConfig)
-               .compileComponents();
+        component = hostComponent.mapComponent;
     }));
 
-    beforeEach(() =>
-    {
-        hostFixture = TestBed.createComponent(TestHostComponent);
-        hostComponent = hostFixture.componentInstance;
-
-        hostFixture.detectChanges();
-
-        component = hostFixture.componentInstance.mapComponent;
-        api = TestBed.get(GoogleMapsApiService);
-        internalApi = TestBed.get(GoogleMapsInternalApiService);
-    });
-
     it('should create an instance', () => expect(component).toBeTruthy());
-
-    it('should init the native wrapper using the map object if passed-in', () =>
-    {
-        const element = hostFixture.debugElement.query(By.css('div.google-map'));
-
-        hostComponent.map = new GoogleMap(element, api);
-
-        hostFixture.detectChanges();
-
-        expect(component.map).toBe(hostComponent.map);
-        expect((component as any).initNativeWrapper()).toBe(component.map);
-    });
-
-    it('should init the native wrapper using a map object if non was passed-in', () =>
-    {
-        hostComponent.map = undefined;
-
-        hostFixture.detectChanges();
-
-        expect(component.map).toBeUndefined();
-        expect((component as any).initNativeWrapper() instanceof GoogleMap).toBeTruthy();
-    });
 });
 
 @Component({
-    template: '<bs-google-map [map]="map" [center]="center"></bs-google-map>'
+    template: createLifecycleTestingHostComponentTemplate('')
 })
-class TestHostComponent
+class TestHostComponent extends LifecycleTestsHostComponentBase
 {
-    @ViewChild(GoogleMapComponent)
-    public mapComponent: GoogleMapComponent;
-
-    public map: GoogleMap;
     public center: google.maps.LatLng;
 }

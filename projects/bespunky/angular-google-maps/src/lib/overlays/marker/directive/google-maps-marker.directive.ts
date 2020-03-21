@@ -5,7 +5,6 @@ import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { MarkerEventsMap } from '../types/marker-event.enum';
 import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
 import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
-import { IGoogleMap } from '../../../google-map/i-google-map';
 import { GoogleMapsMarker } from '../google-maps-marker';
 
 @Directive({
@@ -64,9 +63,14 @@ export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
     {
         super(MarkerEventsMap, api);
     }
-
-    protected initNativeWrapper(): IGoogleMapsMarker
+    
+    protected get nativeWrapperInput(): IGoogleMapsMarker
     {
-        return this.marker || new GoogleMapsMarker(this.mapComponent.nativeWrapper as IGoogleMap, this.api.openApi);
+        return this.marker;
+    }
+
+    protected createNativeWrapper(): IGoogleMapsMarker
+    {
+        return new GoogleMapsMarker(this.mapComponent.map, this.api.openApi)
     }
 }

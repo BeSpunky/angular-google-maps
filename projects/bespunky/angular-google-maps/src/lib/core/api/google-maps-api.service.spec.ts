@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { createDefaultTestModuleConfig } from '../../testing/utils';
+import { configureGoogleMapsTestingModule, IGoogleMapsTestingModuleConfigOptions } from '../../testing/setup';
 
 describe('GoogleMapsApiService', () =>
 {
@@ -18,14 +18,14 @@ describe('GoogleMapsApiService', () =>
 
         tokenSubscribeSpy = spyOn(waitToken, 'subscribe').and.callThrough();
 
-        const moduleConfig = createDefaultTestModuleConfig();
-        moduleConfig.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken });
+        const testConfig: IGoogleMapsTestingModuleConfigOptions = {
+            customize: (moduleDef) => moduleDef.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken }),
+            spies: { fakeRunOutsideAngular: false }
+        };
 
-        TestBed.configureTestingModule(moduleConfig);
+        ({ api: service } = configureGoogleMapsTestingModule(testConfig));
 
-        waitForApiPromiseCreation = TestBed.get(GoogleMapsApiReadyPromise);
-
-        service = TestBed.get(GoogleMapsApiService);
+        waitForApiPromiseCreation = TestBed.inject(GoogleMapsApiReadyPromise);
     });
 
     it('should create an instance', () => expect(service).toBeTruthy());

@@ -5,9 +5,14 @@ import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service'
 
 export class GoogleMapsFeature extends GoogleMapsNativeObjectWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
-    constructor(public data: IGoogleMapsData, private api: GoogleMapsApiService, options?: google.maps.Data.FeatureOptions)
+    constructor(public data: IGoogleMapsData, protected api: GoogleMapsApiService, private options?: google.maps.Data.FeatureOptions)
     {
-        super(api, () => new google.maps.Data.Feature(options));
+        super(api);
+    }
+    
+    protected createNativeObject(): google.maps.Data.Feature
+    {
+        return new google.maps.Data.Feature(this.options);
     }
     
     public async getId(): Promise<string | number>

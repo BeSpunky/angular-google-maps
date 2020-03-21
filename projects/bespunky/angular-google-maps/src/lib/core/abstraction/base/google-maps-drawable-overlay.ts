@@ -5,11 +5,13 @@ import { IGoogleMap } from '../../../google-map/i-google-map';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { OverlayType } from './overlay-type.enum';
 
-export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay> extends GoogleMapsNativeObjectEmittingWrapper<TNative> implements IGoogleMapsDrawableOverlay
+export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay>
+                extends GoogleMapsNativeObjectEmittingWrapper<TNative>
+                implements IGoogleMapsDrawableOverlay
 {
-    constructor(public readonly type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService, createObject: () => TNative)
+    constructor(public readonly type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService)
     {
-        super(api, createObject);
+        super(api);
 
         if (map) this.setContainingMap(map);
     }
@@ -26,18 +28,12 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
      *
      * @param {IGoogleMap} map The map to dispaly the overlay on.
      */
-    public async setContainingMap(map: IGoogleMap)
+    public setContainingMap(map: IGoogleMap): Promise<void>
     {
         this.map = map;
 
         // Wait for the map object to create, then for the drawable to create, then set the map to the drawable
-        this.api.runOutsideAngular(async () =>
-        {
-            const nativeMap = await map.native;
-            const nativeDrawable = await this.native;
-
-            nativeDrawable.setMap(nativeMap);
-        });
+        return this.api.runOutsideAngular(() => map.native.then((nativeMap: google.maps.Map) => this.nativeObject.setMap(nativeMap)));
     }
 
     /**
@@ -45,15 +41,10 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
      * If not possible, it is the responsability of the caller to remove the overlay from the `OverlayTracker` in the `GoogleMap.overlays` object.
      * Otherwise, inconsistencies and unexpected behaviours might occur.
      */
-    public async removeFromMap()
+    public removeFromMap(): Promise<void>
     {
         this.map = null;
 
-        this.api.runOutsideAngular(async () =>
-        {
-            const nativeDrawable = await this.native;
-
-            nativeDrawable.setMap(null);
-        });
+        return this.api.runOutsideAngular(() => this.nativeObject.setMap(null));
     }
 }

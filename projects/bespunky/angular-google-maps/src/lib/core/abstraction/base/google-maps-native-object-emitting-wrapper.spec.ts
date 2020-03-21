@@ -1,22 +1,19 @@
-import { fakeAsync, tick, TestBed } from '@angular/core/testing';
 
 import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-import { createDefaultTestModuleConfig } from '../../../testing/utils';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup';
 import { IGoogleMapsEmittingNativeObject } from '../native/i-google-maps-emitting-native-object';
 
-describe('GoogleMapsNativeObjectEmittingWrapper', () =>
+describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
 {
     let api: GoogleMapsApiService;
     let mockWrapper: MockWrapper;
 
     beforeEach(() =>
     {
-        TestBed.configureTestingModule(createDefaultTestModuleConfig());
+        ({ api } = configureGoogleMapsTestingModule());
 
-        api = TestBed.inject(GoogleMapsApiService);
-
-        return mockWrapper = new MockWrapper(api, () => new google.maps.Marker());
+        mockWrapper = new MockWrapper(api, mockNative);
     });
 
     it('should create an instance when instantiated by a derived class', () =>
@@ -24,34 +21,38 @@ describe('GoogleMapsNativeObjectEmittingWrapper', () =>
         expect(mockWrapper).toBeTruthy();
     });
 
-    it('should wait for the native object then register a listener when calling `listenTo()`', fakeAsync(() =>
+    it('should wait for the native object then register a listener when calling `listenTo()`', async () =>
     {
         spyOn(mockNative, 'addListener').and.callThrough();
 
-        mockWrapper.listenTo('dummyEvent', () => true);
-
-        tick();
+        await mockWrapper.listenTo('dummyEvent', () => true);
 
         expect(mockNative.addListener).toHaveBeenCalledTimes(1);
-    }));
+    });
 
-    it('should wait for the native object then unregister all listeners when calling `stopListeningTo()', fakeAsync(() =>
+    it('should wait for the native object then unregister all listeners when calling `stopListeningTo()', async () =>
     {
         spyOn(google.maps.event, 'clearListeners').and.callFake((native, eventName) => true);
 
-        mockWrapper.stopListeningTo('dummyEvent');
-
-        tick();
+        await mockWrapper.stopListeningTo('dummyEvent');
 
         expect(google.maps.event.clearListeners).toHaveBeenCalledTimes(1);
-    }));
+    });
 });
 
 const mockNative: IGoogleMapsEmittingNativeObject = {
     addListener: (eventName: string, handler: () => void) => 'listenerAdded'
 };
 
-class MockWrapper extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Marker>
+class MockWrapper extends GoogleMapsNativeObjectEmittingWrapper<IGoogleMapsEmittingNativeObject>
 {
+    constructor(api: GoogleMapsApiService, private mockNativeObject: IGoogleMapsEmittingNativeObject)
+    {
+        super(api);
+    }
 
+    public createNativeObject(): IGoogleMapsEmittingNativeObject
+    {
+        return this.mockNativeObject;
+    }
 }

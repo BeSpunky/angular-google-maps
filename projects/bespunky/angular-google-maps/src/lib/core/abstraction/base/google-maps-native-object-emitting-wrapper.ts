@@ -6,18 +6,18 @@ import { IGoogleMapsEmittingNativeObject } from '../native/i-google-maps-emittin
 export abstract class GoogleMapsNativeObjectEmittingWrapper<TNative extends IGoogleMapsEmittingNativeObject>
                 extends GoogleMapsNativeObjectWrapper<TNative> implements IGoogleMapsNativeObjectEmittingWrapper                                                   
 {
-    constructor(api: GoogleMapsApiService, createObject: () => TNative)
+    constructor(api: GoogleMapsApiService)
     {
-        super(api, createObject);
+        super(api);
     }
 
-    listenTo(eventName: string, handler: () => void): void
+    public listenTo(eventName: string, handler: () => void): Promise<void>
     {
-        this.native.then(nativeObject => nativeObject.addListener(eventName, handler));
+        return this.native.then(nativeObject => nativeObject.addListener(eventName, handler));
     }
 
-    stopListeningTo(eventName: string): void
+    public stopListeningTo(eventName: string): Promise<void>
     {
-        this.native.then(nativeObject => google.maps.event.clearListeners(nativeObject, eventName));
+        return this.native.then(nativeObject => google.maps.event.clearListeners(nativeObject, eventName));
     }
 }
