@@ -50,6 +50,9 @@ describe('OverlayTracker', () =>
 
 class StubGoogleMap implements IGoogleMap
 {
+    native = Promise.resolve({});
+    custom: any;
+
     getCenter(): Promise<google.maps.LatLng>
     {
         throw new Error("Method not implemented.");
@@ -70,8 +73,6 @@ class StubGoogleMap implements IGoogleMap
     {
         throw new Error("Method not implemented.");
     }
-    native: any;
-    custom: any;
     listenTo(eventName: string, handler: () => void): Promise<void>
     {
         throw new Error("Method not implemented.");
