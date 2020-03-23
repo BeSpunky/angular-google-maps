@@ -1,14 +1,31 @@
 import { ElementRef } from '@angular/core';
 
-import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { Defaults } from '../core/config/defaults';
-import { ZoomLevel } from './types/zoom-level.enum';
-import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
+import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMapsNativeObjectEmittingWrapper } from '../core/abstraction/base/google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
+import { NativeObjectWrapper } from '../core/decorators/native-object-wrapper.decorator';
 import { IGoogleMap } from './i-google-map';
 import { OverlaysTracker } from '../overlays/overlays-tracker';
-import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
+import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
+import { ZoomLevel } from './types/zoom-level.enum';
 
+/**
+ * Extends intellisense for the class without providing implementation for the methods dynamically set by the framework.
+ * See documentation for the `@NativeObjectWrapper()` decorator for more info.
+ */
+export interface GoogleMap
+{
+    getCenter(): Promise<google.maps.LatLng>;
+    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>;
+
+    getZoom(): Promise<number>;
+    setZoom(zoomLevel: ZoomLevel | number): Promise<void>;
+}
+
+@NativeObjectWrapper({
+    nativeType: google.maps.Map
+})
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
     public overlays = new OverlaysTracker();
@@ -25,28 +42,8 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     {
         return new google.maps.Map(this.mapElement.nativeElement, {
             center: this.initialCenter || Defaults.Center,
-            zoom  : this.initialZoom   || Defaults.ZoomLevel
+            zoom: this.initialZoom || Defaults.ZoomLevel
         });
-    }
-
-    public async getCenter(): Promise<google.maps.LatLng>
-    {
-        return (await this.native).getCenter();
-    }
-
-    public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
-    {
-        return this.api.runOutsideAngular(() => this.nativeObject.setCenter(lngLat));
-    }
-
-    public async getZoom(): Promise<number>
-    {
-        return (await this.native).getZoom();
-    }
-
-    public setZoom(zoomLevel: ZoomLevel | number): Promise<void>
-    {
-        return this.api.runOutsideAngular(() => this.nativeObject.setZoom(zoomLevel));
     }
 
     public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>

@@ -87,29 +87,13 @@ export class GoogleMapsInternalApiService
     }
 
     /**
-     * Unregisters event listeners from the native object. The component's `nativeWrapper` property will be used.
-     * Use this overload if `hookEmitters()` was used on a component holding the actual native object.
-     * Example: Markers, Polygons, Polylines, etc.
-     *
-     * @param {GoogleMapsLifecycleBase} emittingComponent The component/directive for which event handlers were previously registered and hooked to its emitters.
-     * @param {GoogleMapsEventsMap} eventMap The map of native events supported by the native object to unregister from.
-     */
-    public unhookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventMap: GoogleMapsEventsMap): void;
-    /**
      * Unregisters event listeners from the native object.
-     * Use this overload if `hookEmitters()` was called for a native wrapper which was different to `emittingComponent.nativeWrapper`.
-     * Example: The native google.maps.Data object defines events, but they are delegated to the features.
      * 
-     * @see `google-maps-feature.directive.ts` for more info.
-     *
      * @param {IGoogleMapsNativeObjectEmittingWrapper} nativeWrapper The native wrapper for which event handlers were previously registered and hooked to another component.
      * @param {GoogleMapsEventsMap} eventMap The map of native events supported by the native object to unregister from.
      */
-    public unhookEmitters(nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper, eventMap: GoogleMapsEventsMap): void;
-    public unhookEmitters(emittingComponentOrNativeWrapper: GoogleMapsLifecycleBase | IGoogleMapsNativeObjectEmittingWrapper, eventsMap: GoogleMapsEventsMap)
+    public unhookEmitters(nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper, eventsMap: GoogleMapsEventsMap): void
     {
-        const nativeWrapper = emittingComponentOrNativeWrapper instanceof GoogleMapsLifecycleBase ? emittingComponentOrNativeWrapper.nativeWrapper : emittingComponentOrNativeWrapper;
-
         for (const event of eventsMap)
             nativeWrapper.stopListeningTo(event.reference);
     }

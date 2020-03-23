@@ -3,7 +3,11 @@ import { IGoogleMapsData } from './i-google-maps-data';
 import { IGoogleMap } from '../../google-map/i-google-map';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
+import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
 
+@NativeObjectWrapper({
+    nativeType: google.maps.Data
+})
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
     constructor(public map: IGoogleMap, api: GoogleMapsApiService, private options?: google.maps.Data.DataOptions)

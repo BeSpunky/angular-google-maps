@@ -30,27 +30,4 @@ describe('GoogleMapsMarker', () =>
     {
         it('should create an instance', () => expect(marker).toBeTruthy());
     });
-
-    describe('upon calling getter functions', () =>
-    {
-        it('should wait for api and return the position of the marker', async () => expectPositionEquals(await marker.getPosition(), position));
-    });
-
-    describe('upon calling setter functions', () =>
-    {
-        beforeEach(() => runOutsideAngular.calls.reset());
-
-        it('should wait for api and set the position of the marker outside angular', async () =>
-        {
-            const pos = { lat: 12, lng: 33 };
-
-            marker.setPosition(pos);
-
-            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-
-            await api.whenReady;
-
-            expectPositionEquals(await marker.getPosition(), pos);
-        });
-    });
 });

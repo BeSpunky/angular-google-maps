@@ -54,38 +54,6 @@ describe('GoogleMap', () =>
         });
     });
 
-    describe('upon calling get functions', () =>
-    {
-        it('should wait for api and retrieve the map\'s center', async () => expect(await map.getCenter() instanceof google.maps.LatLng).toBeTruthy());
-        it('should wait for api and retrieve the map\'s zoom', async () => expect(await map.getZoom()).toBeGreaterThanOrEqual(0));
-    });
-
-    describe('upon calling set functions', () =>
-    {
-        beforeEach(() => runOutsideAngular.calls.reset());
-
-        it('should wait for api and set the map\'s center outside of angular', async () =>
-        {
-            const center = { lat: 10, lng: 10 };
-
-            map.setCenter(center);
-
-            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-
-            expectPositionEquals(await map.getCenter(), center);
-        });
-
-        it('should wait for api and set the map\'s zoom outside of angular', async () =>
-        {
-            const zoom = ZoomLevel.LandmassOrContinent;
-
-            map.setZoom(zoom);
-
-            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-            expect(await map.getZoom()).toBe(zoom);
-        });
-    });
-
     describe('overlay management', () =>
     {
         const dummyOverlay = jasmine.createSpyObj('overlay', ['setContainingMap', 'removeFromMap']);

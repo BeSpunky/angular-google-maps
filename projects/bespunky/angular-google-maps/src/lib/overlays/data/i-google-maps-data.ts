@@ -1,5 +1,6 @@
 import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
 
+
 export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay
 {
     addFeature(feature: google.maps.Data.Feature): Promise<void>;

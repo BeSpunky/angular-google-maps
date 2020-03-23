@@ -2,6 +2,4 @@ import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google
 
 export interface IGoogleMapsMarker extends IGoogleMapsDrawableOverlay
 {
-    getPosition(): Promise<google.maps.LatLng>;
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>;
 }

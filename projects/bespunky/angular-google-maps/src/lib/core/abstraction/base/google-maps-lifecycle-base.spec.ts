@@ -1,9 +1,9 @@
 import { SimpleChange, SimpleChanges, Component } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 
+import { configureGoogleMapsTestingModule } from '../../../testing/setup';
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-import { configureGoogleMapsTestingModule } from '../../../testing/setup';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
@@ -23,6 +23,15 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
         spyOn(api, 'hookEmitters').and.stub();
         spyOn(api, 'unhookEmitters').and.stub();
         spyOn(api, 'delegateInputChangesToNativeObject').and.stub();
+    });
+
+    afterEach(() =>
+    {
+        // Some of the tests don't call ngOnInit(), thus leaving the nativeWrapper property undefined.
+        // The tests all pass but console errors show when jasmine automatically calls ngOnDestroy(), as it calls
+        // api.unhookEmitters() with an undefined wrapper. This workaround solves it.
+        if (!mockComponent.nativeWrapper)
+            mockComponent.nativeWrapper = mockComponent.createNativeWrapper();
     });
 
     describe('basically', () =>
@@ -106,7 +115,7 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
             const hookArgs: any[] = (api.unhookEmitters as jasmine.Spy).calls.mostRecent().args;
 
             expect(api.unhookEmitters).toHaveBeenCalledTimes(1);
-            expect(hookArgs[0]).toBe(mockComponent);
+            expect(hookArgs[0]).toBe(mockComponent.nativeWrapper);
             expect(hookArgs[1]).toBe(EventsMapStub);
         });
     });
@@ -152,7 +161,7 @@ class MockComponent extends GoogleMapsLifecycleBase
         return {
             listenTo: () => Promise.resolve(),
             stopListeningTo: () => Promise.resolve(),
-            native: {},
+            native: Promise.resolve({}),
             custom: null
         };
     }
