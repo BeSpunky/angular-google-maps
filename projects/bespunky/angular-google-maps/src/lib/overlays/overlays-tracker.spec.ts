@@ -1,19 +1,15 @@
-import { OverlaysTracker } from "./overlays-tracker";
-import { GoogleMapsMarker } from './marker/google-maps-marker';
-import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
-import { IGoogleMap } from '../google-map/i-google-map';
 import { configureGoogleMapsTestingModule } from '../testing/setup';
+import { OverlaysTracker } from "./overlays-tracker";
+import { IGoogleMap } from '../google-map/i-google-map';
 import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
+import { IGoogleMapsMarker } from './marker/i-google-maps-marker';
+import { OverlayType } from '../core/abstraction/base/overlay-type.enum';
 
 describe('OverlayTracker', () =>
 {
     let overlays = new OverlaysTracker();
-    let api: GoogleMapsApiService;
 
-    beforeEach(() =>
-    {
-        ({ api } = configureGoogleMapsTestingModule());
-    });
+    beforeEach(() => configureGoogleMapsTestingModule());
 
     it('should create an instance', () => expect(overlays).toBeDefined());
 
@@ -21,7 +17,7 @@ describe('OverlayTracker', () =>
     {
         expect(overlays.markers.length).toBe(0);
         
-        const marker = new GoogleMapsMarker(new StubGoogleMap(), api);
+        const marker = new StubGoogleMapsMarker(OverlayType.Marker);
         
         overlays.add(marker);
 
@@ -48,28 +44,22 @@ describe('OverlayTracker', () =>
     });
 });
 
-class StubGoogleMap implements IGoogleMap
+class StubGoogleMapsMarker implements IGoogleMapsMarker
 {
-    native = Promise.resolve({});
-    custom: any;
+    public native: Promise<any>;
+    public custom: any;
 
-    getCenter(): Promise<google.maps.LatLng>
+    constructor(public type: OverlayType) { }
+
+    getContainingMap(): IGoogleMap
     {
         throw new Error("Method not implemented.");
     }
-    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
+    setContainingMap(map: IGoogleMap): void
     {
         throw new Error("Method not implemented.");
     }
-    getZoom(): Promise<number>
-    {
-        throw new Error("Method not implemented.");
-    }
-    setZoom(zoomLevel: number): Promise<void>
-    {
-        throw new Error("Method not implemented.");
-    }
-    createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<import("./marker/i-google-maps-marker").IGoogleMapsMarker>
+    removeFromMap(): void
     {
         throw new Error("Method not implemented.");
     }
