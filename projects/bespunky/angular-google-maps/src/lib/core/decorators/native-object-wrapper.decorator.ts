@@ -1,3 +1,4 @@
+import { keyBy } from 'lodash';
 import { Type } from '@angular/core';
 import { IGoogleMapsNativeObject } from '../abstraction/native/i-google-maps-native-object';
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
@@ -6,21 +7,21 @@ import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-map
 export interface NativeObjectWrapperDefinition
 {
     /** The type of object being wrapped (e.g. `google.maps.Map`, `google.maps.Marker`, etc.). */
-    nativeType: Type<IGoogleMapsNativeObject>,
+    nativeType: Type<IGoogleMapsNativeObject>;
     /**
-     * Any specific native functions not starting the word 'get' to include or exclude as getters.
-     * See decorator documentation to understand how the function will be wrapped.
-     * 
-     * Specify the native function name as key, and assign it `true` to force include, `false` to force exclude.
+     * The names specific native functions to explicitly include or exclude as from wrapping.
+     * No need to specify native functions matching the pattern 'getXXX'. They will automatically wrap.
+     * Functions explictly included here will execute async **inside of angular** when maps api is ready.
      */
-    explicitGetters?: { [name: string]: boolean }
-     /**
-     * Any specific native functions not starting the word 'set' to include or exclude as setters.
-     * See decorator documentation to understand how the function will be wrapped.
-     * 
-     * Specify the native function name as key, and assign it `true` to force include, `false` to force exclude.
-     */
-    explicitSetters?: { [name: string]: boolean }
+    wrapInside?: string[];
+    /**
+    * The names specific native functions to explicitly include or exclude as from wrapping.
+    * No need to specify native functions matching the pattern 'getXXX'. They will automatically wrap.
+    * Functions explictly included will execute async **outside of angular** when maps api is ready.
+    */
+    wrapOutside?: string[];
+    /** The names of any native 'getXXX' or 'setXXX' functions to exclude from automatic wrapping. */
+    exclude?: string[]
 }
 
 /**
@@ -42,42 +43,39 @@ export interface NativeObjectWrapperDefinition
  */
 export function NativeObjectWrapper(wrapperDef: NativeObjectWrapperDefinition)
 {
-    const { nativeType, explicitGetters: specialGetters, explicitSetters: specialSetters } = wrapperDef;
+    const { nativeType, wrapInside = [], wrapOutside = [], exclude = [] } = wrapperDef;
+
+    exclude.push('constructor'); // Never wrap the constructor
+
+    // Map arrays to objects instead of array to allow O(1) access
+    const wrapInsideMap  = keyBy(wrapInside);
+    const wrapOutsideMap = keyBy(wrapOutside);
+    const excluded       = keyBy(exclude);
 
     return function NativeObjectWrapperDecorator(wrapper: Type<IGoogleMapsNativeObjectWrapper>): void
     {
-        // Using object instead of array to allow O(1) access
-        const excluded = {
-            constructor: true
-        };
-
         // Using for...in so all keys are extracted at all prototype levels
         for (let name in nativeType.prototype)
         {
             if (excluded[name]) continue;
-            
-            if (shouldWrap(name, specialGetters, /^get[A-Z]/))
+
+            if (shouldWrap(name, wrapInsideMap, excluded, /^get[A-Z]/))
             {
                 if (!alreadyWrapped(wrapper, name))
-                    wrapGetter(wrapper, name);
+                    wrapInsideAngular(wrapper, name);
             }
-            else if (shouldWrap(name, specialSetters, /^set[A-Z]/))
+            else if (shouldWrap(name, wrapOutsideMap, excluded, /^set[A-Z]/))
             {
                 if (!alreadyWrapped(wrapper, name))
-                    wrapSetter(wrapper, name);
+                    wrapOutsideAngular(wrapper, name);
             }
         }
     }
 }
 
-function shouldWrap(nativeName: string, explicits: { [name: string]: boolean } = {}, regex: RegExp)
-{
-    // Wrap only functions that match the getter/setter pattern and weren't excluded (i.e. they weren't configured with `false`),
-    // or functions that were included (i.e. they were configured with `true`)
-
-    if (explicits[nativeName] === undefined) return nativeName.match(regex);
-    
-    return explicits[nativeName];
+function shouldWrap(nativeName: string, explicitWrap: { [name: string]: string }, excluded: { [name: string]: string}, regex: RegExp): boolean
+{   
+    return !excluded[nativeName] && (!!explicitWrap[nativeName] || !!nativeName.match(regex));
 }
 
 function alreadyWrapped(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string): boolean
@@ -85,7 +83,7 @@ function alreadyWrapped(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: str
     return wrapper.prototype[name] instanceof Function;
 }
 
-function wrapGetter(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string)
+function wrapInsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string)
 {
     wrapper.prototype[name] = async function(...args: any[])
     {
@@ -93,7 +91,7 @@ function wrapGetter(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string)
     };
 }
 
-function wrapSetter(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string)
+function wrapOutsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string)
 {
     wrapper.prototype[name] = function(...args: any[])
     {

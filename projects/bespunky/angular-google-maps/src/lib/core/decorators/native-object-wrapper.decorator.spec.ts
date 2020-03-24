@@ -42,7 +42,7 @@ describe('@NativeObjectWrapper()', () =>
         expect(wrapper.setTitle()).toBe('manual set wrapping');
     });
 
-    it('should allow including extra getters and setters', () =>
+    it('should allow including extra wrappers for execution inside and outside angular', () =>
     {
         expect(MockMarkerWrapper.prototype.changed instanceof Function).toBeTruthy();
         expect(MockMarkerWrapper.prototype.notify  instanceof Function).toBeTruthy();
@@ -70,9 +70,10 @@ interface MockMarkerWrapper
 }
 
 @NativeObjectWrapper({
-    nativeType: google.maps.Marker,
-    explicitGetters: { changed: true, getIcon: false },
-    explicitSetters: { notify: true, setIcon: false }
+    nativeType : google.maps.Marker,
+    wrapInside : ['changed'],
+    wrapOutside: ['notify'],
+    exclude    : ['getIcon', 'setIcon']
 })
 class MockMarkerWrapper implements IGoogleMapsNativeObjectWrapper
 {
