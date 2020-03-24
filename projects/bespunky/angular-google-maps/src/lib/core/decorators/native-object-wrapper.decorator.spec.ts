@@ -1,3 +1,4 @@
+import { fakeAsync, tick } from '@angular/core/testing';
 import { NativeObjectWrapper } from "./native-object-wrapper.decorator";
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
 
@@ -48,6 +49,25 @@ describe('@NativeObjectWrapper()', () =>
         expect(MockMarkerWrapper.prototype.notify  instanceof Function).toBeTruthy();
     });
 
+    it('should allow specifying new names for wrapping methods', fakeAsync(() =>
+    {
+        expect(MockDataWrapper.prototype.addFeature  instanceof Function).toBeTruthy();
+        expect(MockDataWrapper.prototype.findFeature instanceof Function).toBeTruthy();
+
+        const mockData = new MockDataWrapper();
+
+        spyOn(mockData.mockNative, 'add');
+        spyOn(mockData.mockNative, 'getFeatureById');
+
+        expect(mockData.findFeature(null) instanceof Promise);
+        expect(mockData.addFeature(null) instanceof Promise);
+
+        tick();
+
+        expect(mockData.mockNative.getFeatureById).toHaveBeenCalledTimes(1);
+        expect(mockData.mockNative.add).toHaveBeenCalledTimes(1);
+    }));
+
     it('should allow excluding specific getters and setters', () =>
     {
         expect(MockMarkerWrapper.prototype.getIcon).toBeUndefined();
@@ -69,6 +89,8 @@ interface MockMarkerWrapper
     setIcon(): void; // Explicitly excluded setter
 }
 
+const runOutsideAngular = (fn: Function) => Promise.resolve(fn());
+
 @NativeObjectWrapper({
     nativeType : google.maps.Marker,
     wrapInside : ['changed'],
@@ -79,18 +101,40 @@ class MockMarkerWrapper implements IGoogleMapsNativeObjectWrapper
 {
     public mockNative = {
         getMap     : () => void 0,
-        setMap     : (map: any) => void 0,
+        setMap     : () => void 0,
         getPosition: () => void 0,
-        setPosition: (pos: any) => void 0
+        setPosition: () => void 0
     };
-
+    
     native = Promise.resolve(this.mockNative);
     custom: any;
 
-    api = {
-        runOutsideAngular: (fn: Function) => Promise.resolve(fn())
-    };
+    api = { runOutsideAngular };
 
     getTitle() { return 'manual get wrapping'; }
     setTitle() { return 'manual set wrapping'; }
+}
+
+interface MockDataWrapper
+{
+    addFeature  (feature: google.maps.Data.Feature): Promise<google.maps.Map>;
+    findFeature (id: string | number)              : Promise<google.maps.Data.Feature>;
+}
+
+@NativeObjectWrapper({
+    nativeType : google.maps.Data,
+    wrapInside : { getFeatureById: 'findFeature' },
+    wrapOutside: { add: 'addFeature' }
+})
+class MockDataWrapper implements IGoogleMapsNativeObjectWrapper
+{
+    public mockNative = {
+        add           : () => void 0,
+        getFeatureById: ()               => void 0
+    };
+    
+    native = Promise.resolve(this.mockNative);
+    custom: any;
+
+    api = { runOutsideAngular };
 }
