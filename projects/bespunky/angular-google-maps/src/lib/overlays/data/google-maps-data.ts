@@ -5,8 +5,20 @@ import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
 
+/**
+ * Extends intellisense for the class without providing implementation for the methods dynamically set by the framework.
+ * See documentation for the `@NativeObjectWrapper()` decorator for more info.
+ */
+export interface GoogleMapData
+{
+    addFeature (feature: google.maps.Data.Feature): Promise<void>;
+    findFeature(id: string | number)              : Promise<google.maps.Data.Feature>;
+}
+
 @NativeObjectWrapper({
-    nativeType: google.maps.Data
+    nativeType : google.maps.Data,
+    wrapInside : { getFeatureById: 'findFeature' },
+    wrapOutside: { add: 'addFeature' }
 })
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
@@ -18,11 +30,6 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     protected createNativeObject(): google.maps.Data
     {
         return new google.maps.Data(this.options);
-    }
-    
-    public addFeature(feature: google.maps.Data.Feature): Promise<void>
-    {
-        return this.api.runOutsideAngular(() => this.nativeObject.add(feature));
     }
     
     public removeFeature(feature: google.maps.Data.Feature): Promise<google.maps.Data.Feature>;
@@ -37,11 +44,6 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
 
             return feature;
         });
-    }
-    
-    public async findFeature(id: string | number): Promise<google.maps.Data.Feature>
-    {
-        return (await this.native).getFeatureById(id);
     }
     
     public loadGeoJson(url: string, options?: google.maps.Data.GeoJsonOptions): Promise<google.maps.Data.Feature[]>

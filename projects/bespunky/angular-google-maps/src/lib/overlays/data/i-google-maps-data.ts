@@ -3,10 +3,7 @@ import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google
 
 export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay
 {
-    addFeature(feature: google.maps.Data.Feature): Promise<void>;
     removeFeature(featureOrId: google.maps.Data.Feature | number | string): Promise<google.maps.Data.Feature>;
-
-    findFeature(id: number | string): Promise<google.maps.Data.Feature>;
 
     /**
      * Should download GeoJson data from the specified url, interpret it and create map features for it.
