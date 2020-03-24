@@ -12,14 +12,24 @@ export interface NativeObjectWrapperDefinition
      * The names specific native functions to explicitly include or exclude as from wrapping.
      * No need to specify native functions matching the pattern 'getXXX'. They will automatically wrap.
      * Functions explictly included here will execute async **inside of angular** when maps api is ready.
+     * 
+     * If you want the wrapping method to have a different name to the native one, use object notation instead of array.
+     * @example
+    * wrapInside: ['add', 'remove'] // will wrap the `add` and `remove` functions with the same names.
+    * wrapInside: { add: 'addFeature', remove: 'removeFeature' } // will wrap them with new names.
      */
-    wrapInside?: string[];
+    wrapInside?: string[] | { [name: string]: string };
     /**
     * The names specific native functions to explicitly include or exclude as from wrapping.
     * No need to specify native functions matching the pattern 'getXXX'. They will automatically wrap.
     * Functions explictly included will execute async **outside of angular** when maps api is ready.
+    * 
+    * If you want the wrapping method to have a different name to the native one, use object notation instead of array.
+    * @example
+    * wrapOutside: ['add', 'remove'] // will wrap the `add` and `remove` functions with the same names.
+    * wrapOutside: { add: 'addFeature', remove: 'removeFeature' } // will wrap them with new names.
     */
-    wrapOutside?: string[];
+    wrapOutside?: string[] | { [name: string]: string };
     /** The names of any native 'getXXX' or 'setXXX' functions to exclude from automatic wrapping. */
     exclude?: string[]
 }
@@ -48,8 +58,8 @@ export function NativeObjectWrapper(wrapperDef: NativeObjectWrapperDefinition)
     exclude.push('constructor'); // Never wrap the constructor
 
     // Map arrays to objects instead of array to allow O(1) access
-    const wrapInsideMap  = keyBy(wrapInside);
-    const wrapOutsideMap = keyBy(wrapOutside);
+    const wrapInsideMap  = Array.isArray(wrapInside)  ? keyBy(wrapInside)  : wrapInside;
+    const wrapOutsideMap = Array.isArray(wrapOutside) ? keyBy(wrapOutside) : wrapOutside;
     const excluded       = keyBy(exclude);
 
     return function NativeObjectWrapperDecorator(wrapper: Type<IGoogleMapsNativeObjectWrapper>): void
@@ -61,13 +71,13 @@ export function NativeObjectWrapper(wrapperDef: NativeObjectWrapperDefinition)
 
             if (shouldWrap(name, wrapInsideMap, excluded, /^get[A-Z]/))
             {
-                if (!alreadyWrapped(wrapper, name))
-                    wrapInsideAngular(wrapper, name);
+                if (!alreadyWrapped(wrapper, wrapInsideMap[name] || name))
+                    wrapInsideAngular(wrapper, name, wrapInsideMap[name]);
             }
             else if (shouldWrap(name, wrapOutsideMap, excluded, /^set[A-Z]/))
             {
-                if (!alreadyWrapped(wrapper, name))
-                    wrapOutsideAngular(wrapper, name);
+                if (!alreadyWrapped(wrapper, wrapInsideMap[name] || name))
+                    wrapOutsideAngular(wrapper, name, wrapOutsideMap[name]);
             }
         }
     }
@@ -83,18 +93,18 @@ function alreadyWrapped(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: str
     return wrapper.prototype[name] instanceof Function;
 }
 
-function wrapInsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string)
+function wrapInsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, nativeName: string, wrapperName: string = nativeName)
 {
-    wrapper.prototype[name] = async function(...args: any[])
+    wrapper.prototype[wrapperName] = async function(...args: any[])
     {
-        return (await this.native)[name](...args);
+        return (await this.native)[nativeName](...args);
     };
 }
 
-function wrapOutsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string)
+function wrapOutsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, nativeName: string, wrapperName: string = nativeName)
 {
-    wrapper.prototype[name] = function(...args: any[])
+    wrapper.prototype[wrapperName] = function(...args: any[])
     {
-        return this.api.runOutsideAngular(() => this.native.then(native => native[name](...args)));
+        return this.api.runOutsideAngular(() => this.native.then(native => native[nativeName](...args)));
     };
 }
