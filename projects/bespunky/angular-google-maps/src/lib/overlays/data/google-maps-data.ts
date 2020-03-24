@@ -9,7 +9,7 @@ import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper
  * Extends intellisense for the class without providing implementation for the methods dynamically set by the framework.
  * See documentation for the `@NativeObjectWrapper()` decorator for more info.
  */
-export interface GoogleMapData
+export interface GoogleMapsData
 {
     addFeature (feature: google.maps.Data.Feature): Promise<void>;
     findFeature(id: string | number)              : Promise<google.maps.Data.Feature>;
