@@ -11,6 +11,8 @@ import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { Wrap } from '../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
+import { Coord } from '../core/types/geometry-utils.type';
+import { GeometryTransformService } from '../utils/transform/geometry-transform.service';
 
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
@@ -20,6 +22,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     constructor(
         private   mapElement    : ElementRef,
         protected api           : GoogleMapsApiService,
+        protected geometry      : GeometryTransformService,
         private   initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
         private   initialZoom?  : ZoomLevel | number)
     {
@@ -34,8 +37,10 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         });
     }
 
-    public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
-    {
+    public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
+    {        
+        options = Object.assign({}, options, { position: this.geometry.toCoordLiteral(position) });
+
         // Marker creation will cause rendering. Run outside...
         return this.createOverlay(() => new GoogleMapsMarker(this, this.api, options));
     }

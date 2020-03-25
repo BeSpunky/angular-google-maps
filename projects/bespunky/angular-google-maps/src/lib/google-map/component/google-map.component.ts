@@ -7,6 +7,7 @@ import { MapEventsMap } from '../types/map-event.enum';
 import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
 import { GoogleMapsLifecycleBase } from '../../core/abstraction/base/google-maps-lifecycle-base';
 import { IGoogleMap } from '../i-google-map';
+import { GeometryTransformService } from '../../utils/transform/geometry-transform.service';
 
 @Component({
     selector: 'bs-google-map',
@@ -44,7 +45,7 @@ export class GoogleMapComponent extends GoogleMapsLifecycleBase
     @Output() public tiltChanged        = new EventEmitter();
     @Output() public idle               = new EventEmitter();
 
-    constructor(protected api: GoogleMapsInternalApiService)
+    constructor(protected api: GoogleMapsInternalApiService, private geometry: GeometryTransformService)
     {
         super(MapEventsMap, api);
     }
@@ -56,6 +57,6 @@ export class GoogleMapComponent extends GoogleMapsLifecycleBase
     
     protected createNativeWrapper(): IGoogleMap
     {
-        return new GoogleMap(this.element, this.api.openApi);
+        return new GoogleMap(this.element, this.api.openApi, this.geometry);
     }
 }

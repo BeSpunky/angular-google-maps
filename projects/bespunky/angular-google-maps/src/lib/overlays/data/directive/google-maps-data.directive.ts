@@ -4,8 +4,8 @@ import { GoogleMapComponent } from '../../../google-map/component/google-map.com
 import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
 import { IGoogleMapsData } from '../i-google-maps-data';
 import { GoogleMapsData } from '../google-maps-data';
-import { IGoogleMap } from '../../../google-map/i-google-map';
 import { DataEventsMap } from '../types/data-event.enum';
+import { GeometryTransformService } from '../../../utils/transform/geometry-transform.service';
 
 @Directive({
     selector: 'bs-google-maps-data, [bsGoogleMapsData]',
@@ -40,7 +40,7 @@ export class GoogleMapsDataDirective extends GoogleMapsLifecycleBase
     /** This event is fired when a feature's property is set. */
     @Output() public setProperty                                = new EventEmitter()
 
-    constructor(private mapComponent: GoogleMapComponent, protected api: GoogleMapsInternalApiService)
+    constructor(private mapComponent: GoogleMapComponent, protected api: GoogleMapsInternalApiService, private geometry: GeometryTransformService)
     {
         super(DataEventsMap, api);
     }
@@ -52,6 +52,6 @@ export class GoogleMapsDataDirective extends GoogleMapsLifecycleBase
 
     protected createNativeWrapper(): IGoogleMapsData
     {
-        return new GoogleMapsData(this.mapComponent.map, this.api.openApi);
+        return new GoogleMapsData(this.mapComponent.map, this.api.openApi, this.geometry);
     }
 }

@@ -4,7 +4,7 @@ import { ZoomLevel } from './types/zoom-level.enum';
 
 export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper
 {
-    createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker>;
+    createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker>;
 
     getCenter(): Promise<google.maps.LatLng>;
     setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>;
