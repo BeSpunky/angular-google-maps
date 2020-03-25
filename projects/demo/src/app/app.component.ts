@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { GoogleMapsApiService, GoogleMapsMarker } from '@bespunky/angular-google-maps';
+import { Component, ViewChild } from '@angular/core';
+import { GoogleMapsApiService, GoogleMapsMarker, GoogleMapsData, GoogleMapsDataDirective, GoogleMapsEventData } from '@bespunky/angular-google-maps';
 
 @Component({
     selector: 'app-root',
@@ -8,16 +8,21 @@ import { GoogleMapsApiService, GoogleMapsMarker } from '@bespunky/angular-google
 })
 export class AppComponent
 {
-    title = 'demo';
+    @ViewChild(GoogleMapsDataDirective)
+    public data: GoogleMapsDataDirective;
 
     constructor(private api: GoogleMapsApiService)
     {
-        api.whenReady.then(() => this.title = 'loaded api');
+        api.whenReady.then(() => console.log('loaded api'));
     }
 
-    public onClick()
+    public onClick(event: GoogleMapsEventData)
     {
-        alert('clicked');
+        if (!(event instanceof GoogleMapsEventData)) return;
+
+        const feature = new google.maps.Data.Feature({ geometry: new google.maps.Data.Point(event.args[0].position) });
+
+        (this.data.nativeWrapper as GoogleMapsData).addFeature(feature);
     }
 
     public onMarkerClick(marker: GoogleMapsMarker)

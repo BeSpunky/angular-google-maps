@@ -1,3 +1,5 @@
+import 'reflect-metadata'; // Imported once here. No need to import in other places.
+
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { ZenModule } from '@bespunky/angular-zen';
 
@@ -9,11 +11,12 @@ import { GoogleMapComponent } from './google-map/component/google-map.component'
 import { GoogleMapsMarkerDirective } from './overlays/marker/directive/google-maps-marker.directive';
 import { GoogleMapsInternalApiService } from './core/api/google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromiseProvider } from './core/api/google-maps-api-ready.token';
+import { GoogleMapsDataDirective } from './overlays/data/directive/google-maps-data.directive';
 
 @NgModule({
-    declarations: [GoogleMapComponent, GoogleMapsMarkerDirective],
+    declarations: [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective],
     imports:      [ZenModule],
-    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective]
+    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective]
 })
 export class GoogleMapsModule
 {

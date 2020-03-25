@@ -1,19 +1,25 @@
 import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
 import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 
-export abstract class GoogleMapsNativeObjectWrapper implements IGoogleMapsNativeObjectWrapper
+export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsNativeObject> implements IGoogleMapsNativeObjectWrapper                                                   
 {
-    abstract readonly native: Promise<IGoogleMapsNativeObject>;
-
     public custom: any;
 
-    listenTo(eventName: string, handler: () => void): void
+    protected nativeObject: TNative;
+
+    constructor(protected api: GoogleMapsApiService)
     {
-        this.native.then(nativeObject => nativeObject.addListener(eventName, handler));
+        this.api.runOutsideAngular(() =>
+        {
+            this.nativeObject = this.createNativeObject();
+        });
     }
 
-    stopListeningTo(eventName: string): void
+    public get native(): Promise<TNative>
     {
-        this.native.then(nativeObject => google.maps.event.clearListeners(nativeObject, eventName));
+        return this.api.whenReady.then(() => this.nativeObject);
     }
+
+    protected abstract createNativeObject(): TNative;
 }

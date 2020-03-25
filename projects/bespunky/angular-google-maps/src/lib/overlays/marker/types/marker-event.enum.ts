@@ -1,4 +1,4 @@
-import { GoogleMapsEventsMap } from '../../../core/types/google-maps-events-map.type';
+import { convertEnumToGoogleMapsEventsMap } from '../../../utils/utils';
 
 export enum MarkerEvent
 {
@@ -47,4 +47,4 @@ export enum MarkerEvent
 }
 
 // Used for iteration of known events (e.g. in case of registering listeners)
-export const MarkerEventsMap: GoogleMapsEventsMap = Object.keys(MarkerEvent).map(eventName => ({ name: eventName, reference: MarkerEvent[eventName] }));
+export const MarkerEventsMap = convertEnumToGoogleMapsEventsMap(MarkerEvent);

@@ -3,38 +3,26 @@ import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-ma
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { IGoogleMapsMarker } from './i-google-maps-marker';
 import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
-
-export class GoogleMapsMarker extends GoogleMapsDrawableOverlay implements IGoogleMapsMarker
+import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
+import { Wrap } from '../../core/decorators/wrap.decorator';
+import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
+  
+@NativeObjectWrapper
+export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
-    private whenReady: Promise<void>;
-    private marker: google.maps.Marker;
-
-    constructor(public map: IGoogleMap, api: GoogleMapsApiService, options?: google.maps.ReadonlyMarkerOptions)
+    constructor(public map: IGoogleMap, api: GoogleMapsApiService, private options?: google.maps.ReadonlyMarkerOptions)
     {
         super(OverlayType.Marker, map, api);
-
-        this.whenReady = this.api.whenReady;
-
-        this.whenReady.then(() =>
-        {
-            this.marker = new google.maps.Marker(options);
-        });
     }
 
-    public get native(): Promise<google.maps.Marker>
+    protected createNativeObject(): google.maps.Marker
     {
-        return this.whenReady.then(() => this.marker);
+        return new google.maps.Marker(this.options);
     }
 
-    public async getPosition(): Promise<google.maps.LatLng>
-    {
-        await this.whenReady;
-
-        return this.marker.getPosition();
-    }
-
-    public setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral)
-    {
-        this.api.runOutsideAngular(() => this.marker.setPosition(position));
-    }
+    @Wrap()
+    getPosition(): Promise<google.maps.LatLng> { return null; }
+    
+    @Wrap() @OutsideAngular
+    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void> { return null; }
 }

@@ -1,17 +1,17 @@
+import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
 import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 import { IGoogleMap } from '../../../google-map/i-google-map';
-import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { OverlayType } from './overlay-type.enum';
 
-export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWrapper implements IGoogleMapsDrawableOverlay
+export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay>
+                extends GoogleMapsNativeObjectEmittingWrapper<TNative>
+                implements IGoogleMapsDrawableOverlay
 {
-    public abstract readonly native: Promise<IGoogleMapsNativeDrawableOverlay>;
-
     constructor(public readonly type: OverlayType, protected map: IGoogleMap, protected api: GoogleMapsApiService)
     {
-        super();
+        super(api);
 
         if (map) this.setContainingMap(map);
     }
@@ -28,18 +28,12 @@ export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWr
      *
      * @param {IGoogleMap} map The map to dispaly the overlay on.
      */
-    public async setContainingMap(map: IGoogleMap)
+    public setContainingMap(map: IGoogleMap): Promise<void>
     {
         this.map = map;
 
         // Wait for the map object to create, then for the drawable to create, then set the map to the drawable
-        this.api.runOutsideAngular(async () =>
-        {
-            const nativeMap      = await map.native;
-            const nativeDrawable = await this.native;
-
-            nativeDrawable.setMap(nativeMap);
-        });
+        return this.api.runOutsideAngular(() => map.native.then((nativeMap: google.maps.Map) => this.nativeObject.setMap(nativeMap)));
     }
 
     /**
@@ -47,15 +41,10 @@ export abstract class GoogleMapsDrawableOverlay extends GoogleMapsNativeObjectWr
      * If not possible, it is the responsability of the caller to remove the overlay from the `OverlayTracker` in the `GoogleMap.overlays` object.
      * Otherwise, inconsistencies and unexpected behaviours might occur.
      */
-    public async removeFromMap()
+    public removeFromMap(): Promise<void>
     {
         this.map = null;
 
-        this.api.runOutsideAngular(async () =>
-        {
-            const nativeDrawable = await this.native;
-
-            nativeDrawable.setMap(null);
-        });
+        return this.api.runOutsideAngular(() => this.nativeObject.setMap(null));
     }
 }

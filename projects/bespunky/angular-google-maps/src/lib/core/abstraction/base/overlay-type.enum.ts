@@ -13,5 +13,7 @@ export enum OverlayType
     /** A rectangular image overlay on the map. */
     Ground,
     /** An overlay that looks like a bubble and is often connected to a marker. */
-    InfoWindow
+    InfoWindow,
+    /** Data layer defining drawn features. Also allows loading features directly from a GeoJson. */
+    Data
 }

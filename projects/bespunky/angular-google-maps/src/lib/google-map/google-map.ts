@@ -1,66 +1,37 @@
 import { ElementRef } from '@angular/core';
 
-import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { Defaults } from '../core/config/defaults';
-import { ZoomLevel } from './types/zoom-level.enum';
-import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
-import { GoogleMapsNativeObjectWrapper } from '../core/abstraction/base/google-maps-native-object-wrapper';
+import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
+import { GoogleMapsNativeObjectEmittingWrapper } from '../core/abstraction/base/google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
+import { NativeObjectWrapper } from '../core/decorators/native-object-wrapper.decorator';
 import { IGoogleMap } from './i-google-map';
 import { OverlaysTracker } from '../overlays/overlays-tracker';
-import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
+import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
+import { ZoomLevel } from './types/zoom-level.enum';
+import { Wrap } from '../core/decorators/wrap.decorator';
+import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
 
-export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleMap
+@NativeObjectWrapper
+export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
-    private whenReady: Promise<void>;
-    private map: google.maps.Map;
-    
     public overlays = new OverlaysTracker();
 
-    constructor(private mapElement: ElementRef,
-                private api: GoogleMapsApiService,
-                initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
-                initialZoom?: ZoomLevel | number)
+    constructor(
+        private   mapElement    : ElementRef,
+        protected api           : GoogleMapsApiService,
+        private   initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
+        private   initialZoom?  : ZoomLevel | number)
     {
-        super();
+        super(api);
+    }
 
-        this.whenReady = this.api.whenReady;
-
-        this.api.runOutsideAngular(() =>
-        {
-            this.map = new google.maps.Map(this.mapElement.nativeElement, {
-                center: initialCenter || Defaults.Center,
-                zoom:   initialZoom   || Defaults.ZoomLevel
-            });
+    protected createNativeObject(): google.maps.Map
+    {
+        return new google.maps.Map(this.mapElement.nativeElement, {
+            center: this.initialCenter || Defaults.Center,
+            zoom  : this.initialZoom   || Defaults.ZoomLevel
         });
-    }
-
-    public get native(): Promise<google.maps.Map>
-    {
-        return this.whenReady.then(() => this.map);
-    }
-
-    public async getCenter(): Promise<google.maps.LatLng>
-    {
-        await this.whenReady;
-
-        return this.map.getCenter();
-    }
-
-    public setCenter(lngLat: google.maps.LatLng | google.maps.LatLngLiteral)
-    {
-        this.api.runOutsideAngular(() => this.map.setCenter(lngLat));
-    }
-
-    public async getZoom(): Promise<number>
-    {
-        await this.whenReady;
-
-        return this.map.getZoom();
-    }
-
-    public setZoom(zoomLevel: ZoomLevel | number)
-    {
-        this.api.runOutsideAngular(() => this.map.setZoom(zoomLevel));
     }
 
     public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
@@ -81,11 +52,23 @@ export class GoogleMap extends GoogleMapsNativeObjectWrapper implements IGoogleM
         return overlay;
     }
 
-    private async removeOverlay(overlay: IGoogleMapsDrawableOverlay)
+    public async removeOverlay(overlay: IGoogleMapsDrawableOverlay)
     {
         // Overlay removal will cause rendering. Run outside...
         await this.api.runOutsideAngular(() => overlay.removeFromMap());
 
         this.overlays.remove(overlay);
     }
+
+    @Wrap()
+    getCenter(): Promise<google.maps.LatLng> { return null; }
+
+    @Wrap() @OutsideAngular
+    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void> { return null; }
+
+    @Wrap()
+    getZoom(): Promise<number> { return null; }
+
+    @Wrap() @OutsideAngular
+    setZoom(zoomLevel: ZoomLevel | number): Promise<void> { return null; }
 }
