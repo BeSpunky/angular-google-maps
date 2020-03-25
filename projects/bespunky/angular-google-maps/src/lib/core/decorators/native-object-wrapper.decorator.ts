@@ -1,110 +1,57 @@
-import { keyBy } from 'lodash';
 import { Type } from '@angular/core';
-import { IGoogleMapsNativeObject } from '../abstraction/native/i-google-maps-native-object';
-import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
 
-/** Defines the structure for providing wrapper definitions when using the `@NativeObjectWrapper()`. */
-export interface NativeObjectWrapperDefinition
-{
-    /** The type of object being wrapped (e.g. `google.maps.Map`, `google.maps.Marker`, etc.). */
-    nativeType: Type<IGoogleMapsNativeObject>;
-    /**
-     * The names specific native functions to explicitly include or exclude as from wrapping.
-     * No need to specify native functions matching the pattern 'getXXX'. They will automatically wrap.
-     * Functions explictly included here will execute async **inside of angular** when maps api is ready.
-     * 
-     * If you want the wrapping method to have a different name to the native one, use object notation instead of array.
-     * @example
-    * wrapInside: ['add', 'remove'] // will wrap the `add` and `remove` functions with the same names.
-    * wrapInside: { add: 'addFeature', remove: 'removeFeature' } // will wrap them with new names.
-     */
-    wrapInside?: string[] | { [name: string]: string };
-    /**
-    * The names specific native functions to explicitly include or exclude as from wrapping.
-    * No need to specify native functions matching the pattern 'getXXX'. They will automatically wrap.
-    * Functions explictly included will execute async **outside of angular** when maps api is ready.
-    * 
-    * If you want the wrapping method to have a different name to the native one, use object notation instead of array.
-    * @example
-    * wrapOutside: ['add', 'remove'] // will wrap the `add` and `remove` functions with the same names.
-    * wrapOutside: { add: 'addFeature', remove: 'removeFeature' } // will wrap them with new names.
-    */
-    wrapOutside?: string[] | { [name: string]: string };
-    /** The names of any native 'getXXX' or 'setXXX' functions to exclude from automatic wrapping. */
-    exclude?: string[]
-}
+import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
+import { OutsideAngularSymbol } from './outside-angular.decorator';
+import { WrapSymbol } from './wrap.decorator';
 
 /**
- * Mark classes implementing `IGoogleMapsNativeObjectWrapper` (directly or indirectly) and they will be assigned
- * with all the `getXXX()` and `setXXX()` functions that exist on the corresponding native type.
- * For example, marking GoogleMap will add `getZoom()`, `setZoom()`, `getCenter()`, `setCenter()`, etc.
+ * Should be placed over classes implementing `IGoogleMapsNativeObjectWrapper` (directly or indirectly).
+ * The decorator will scan the class for methods decorated with `@Wrap` or `@OutsideAngular` and replace their implementation
+ * with a wrapper method that calls the native function.
  * 
- * Getters will wait on the map api ready promise, then retrieve the value from the native object.
- * Setters will wait on the map api ready promise, then, outside angular, will set the new value to the native object.
- * 
+ * By itself, the decorator will not have any affect. Methods must be decorated for it to do the work.
  * This is necessary for the property delegation mechanism to work (see `GoogleMapsInternalApiService.delegateInputChangesToNativeObject()`).
- * 
- * If you want to implement the getter/setter wrapper yourself, simply do. The decorator will detect the existing function and will not overwrite it.
- * 
- * Note: To have intellisense list the getters and setters on wrapper objects, create an interface with the same name as the wrapper class
- * and define the method signatures (see `interface GoogleMap` at `google-map.ts`).
- *
- * @param {NativeObjectWrapperDefinition} wrapperDef The definition of the native wrapper.
+ * You can implement the wrappers yourself but this will save you the need for repeating the same implementation each time.
+ *  
+ * @see `@Wrap` and `@OutsideAngular` to understand the implementation provided the decorators.
  */
-export function NativeObjectWrapper(wrapperDef: NativeObjectWrapperDefinition)
+export function NativeObjectWrapper(wrapper: Type<IGoogleMapsNativeObjectWrapper>): void
 {
-    const { nativeType, wrapInside = [], wrapOutside = [], exclude = [] } = wrapperDef;
+    // Find all decorated methods
+    const wrappedMap     = Reflect.getMetadata(WrapSymbol,           wrapper.prototype) as { [name: string]: string } || {};
+    const outsideAngular = Reflect.getMetadata(OutsideAngularSymbol, wrapper.prototype) as string[]                   || [];
 
-    exclude.push('constructor'); // Never wrap the constructor
+    const wrapped = Object.keys(wrappedMap);
 
-    // Map arrays to objects instead of array to allow O(1) access
-    const wrapInsideMap  = Array.isArray(wrapInside)  ? keyBy(wrapInside)  : wrapInside;
-    const wrapOutsideMap = Array.isArray(wrapOutside) ? keyBy(wrapOutside) : wrapOutside;
-    const excluded       = keyBy(exclude);
+    if (!wrapped.length) console.warn(`[NativeObjectWrapper ${wrapper.name}]: No method marked for wrapping. Property delegation will not work. Please use the @Wrap decorator.`);
 
-    return function NativeObjectWrapperDecorator(wrapper: Type<IGoogleMapsNativeObjectWrapper>): void
-    {
-        // Using for...in so all keys are extracted at all prototype levels
-        for (let name in nativeType.prototype)
-        {
-            if (excluded[name]) continue;
+    // Replace implementation for all methods decorated for wrapping
+    wrapped.forEach(methodName => wrapNative(wrapper, methodName, wrappedMap[methodName]));
 
-            if (shouldWrap(name, wrapInsideMap, excluded, /^get[A-Z]/))
-            {
-                if (!alreadyWrapped(wrapper, wrapInsideMap[name] || name))
-                    wrapInsideAngular(wrapper, name, wrapInsideMap[name]);
-            }
-            else if (shouldWrap(name, wrapOutsideMap, excluded, /^set[A-Z]/))
-            {
-                if (!alreadyWrapped(wrapper, wrapInsideMap[name] || name))
-                    wrapOutsideAngular(wrapper, name, wrapOutsideMap[name]);
-            }
-        }
-    }
+    // Wrap all decorated for outside angular execution with a call to `api.runOutsideAngular()`
+    outsideAngular.forEach(methodName => wrapOutside(wrapper, methodName));
 }
 
-function shouldWrap(nativeName: string, explicitWrap: { [name: string]: string }, excluded: { [name: string]: string}, regex: RegExp): boolean
-{   
-    return !excluded[nativeName] && (!!explicitWrap[nativeName] || !!nativeName.match(regex));
-}
-
-function alreadyWrapped(wrapper: Type<IGoogleMapsNativeObjectWrapper>, name: string): boolean
-{
-    return wrapper.prototype[name] instanceof Function;
-}
-
-function wrapInsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, nativeName: string, wrapperName: string = nativeName)
+function wrapNative(wrapper: Type<IGoogleMapsNativeObjectWrapper>, wrapperName: string, nativeName: string): void
 {
     wrapper.prototype[wrapperName] = async function(...args: any[])
     {
-        return (await this.native)[nativeName](...args);
+        const native = (await this.native);
+    
+        // As the function is assigned to the prototype, not the instance, the original function should be bound
+        // to the instance of the native object for which the call was triggered. Hence the call to `apply(native, args)`.
+        return native[nativeName].apply(native, args);
     };
 }
 
-function wrapOutsideAngular(wrapper: Type<IGoogleMapsNativeObjectWrapper>, nativeName: string, wrapperName: string = nativeName)
+function wrapOutside(wrapper: Type<IGoogleMapsNativeObjectWrapper>, wrapperName: string): void
 {
+    const original = wrapper.prototype[wrapperName] as (...args: any[]) => any;
+
     wrapper.prototype[wrapperName] = function(...args: any[])
     {
-        return this.api.runOutsideAngular(() => this.native.then(native => native[nativeName](...args)));
+        // As the function is assigned to the prototype, not the instance, the original function should be bound
+        // to the instance which triggered the call. Hence the call to `apply(this, args)`.
+        return this.api.runOutsideAngular(() => original.apply(this, args));
     };
 }

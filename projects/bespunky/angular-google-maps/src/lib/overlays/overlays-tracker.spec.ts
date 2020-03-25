@@ -50,6 +50,15 @@ class StubGoogleMapsMarker implements IGoogleMapsMarker
     public custom: any;
 
     constructor(public type: OverlayType) { }
+    
+    getPosition(): Promise<google.maps.LatLng>
+    {
+        throw new Error("Method not implemented.");
+    }
+    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
+    {
+        throw new Error("Method not implemented.");
+    }
 
     getContainingMap(): IGoogleMap
     {

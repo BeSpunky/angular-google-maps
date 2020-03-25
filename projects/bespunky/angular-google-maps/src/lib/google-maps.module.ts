@@ -1,3 +1,5 @@
+import 'reflect-metadata'; // Imported once here. No need to import in other places.
+
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { ZenModule } from '@bespunky/angular-zen';
 

@@ -4,22 +4,10 @@ import { IGoogleMap } from '../../google-map/i-google-map';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
+import { Wrap } from '../../core/decorators/wrap.decorator';
+import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
 
-/**
- * Extends intellisense for the class without providing implementation for the methods dynamically set by the framework.
- * See documentation for the `@NativeObjectWrapper()` decorator for more info.
- */
-export interface GoogleMapsData
-{
-    addFeature (feature: google.maps.Data.Feature): Promise<void>;
-    findFeature(id: string | number)              : Promise<google.maps.Data.Feature>;
-}
-
-@NativeObjectWrapper({
-    nativeType : google.maps.Data,
-    wrapInside : { getFeatureById: 'findFeature' },
-    wrapOutside: { add: 'addFeature' }
-})
+@NativeObjectWrapper
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
     constructor(public map: IGoogleMap, api: GoogleMapsApiService, private options?: google.maps.Data.DataOptions)
@@ -46,12 +34,16 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         });
     }
     
-    public loadGeoJson(url: string, options?: google.maps.Data.GeoJsonOptions): Promise<google.maps.Data.Feature[]>
+    @Wrap('add') @OutsideAngular
+    addFeature(feature: google.maps.Data.Feature): Promise<void> { return null; }
+
+    @Wrap('getFeatureById')
+    findFeature(id: string | number): Promise<google.maps.Data.Feature> { return null; }
+    
+    @OutsideAngular
+    loadGeoJson(url: string, options?: google.maps.Data.GeoJsonOptions): Promise<google.maps.Data.Feature[]>
     {
-        return this.api.runOutsideAngular(() =>
-        {
-            return new Promise(resolve => this.nativeObject.loadGeoJson(url, options, resolve));
-        });
+        return new Promise(resolve => this.nativeObject.loadGeoJson(url, options, resolve));
     }
     
     public async toGeoJson(): Promise<any>

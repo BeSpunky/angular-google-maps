@@ -3,6 +3,10 @@ import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google
 
 export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay
 {
+    addFeature(feature: google.maps.Data.Feature): Promise<void>;
+    
+    findFeature(id: string | number): Promise<google.maps.Data.Feature>;
+
     removeFeature(featureOrId: google.maps.Data.Feature | number | string): Promise<google.maps.Data.Feature>;
 
     /**
