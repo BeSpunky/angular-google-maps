@@ -1,4 +1,4 @@
-import { convertEnumToGoogleMapsEventsMap } from '../../../utils/utils';
+import { createEventMapProvider } from '../../../utils/utils';
 
 export enum DataEvent
 {
@@ -28,5 +28,4 @@ export enum DataEvent
     SetProperty     = 'setproperty'
 }
 
-// Used for iteration of known events (e.g. in case of registering listeners)
-export const DataEventsMap = convertEnumToGoogleMapsEventsMap(DataEvent);
+export const DataEventsMapProvider = createEventMapProvider(DataEvent);

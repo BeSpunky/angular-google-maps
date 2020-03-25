@@ -1,16 +1,31 @@
-import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges, InjectionToken, Inject } from '@angular/core';
 import { promiseLater } from '@bespunky/angular-zen';
 
-import { GoogleMapsEventsMap } from '../../types/google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
+import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
+import { NativeWrapperFactoryProvider } from './native-wrapper-factory.provider';
+import { IGoogleMap } from '../../../google-map/i-google-map';
+import { EventsMap } from '../events/event-map.token';
+import { CurrentMap } from '../../../google-map/component/current-map.provider';
+import { GoogleMap } from '../../../google-map/google-map';
 
 export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
 {
     private waitForComponentInit: { promise: Promise<void>, resolve: () => void, reject: () => any };
+    
     public nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper;
 
-    constructor(protected eventsMap: GoogleMapsEventsMap, protected api: GoogleMapsInternalApiService)
+    public abstract options?: any;
+
+    constructor(
+        protected api: GoogleMapsInternalApiService,
+        @Inject(NativeWrapperFactoryProvider) private createNativeWrapper: EmittingNativeWrapperFactory,
+        @Inject(EventsMap) private eventsMap: GoogleMapsEventsMap,
+        @Inject(CurrentMap) private currentMap: BehaviorSubject<IGoogleMap>
+    )
     {
         // initNativeWrapper cannot be called here because the map extending component hasn't been initialized yet.
         // If the component hasn't initialized yet, the wrapper hasn't either.
@@ -41,26 +56,12 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
 
     private initNativeWrapper(): void
     {
-        this.nativeWrapper = this.nativeWrapperInput || this.createNativeWrapper();
-    }
+        // TODO: Read metadata to detect @Input wrapper
+        this.nativeWrapper = null || this.createNativeWrapper(this.options);
 
-    /**
-     * Derived components should allow component users to assign their own native wrapper in their templates.
-     * This getter should return the member marked as `@Input()` which holds that wrapper passed from the template user.
-     * If this is `null` or `undefined` at the moment of instantiation, a new wrapper will be created automaticlly using `createNativeWrapper()`.
-     * Event hooking and property delegation will be done with that wrapper only.
-     * 
-     * @readonly
-     * @protected
-     * @abstract
-     */
-    protected abstract get nativeWrapperInput(): IGoogleMapsNativeObjectEmittingWrapper;
-    /**
-     * Should create a new wrapper of the type that corresponds to the component (e.g. `GoogleMap` for `GoogleMapComponent`, `GoogleMapsMarker` for `GoogleMapsMarkerDirective`, etc.).
-     *
-     * @protected
-     * @abstract
-     * @returns {IGoogleMapsNativeObjectEmittingWrapper} A new native wrapper corresponding to the component type.
-     */
-    protected abstract createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper;
+        // The map object is provided to the different factories when instantiating wrappers.
+        // This is the most immediate place after instantiation to notify the system of the new GoogleMap object.
+        if (this.nativeWrapper instanceof GoogleMap)
+            this.currentMap.next(this.nativeWrapper);
+    }
 }

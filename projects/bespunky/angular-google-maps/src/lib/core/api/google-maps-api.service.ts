@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsConfig } from '../config/google-maps-config';
+import { EventDataTransformService } from '../../utils/transform/event-data-transform.service';
+import { GeometryTransformService } from '../../utils/transform/geometry-transform.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,10 +14,13 @@ export class GoogleMapsApiService implements OnDestroy
 {
     private mapsApiReady: Promise<void>;
 
-    constructor(public config: GoogleMapsConfig,
-                private zone: NgZone,
-                @Inject(GoogleMapsApiReadyPromise)
-                private waitForApiPromiseCreation: BehaviorSubject<Promise<void>>)
+    constructor(
+        public config: GoogleMapsConfig,
+        public eventsData: EventDataTransformService,
+        public geometry: GeometryTransformService,
+        private zone: NgZone,
+        @Inject(GoogleMapsApiReadyPromise)
+        private waitForApiPromiseCreation: BehaviorSubject<Promise<void>>)
     {
         // Fetch the promise created by the internal api and store it
         this.waitForApiPromiseCreation.subscribe(promise => this.mapsApiReady = promise);

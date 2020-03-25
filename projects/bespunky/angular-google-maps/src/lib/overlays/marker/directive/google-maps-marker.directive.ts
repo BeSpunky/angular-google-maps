@@ -1,22 +1,25 @@
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 
-import { GoogleMapComponent } from '../../../google-map/component/google-map.component';
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
-import { MarkerEventsMap } from '../types/marker-event.enum';
-import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
 import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
-import { GoogleMapsMarker } from '../google-maps-marker';
+import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
+import { MarkerEventsMapProvider } from '../types/marker-event.enum';
 
 @Directive({
     selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
-    exportAs: 'marker'
+    exportAs: 'marker',
+    providers: [
+        GoogleMapsMarkerFactoryProvider,
+        MarkerEventsMapProvider
+    ]
 })
 export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
 {
     @Input() public marker?: IGoogleMapsMarker;
+    @Input() public options?: google.maps.MarkerOptions;
     @Input() public position?: google.maps.LatLng | google.maps.LatLngLiteral;
 
-  /** Fired when the marker's animation property changes. */
+    /** Fired when the marker's animation property changes. */
     @Output() public animationChanged                               = new EventEmitter();
     /** Fired when the marker icon was clicked. */
     @Output() public click                                          = new EventEmitter();
@@ -58,19 +61,4 @@ export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
     @Output() public visibleChanged                                 = new EventEmitter();
     /** Fired when the marker's zIndex property changes.    */
     @Output() public zIndexChanged                                  = new EventEmitter();
-
-    constructor(private mapComponent: GoogleMapComponent, protected api: GoogleMapsInternalApiService)
-    {
-        super(MarkerEventsMap, api);
-    }
-    
-    protected get nativeWrapperInput(): IGoogleMapsMarker
-    {
-        return this.marker;
-    }
-
-    protected createNativeWrapper(): IGoogleMapsMarker
-    {
-        return new GoogleMapsMarker(this.mapComponent.map, this.api.openApi)
-    }
 }
