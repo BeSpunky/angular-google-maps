@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { async, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapComponent } from './google-map.component';
 import { configureGoogleMapsTestingModule } from '../../testing/setup';
@@ -15,18 +15,18 @@ import { LifecycleTestsHostComponentBase, createLifecycleTestingHostComponentTem
  */
 describe('GoogleMapComponent', () =>
 {
-    let hostFixture: ComponentFixture<TestHostComponent>;
+    let hostFixture  : ComponentFixture<TestHostComponent>;
     let hostComponent: TestHostComponent;
-    let component: GoogleMapComponent;
+    let component    : GoogleMapComponent;
 
-    beforeEach(async(() =>
+    beforeEach(async () =>
     {
-        ({ fixture: hostFixture, component: hostComponent } = configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
+        ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
         
         hostFixture.detectChanges();
 
         component = hostComponent.mapComponent;
-    }));
+    });
 
     it('should create an instance', () => expect(component).toBeTruthy());
 });

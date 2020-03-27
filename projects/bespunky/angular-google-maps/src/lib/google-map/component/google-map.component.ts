@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
-import { BehaviorSubject } from 'rxjs';
-import { Component, Input, Output, EventEmitter, InjectionToken, FactoryProvider } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { ZoomLevel } from '../types/zoom-level.enum';
 import { MapEventsMapProvider } from '../types/map-event.enum';
@@ -8,6 +7,7 @@ import { GoogleMapsLifecycleBase } from '../../core/abstraction/base/google-maps
 import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
 import { GoogleMap } from '../google-map';
 import { CurrentMapProvider } from './current-map.provider';
+import { WrapperInput } from '../../core/decorators/wrapper-input.decorator';
 
 @Component({
     selector: 'bs-google-map',
@@ -22,7 +22,7 @@ import { CurrentMapProvider } from './current-map.provider';
 export class GoogleMapComponent extends GoogleMapsLifecycleBase
 {
     // Bound properties
-    @Input() public map     : GoogleMap;
+    @WrapperInput() public map     : GoogleMap;
     @Input() public options?: google.maps.MapOptions;
     @Input() public center? : google.maps.LatLng;
     @Input() public zoom?   : ZoomLevel;

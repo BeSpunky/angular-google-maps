@@ -19,9 +19,9 @@ describe('GoogleMapsDataDirective', () =>
     let hostComponent: TestHostComponent;
     let directive: GoogleMapsDataDirective;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ fixture: hostFixture, component: hostComponent } = configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
+        ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
         
         hostFixture.detectChanges();
 
@@ -32,6 +32,6 @@ describe('GoogleMapsDataDirective', () =>
 });
 
 @Component({
-    template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-data #testedComponent></bs-google-maps-data>')
+    template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-data #testedComponent></bs-google-maps-data>'),
 })
 class TestHostComponent extends LifecycleTestsHostComponentBase { }

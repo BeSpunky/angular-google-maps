@@ -16,12 +16,12 @@ describe('GoogleMapsFeature', () =>
     let map: GoogleMap;
     let data: GoogleMapsData;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        map = new GoogleMap(new ElementRef(elementStub), api);
-        data = new GoogleMapsData(map, api);
+        map = new GoogleMap(api, new ElementRef(elementStub));
+        data = new GoogleMapsData(api, map);
         feature = new GoogleMapsFeature(data, api, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }) });
     });
 

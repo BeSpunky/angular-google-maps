@@ -12,7 +12,7 @@ describe('GoogleMapsApiService', () =>
     let waitForApiPromiseCreation: BehaviorSubject<Promise<void>>;
     let tokenSubscribeSpy: jasmine.Spy;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
         const waitToken = new BehaviorSubject<Promise<void>>(null);
 
@@ -23,7 +23,7 @@ describe('GoogleMapsApiService', () =>
             spies: { fakeRunOutsideAngular: false }
         };
 
-        ({ api: service } = configureGoogleMapsTestingModule(testConfig));
+        ({ api: service } = await configureGoogleMapsTestingModule(testConfig));
 
         waitForApiPromiseCreation = TestBed.inject(GoogleMapsApiReadyPromise);
     });

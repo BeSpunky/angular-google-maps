@@ -7,7 +7,7 @@ import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-ma
 import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 import { Wrap } from '../../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
-  
+
 @NativeObjectWrapper
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {

@@ -15,13 +15,13 @@ import { GoogleMapsMarkerDirective } from './google-maps-marker.directive';
  */
 describe('GoogleMapsMarkerDirective', () =>
 {
-    let hostFixture: ComponentFixture<TestHostComponent>;
+    let hostFixture  : ComponentFixture<TestHostComponent>;
     let hostComponent: TestHostComponent;
-    let directive: GoogleMapsMarkerDirective;
+    let directive    : GoogleMapsMarkerDirective;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ fixture: hostFixture, component: hostComponent } = configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
+        ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
         
         hostFixture.detectChanges();
 

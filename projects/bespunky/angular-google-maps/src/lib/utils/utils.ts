@@ -13,8 +13,7 @@ export function createEventMapProvider(eventEnum: any): FactoryProvider
 {
     return {
         provide: EventsMap,
-        useFactory: convertEnumToGoogleMapsEventsMap,
-        deps: [eventEnum]
+        useFactory: () => convertEnumToGoogleMapsEventsMap(eventEnum)
     };
 }
 

@@ -4,6 +4,7 @@ import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
 import { MarkerEventsMapProvider } from '../types/marker-event.enum';
+import { WrapperInput } from '../../../core/decorators/wrapper-input.decorator';
 
 @Directive({
     selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
@@ -15,7 +16,7 @@ import { MarkerEventsMapProvider } from '../types/marker-event.enum';
 })
 export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
 {
-    @Input() public marker?: IGoogleMapsMarker;
+    @WrapperInput() public marker?: IGoogleMapsMarker;
     @Input() public options?: google.maps.MarkerOptions;
     @Input() public position?: google.maps.LatLng | google.maps.LatLngLiteral;
 

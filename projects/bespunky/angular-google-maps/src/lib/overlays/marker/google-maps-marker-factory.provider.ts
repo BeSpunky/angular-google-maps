@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { FactoryProvider } from '@angular/core';
 
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { NativeWrapperFactoryProvider } from '../../core/abstraction/base/native-wrapper-factory.provider';
+import { WrapperFactory } from '../../core/abstraction/base/wrapper-factory.token';
 import { ensureMapInstantiated } from '../../utils/utils';
 import { IGoogleMap } from '../../google-map/i-google-map';
 import { GoogleMapsMarker } from './google-maps-marker';
@@ -19,7 +19,7 @@ export function NativeMarkerWrapperFactoryProvider(api: GoogleMapsApiService, cu
 }
 
 export const GoogleMapsMarkerFactoryProvider: FactoryProvider = {
-    provide   : NativeWrapperFactoryProvider,
+    provide   : WrapperFactory,
     useFactory: NativeMarkerWrapperFactoryProvider,
     deps      : [GoogleMapsApiService, CurrentMap]
 }

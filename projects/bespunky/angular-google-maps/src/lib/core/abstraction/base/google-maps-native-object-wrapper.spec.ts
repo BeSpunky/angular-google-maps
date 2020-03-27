@@ -11,9 +11,9 @@ describe('GoogleMapsNativeObjectWrapper (abstract)', () =>
     let mockNative: object;
     let mockWrapper: MockWrapper;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
         mockNative = {};
 

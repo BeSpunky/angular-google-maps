@@ -1,8 +1,10 @@
 import { Directive, Input, EventEmitter, Output } from '@angular/core';
+
 import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
 import { IGoogleMapsData } from '../i-google-maps-data';
 import { DataEventsMapProvider } from '../types/data-event.enum';
 import { GoogleMapsDataFactoryProvider } from '../google-maps-data-factory.provider';
+import { WrapperInput } from '../../../core/decorators/wrapper-input.decorator';
 
 @Directive({
     selector: 'bs-google-maps-data, [bsGoogleMapsData]',
@@ -14,7 +16,7 @@ import { GoogleMapsDataFactoryProvider } from '../google-maps-data-factory.provi
 })
 export class GoogleMapsDataDirective extends GoogleMapsLifecycleBase
 {
-    @Input() public dataLayer?: IGoogleMapsData;
+    @WrapperInput() public dataLayer?: IGoogleMapsData;
     @Input() public options?: google.maps.Data.DataOptions;
 
     /** This event is fired when a feature is added to the collection. */

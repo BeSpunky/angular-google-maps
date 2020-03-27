@@ -6,7 +6,6 @@ import { IGoogleMap } from '../../../google-map/i-google-map';
 import { IGoogleMapsMarker } from '../../../overlays/marker/i-google-maps-marker';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { OverlayType } from './overlay-type.enum';
-import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('GoogleMapsDrawableOverlay (abstract)', () =>
 {
@@ -16,15 +15,15 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
     let mockNativeOverlay: NativeDrawableOverlayMock;
     let mockOverlay: DrawableOverlayMock;
 
-    beforeAll(() =>
+    beforeAll(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
         spyOn(DrawableOverlayMock.prototype, 'setContainingMap').and.callThrough();
 
         mockMap = new MockGoogleMap({ id: 1, zoom: 1 });
         mockNativeOverlay = new NativeDrawableOverlayMock();
-        mockOverlay = new DrawableOverlayMock(mockMap, api, mockNativeOverlay);
+        mockOverlay = new DrawableOverlayMock(api, mockMap, mockNativeOverlay);
     });
 
     it('should be created', () => expect(mockOverlay).toBeTruthy());
@@ -83,11 +82,12 @@ class MockGoogleMap implements IGoogleMap
 
     constructor(private nativeMapMock: object) { }
 
+
     getCenter(): Promise<google.maps.LatLng> { throw new Error('Method not implemented.'); }
     setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void> { throw new Error('Method not implemented.'); }
     getZoom(): Promise<number> { throw new Error('Method not implemented.'); }
     setZoom(zoomLevel: number): Promise<void> { throw new Error('Method not implemented.'); }
-    createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker> { throw new Error('Method not implemented.'); }
+    createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker> { throw new Error("Method not implemented."); }
     listenTo(eventName: string, handler: () => void): Promise<void> { throw new Error('Method not implemented.'); }
     stopListeningTo(eventName: string): Promise<void> { throw new Error('Method not implemented.'); }
 }
@@ -102,9 +102,9 @@ class NativeDrawableOverlayMock implements IGoogleMapsNativeDrawableOverlay
 
 class DrawableOverlayMock extends GoogleMapsDrawableOverlay<NativeDrawableOverlayMock>
 {
-    constructor(public map: IGoogleMap, protected api: GoogleMapsApiService, private mockNativeOverlay: NativeDrawableOverlayMock)
+    constructor(protected api: GoogleMapsApiService, public map: IGoogleMap, private mockNativeOverlay: NativeDrawableOverlayMock)
     {
-        super(OverlayType.Marker, map, api);
+        super(api, map, OverlayType.Marker);
     }
 
     protected createNativeObject(): NativeDrawableOverlayMock

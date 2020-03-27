@@ -9,9 +9,7 @@ import { GoogleMap } from '../google-map/google-map';
 
 export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string): string
 {
-    return `<bs-google-map [map]="map" [center]="center">
-                ${testedComponentTemplate}
-            </bs-google-map>`;
+    return `<bs-google-map [map]="map" [center]="center">${testedComponentTemplate}</bs-google-map>`;
 }
 
 /**
@@ -28,7 +26,6 @@ export function createLifecycleTestingHostComponentTemplate(testedComponentTempl
  *     class TestHostComponent extends LifecycleTestsHostComponentBase { } 
  * ```
  * 
- * @export
  * @class LifecycleTestsHostComponentBase
  */
 export class LifecycleTestsHostComponentBase

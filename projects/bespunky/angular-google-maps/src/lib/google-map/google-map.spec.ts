@@ -18,12 +18,12 @@ describe('GoogleMap', () =>
     let mapElement: ElementRef;
     let runOutsideAngular: jasmine.Spy;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
         mapElement = new ElementRef(elementStub);
-        map = new GoogleMap(mapElement, api);
+        map = new GoogleMap(api, mapElement);
     });
 
     describe('basically', () =>
@@ -43,14 +43,14 @@ describe('GoogleMap', () =>
 
         it('should allow creation of the native map with specific center and zoom', async () =>
         {
-            const customCenter = { lat: 10, lng: 10 };
-            const customZoom = ZoomLevel.World;
+            const center = { lat: 10, lng: 10 };
+            const zoom = ZoomLevel.World;
 
-            const customMap = new GoogleMap(mapElement, api, customCenter, customZoom);
+            const customMap = new GoogleMap(api, mapElement, { center, zoom });
             const nativeMap = await customMap.native;
 
-            expectPositionEquals(nativeMap.getCenter(), customCenter);
-            expect(nativeMap.getZoom()).toBe(customZoom);
+            expectPositionEquals(nativeMap.getCenter(), center);
+            expect(nativeMap.getZoom()).toBe(zoom);
         });
     });
 
@@ -87,11 +87,7 @@ describe('GoogleMap', () =>
 
         it('should create a marker associated with the map when calling `createMarker()`', async () =>
         {
-            const options: google.maps.ReadonlyMarkerOptions = {
-                position: Defaults.Center
-            };
-
-            const marker = await map.createMarker(options);
+            const marker = await map.createMarker(Defaults.Center);
 
             expect(marker instanceof GoogleMapsMarker).toBeTruthy();
             expect(marker.map).toBe(map);
