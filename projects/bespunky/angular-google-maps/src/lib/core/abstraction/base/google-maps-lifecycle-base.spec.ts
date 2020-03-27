@@ -5,7 +5,7 @@ import { configureGoogleMapsTestingModule } from '../../../testing/setup';
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
-import { WrapperFactory } from './wrapper-factory.token';
+import { WrapperFactory } from '../tokens/wrapper-factory.token';
 import { EventsMap } from '../events/event-map.token';
 import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
 import { CurrentMapProvider } from '../../../google-map/component/current-map.provider';

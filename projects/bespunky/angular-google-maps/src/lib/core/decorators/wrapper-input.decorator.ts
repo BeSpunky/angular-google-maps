@@ -8,6 +8,7 @@ export const WrapperInputSymbol = Symbol('LifecycleComponent.WrapperInput');
  * themselves, instead of having the component instantiate one for them.
  *
  * This decorator wraps angular's `@Input()` decorator, so there's no need to mark the input member again.
+ * 
  * @see GoogleMapComponent source code for an example.
  * 
  * @param {string} [bindingPropertyName] (Optional) A different name by which the member would be bound to the template. See angular's `@Input()` decorator for more info.

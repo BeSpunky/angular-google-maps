@@ -1,10 +1,13 @@
 import { BehaviorSubject } from 'rxjs';
-import { InjectionToken, FactoryProvider } from '@angular/core';
+import { FactoryProvider } from '@angular/core';
 
 import { IGoogleMap } from '../i-google-map';
+import { CurrentMap } from '../../core/abstraction/tokens/current-map.token';
 
-export const CurrentMap = new InjectionToken<BehaviorSubject<IGoogleMap>>('GoogleMaps.CurrentMap');
-
+/**
+ * Provides a `BehaviorSubject` that will be used by the `GoogleMapComponent` to notify child components of the creation of the 
+ * map wrapper object.
+ */
 export const CurrentMapProvider: FactoryProvider = {
     provide: CurrentMap,
     useFactory: () => new BehaviorSubject<IGoogleMap>(null)

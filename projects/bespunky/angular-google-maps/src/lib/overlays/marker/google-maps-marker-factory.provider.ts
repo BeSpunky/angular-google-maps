@@ -2,11 +2,11 @@ import { BehaviorSubject } from 'rxjs';
 import { FactoryProvider } from '@angular/core';
 
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { WrapperFactory } from '../../core/abstraction/base/wrapper-factory.token';
+import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.token';
+import { CurrentMap } from '../../core/abstraction/tokens/current-map.token';
 import { ensureMapInstantiated } from '../../utils/utils';
 import { IGoogleMap } from '../../google-map/i-google-map';
 import { GoogleMapsMarker } from './google-maps-marker';
-import { CurrentMap } from '../../google-map/component/current-map.provider';
 
 export function NativeMarkerWrapperFactoryProvider(api: GoogleMapsApiService, currentMap: BehaviorSubject<IGoogleMap>)
 {

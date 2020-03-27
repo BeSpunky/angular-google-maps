@@ -9,7 +9,7 @@ import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecyc
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
-import { WrapperFactory } from '../abstraction/base/wrapper-factory.token';
+import { WrapperFactory } from '../abstraction/tokens/wrapper-factory.token';
 import { EventsMap } from '../abstraction/events/event-map.token';
 import { WrapperInput } from '../decorators/wrapper-input.decorator';
 import { CurrentMapProvider } from '../../google-map/component/current-map.provider';

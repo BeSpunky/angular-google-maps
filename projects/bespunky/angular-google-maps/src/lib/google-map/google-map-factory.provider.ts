@@ -1,6 +1,6 @@
 import { ElementRef, FactoryProvider } from '@angular/core';
 
-import { WrapperFactory } from '../core/abstraction/base/wrapper-factory.token';
+import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMap } from './google-map';
 
