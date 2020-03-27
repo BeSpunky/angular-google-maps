@@ -11,7 +11,7 @@ import { WrapperInput } from '../../../core/decorators/wrapper-input.decorator';
     exportAs: 'dataLayer',
     providers: [
         GoogleMapsDataFactoryProvider,
-        DataEventsMapProvider,
+        DataEventsMapProvider
     ]
 })
 export class GoogleMapsDataDirective extends GoogleMapsLifecycleBase
