@@ -9,9 +9,9 @@ describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
     let api: GoogleMapsApiService;
     let mockWrapper: MockWrapper;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ api } = configureGoogleMapsTestingModule());
+        ({ api } = await configureGoogleMapsTestingModule());
 
         mockWrapper = new MockWrapper(api, mockNative);
     });

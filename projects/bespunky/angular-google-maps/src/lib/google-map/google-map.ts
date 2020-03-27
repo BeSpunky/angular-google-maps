@@ -11,6 +11,7 @@ import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { Wrap } from '../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
+import { Coord } from '../core/abstraction/types/geometry-utils.type';
 
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
@@ -18,26 +19,30 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     public overlays = new OverlaysTracker();
 
     constructor(
-        private   mapElement    : ElementRef,
-        protected api           : GoogleMapsApiService,
-        private   initialCenter?: google.maps.LatLng | google.maps.LatLngLiteral,
-        private   initialZoom?  : ZoomLevel | number)
+        protected api       : GoogleMapsApiService,
+        private   mapElement: ElementRef,
+        private   options?  : google.maps.MapOptions
+    )
     {
         super(api);
     }
 
     protected createNativeObject(): google.maps.Map
     {
-        return new google.maps.Map(this.mapElement.nativeElement, {
-            center: this.initialCenter || Defaults.Center,
-            zoom  : this.initialZoom   || Defaults.ZoomLevel
-        });
+        const options = Object.assign({}, {
+            center: Defaults.Center,
+            zoom  : Defaults.ZoomLevel,
+        }, this.options);
+
+        return new google.maps.Map(this.mapElement.nativeElement, options);
     }
 
-    public createMarker(options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
-    {
+    public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
+    {        
+        options = Object.assign({}, options, { position: this.api.geometry.toCoordLiteral(position) });
+
         // Marker creation will cause rendering. Run outside...
-        return this.createOverlay(() => new GoogleMapsMarker(this, this.api, options));
+        return this.createOverlay(() => new GoogleMapsMarker(this.api, this, options));
     }
 
     // TODO: Add here create methods for any new featured overlay type (e.g. polygons, polylines, etc.)

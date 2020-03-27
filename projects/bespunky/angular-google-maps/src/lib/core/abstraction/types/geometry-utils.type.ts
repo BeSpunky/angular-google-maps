@@ -1,0 +1,1 @@
+export type Coord = google.maps.LatLng | google.maps.LatLngLiteral | google.maps.ReadonlyLatLngLiteral;

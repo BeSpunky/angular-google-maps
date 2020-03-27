@@ -1,8 +1,11 @@
 import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
-
+import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
+import { Coord } from '../../core/abstraction/types/geometry-utils.type';
 
 export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay
 {
+    createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): Promise<IGoogleMapsFeature>;
+
     addFeature(feature: google.maps.Data.Feature): Promise<void>;
     
     findFeature(id: string | number): Promise<google.maps.Data.Feature>;

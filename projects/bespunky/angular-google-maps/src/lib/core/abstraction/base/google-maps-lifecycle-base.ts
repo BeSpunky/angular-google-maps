@@ -1,16 +1,59 @@
-import { OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { OnInit, OnDestroy, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { promiseLater } from '@bespunky/angular-zen';
 
-import { GoogleMapsEventsMap } from '../../types/google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
+import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
+import { WrapperFactory } from '../tokens/wrapper-factory.token';
+import { CurrentMap } from '../tokens/current-map.token';
+import { IGoogleMap } from '../../../google-map/i-google-map';
+import { EventsMap } from '../events/event-map.token';
+import { GoogleMap } from '../../../google-map/google-map';
+import { WrapperInputSymbol } from '../../decorators/wrapper-input.decorator';
 
+/**
+ * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.
+ * Extending this class will automatically:
+ * - Hook event emitters to native events raised by the native Google Maps object and unhook them on destruction.
+ * - Delegate any bound property changes to their corresponding native setter function on the native Google Maps object.
+ * - Detect if a native object wrapper was assigned by the component's user and generate use it.
+ * - Instantiate a new native wrapper object if not assigned by the component's user.
+ * 
+ * Requirements for the magic to happen:
+ * --- Must ---
+ * 1. Create a component or a directive.
+ * 2. extend `GoogleMapsLifecycleBase`.
+ * 3. Define factory providers for the `WrapperFactory` tokens.
+ * 4. If this is a map component, add `CurrentMapProvider` to the providers array (see `CurrentMap` token for more info).
+ * 5. Expose a public member of the type of your native wrapper and decorate it with @WrapperInput(). This is step is not a must but it will keep
+ *    the flexible design of the library which allows component users to specify their own wrapper instances and implementation.
+ * 
+ * --- To expose native events as bindable template events ---
+ * 5. Define a provider for the `EventsMap` token to specify the native event names and their corresponding angular `EventEmitter` members.
+ * 6. Add `@Output()` marked event emitters to the component / directive.
+ * 
+ * --- To expose native setters as bindable template attributes ---
+ * 7. Add `@Input()` members for getters/setters you would like to expose. Use the native setter function name and omit the 'set' part to name your inputs.
+ * 
+ * @see GoogleMapsComponent source code for an example.
+ * 
+ */
 export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
 {
     private waitForComponentInit: { promise: Promise<void>, resolve: () => void, reject: () => any };
+    
     public nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper;
 
-    constructor(protected eventsMap: GoogleMapsEventsMap, protected api: GoogleMapsInternalApiService)
+    public abstract options?: any;
+
+    constructor(
+        protected api: GoogleMapsInternalApiService,
+        @Inject(WrapperFactory)             private createNativeWrapper: EmittingNativeWrapperFactory,
+        @Inject(EventsMap     ) @Optional() private eventsMap          : GoogleMapsEventsMap = [],
+        @Inject(CurrentMap    )             private currentMap         : BehaviorSubject<IGoogleMap>
+    )
     {
         // initNativeWrapper cannot be called here because the map extending component hasn't been initialized yet.
         // If the component hasn't initialized yet, the wrapper hasn't either.
@@ -41,26 +84,15 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
 
     private initNativeWrapper(): void
     {
-        this.nativeWrapper = this.nativeWrapperInput || this.createNativeWrapper();
-    }
+        const wrapperInputName = Reflect.getMetadata(WrapperInputSymbol, this);
+        
+        if (!wrapperInputName) console.warn(`[${(this as any).constructor.name}] No wrapper input property has been set for this component. Wrapper cannot be set by component users. See @WrapperInput() for more info.`);
 
-    /**
-     * Derived components should allow component users to assign their own native wrapper in their templates.
-     * This getter should return the member marked as `@Input()` which holds that wrapper passed from the template user.
-     * If this is `null` or `undefined` at the moment of instantiation, a new wrapper will be created automaticlly using `createNativeWrapper()`.
-     * Event hooking and property delegation will be done with that wrapper only.
-     * 
-     * @readonly
-     * @protected
-     * @abstract
-     */
-    protected abstract get nativeWrapperInput(): IGoogleMapsNativeObjectEmittingWrapper;
-    /**
-     * Should create a new wrapper of the type that corresponds to the component (e.g. `GoogleMap` for `GoogleMapComponent`, `GoogleMapsMarker` for `GoogleMapsMarkerDirective`, etc.).
-     *
-     * @protected
-     * @abstract
-     * @returns {IGoogleMapsNativeObjectEmittingWrapper} A new native wrapper corresponding to the component type.
-     */
-    protected abstract createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper;
+        this.nativeWrapper = this[wrapperInputName] || this.createNativeWrapper(this.options);
+
+        // The map object is provided to the different factories when instantiating wrappers.
+        // This is the most immediate place after instantiation to notify child components of the new GoogleMap object.
+        if (this.nativeWrapper instanceof GoogleMap)
+            this.currentMap.next(this.nativeWrapper);
+    }
 }

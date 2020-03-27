@@ -14,12 +14,12 @@ describe('GoogleMapsData', () =>
     let data: GoogleMapsData;
     let map: GoogleMap;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        map = new GoogleMap(new ElementRef(elementStub), api);
-        data = new GoogleMapsData(map, api);
+        map = new GoogleMap(api, new ElementRef(elementStub));
+        data = new GoogleMapsData(api, map);
     });
 
     it('should create an instance', () => expect(data).toBeTruthy());

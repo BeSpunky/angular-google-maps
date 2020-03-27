@@ -70,10 +70,16 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
     customize?: (moduleDef: TestModuleMetadata) => void;
     /** (Optional) Configures the automation of jasmine spies. */
     spies?: {
-        /** `true` to fake the execution of `api.runOutsideAngular()` (@see `fakeTheRunOutsideAngularMethod()`); `false` to spy and call through. */
+        /** `true` to fake the execution of `api.runOutsideAngular()` (@see `fakeTheRunOutsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
         fakeRunOutsideAngular?: boolean
     }
 }
+
+const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
+    spies: {
+        fakeRunOutsideAngular: true
+    }
+};
 
 /**
  * Configures a basic testing module with common definitions for Google Maps components and extracts useful tools and services.
@@ -86,15 +92,17 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
  * @param {IGoogleMapsTestingModuleConfigOptions} [options] (Optional) The options for the configuring the test module.
  * @returns The created tools and services, ready to use.
  */
-export function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMapsTestingModuleConfigOptions)
+export async function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMapsTestingModuleConfigOptions)
 {
     let fixture: ComponentFixture<TComponent>;
     let component: TComponent;
     let debugElement: DebugElement;
     let element: ElementRef;
 
+    options = Object.assign({}, defaultModuleConfigOptions, options);
+
     // Create the basic testing configuration
-    const moduleConfig = createGoogleMapsTestModuleMetadata(options?.moduleConfig);
+    const moduleConfig = createGoogleMapsTestModuleMetadata(options.moduleConfig);
     // Get the type of the component being compiled, if there is one
     const componentType = options?.componentType;
 
@@ -103,7 +111,7 @@ export function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMa
         moduleConfig.declarations = [options.componentType];
 
     // If there are any additional customizations to be done to the module definition, run them
-    if (options?.customize)
+    if (options.customize)
         options.customize(moduleConfig);
     
     // Create the TestBed
@@ -112,7 +120,7 @@ export function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMa
     // If a component is being tested, compile it and retrieve its relevant instances
     if (componentType)
     {
-        testBed.compileComponents();
+        await testBed.compileComponents();
         
         fixture = TestBed.createComponent(componentType);
 
@@ -125,8 +133,7 @@ export function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMa
     const api         = TestBed.inject(GoogleMapsApiService);
     const internalApi = TestBed.inject(GoogleMapsInternalApiService);
 
-    const fakeRunOutsideAngular = options?.spies?.fakeRunOutsideAngular !== false; // Forced equality with `false` as `undefined` is also possible
-    const runOutsideAngular = fakeRunOutsideAngular ? fakeTheRunOutsideAngularMethod(api) : spyOn(api, 'runOutsideAngular').and.callThrough();
+    const runOutsideAngular = options.spies.fakeRunOutsideAngular ? fakeTheRunOutsideAngularMethod(api) : spyOn(api, 'runOutsideAngular').and.callThrough();
 
     // Return all extracted services and objects for easier use
     return { fixture, component, debugElement, element, api, internalApi, spies: { runOutsideAngular } };

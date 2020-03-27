@@ -15,14 +15,14 @@ describe('GoogleMapsMarker', () =>
     let map: GoogleMap;
     let position: google.maps.LatLng;
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = configureGoogleMapsTestingModule());
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
         position = new google.maps.LatLng(11, 11);
 
-        map = new GoogleMap(new ElementRef(elementStub), api);
-        marker = new GoogleMapsMarker(map, api, { position });
+        map = new GoogleMap(api, new ElementRef(elementStub));
+        marker = new GoogleMapsMarker(api, map, { position });
     });
 
     describe('basically', () =>

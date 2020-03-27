@@ -6,14 +6,12 @@ import { promiseLater } from '@bespunky/angular-zen';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { GoogleMapsApiService } from './google-maps-api.service';
-import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../abstraction/types/google-maps-events-map.type';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
-import { EventDataTransformService } from '../../utils/transform/event-data-transform.service';
-
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +23,6 @@ export class GoogleMapsInternalApiService
     constructor(public config: GoogleMapsConfig,
                 public openApi: GoogleMapsApiService,
                 private loader: GoogleMapsApiLoader,
-                private eventTransform: EventDataTransformService,
                 private zone: NgZone,
                 @Inject(GoogleMapsApiReadyPromise)
                 waitForApiReadyPromise: BehaviorSubject<Promise<void>>)
@@ -63,7 +60,7 @@ export class GoogleMapsInternalApiService
      */
     public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper)
     {
-        const transfrom = this.eventTransform;
+        const transfrom = this.openApi.eventsData;
         
         for (const event of eventsMap)
         {

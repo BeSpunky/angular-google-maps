@@ -1,27 +1,31 @@
 import * as _ from 'lodash';
-import { Component, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { ZoomLevel } from '../types/zoom-level.enum';
-import { GoogleMap } from '../google-map';
-import { MapEventsMap } from '../types/map-event.enum';
-import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
+import { MapEventsMapProvider } from '../types/map-event.enum';
 import { GoogleMapsLifecycleBase } from '../../core/abstraction/base/google-maps-lifecycle-base';
-import { IGoogleMap } from '../i-google-map';
+import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
+import { GoogleMap } from '../google-map';
+import { CurrentMapProvider } from './current-map.provider';
+import { WrapperInput } from '../../core/decorators/wrapper-input.decorator';
 
 @Component({
     selector: 'bs-google-map',
     templateUrl: './google-map.component.html',
     styleUrls: ['./google-map.component.css'],
+    providers: [
+        GoogleMapFactoryProvider,
+        MapEventsMapProvider,
+        CurrentMapProvider
+    ]
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase
 {
-    @ViewChild('map', { static: true })
-    private element: ElementRef;
-
     // Bound properties
-    @Input() public map: GoogleMap;
-    @Input() public center?: google.maps.LatLng;
-    @Input() public zoom?: ZoomLevel;
+    @WrapperInput() public map     : GoogleMap;
+    @Input() public options?: google.maps.MapOptions;
+    @Input() public center? : google.maps.LatLng;
+    @Input() public zoom?   : ZoomLevel;
 
     // Events
     @Output() public boundsChanged      = new EventEmitter();
@@ -43,19 +47,4 @@ export class GoogleMapComponent extends GoogleMapsLifecycleBase
     @Output() public tilesLoaded        = new EventEmitter();
     @Output() public tiltChanged        = new EventEmitter();
     @Output() public idle               = new EventEmitter();
-
-    constructor(protected api: GoogleMapsInternalApiService)
-    {
-        super(MapEventsMap, api);
-    }
-
-    protected get nativeWrapperInput(): IGoogleMap
-    {
-        return this.map;
-    }
-    
-    protected createNativeWrapper(): IGoogleMap
-    {
-        return new GoogleMap(this.element, this.api.openApi);
-    }
 }

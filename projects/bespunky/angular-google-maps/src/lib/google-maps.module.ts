@@ -23,7 +23,7 @@ export class GoogleMapsModule
     constructor(@Optional() @SkipSelf() googleMapsModule: GoogleMapsModule, private api: GoogleMapsInternalApiService)
     {
         if (googleMapsModule)
-            throw new Error('GoogleMapsModule was previously loaded somewhere. Make sure there is only place where you import it.');
+            throw new Error('GoogleMapsModule was previously loaded somewhere. Make sure there is only one place where you import it.');
 
         this.api.load().then(this.onApiLoaded)
                        .catch(this.onApiLoadError);
