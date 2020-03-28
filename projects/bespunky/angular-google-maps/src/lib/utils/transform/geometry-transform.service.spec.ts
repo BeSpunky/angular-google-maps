@@ -31,6 +31,4 @@ describe('GeometryTransformService', () =>
             expect(service.toCoordLiteral(coord)).toBe(coord);
         });
     });
-
-    it('shoud return the same object ')
 });
