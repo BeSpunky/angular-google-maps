@@ -2,7 +2,7 @@ import { Directive, Input, EventEmitter, Output } from '@angular/core';
 
 import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
 import { IGoogleMapsData } from '../i-google-maps-data';
-import { DataEventsMapProvider } from '../types/data-event.enum';
+import { DataEventsMapProvider } from './data-event.enum';
 import { GoogleMapsDataFactoryProvider } from '../google-maps-data-factory.provider';
 import { WrapperInput } from '../../../core/decorators/wrapper-input.decorator';
 

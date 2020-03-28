@@ -3,7 +3,7 @@ import { Directive, Input, Output, EventEmitter } from '@angular/core';
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
-import { MarkerEventsMapProvider } from '../types/marker-event.enum';
+import { MarkerEventsMapProvider } from './marker-event.enum';
 import { WrapperInput } from '../../../core/decorators/wrapper-input.decorator';
 
 @Directive({
