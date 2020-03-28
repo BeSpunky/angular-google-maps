@@ -12,11 +12,12 @@ import { GoogleMapsMarkerDirective } from './overlays/marker/directive/google-ma
 import { GoogleMapsInternalApiService } from './core/api/google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromiseProvider } from './core/api/google-maps-api-ready.token';
 import { GoogleMapsDataDirective } from './overlays/data/directive/google-maps-data.directive';
+import { GoogleMapsFeatureDirective } from './overlays/data/feature/directive/google-maps-feature.directive';
 
 @NgModule({
-    declarations: [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective],
+    declarations: [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective, GoogleMapsFeatureDirective],
     imports:      [ZenModule],
-    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective]
+    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective, GoogleMapsFeatureDirective]
 })
 export class GoogleMapsModule
 {
