@@ -9,7 +9,7 @@ import { OutsideAngular } from '../../../core/decorators/outside-angular.decorat
 @NativeObjectWrapper
 export class GoogleMapsFeature extends GoogleMapsNativeObjectWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
-    constructor(public data: IGoogleMapsData, protected api: GoogleMapsApiService, private options?: google.maps.Data.FeatureOptions)
+    constructor(protected api: GoogleMapsApiService, public data: IGoogleMapsData, private options?: google.maps.Data.FeatureOptions)
     {
         super(api);
     }
