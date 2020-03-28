@@ -19,7 +19,7 @@ import { WrapperInputSymbol } from '../../decorators/wrapper-input.decorator';
  * - Hook event emitters to native events raised by the native Google Maps object and unhook them on destruction.
  * - Delegate any bound property changes to their corresponding native setter function on the native Google Maps object.
  * - Detect if a native object wrapper was assigned by the component's user and generate use it.
- * - Instantiate a new native wrapper object if not assigned by the component's user.
+ * - Instantiate a new native wrapper object if not assigned by the component's user and expose it to the component's user.
  * 
  * Requirements for the magic to happen:
  * --- Must ---
@@ -43,8 +43,7 @@ import { WrapperInputSymbol } from '../../decorators/wrapper-input.decorator';
 export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
 {
     private waitForComponentInit: { promise: Promise<void>, resolve: () => void, reject: () => any };
-    
-    public nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper;
+    private wrapperInputName: string;
 
     public abstract options?: any;
 
@@ -55,6 +54,8 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
         @Inject(EventsMap     ) @Optional() private eventsMap          : GoogleMapsEventsMap = []
     )
     {
+        this.wrapperInputName = Reflect.getMetadata(WrapperInputSymbol, this) || 'nativeWrapperInput';
+    
         // initNativeWrapper cannot be called here because the map extending component hasn't been initialized yet.
         // If the component hasn't initialized yet, the wrapper hasn't either.
         // A promise is to initialize it is instantiated here and resolved after full component init (see `ngOnInit()`).
@@ -82,13 +83,17 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
         this.waitForComponentInit.promise.then(() => this.api.delegateInputChangesToNativeObject(changes, this.nativeWrapper));
     }
 
+    public get nativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
+    {
+        return this[this.wrapperInputName];
+    }
+
     private initNativeWrapper(): void
     {
-        const wrapperInputName = Reflect.getMetadata(WrapperInputSymbol, this);
-        
-        if (!wrapperInputName) console.warn(`[${(this as any).constructor.name}] No wrapper input property has been set for this component. Wrapper cannot be set by component users. See @WrapperInput() for more info.`);
+        if (!this.wrapperInputName) console.warn(`[${(this as any).constructor.name}] No wrapper input property has been set for this component. Component users will not be able to bind their wrapper. See @WrapperInput() for more info.`);
 
-        this.nativeWrapper = this[wrapperInputName] || this.createNativeWrapper(this.options);
+        // Either component user has already set a wrapper through the tempalte, or it will be created using the factory and assigned to the input
+        if (!this.nativeWrapper) this[this.wrapperInputName] = this.createNativeWrapper(this.options);
 
         // The map object is provided to the different factories when instantiating wrappers.
         // This is the most immediate place after instantiation to notify child components of the new GoogleMap object.
