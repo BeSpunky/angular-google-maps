@@ -51,8 +51,8 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
     constructor(
         protected api: GoogleMapsInternalApiService,
         @Inject(WrapperFactory)             private createNativeWrapper: EmittingNativeWrapperFactory,
-        @Inject(EventsMap     ) @Optional() private eventsMap          : GoogleMapsEventsMap = [],
-        @Inject(CurrentMap    )             private currentMap         : BehaviorSubject<IGoogleMap>
+        @Inject(CurrentMap    )             private currentMap         : BehaviorSubject<IGoogleMap>,
+        @Inject(EventsMap     ) @Optional() private eventsMap          : GoogleMapsEventsMap = []
     )
     {
         // initNativeWrapper cannot be called here because the map extending component hasn't been initialized yet.
