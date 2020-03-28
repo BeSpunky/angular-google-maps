@@ -34,3 +34,7 @@ export * from './lib/overlays/data/google-maps-data';
 export * from './lib/overlays/data/directive/google-maps-data.directive';
 export * from './lib/overlays/data/directive/data-event.enum';
 
+// Data Layer Feature
+export * from './lib/overlays/data/feature/google-maps-feature';
+export * from './lib/overlays/data/feature/directive/google-maps-feature.directive';
+export * from './lib/overlays/data/feature/directive/feature-event.enum';
