@@ -8,7 +8,9 @@
         "declaration": true,
         "sourceMap": true,
         "inlineSources": true,
-        "emitDecoratorMetadata": true,
+        // Some methods use native google maps types which load after the metadata is created on the app.
+        // That metadata currently isn't used in the library and it causes an exception in apps using the library, so I disabled it.
+        "emitDecoratorMetadata": false,
         "experimentalDecorators": true,
         "importHelpers": true,
         "types": ["google-maps"],
