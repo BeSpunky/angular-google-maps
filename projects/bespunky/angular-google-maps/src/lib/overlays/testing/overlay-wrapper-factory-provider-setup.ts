@@ -17,7 +17,7 @@ function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider
         useValue: currentMap
     };
 
-    if (mapCreated) currentMap.next(new MockMap());
+    if (mapCreated) currentMap.next(new MockMap(document.createElement('div')));
 
     configureGoogleMapsTestingModule({
         customize: (def) => {
@@ -52,6 +52,13 @@ export function itShouldThrowIfMapNotCreatedBeforeOverlay(factoryProvider: Facto
 
 class MockMap implements IGoogleMap
 {
+    private nativeMap: google.maps.Map;
+
+    constructor(public mapElement: HTMLElement) 
+    {
+        this.nativeMap = new google.maps.Map(mapElement);
+    }
+
     createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker>
     {
         throw new Error("Method not implemented.");
@@ -80,6 +87,6 @@ class MockMap implements IGoogleMap
     {
         throw new Error("Method not implemented.");
     }
-    native: Promise<any>;
+    native = Promise.resolve(this.nativeMap);
     custom: any;
 }
