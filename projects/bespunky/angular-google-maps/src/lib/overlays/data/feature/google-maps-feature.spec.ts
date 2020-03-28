@@ -22,7 +22,7 @@ describe('GoogleMapsFeature', () =>
 
         map = new GoogleMap(api, new ElementRef(elementStub));
         data = new GoogleMapsData(api, map);
-        feature = new GoogleMapsFeature(data, api, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }) });
+        feature = new GoogleMapsFeature(api, data, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }) });
     });
 
     it('should create an instance', () => expect(feature).toBeTruthy());

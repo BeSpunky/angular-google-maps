@@ -27,7 +27,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     {
         options = Object.assign({}, options, { geometry: new google.maps.Data.Point(position) });
 
-        return this.createOverlay(() => new GoogleMapsFeature(this, this.api, options));
+        return this.createOverlay(() => new GoogleMapsFeature(this.api, this, options));
     }
 
     private async createOverlay<TOverlay extends IGoogleMapsFeature>(createObject: () => TOverlay): Promise<TOverlay>
