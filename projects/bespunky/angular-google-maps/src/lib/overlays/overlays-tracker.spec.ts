@@ -1,4 +1,4 @@
-import { configureGoogleMapsTestingModule } from '../testing/setup';
+import { configureGoogleMapsTestingModule } from '../testing/setup.spec';
 import { OverlaysTracker } from "./overlays-tracker";
 import { IGoogleMap } from '../google-map/i-google-map';
 import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';

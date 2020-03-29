@@ -1,7 +1,7 @@
 
 import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../../../testing/setup';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
 describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>

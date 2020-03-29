@@ -7,7 +7,7 @@ import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
-import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup';
+import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../abstraction/tokens/wrapper-factory.token';
 import { EventsMap } from '../abstraction/tokens/event-map.token';

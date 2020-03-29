@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ValueProvider, FactoryProvider, Type } from "@angular/core";
 import { TestBed } from '@angular/core/testing';
 
-import { configureGoogleMapsTestingModule } from '../../testing/setup';
+import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.token';
 import { IGoogleMap } from '../../google-map/i-google-map';
 import { IGoogleMapsMarker } from '../marker/i-google-maps-marker';

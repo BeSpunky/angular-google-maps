@@ -1,7 +1,7 @@
 import { SimpleChange, SimpleChanges, Component, DebugElement, Input } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 
-import { configureGoogleMapsTestingModule } from '../../../testing/setup';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';

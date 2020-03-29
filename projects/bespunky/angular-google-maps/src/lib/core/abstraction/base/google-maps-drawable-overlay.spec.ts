@@ -1,5 +1,5 @@
 
-import { configureGoogleMapsTestingModule } from '../../../testing/setup';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 import { IGoogleMap } from '../../../google-map/i-google-map';
