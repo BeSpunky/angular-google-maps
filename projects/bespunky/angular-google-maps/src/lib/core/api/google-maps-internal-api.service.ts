@@ -73,10 +73,10 @@ export class GoogleMapsInternalApiService
             if (!emitter || emitter.observers.length === 0) continue;
 
             // Hook the emitter to the listener and emit everytime the event is fired.
-            nativeWrapper.listenTo(event.reference, function()
+            nativeWrapper.listenTo(event.reference, function(...nativeArgs: any[])
             {
-                const args = transfrom.auto([...arguments]);
-                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, this, args, Array.from(arguments), delegatedEmitter);
+                const args = transfrom.auto(nativeArgs);
+                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, this, args, nativeArgs, delegatedEmitter);
 
                 // If no filter function specified, or the filter function returned true, then emit. Wrapped in promise to simplify detection of return type.
                 Promise.resolve(!shouldEmit || shouldEmit(eventData))
