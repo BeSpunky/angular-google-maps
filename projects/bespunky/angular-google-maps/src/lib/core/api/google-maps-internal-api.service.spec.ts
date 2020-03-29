@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange, Component } from '@angular/core';
+import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange, Component, Input } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
@@ -10,9 +10,8 @@ import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-dat
 import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../abstraction/tokens/wrapper-factory.token';
-import { EventsMap } from '../abstraction/events/event-map.token';
-import { WrapperInput } from '../decorators/wrapper-input.decorator';
-import { CurrentMapProvider } from '../../google-map/component/current-map.provider';
+import { EventsMap } from '../abstraction/tokens/event-map.token';
+import { Wrapper } from '../decorators/wrapper.decorator';
 
 describe('GoogleMapsInternalApiService', () =>
 {
@@ -197,8 +196,7 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 @Component({
     providers: [
         { provide: WrapperFactory, useFactory: () => createNativeWrapper },
-        { provide: EventsMap, useValue: EventsMapStub },
-        CurrentMapProvider
+        { provide: EventsMap, useValue: EventsMapStub }
     ]
 })
 class MockComponent extends GoogleMapsLifecycleBase implements OnInit
@@ -209,5 +207,5 @@ class MockComponent extends GoogleMapsLifecycleBase implements OnInit
 
     public event1: EventEmitter<void> = new EventEmitter();
 
-    @WrapperInput() public dummyWrapperInput: IGoogleMapsNativeObjectEmittingWrapper;
+    @Wrapper @Input() public dummyWrapperInput: IGoogleMapsNativeObjectEmittingWrapper;
 }

@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
 import { OnInit, OnDestroy, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { promiseLater } from '@bespunky/angular-zen';
 
@@ -7,11 +6,8 @@ import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
-import { CurrentMap } from '../tokens/current-map.token';
-import { IGoogleMap } from '../../../google-map/i-google-map';
-import { EventsMap } from '../events/event-map.token';
-import { GoogleMap } from '../../../google-map/google-map';
-import { WrapperInputSymbol } from '../../decorators/wrapper-input.decorator';
+import { EventsMap } from '../tokens/event-map.token';
+import { WrapperInputSymbol } from '../../decorators/wrapper.decorator';
 
 /**
  * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.
@@ -26,8 +22,7 @@ import { WrapperInputSymbol } from '../../decorators/wrapper-input.decorator';
  * 1. Create a component or a directive.
  * 2. extend `GoogleMapsLifecycleBase`.
  * 3. Define factory providers for the `WrapperFactory` tokens.
- * 4. If this is a map component, add `CurrentMapProvider` to the providers array (see `CurrentMap` token for more info).
- * 5. Expose a public member of the type of your native wrapper and decorate it with @WrapperInput(). This is step is not a must but it will keep
+ * 4. Expose a public `@Input()` member of the type of your native wrapper and decorate it with @Wrapper. This is step is not a must but it will keep
  *    the flexible design of the library which allows component users to specify their own wrapper instances and implementation.
  * 
  * --- To expose native events as bindable template events ---
@@ -38,7 +33,6 @@ import { WrapperInputSymbol } from '../../decorators/wrapper-input.decorator';
  * 7. Add `@Input()` members for getters/setters you would like to expose. Use the native setter function name and omit the 'set' part to name your inputs.
  * 
  * @see GoogleMapsComponent source code for an example.
- * 
  */
 export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
 {
@@ -49,9 +43,8 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
 
     constructor(
         protected api: GoogleMapsInternalApiService,
-        @Inject(WrapperFactory)             private createNativeWrapper: EmittingNativeWrapperFactory,
-        @Inject(CurrentMap    )             private currentMap         : BehaviorSubject<IGoogleMap>,
-        @Inject(EventsMap     ) @Optional() private eventsMap          : GoogleMapsEventsMap = []
+        @Inject(WrapperFactory)             protected createNativeWrapper: EmittingNativeWrapperFactory,
+        @Inject(EventsMap     ) @Optional() protected eventsMap          : GoogleMapsEventsMap = []
     )
     {
         this.wrapperInputName = Reflect.getMetadata(WrapperInputSymbol, this) || 'nativeWrapperInput';
@@ -74,6 +67,8 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
     ngOnDestroy()
     {
         this.api.unhookEmitters(this.nativeWrapper, this.eventsMap);
+
+        this.nativeWrapper
     }
 
     ngOnChanges(changes: SimpleChanges)
@@ -90,14 +85,10 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
 
     private initNativeWrapper(): void
     {
-        if (!this.wrapperInputName) console.warn(`[${(this as any).constructor.name}] No wrapper input property has been set for this component. Component users will not be able to bind their wrapper. See @WrapperInput() for more info.`);
+        if (!this.wrapperInputName) console.warn(`[${(this as any).constructor.name}] No wrapper input property has been set for this component. Component users will not be able to bind their wrapper. See @Wrapper for more info.`);
 
         // Either component user has already set a wrapper through the tempalte, or it will be created using the factory and assigned to the input
-        if (!this.nativeWrapper) this[this.wrapperInputName] = this.createNativeWrapper(this.options);
-
-        // The map object is provided to the different factories when instantiating wrappers.
-        // This is the most immediate place after instantiation to notify child components of the new GoogleMap object.
-        if (this.nativeWrapper instanceof GoogleMap)
-            this.currentMap.next(this.nativeWrapper);
+        if (!this.nativeWrapper)
+            this[this.wrapperInputName] = this.createNativeWrapper(this.options);
     }
 }

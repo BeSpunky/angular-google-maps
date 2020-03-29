@@ -2,7 +2,7 @@ import { FactoryProvider } from '@angular/core';
 import { GoogleMapsEventsMap } from '../core/abstraction/types/google-maps-events-map.type';
 import { BehaviorSubject } from 'rxjs';
 import { IGoogleMap } from '../google-map/i-google-map';
-import { EventsMap } from '../core/abstraction/events/event-map.token';
+import { EventsMap } from '../core/abstraction/tokens/event-map.token';
 
 export function convertEnumToGoogleMapsEventsMap(eventEnum: any): GoogleMapsEventsMap
 {

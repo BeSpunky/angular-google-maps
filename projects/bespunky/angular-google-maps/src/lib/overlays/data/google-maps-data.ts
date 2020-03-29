@@ -17,43 +17,45 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     {
         super(api, map, OverlayType.Data);
     }
-    
+
     protected createNativeObject(): google.maps.Data
     {
         return new google.maps.Data(this.options);
     }
-    
+
+    @OutsideAngular
     public async createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): Promise<IGoogleMapsFeature>
     {
         options = Object.assign({}, options, { geometry: new google.maps.Data.Point(position) });
 
-        return this.createOverlay(() => new GoogleMapsFeature(this.api, this, options));
+        return new GoogleMapsFeature(this.api, this, options);
     }
 
-    private async createOverlay<TOverlay extends IGoogleMapsFeature>(createObject: () => TOverlay): Promise<TOverlay>
+    public async addFeature(feature: google.maps.Data.Feature | IGoogleMapsFeature): Promise<void>
     {
-        // Overlay creation will cause rendering. Run outside...
-        const overlay = await this.api.runOutsideAngular(createObject);
+        const nativeFeature = feature instanceof google.maps.Data.Feature ? feature : await feature.native;
 
-        this.addFeature(overlay);
-
-        return overlay;
+        return this.add(nativeFeature);
     }
 
-    public removeFeature(feature: google.maps.Data.Feature): Promise<google.maps.Data.Feature>;
-    public removeFeature(featureId: string | number): Promise<google.maps.Data.Feature>;
-    public removeFeature(featureOrId: string | number | google.maps.Data.Feature): Promise<google.maps.Data.Feature>
+    public async removeFeature(feature: google.maps.Data.Feature): Promise<google.maps.Data.Feature>;
+    public async removeFeature(feature: IGoogleMapsFeature): Promise<google.maps.Data.Feature>;
+    public async removeFeature(featureId: string | number): Promise<google.maps.Data.Feature>;
+    @OutsideAngular
+    public async removeFeature(featureOrId: string | number | google.maps.Data.Feature | IGoogleMapsFeature): Promise<google.maps.Data.Feature>
     {
-        return this.api.runOutsideAngular(() =>
-        { 
-            const feature = featureOrId instanceof google.maps.Data.Feature ? featureOrId : this.nativeObject.getFeatureById(featureOrId);
-            
-            this.nativeObject.remove(feature);
+        // If it's a native feature, use it
+        const feature = featureOrId instanceof google.maps.Data.Feature ? featureOrId :
+            // If it's a wrapping feature, fetch native and use it
+            typeof featureOrId === 'object' ? await featureOrId.native :
+                // This is an id, find feature and use it
+                this.nativeObject.getFeatureById(featureOrId);
 
-            return feature;
-        });
+        this.nativeObject.remove(feature);
+
+        return feature;
     }
-        
+
     public async toGeoJson(): Promise<any>
     {
         await this.native;
@@ -67,8 +69,9 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return new Promise(resolve => this.nativeObject.loadGeoJson(url, options, resolve));
     }
 
-    @Wrap('add') @OutsideAngular
-    addFeature(feature: google.maps.Data.Feature): Promise<void> { return null; }
+    // Marked private so the addFeature() method will be the one exposed to the user
+    @Wrap() @OutsideAngular
+    private add(feature: google.maps.Data.Feature): Promise<void> { return null; }
 
     @Wrap('getFeatureById')
     findFeature(id: string | number): Promise<google.maps.Data.Feature> { return null; }

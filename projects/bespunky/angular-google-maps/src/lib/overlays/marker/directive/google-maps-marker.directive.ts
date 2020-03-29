@@ -1,10 +1,10 @@
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 
+import { GoogleMapsOverlayLifecycleBase } from '../../../core/abstraction/base/google-maps-overlay-lifecycle-base';
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
-import { GoogleMapsLifecycleBase } from '../../../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
 import { MarkerEventsMapProvider } from './marker-event.enum';
-import { WrapperInput } from '../../../core/decorators/wrapper-input.decorator';
+import { Wrapper } from '../../../core/decorators/wrapper.decorator';
 
 @Directive({
     selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
@@ -14,11 +14,11 @@ import { WrapperInput } from '../../../core/decorators/wrapper-input.decorator';
         MarkerEventsMapProvider
     ]
 })
-export class GoogleMapsMarkerDirective extends GoogleMapsLifecycleBase
+export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase
 {
-    @WrapperInput() public marker?: IGoogleMapsMarker;
-    @Input() public options?: google.maps.MarkerOptions;
-    @Input() public position?: google.maps.LatLng | google.maps.LatLngLiteral;
+    @Wrapper @Input() public marker?: IGoogleMapsMarker;
+    @Input  () public options?      : google.maps.MarkerOptions;
+    @Input  () public position?     : google.maps.LatLng | google.maps.LatLngLiteral;
 
     /** Fired when the marker's animation property changes. */
     @Output() public animationChanged                               = new EventEmitter();

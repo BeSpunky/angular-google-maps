@@ -1,4 +1,4 @@
-import { SimpleChange, SimpleChanges, Component, DebugElement } from '@angular/core';
+import { SimpleChange, SimpleChanges, Component, DebugElement, Input } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 
 import { configureGoogleMapsTestingModule } from '../../../testing/setup';
@@ -6,10 +6,9 @@ import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
-import { EventsMap } from '../events/event-map.token';
+import { EventsMap } from '../tokens/event-map.token';
 import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
-import { CurrentMapProvider } from '../../../google-map/component/current-map.provider';
-import { WrapperInput } from '../../decorators/wrapper-input.decorator';
+import { Wrapper } from '../../decorators/wrapper.decorator';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
@@ -160,13 +159,12 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 @Component({
     providers: [
         { provide: WrapperFactory, useFactory: () => createNativeWrapper },
-        { provide: EventsMap, useValue: EventsMapStub },
-        CurrentMapProvider
+        { provide: EventsMap, useValue: EventsMapStub }
     ]
 })
 class MockComponent extends GoogleMapsLifecycleBase
 {
     public options?: any;
 
-    @WrapperInput() public dummyInputWrapper: IGoogleMapsNativeObjectEmittingWrapper;
+    @Wrapper @Input() public dummyInputWrapper: IGoogleMapsNativeObjectEmittingWrapper;
 }

@@ -5,9 +5,8 @@ import { ZoomLevel } from '../types/zoom-level.enum';
 import { MapEventsMapProvider } from './map-event.enum';
 import { GoogleMapsLifecycleBase } from '../../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
-import { GoogleMap } from '../google-map';
-import { CurrentMapProvider } from './current-map.provider';
-import { WrapperInput } from '../../core/decorators/wrapper-input.decorator';
+import { Wrapper } from '../../core/decorators/wrapper.decorator';
+import { IGoogleMap } from '../i-google-map';
 
 @Component({
     selector: 'bs-google-map',
@@ -15,17 +14,16 @@ import { WrapperInput } from '../../core/decorators/wrapper-input.decorator';
     styleUrls: ['./google-map.component.css'],
     providers: [
         GoogleMapFactoryProvider,
-        MapEventsMapProvider,
-        CurrentMapProvider
+        MapEventsMapProvider
     ]
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase
 {
     // Bound properties
-    @WrapperInput() public map     : GoogleMap;
-    @Input() public options?: google.maps.MapOptions;
-    @Input() public center? : google.maps.LatLng;
-    @Input() public zoom?   : ZoomLevel;
+    @Wrapper @Input() public map: IGoogleMap;
+    @Input   () public options? : google.maps.MapOptions;
+    @Input   () public center?  : google.maps.LatLng;
+    @Input   () public zoom?    : ZoomLevel;
 
     // Events
     @Output() public boundsChanged      = new EventEmitter();

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { GoogleMapsApiService, GoogleMapsMarker, GoogleMapsData, GoogleMapsDataDirective, GoogleMapsEventData } from '@bespunky/angular-google-maps';
+import { GoogleMapsApiService, GoogleMapsMarker, GoogleMapsDataDirective, GoogleMapsEventData, GoogleMapsFeature } from '@bespunky/angular-google-maps';
 
 @Component({
     selector: 'app-root',
@@ -11,6 +11,8 @@ export class AppComponent
     @ViewChild(GoogleMapsDataDirective)
     public data: GoogleMapsDataDirective;
 
+    public features: GoogleMapsFeature[] = [];
+
     constructor(private api: GoogleMapsApiService)
     {
         api.whenReady.then(() => console.log('loaded api'));
@@ -20,14 +22,23 @@ export class AppComponent
     {
         if (!(event instanceof GoogleMapsEventData)) return;
 
-        const feature = new google.maps.Data.Feature({ geometry: new google.maps.Data.Point(event.args[0].position) });
+        const feature = new GoogleMapsFeature(this.api, this.data.dataLayer, { geometry: new google.maps.Data.Point(event.args[0].position) });
 
-        (this.data.nativeWrapper as GoogleMapsData).addFeature(feature);
+        this.features.push(feature);
+
+        console.log('new feature by app', this.features.length)
     }
 
     public onMarkerClick(marker: GoogleMapsMarker)
     {
         alert('marker clicked');
         console.log(marker);
+    }
+
+    public async onFeatureHover(event: GoogleMapsEventData)
+    {
+        if (!(event instanceof GoogleMapsEventData)) return;
+
+        console.log(`feature hovered ${this.features.indexOf(event.delegatedEmitter as GoogleMapsFeature)}`);
     }
 }

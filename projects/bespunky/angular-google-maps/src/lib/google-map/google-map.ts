@@ -12,11 +12,12 @@ import { ZoomLevel } from './types/zoom-level.enum';
 import { Wrap } from '../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
 import { Coord } from '../core/abstraction/types/geometry-utils.type';
+import { GoogleMapsData } from '../overlays/data/google-maps-data';
 
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
-    public overlays = new OverlaysTracker();
+    public readonly overlays = new OverlaysTracker();
 
     constructor(
         protected api       : GoogleMapsApiService,
@@ -40,9 +41,14 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
     {        
         options = Object.assign({}, options, { position: this.api.geometry.toCoordLiteral(position) });
-
+        
         // Marker creation will cause rendering. Run outside...
         return this.createOverlay(() => new GoogleMapsMarker(this.api, this, options));
+    }
+
+    public createDataLayer(options?: google.maps.Data.DataOptions): Promise<GoogleMapsData>
+    {
+        return this.createOverlay(() => new GoogleMapsData(this.api, this, options));
     }
 
     // TODO: Add here create methods for any new featured overlay type (e.g. polygons, polylines, etc.)
@@ -57,7 +63,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         return overlay;
     }
 
-    public async removeOverlay(overlay: IGoogleMapsDrawableOverlay)
+    public async removeOverlay(overlay: IGoogleMapsDrawableOverlay): Promise<void>
     {
         // Overlay removal will cause rendering. Run outside...
         await this.api.runOutsideAngular(() => overlay.removeFromMap());

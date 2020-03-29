@@ -1,25 +1,20 @@
-import { BehaviorSubject } from 'rxjs';
 import { FactoryProvider } from '@angular/core';
 
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { ensureMapInstantiated } from '../../utils/utils';
 import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.token';
-import { CurrentMap } from '../../core/abstraction/tokens/current-map.token';
-import { IGoogleMap } from '../../google-map/i-google-map';
 import { GoogleMapsData } from './google-maps-data';
+import { GoogleMapComponent } from '../../google-map/component/google-map.component';
 
-export function NativeDataWrapperFactoryProvider(api: GoogleMapsApiService, currentMap: BehaviorSubject<IGoogleMap>)
+export function NativeDataWrapperFactoryProvider(api: GoogleMapsApiService, mapComponent: GoogleMapComponent)
 {
     return function NativeDataWrapperFactory(options?: google.maps.Data.DataOptions)
-    {
-        ensureMapInstantiated(currentMap);
-        
-        return new GoogleMapsData(api, currentMap.value, options);
+    {        
+        return new GoogleMapsData(api, mapComponent.map, options);
     };
 }
 
 export const GoogleMapsDataFactoryProvider: FactoryProvider = {
     provide   : WrapperFactory,
     useFactory: NativeDataWrapperFactoryProvider,
-    deps      : [GoogleMapsApiService, CurrentMap]
+    deps      : [GoogleMapsApiService, GoogleMapComponent]
 }

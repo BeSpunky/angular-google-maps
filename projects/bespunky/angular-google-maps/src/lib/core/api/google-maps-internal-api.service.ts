@@ -12,6 +12,7 @@ import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-map
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
+import { IGoogleMapsNativeObject } from '../abstraction/native/i-google-maps-native-object';
 
 @Injectable({
     providedIn: 'root'
@@ -55,12 +56,13 @@ export class GoogleMapsInternalApiService
      * @param {IGoogleMapsNativeObjectEmittingWrapper} [nativeWrapper=emittingComponent.nativeWrapper] (Optional) The wrapper of the native object that defines the events. Default is `emittingComponent.nativeWrapper`.
      * Pass a value to this argument only if the emitting component is not the one containing the native object.
      * Example: Data layer native object raises events that should be emitted by the individual feature directives.
-     * 
      * @see `google-maps-feature.directive.ts` for more info.
+     * @param {(event: GoogleMapsEventData) => boolean | Promise<boolean>} shouldEmit (Optional) A function that will determine if the a specific event should be emitted or not.
      */
-    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper)
+    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
+        const delegatedEmitter = nativeWrapper === emittingComponent.nativeWrapper ? nativeWrapper : emittingComponent.nativeWrapper;
         
         for (const event of eventsMap)
         {
@@ -71,14 +73,14 @@ export class GoogleMapsInternalApiService
             if (!emitter || emitter.observers.length === 0) continue;
 
             // Hook the emitter to the listener and emit everytime the event is fired.
-            // tslint:disable-next-line:only-arrow-functions
             nativeWrapper.listenTo(event.reference, function()
             {
                 const args = transfrom.auto([...arguments]);
+                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, this, args, Array.from(arguments), delegatedEmitter);
 
-                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, args, arguments);
-
-                emitter.emit(eventData);
+                // If no filter function specified, or the filter function returned true, then emit. Wrapped in promise to simplify detection of return type.
+                Promise.resolve(!shouldEmit || shouldEmit(eventData))
+                       .then(emit => emit ? emitter.emit(eventData) : void 0);
             });
         }
     }

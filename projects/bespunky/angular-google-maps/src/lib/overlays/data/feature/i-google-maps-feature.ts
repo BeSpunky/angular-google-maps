@@ -1,7 +1,11 @@
-import { IGoogleMapsNativeObjectWrapper } from '../../../core/abstraction/base/i-google-maps-native-object-wrapper';
+import { IGoogleMapsData } from '../i-google-maps-data';
+import { IGoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction/base/i-google-maps-native-object-emitting-wrapper';
 
-export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectWrapper
+export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapper
 {
+    /** The data object this feature was added to. */
+    readonly data: IGoogleMapsData;
+
     getId(): Promise<number | string>;
     
     getGeometry(): Promise<google.maps.Data.Geometry>;
