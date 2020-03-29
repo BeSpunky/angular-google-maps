@@ -2,13 +2,13 @@ import { SimpleChange, SimpleChanges, Component, DebugElement, Input } from '@an
 import { fakeAsync, tick } from '@angular/core/testing';
 
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
+import { GoogleMapsLifecycleBase, DefaultWrapperInputName } from './google-maps-lifecycle-base';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
 import { EventsMap } from '../tokens/event-map.token';
 import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
-import { Wrapper } from '../../decorators/wrapper.decorator';
+import { Wrapper, WrapperInputSymbol } from '../../decorators/wrapper.decorator';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
@@ -39,6 +39,16 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
         beforeEach(() => mockComponent.ngOnInit());
 
         it('should create an instance', () => expect(mockComponent).toBeTruthy());
+
+        it('should warn and assign a default name for the native wrapper input if @Wrapper was not used', () =>
+        {
+            spyOn(console, 'warn');
+
+            const noWrapperComponent = new MockNoWrapperComponent(api, () => void 0);
+
+            expect((noWrapperComponent as any).wrapperInputName).toBe(DefaultWrapperInputName);
+            expect(console.warn).toHaveBeenCalledTimes(1);
+        });
 
         it('should create and store a promise for later use when instantiated', () =>
         {
@@ -156,15 +166,25 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
     };
 }
 
-@Component({
+const componentDef = {
     providers: [
         { provide: WrapperFactory, useFactory: () => createNativeWrapper },
         { provide: EventsMap, useValue: EventsMapStub }
     ]
-})
+};
+
+@Component(componentDef)
 class MockComponent extends GoogleMapsLifecycleBase
 {
     public options?: any;
 
     @Wrapper @Input() public dummyInputWrapper: IGoogleMapsNativeObjectEmittingWrapper;
+}
+
+@Component(componentDef)
+class MockNoWrapperComponent extends GoogleMapsLifecycleBase
+{
+    public options?: any;
+
+    @Input() public dummyInputWrapper: IGoogleMapsNativeObjectEmittingWrapper;
 }

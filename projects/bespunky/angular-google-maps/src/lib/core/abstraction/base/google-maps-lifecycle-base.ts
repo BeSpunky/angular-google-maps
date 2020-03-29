@@ -9,6 +9,9 @@ import { WrapperFactory } from '../tokens/wrapper-factory.token';
 import { EventsMap } from '../tokens/event-map.token';
 import { WrapperInputSymbol } from '../../decorators/wrapper.decorator';
 
+/** The name that will be used for the native wrapper input member if @Wrapper wasn't specified. */
+export const DefaultWrapperInputName = 'nativeWrapperInput';
+
 /**
  * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.
  * Extending this class will automatically:
@@ -47,7 +50,7 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
         @Inject(EventsMap     ) @Optional() protected eventsMap          : GoogleMapsEventsMap = []
     )
     {
-        this.wrapperInputName = Reflect.getMetadata(WrapperInputSymbol, this) || 'nativeWrapperInput';
+        this.initNativeWrapperInputName();
     
         // initNativeWrapper cannot be called here because the map extending component hasn't been initialized yet.
         // If the component hasn't initialized yet, the wrapper hasn't either.
@@ -83,10 +86,18 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
         return this[this.wrapperInputName];
     }
 
+    private initNativeWrapperInputName(): void
+    {
+        const name = Reflect.getMetadata(WrapperInputSymbol, this);
+
+        if (!name)
+            console.warn(`[${(this as any).constructor.name}] No wrapper input property has been set for this component. Component users will not be able to bind their wrapper. See @Wrapper for more info.`);
+
+        this.wrapperInputName = name || DefaultWrapperInputName;
+    }
+
     private initNativeWrapper(): void
     {
-        if (!this.wrapperInputName) console.warn(`[${(this as any).constructor.name}] No wrapper input property has been set for this component. Component users will not be able to bind their wrapper. See @Wrapper for more info.`);
-
         // Either component user has already set a wrapper through the tempalte, or it will be created using the factory and assigned to the input
         if (!this.nativeWrapper)
             this[this.wrapperInputName] = this.createNativeWrapper(this.options);
