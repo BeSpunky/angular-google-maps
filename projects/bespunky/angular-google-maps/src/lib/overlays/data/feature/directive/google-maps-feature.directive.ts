@@ -63,6 +63,8 @@ export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase
     {
         this.feature.data.removeFeature(this.feature);
 
+        // TODO: Unhook events. Will doing so right now unhook events registered by data directives? maybe a separate unhook method is needed for delegated events.
+
         super.ngOnDestroy();
     }
 }
