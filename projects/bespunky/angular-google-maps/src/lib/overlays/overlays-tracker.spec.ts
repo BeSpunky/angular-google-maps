@@ -46,6 +46,7 @@ describe('OverlayTracker', () =>
 
 class StubGoogleMapsMarker implements IGoogleMapsMarker
 {
+    public map: IGoogleMap;
     public native: Promise<any>;
     public custom: any;
 

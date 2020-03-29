@@ -2,7 +2,7 @@
 import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup';
-import { IGoogleMapsEmittingNativeObject } from '../native/i-google-maps-emitting-native-object';
+import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
 describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
 {
@@ -23,11 +23,11 @@ describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
 
     it('should wait for the native object then register a listener when calling `listenTo()`', async () =>
     {
-        spyOn(mockNative, 'addListener').and.callThrough();
+        spyOn(google.maps.event, 'addListener').and.callThrough();
 
         await mockWrapper.listenTo('dummyEvent', () => true);
 
-        expect(mockNative.addListener).toHaveBeenCalledTimes(1);
+        expect(google.maps.event.addListener).toHaveBeenCalledTimes(1);
     });
 
     it('should wait for the native object then unregister all listeners when calling `stopListeningTo()', async () =>
@@ -40,18 +40,16 @@ describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
     });
 });
 
-const mockNative: IGoogleMapsEmittingNativeObject = {
-    addListener: (eventName: string, handler: () => void) => 'listenerAdded'
-};
+const mockNative: IGoogleMapsNativeObject = {};
 
-class MockWrapper extends GoogleMapsNativeObjectEmittingWrapper<IGoogleMapsEmittingNativeObject>
+class MockWrapper extends GoogleMapsNativeObjectEmittingWrapper<IGoogleMapsNativeObject>
 {
-    constructor(api: GoogleMapsApiService, private mockNativeObject: IGoogleMapsEmittingNativeObject)
+    constructor(api: GoogleMapsApiService, private mockNativeObject: IGoogleMapsNativeObject)
     {
         super(api);
     }
 
-    public createNativeObject(): IGoogleMapsEmittingNativeObject
+    public createNativeObject(): IGoogleMapsNativeObject
     {
         return this.mockNativeObject;
     }
