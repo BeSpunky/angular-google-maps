@@ -59,7 +59,7 @@ export class GoogleMapsInternalApiService
      * @see `google-maps-feature.directive.ts` for more info.
      * @param {(event: GoogleMapsEventData) => boolean | Promise<boolean>} shouldEmit (Optional) A function that will determine if the a specific event should be emitted or not.
      */
-    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap, nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
         const delegatedEmitter = nativeWrapper === emittingComponent.nativeWrapper ? nativeWrapper : emittingComponent.nativeWrapper;
@@ -91,7 +91,7 @@ export class GoogleMapsInternalApiService
      * @param {IGoogleMapsNativeObjectEmittingWrapper} nativeWrapper The native wrapper for which event handlers were previously registered and hooked to another component.
      * @param {GoogleMapsEventsMap} eventMap The map of native events supported by the native object to unregister from.
      */
-    public unhookEmitters(nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper, eventsMap: GoogleMapsEventsMap): void
+    public unhookEmitters(nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper, eventsMap: GoogleMapsEventsMap = []): void
     {
         for (const event of eventsMap)
             nativeWrapper.stopListeningTo(event.reference);
