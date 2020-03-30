@@ -16,11 +16,6 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
         if (map) this.setContainingMap(map);
     }
 
-    public getContainingMap(): IGoogleMap
-    {
-        return this.map;
-    }
-
     /**
      * Assigns the overlay to the specified map. If possible, prefer using the appropriate `GoogleMap.createXXX()` method instead.
      * If not possible, it is the responsability of the caller to add the overlay to the `OverlayTracker` in the `GoogleMap.overlays` object.

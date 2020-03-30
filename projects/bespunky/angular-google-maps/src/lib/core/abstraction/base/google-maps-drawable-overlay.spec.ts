@@ -38,8 +38,6 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
         expect(DrawableOverlayMock.prototype.setContainingMap).toHaveBeenCalledWith(mockMap);
     });
 
-    it('should retrieve the map when calling `getContainingMap()`', () => expect(mockOverlay.getContainingMap()).toBe(mockMap));
-
     it('should set a new containing map to the overlay outside of angular when calling `setContainingMap()`', async () =>
     {
         runOutsideAngular.calls.reset();

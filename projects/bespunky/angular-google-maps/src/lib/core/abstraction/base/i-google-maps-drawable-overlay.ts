@@ -9,12 +9,6 @@ export interface IGoogleMapsDrawableOverlay extends IGoogleMapsNativeObjectEmitt
     readonly type: OverlayType;
 
     /**
-     * Retrieves the map this overlay is assigned to.
-     *
-     * @returns {IGoogleMap} The map this overlay is assigned to. `null` if the overlay is not assigned to any map.
-     */
-    getContainingMap(): IGoogleMap;
-    /**
      * Assigns the overlay to the specified map. If possible, prefer using the appropriate `GoogleMap.createXXX()` method instead.
      * If not possible, it is the responsability of the caller to add the overlay to the `OverlayTracker` in the `GoogleMap.overlays` object.
      * Otherwise, inconsistencies and unexpected behaviours might occur.
