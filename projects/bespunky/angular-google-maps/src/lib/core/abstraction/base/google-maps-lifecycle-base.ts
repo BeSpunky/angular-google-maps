@@ -70,8 +70,6 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
     ngOnDestroy()
     {
         this.api.unhookEmitters(this.nativeWrapper, this.eventsMap);
-
-        this.nativeWrapper
     }
 
     ngOnChanges(changes: SimpleChanges)
