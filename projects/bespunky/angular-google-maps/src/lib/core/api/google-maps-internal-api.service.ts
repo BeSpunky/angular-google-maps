@@ -62,7 +62,6 @@ export class GoogleMapsInternalApiService
     public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
-        const delegatedEmitter = nativeWrapper === emittingComponent.nativeWrapper ? nativeWrapper : emittingComponent.nativeWrapper;
         
         for (const event of eventsMap)
         {
@@ -76,7 +75,7 @@ export class GoogleMapsInternalApiService
             nativeWrapper.listenTo(event.reference, function(...nativeArgs: any[])
             {
                 const args = transfrom.auto(nativeArgs);
-                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, this, args, nativeArgs, delegatedEmitter);
+                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, this, args, nativeArgs, emittingComponent.nativeWrapper);
 
                 // If no filter function specified, or the filter function returned true, then emit. Wrapped in promise to simplify detection of return type.
                 Promise.resolve(!shouldEmit || shouldEmit(eventData))

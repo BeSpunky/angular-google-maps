@@ -7,7 +7,11 @@ export class GoogleMapsEventData implements IGoogleMapsEventData
     constructor(
         /** The name of the triggered event. */
         public eventName: string,
-        /** The wrapper which actually emitted the event. See `delegatedEmitter` documentation for more details. */
+        /**
+         * The wrapper which actually emitted the event. If the component was hooked to its own inner wrapper's events, this will be the inner wrapper.
+         * If a component was hooked to events of another wrapper, this will be the other wrapper. In case you need access only to the component's inner wrapper,
+         * use `associatedEmitter` instead.
+         */
         public emitter: IGoogleMapsNativeObjectEmittingWrapper,
         /** The native object which actually emitted the event. */
         public nativeEmitter: IGoogleMapsNativeObject,
@@ -15,11 +19,7 @@ export class GoogleMapsEventData implements IGoogleMapsEventData
         public args: any,
         /** The native arguments provided in the native event. */
         public nativeArgs: any,
-        /**
-         * The wrapper this event is related to. If events a component's events were hooked to a wrapper different to the one it holds internally,
-         * this will be the inner wrapper. Otherwise (events were hooked to the internal wrapper of the component), this will be the same as the `emitter` member.
-         * Example use case: GoogleMapsFeatureDirective hooks events to a GoogleMapsData wrapper from its containing GoogleMapsDataDirective.
-         */
-        public delegatedEmitter: IGoogleMapsNativeObjectEmittingWrapper
+        /** The wrapper this event is related to. This is always the inner wrapper of the hooked component. */
+        public associatedEmitter: IGoogleMapsNativeObjectEmittingWrapper
     ) { }
 }
