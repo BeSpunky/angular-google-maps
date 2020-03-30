@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
+import { OnInit, OnChanges, SimpleChanges, Inject, Optional } from '@angular/core';
 import { promiseLater } from '@bespunky/angular-zen';
 
 import { GoogleMapsEventsMap } from '../types/google-maps-events-map.type';
@@ -37,7 +37,7 @@ export const DefaultWrapperInputName = 'nativeWrapperInput';
  * 
  * @see GoogleMapsComponent source code for an example.
  */
-export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnChanges
+export abstract class GoogleMapsLifecycleBase implements OnInit, OnChanges
 {
     private waitForComponentInit: { promise: Promise<void>, resolve: () => void, reject: () => any };
     private wrapperInputName: string;
@@ -52,6 +52,7 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
     {
         this.eventsMap = eventsMap || []; // A default value of [] doesn't get assigned if eventsMap is null
 
+        this.initEmitters();
         this.initNativeWrapperInputName();
     
         // initNativeWrapper cannot be called here because the map extending component hasn't been initialized yet.
@@ -65,13 +66,6 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
         this.initNativeWrapper();
 
         this.waitForComponentInit.resolve();
-
-        this.api.hookEmitters(this, this.eventsMap);
-    }
-
-    ngOnDestroy()
-    {
-        this.api.unhookEmitters(this.nativeWrapper, this.eventsMap);
     }
 
     ngOnChanges(changes: SimpleChanges)
@@ -84,6 +78,19 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnDestroy, OnCh
     public get nativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
     {
         return this[this.wrapperInputName];
+    }
+
+    /**
+     * Executed by the constructor, before angular attempts to bind events. Calls the `api.hookAndSetEmitters()` method with the appropriate implementation.
+     * The default call is `api.hookAndSetEmitters(this, this.eventsMap)` which will hook native events to this component instance using the inner wrapper
+     * and no event filtering. Override this method to change implementation.
+     * 
+     * @protected
+     * @virtual
+     */
+    protected initEmitters()
+    {
+        this.api.hookAndSetEmitters(this, this.eventsMap);
     }
 
     private initNativeWrapperInputName(): void

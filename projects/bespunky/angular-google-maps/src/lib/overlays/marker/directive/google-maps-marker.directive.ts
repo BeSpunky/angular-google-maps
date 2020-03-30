@@ -1,10 +1,12 @@
-import { Directive, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Directive, Input, Output } from '@angular/core';
 
 import { GoogleMapsOverlayLifecycleBase } from '../../../core/abstraction/base/google-maps-overlay-lifecycle-base';
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
 import { MarkerEventsMapProvider } from './marker-event.enum';
 import { Wrapper } from '../../../core/decorators/wrapper.decorator';
+import { GoogleMapsEventData } from '../../../core/abstraction/events/google-maps-event-data';
 
 @Directive({
     selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
@@ -21,45 +23,45 @@ export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase
     @Input  () public position?     : google.maps.LatLng | google.maps.LatLngLiteral;
 
     /** Fired when the marker's animation property changes. */
-    @Output() public animationChanged                               = new EventEmitter();
+    @Output() public animationChanged                               : Observable<GoogleMapsEventData>;
     /** Fired when the marker icon was clicked. */
-    @Output() public click                                          = new EventEmitter();
+    @Output() public click                                          : Observable<GoogleMapsEventData>;
     /** Fired for a rightclick on the marker. */
-    @Output() public rightClick                                     = new EventEmitter();
+    @Output() public rightClick                                     : Observable<GoogleMapsEventData>;
     /** Fired when the marker's clickable property changes. */
-    @Output() public clickableChanged                               = new EventEmitter();
+    @Output() public clickableChanged                               : Observable<GoogleMapsEventData>;
     /** Fired when the marker icon was double clicked. */
-    @Output() public doubleClick                                    = new EventEmitter();
+    @Output() public doubleClick                                    : Observable<GoogleMapsEventData>;
     /** Fired for a mousedown on the marker. */
-    @Output() public mouseDown                                      = new EventEmitter();
+    @Output() public mouseDown                                      : Observable<GoogleMapsEventData>;
     /** Fired when the mouse leaves the area of the marker icon. */
-    @Output() public mouseOut                                       = new EventEmitter();
+    @Output() public mouseOut                                       : Observable<GoogleMapsEventData>;
     /** Fired when the mouse enters the area of the marker icon. */
-    @Output() public mouseOver                                      = new EventEmitter();
+    @Output() public mouseOver                                      : Observable<GoogleMapsEventData>;
     /** Fired for a mouseup on the marker. */
-    @Output() public mouseUp                                        = new EventEmitter();
+    @Output() public mouseUp                                        : Observable<GoogleMapsEventData>;
     /** Fired when the marker's cursor property changes. */
-    @Output() public cursorChanged                                  = new EventEmitter();
+    @Output() public cursorChanged                                  : Observable<GoogleMapsEventData>;
     /** Fired repeatedly while the user drags the marker. */
-    @Output() public drag                                           = new EventEmitter();
+    @Output() public drag                                           : Observable<GoogleMapsEventData>;
     /** Fired when the user stops dragging the marker. */
-    @Output() public dragEnd                                        = new EventEmitter();
+    @Output() public dragEnd                                        : Observable<GoogleMapsEventData>;
     /** Fired when the marker's draggable property changes. */
-    @Output() public draggableChanged                               = new EventEmitter();
+    @Output() public draggableChanged                               : Observable<GoogleMapsEventData>;
     /** Fired when the user starts dragging the marker. */
-    @Output() public dragStart                                      = new EventEmitter();
+    @Output() public dragStart                                      : Observable<GoogleMapsEventData>;
     /** Fired when the marker's flat property changes. */
-    @Output() public flatChanged                                    = new EventEmitter();
+    @Output() public flatChanged                                    : Observable<GoogleMapsEventData>;
     /** Fired when the marker icon property changes. */
-    @Output() public iconChanged                                    = new EventEmitter();
+    @Output() public iconChanged                                    : Observable<GoogleMapsEventData>;
     /** Fired when the marker position property changes. */
-    @Output() public positionChanged                                = new EventEmitter();
+    @Output() public positionChanged                                : Observable<GoogleMapsEventData>;
     /** Fired when the marker's shape property changes. */
-    @Output() public shapeChanged                                   = new EventEmitter();
+    @Output() public shapeChanged                                   : Observable<GoogleMapsEventData>;
     /** Fired when the marker title property changes. */
-    @Output() public titleChanged                                   = new EventEmitter();
+    @Output() public titleChanged                                   : Observable<GoogleMapsEventData>;
     /** Fired when the marker's visible property changes. */
-    @Output() public visibleChanged                                 = new EventEmitter();
+    @Output() public visibleChanged                                 : Observable<GoogleMapsEventData>;
     /** Fired when the marker's zIndex property changes.    */
-    @Output() public zIndexChanged                                  = new EventEmitter();
+    @Output() public zIndexChanged                                  : Observable<GoogleMapsEventData>;
 }

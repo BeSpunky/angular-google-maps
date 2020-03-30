@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange, Component, Input } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
@@ -99,47 +99,94 @@ describe('GoogleMapsInternalApiService', () =>
 
             // If listenTo() was called once, only one event1 got hooked and we won
             expect(componentMock.nativeWrapper.listenTo).toHaveBeenCalledTimes(1);
-            expect(componentMock.listeners.length).toBe(1);
+            expect(componentMock.wrapper.listeners.length).toBe(1);
         });
 
-        it('should create a callback that generates an event data object and emit the event', (done: DoneFn) =>
+        it('should create a callback that generates an event data object and emit the event', async (done: DoneFn) =>
         {
             const eventArgs = { value: 'dummy' };
 
+            const native = await componentMock.nativeWrapper.native;
             // Subscribe to the first event so it won't be skiped for having no observers
             componentMock.event1.subscribe((eventData: GoogleMapsEventData) =>
             {
-                expect(eventData.eventName).toBe('Event1');
-                expect(eventData.emitter).toBe(componentMock.nativeWrapper);
-                expect(eventData.args[0]).toEqual(eventArgs); // For unrecognized native args, the transformer should return the native args
-                expect(eventData.nativeArgs[0]).toEqual(eventArgs);
+                expect(eventData.eventName).toBe('Event1', 'wrong event name');
+                expect(eventData.emitter).toBe(componentMock.nativeWrapper, 'wrong emitter');
+                expect(eventData.associatedEmitter).toBe(componentMock.nativeWrapper, 'wrong delegated emitter');
+                expect(eventData.nativeEmitter).toBe(native, 'wrong native emitter');
+                expect(eventData.args[0]).toEqual(eventArgs, 'wrong event args'); // For unrecognized native args, the transformer should return the native args
+                expect(eventData.nativeArgs[0]).toEqual(eventArgs, 'wrong native event args');
 
                 done();
             });
 
             service.hookEmitters(componentMock, EventsMapStub);
 
-            componentMock.nativeWrapper.native.then(native => native.raiseEvent(eventArgs));
+            native.raiseEvent(eventArgs);
         });
+        
+        it('should be able to hook events of a wrapper different to the component\'s inner wrapper', async (done: DoneFn) =>
+        {
+            const eventArgs = { value: 'dummy' };
+
+            const secondWrapper = createNativeWrapper.call({});
+            const secondNative = await secondWrapper.native;
+
+            // Subscribe to the first event so it won't be skiped for having no observers
+            componentMock.event1.subscribe((eventData: GoogleMapsEventData) =>
+            {
+                expect(eventData.eventName).toBe('Event1', 'wrong event name');
+                expect(eventData.emitter).toBe(secondWrapper, 'wrong emitter');
+                expect(eventData.associatedEmitter).toBe(componentMock.nativeWrapper, 'wrong delegated emitter');
+                expect(eventData.nativeEmitter).toBe(secondNative, 'wrong native emitter');
+                expect(eventData.args[0]).toEqual(eventArgs, 'wrong event args'); // For unrecognized native args, the transformer should return the native args
+                expect(eventData.nativeArgs[0]).toEqual(eventArgs, 'wrong native event args');
+
+                done();
+            });
+
+            service.hookEmitters(componentMock, EventsMapStub, secondWrapper);
+
+            secondNative.raiseEvent(eventArgs);
+        });
+
+        // it('should allow filtering of events', fakeAsync(async () =>
+        // {
+        //     const shouldEmitArgs    = { shouldEmit: true };
+        //     const shouldNotEmitArgs = { shouldEmit: false };
+
+        //     spyOn(componentMock.event1, 'emit').and.callThrough();
+
+        //     componentMock.event1.subscribe(() => )
+        //     service.hookEmitters(componentMock, EventsMapStub, null, (event) => event.nativeArgs.shouldEmit);
+
+        //     const native = await componentMock.wrapper.native;
+            
+        //     native.raiseEvent(shouldEmitArgs);
+        //     native.raiseEvent(shouldNotEmitArgs);
+
+        //     tick();
+        //     expect(componentMock.event1.emit).toHaveBeenCalledTimes(1);
+        // }));
     });
 
     describe('upon calling `unhookEmitters()`', () =>
     {
         it('should remove all listeners from the native object', () =>
         {
-            // Subscribe to the first event so it won't be skiped for having no observers
-            componentMock.event1.subscribe(() => 'event1');
+            // // Subscribe to the first event so it won't be skiped for having no observers
+            // componentMock.event1.subscribe(() => 'event1');
 
-            service.hookEmitters(componentMock, EventsMapStub);
+            // service.hookEmitters(componentMock, EventsMapStub);
 
-            expect(componentMock.listeners.length).toBe(1);
+            // expect(componentMock.wrapper.listeners.length).toBe(1);
 
-            spyOn(componentMock.nativeWrapper, 'stopListeningTo').and.callThrough();
+            // spyOn(componentMock.nativeWrapper, 'stopListeningTo').and.callThrough();
 
-            service.unhookEmitters(componentMock.nativeWrapper, EventsMapStub);
+            // service.unhookEmitters(componentMock.nativeWrapper, EventsMapStub);
 
-            expect(componentMock.nativeWrapper.stopListeningTo).toHaveBeenCalledTimes(EventsMapStub.length);
-            expect(componentMock.listeners.length).toBe(0);
+            // expect(componentMock.nativeWrapper.clearListenersFor).toHaveBeenCalledTimes(EventsMapStub.length);
+            // expect(componentMock.wrapper.listeners.length).toBe(0);
         });
     });
 
@@ -167,30 +214,47 @@ const EventsMapStub = [
     { name: 'Event2', reference: 'native_event2' }
 ];
 
-function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
+class MockWrapper implements IGoogleMapsNativeObjectEmittingWrapper
 {
-    const mockNative = {
-        raiseEvent: (args: any) => this.listeners.forEach(handler => handler(args)),
+    public listeners = [];
+    public mockNative = {
+        raiseEvent: (args: any) => this.listeners.forEach(handler => handler.call(this.mockNative, args)),
         fakeProperty: null
     };
 
-    const native = Promise.resolve(mockNative);
+    listenTo(eventName: string, handler: (...args: any[]) => void): Promise<() => void>
+    {
+        this.listeners.push(handler);
 
-    return {
-        listenTo: (eventName: string, handler: () => void) =>
-        {
-            this.listeners.push(handler);
-            return Promise.resolve();
-        },
-        stopListeningTo: () =>
-        {
-            this.listeners = [];
-            return Promise.resolve();
-        },
-        setFakeProperty(value: any) { mockNative.fakeProperty = value; },
-        native,
-        custom: null,
-    } as IGoogleMapsNativeObjectEmittingWrapper;
+        return Promise.resolve(() => void 0);
+    }
+
+    stopListeningTo(eventName: string): Promise<void>
+    {
+        this.listeners = [];
+
+        return Promise.resolve();
+    }
+
+    clearListeners(): Promise<void>
+    {
+        this.listeners = [];
+
+        return Promise.resolve();
+    }
+
+    setFakeProperty(value: any)
+    {
+        this.mockNative.fakeProperty = value;
+    }
+    
+    native = Promise.resolve(this.mockNative);
+    custom: any;    
+}
+
+function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
+{
+    return new MockWrapper();
 }
 
 @Component({
@@ -202,10 +266,8 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 class MockComponent extends GoogleMapsLifecycleBase implements OnInit
 {
     public options?: any;
-    // The callbacks passed-in when calling listenTo(). Stored so the native event could be fired and faked.
-    public listeners: ((args: any) => void)[] = [];
 
     public event1: EventEmitter<void> = new EventEmitter();
 
-    @Wrapper @Input() public dummyWrapperInput: IGoogleMapsNativeObjectEmittingWrapper;
+    @Wrapper @Input() public wrapper: MockWrapper;
 }

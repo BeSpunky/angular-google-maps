@@ -52,6 +52,19 @@ class StubGoogleMapsMarker implements IGoogleMapsMarker
 
     constructor(public type: OverlayType) { }
     
+    listenTo(eventName: string, handler: (...args: any[]) => void): Promise<() => void>
+    {
+        throw new Error("Method not implemented.");
+    }
+    stopListeningTo(eventName: string): Promise<void>
+    {
+        throw new Error("Method not implemented.");
+    }
+    clearListeners(): Promise<void>
+    {
+        throw new Error("Method not implemented.");
+    }
+    
     getPosition(): Promise<google.maps.LatLng>
     {
         throw new Error("Method not implemented.");
@@ -70,14 +83,6 @@ class StubGoogleMapsMarker implements IGoogleMapsMarker
         throw new Error("Method not implemented.");
     }
     removeFromMap(): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    listenTo(eventName: string, handler: () => void): Promise<void>
-    {
-        throw new Error("Method not implemented.");
-    }
-    stopListeningTo(eventName: string): Promise<void>
     {
         throw new Error("Method not implemented.");
     }

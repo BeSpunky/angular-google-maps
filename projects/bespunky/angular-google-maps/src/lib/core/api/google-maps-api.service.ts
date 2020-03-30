@@ -40,4 +40,9 @@ export class GoogleMapsApiService implements OnDestroy
     {
         return this.zone.runOutsideAngular(() => this.whenReady.then(fn));
     }
+
+    public runInsideAngular(fn: () => any): Promise<any>
+    {
+        return this.zone.run(() => this.whenReady.then(fn));
+    }
 }

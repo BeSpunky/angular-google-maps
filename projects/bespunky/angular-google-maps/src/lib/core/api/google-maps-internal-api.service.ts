@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, fromEventPattern, from, Observable, defer } from 'rxjs';
+import { filter, switchMap, mergeMap, last, withLatestFrom, pluck } from 'rxjs/operators';
 import { Injectable, NgZone, EventEmitter, SimpleChanges, Inject } from '@angular/core';
 import { promiseLater } from '@bespunky/angular-zen';
 
@@ -13,7 +14,7 @@ import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
 import { IGoogleMapsNativeObject } from '../abstraction/native/i-google-maps-native-object';
-
+    
 @Injectable({
     providedIn: 'root'
 })
@@ -34,13 +35,13 @@ export class GoogleMapsInternalApiService
         waitForApiReadyPromise.next(this.waitForApi.promise);
     }
 
-    load(): Promise<void>
+    public load(): Promise<void>
     {
         return this.zone.runOutsideAngular(() =>
         {
             this.loader.load()
-                .then(this.waitForApi.resolve)
-                .catch(this.waitForApi.reject);
+                       .then (this.waitForApi.resolve)
+                       .catch(this.waitForApi.reject);
 
             return this.waitForApi.promise;
         });
@@ -57,7 +58,7 @@ export class GoogleMapsInternalApiService
      * Pass a value to this argument only if the emitting component is not the one containing the native object.
      * Example: Data layer native object raises events that should be emitted by the individual feature directives.
      * @see `google-maps-feature.directive.ts` for more info.
-     * @param {(event: GoogleMapsEventData) => boolean | Promise<boolean>} shouldEmit (Optional) A function that will determine if the a specific event should be emitted or not.
+     * @param {(event: GoogleMapsEventData) => boolean} shouldEmit (Optional) A function that will determine if the a specific event should be emitted or not.
      */
     public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
@@ -81,6 +82,36 @@ export class GoogleMapsInternalApiService
                 Promise.resolve(!shouldEmit || shouldEmit(eventData))
                        .then(emit => emit ? emitter.emit(eventData) : void 0);
             });
+        }
+    }
+
+    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    {
+        const transfrom = this.openApi.eventsData;
+        
+        for (const event of eventsMap)
+        {
+            let emitter = fromEventPattern(
+                // Hook native event to observable subscribe
+                (handler)                      => nativeWrapper.listenTo(event.reference, handler),
+                // Hook unregister function to observable unsubscribe
+                (_, stopListening: () => void) => stopListening(),
+                // Map, simplify and storng-type event args
+                (...nativeArgs: any)           => new GoogleMapsEventData(event.name, nativeWrapper, this, transfrom.auto(nativeArgs), nativeArgs, emittingComponent.nativeWrapper)
+            );
+            
+            // If a filtering function was provided, pipe it in
+            if (shouldEmit) emitter = emitter.pipe(
+                // Determine if the event should be emitted. Wrapped in a Promise.resolve() call to avoid detecting the return type of the filter function
+                switchMap(event => Promise.resolve(shouldEmit(event)), (event, emit) => ({ event, emit })),
+                // Filter by the boolean result of the shouldEmit function
+                filter(data => data.emit),
+                // Get and pass along only the event object
+                pluck('event')
+            );
+
+            // Set the observable to the event emitter property
+            emittingComponent[_.camelCase(event.name)] = emitter;
         }
     }
 

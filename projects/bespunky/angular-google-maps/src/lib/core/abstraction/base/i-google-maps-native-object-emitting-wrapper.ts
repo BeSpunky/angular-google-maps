@@ -2,6 +2,20 @@ import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wr
 
 export interface IGoogleMapsNativeObjectEmittingWrapper extends IGoogleMapsNativeObjectWrapper
 {
-    listenTo       (eventName: string, handler: () => void): Promise<any>;
-    stopListeningTo(eventName: string)                     : Promise<any>;
+    /**
+     * Registers an event handler on the native object.
+     *
+     * @param {string} eventName The name of the native event to listen to.
+     * @param {(...args: any[]) => void} handler The function that will handle the event.
+     * @returns {Promise<() => void>} A function which can be used to unregister that specific handler.
+     */
+    listenTo(eventName: string, handler: (...args: any[]) => void): Promise<() => void>;
+    /**
+     * Unregisters all handlers for the specified event from the native object.
+     *
+     * @param {string} eventName The name of the event for which handlers should be cleared.
+     */
+    stopListeningTo(eventName: string): Promise<void>;
+    /** Unregisters all handlers for all events from the native object. */
+    clearListeners(): Promise<void>;
 }

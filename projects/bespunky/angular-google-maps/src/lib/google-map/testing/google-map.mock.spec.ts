@@ -10,6 +10,19 @@ export class MockGoogleMap implements IGoogleMap
     custom: any;
 
     constructor(private nativeMap: object = {}) { }
+    
+    listenTo(eventName: string, handler: (...args: any[]) => void): Promise<() => void>
+    {
+        throw new Error("Method not implemented.");
+    }
+    stopListeningTo(eventName: string): Promise<void>
+    {
+        throw new Error("Method not implemented.");
+    }
+    clearListeners(): Promise<void>
+    {
+        throw new Error("Method not implemented.");
+    }
 
     createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker>
     {
@@ -36,14 +49,6 @@ export class MockGoogleMap implements IGoogleMap
         throw new Error("Method not implemented.");
     }
     setZoom(zoomLevel: number): Promise<void>
-    {
-        throw new Error("Method not implemented.");
-    }
-    listenTo(eventName: string, handler: () => void): Promise<any>
-    {
-        throw new Error("Method not implemented.");
-    }
-    stopListeningTo(eventName: string): Promise<any>
     {
         throw new Error("Method not implemented.");
     }
