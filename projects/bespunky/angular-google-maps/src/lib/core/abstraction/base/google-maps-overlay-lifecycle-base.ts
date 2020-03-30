@@ -9,10 +9,13 @@ export abstract class GoogleMapsOverlayLifecycleBase extends GoogleMapsLifecycle
 {
     ngOnDestroy()
     {
-        const overlay = this.nativeWrapper as IGoogleMapsDrawableOverlay;
+        if (this.nativeWrapper)
+        {
+            const overlay = this.nativeWrapper as IGoogleMapsDrawableOverlay;
 
-        overlay.map.removeOverlay(overlay);
-
+            overlay.map.removeOverlay(overlay);
+        }
+        
         super.ngOnDestroy();
     }
 }
