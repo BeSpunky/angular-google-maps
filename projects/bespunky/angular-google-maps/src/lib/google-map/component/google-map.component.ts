@@ -5,7 +5,6 @@ import { Component, Input, Output } from '@angular/core';
 import { IGoogleMap               } from '../i-google-map';
 import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
 import { ZoomLevel                } from '../types/zoom-level.enum';
-import { Wrapper                  } from '../../core/decorators/wrapper.decorator';
 import { GoogleMapsLifecycleBase  } from '../../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsEventData      } from '../../core/abstraction/events/google-maps-event-data';
 import { Hook                     } from '../../core/decorators/hook.decorator';
@@ -16,11 +15,8 @@ import { Hook                     } from '../../core/decorators/hook.decorator';
     styleUrls: ['./google-map.component.css'],
     providers: [ GoogleMapFactoryProvider ]
 })
-export class GoogleMapComponent extends GoogleMapsLifecycleBase
+export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
 {
-    @Wrapper @Input() public map: IGoogleMap;
-
-    @Input() public options? : google.maps.MapOptions;
     @Input() public center?  : google.maps.LatLng;
     @Input() public zoom?    : ZoomLevel;
 

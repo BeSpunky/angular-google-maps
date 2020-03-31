@@ -6,7 +6,6 @@ import { GoogleMapsLifecycleBase, DefaultWrapperInputName } from './google-maps-
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
-import { EventsMap } from '../tokens/event-map.token';
 import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
 import { Wrapper, WrapperInputSymbol } from '../../decorators/wrapper.decorator';
 
@@ -63,7 +62,6 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
 
             expect(internalApi.hookAndSetEmitters).toHaveBeenCalledTimes(1);
             expect(hookArgs[0]).toBe(mockComponent);
-            expect(hookArgs[1]).toBe(EventsMapStub);
         });
     });
 
@@ -83,7 +81,7 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
 
         describe('with a wrapper instance input from the template', () =>
         {
-            it('should the input to `nativeWrapper`', () =>
+            it('should the input to `wrapper`', () =>
             {
                 const wrapper = createNativeWrapper();
 
@@ -93,16 +91,16 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
                 // Allow the component to initialize
                 mockComponent.ngOnInit();
 
-                // Verify that `nativeWrapper` assigned with the wrapper passed in from the template
-                expect(mockComponent.nativeWrapper).toBe(wrapper);
+                // Verify that `wrapper` assigned with the wrapper passed in from the template
+                expect(mockComponent.wrapper).toBe(wrapper);
             });
         });
 
         describe('with no wrapper instance from an input member', () =>
         {
-            it('should init `nativeWrapper` with a new wrapper created using `createNativeWrapper()`', () =>
+            it('should init `wrapper` with a new wrapper created using `createNativeWrapper()`', () =>
             {
-                expect(mockComponent.nativeWrapper).toBeUndefined();
+                expect(mockComponent.wrapper).toBeUndefined();
 
                 const mockComponentRaw = mockComponent as any;
 
@@ -112,8 +110,8 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
                 mockComponent.ngOnInit();
 
                 expect(mockComponentRaw.createNativeWrapper).toHaveBeenCalledTimes(1);
-                // Verify that `nativeWrapper` was assigned with a new wrapper created using the `createNativeWrapper()` method
-                expect(mockComponent.nativeWrapper).toBeDefined(mockComponentRaw.createNativeWrapper.calls.mostRecent().returnValue);
+                // Verify that `wrapper` was assigned with a new wrapper created using the `createNativeWrapper()` method
+                expect(mockComponent.wrapper).toBeDefined(mockComponentRaw.createNativeWrapper.calls.mostRecent().returnValue);
             });
         });
     });
@@ -137,8 +135,6 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
     });
 });
 
-const EventsMapStub = [{ name: 'Event1', reference: 'event1' }];
-
 function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 {
     return {
@@ -152,8 +148,7 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 
 const componentDef = {
     providers: [
-        { provide: WrapperFactory, useFactory: () => createNativeWrapper },
-        { provide: EventsMap, useValue: EventsMapStub }
+        { provide: WrapperFactory, useFactory: () => createNativeWrapper }
     ]
 };
 

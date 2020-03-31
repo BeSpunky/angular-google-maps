@@ -50,19 +50,19 @@ export class GoogleMapsInternalApiService
     /**
      * Registers event handlers for the specified events on the native object and hooks them to the emitters on the emitting component.
      * Event arguments are automatically transformed using the `EventDataTransformService`.
-     * If the native object is different to the one contained in the emitting component, you can pass it in using the `nativeWrapper` argument.
+     * If the native object is different to the one contained in the emitting component, you can pass it in using the `wrapper` argument.
      *
      * @deprecated Use `hookAndSetEmitters()` instead.
      * 
      * @param {GoogleMapsLifecycleBase} emittingComponent The component/directive emitting the events using Angular `EventEmitter`s.
      * @param {GoogleMapsEventsMap} eventsMap The map of native events supported by the native object to unregister from.
-     * @param {IGoogleMapsNativeObjectEmittingWrapper} [nativeWrapper=emittingComponent.nativeWrapper] (Optional) The wrapper of the native object that defines the events. Default is `emittingComponent.nativeWrapper`.
+     * @param {IGoogleMapsNativeObjectEmittingWrapper} [wrapper=emittingComponent.wrapper] (Optional) The wrapper of the native object that defines the events. Default is `emittingComponent.wrapper`.
      * Pass a value to this argument only if the emitting component is not the one containing the native object.
      * Example: Data layer native object raises events that should be emitted by the individual feature directives.
      * @see `google-maps-feature.directive.ts` for more info.
      * @param {(event: GoogleMapsEventData) => boolean} shouldEmit (Optional) A function that will determine if the a specific event should be emitted or not.
      */
-    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], wrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
         
@@ -75,10 +75,10 @@ export class GoogleMapsInternalApiService
             if (!emitter || emitter.observers.length === 0) continue;
 
             // Hook the emitter to the listener and emit everytime the event is fired.
-            nativeWrapper.listenTo(event.reference, function(...nativeArgs: any[])
+            wrapper.listenTo(event.reference, function(...nativeArgs: any[])
             {
                 const args = transfrom.auto(nativeArgs);
-                const eventData = new GoogleMapsEventData(event.name, nativeWrapper, this, args, nativeArgs, emittingComponent.nativeWrapper);
+                const eventData = new GoogleMapsEventData(event.name, wrapper, this, args, nativeArgs, emittingComponent.wrapper);
 
                 // If no filter function specified, or the filter function returned true, then emit. Wrapped in promise to simplify detection of return type.
                 Promise.resolve(!shouldEmit || shouldEmit(eventData))
@@ -87,20 +87,30 @@ export class GoogleMapsInternalApiService
         }
     }
 
-    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase, nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase, wrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
-        const eventsMap = Reflect.getMetadata(HookOutputSymbol, emittingComponent) as GoogleMapsEventsMap;
+        const eventsMap = (Reflect.getMetadata(HookOutputSymbol, emittingComponent) || []) as GoogleMapsEventsMap;
 
         for (const event of eventsMap)
         {
             let emitter = fromEventPattern(
                 // Hook native event to observable subscribe
-                (handler)                      => nativeWrapper.listenTo(event.reference, handler),
+                (handler) =>
+                {
+                    console.log(`listening to ${event.reference}`);
+                    return wrapper.listenTo(event.reference, handler);
+                },
                 // Hook unregister function to observable unsubscribe
-                (_, stopListening: () => void) => stopListening(),
+                (_, stopListening: () => void) => {
+                    console.log(`unlistening to ${event.reference}`);
+                    return stopListening();
+                },
                 // Map, simplify and storng-type event args
-                (...nativeArgs: any)           => new GoogleMapsEventData(event.name, nativeWrapper, this, transfrom.auto(nativeArgs), nativeArgs, emittingComponent.nativeWrapper)
+                (...nativeArgs: any)           => {
+                    console.log(`mapping event data...`, nativeArgs);
+                    return new GoogleMapsEventData(event.name, wrapper, this, transfrom.auto(nativeArgs), nativeArgs, emittingComponent.wrapper);
+                }
             );
             
             // If a filtering function was provided, pipe it in
@@ -123,13 +133,13 @@ export class GoogleMapsInternalApiService
      * 
      * @deprecated Use `hookAndSetEmitters()` instead of `hookEmitters()` to they will automatically unhook by angular.
      * 
-     * @param {IGoogleMapsNativeObjectEmittingWrapper} nativeWrapper The native wrapper for which event handlers were previously registered and hooked to another component.
+     * @param {IGoogleMapsNativeObjectEmittingWrapper} wrapper The native wrapper for which event handlers were previously registered and hooked to another component.
      * @param {GoogleMapsEventsMap} eventMap The map of native events supported by the native object to unregister from.
      */
-    public unhookEmitters(nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper, eventsMap: GoogleMapsEventsMap = []): void
+    public unhookEmitters(wrapper: IGoogleMapsNativeObjectEmittingWrapper, eventsMap: GoogleMapsEventsMap = []): void
     {
         for (const event of eventsMap)
-            nativeWrapper.stopListeningTo(event.reference);
+            wrapper.stopListeningTo(event.reference);
     }
 
     // Expects `wrapper` to have setters for the properties which, in turn, call the approperiate native function in the native object

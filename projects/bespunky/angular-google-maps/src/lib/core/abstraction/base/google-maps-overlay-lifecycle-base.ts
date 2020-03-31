@@ -5,14 +5,13 @@ import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
  * Provides everything `GoogleMapsLifecycleBase` provides and also takes care of removing the overlay wrapper from the map.
  * Extend this instead of `GoogleMapsLifecycleBase` for components/directives representing drawable overlays.
  */
-export abstract class GoogleMapsOverlayLifecycleBase extends GoogleMapsLifecycleBase
+export abstract class GoogleMapsOverlayLifecycleBase<TWrapper extends IGoogleMapsDrawableOverlay>
+                extends GoogleMapsLifecycleBase<TWrapper>
 {
     ngOnDestroy()
     {
-        if (!this.nativeWrapper) return;
+        if (!this.wrapper) return;
 
-        const overlay = this.nativeWrapper as IGoogleMapsDrawableOverlay;
-
-        overlay.map.removeOverlay(overlay);
+        this.wrapper.map.removeOverlay(this.wrapper);
     }
 }

@@ -2,22 +2,18 @@ import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
 import { GoogleMapsOverlayLifecycleBase } from '../../../core/abstraction/base/google-maps-overlay-lifecycle-base';
-import { IGoogleMapsMarker } from '../i-google-maps-marker';
 import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
-import { Wrapper } from '../../../core/decorators/wrapper.decorator';
 import { GoogleMapsEventData } from '../../../core/abstraction/events/google-maps-event-data';
 import { Hook } from '../../../core/decorators/hook.decorator';
+import { IGoogleMapsMarker } from '../i-google-maps-marker';
 
 @Directive({
     selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
     exportAs: 'marker',
     providers: [ GoogleMapsMarkerFactoryProvider ]
 })
-export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase
+export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsMarker>
 {
-    @Wrapper @Input() public marker?: IGoogleMapsMarker;
-
-    @Input() public options?      : google.maps.MarkerOptions;
     @Input() public position?     : google.maps.LatLng | google.maps.LatLngLiteral;
 
     /** Fired when the marker's animation property changes. */

@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange, Component, Input, Output } from '@angular/core';
 
@@ -10,7 +10,6 @@ import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-dat
 import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../abstraction/tokens/wrapper-factory.token';
-import { Wrapper } from '../decorators/wrapper.decorator';
 import { Hook } from '../decorators/hook.decorator';
 
 describe('GoogleMapsInternalApiService', () =>
@@ -31,6 +30,8 @@ describe('GoogleMapsInternalApiService', () =>
             componentType: MockComponent,
             customize: (moduleDef) => moduleDef.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken })
         };
+
+        spyOn(MockWrapper.prototype, 'listenTo').and.callThrough();
 
         ({ internalApi: service, component: componentMock } = await configureGoogleMapsTestingModule(testConfig));
 
@@ -88,17 +89,16 @@ describe('GoogleMapsInternalApiService', () =>
 
     describe('upon calling `hookAndSetEmitters()', () =>
     {
-        it('should assign observables to the component\'s output members', () =>
+        it('should assign observables to the component\'s @Output() members', () =>
         {
-            // Subscribe to the first event so it won't be skiped for having no observers
-            componentMock.event1.subscribe(() => 'event1');
+            expect(componentMock.event1 instanceof Observable).toBeTruthy();
+        });
 
-            spyOn(componentMock.nativeWrapper, 'listenTo').and.callThrough();
+        it('should register an event handler with the native wrapper on subscriptions', () =>
+        {
+            componentMock.event1.subscribe(() => void 0);
 
-            service.hookEmitters(componentMock);
-
-            // If listenTo() was called once, only one event1 got hooked and we won
-            expect(componentMock.nativeWrapper.listenTo).toHaveBeenCalledTimes(1);
+            expect(componentMock.wrapper.listenTo).toHaveBeenCalledTimes(1);
             expect(componentMock.wrapper.listeners.length).toBe(1);
         });
 
@@ -106,13 +106,13 @@ describe('GoogleMapsInternalApiService', () =>
         {
             const eventArgs = { value: 'dummy' };
 
-            const native = await componentMock.nativeWrapper.native;
+            const native = await componentMock.wrapper.native;
             // Subscribe to the first event so it won't be skiped for having no observers
             componentMock.event1.subscribe((eventData: GoogleMapsEventData) =>
             {
                 expect(eventData.eventName).toBe('Event1', 'wrong event name');
-                expect(eventData.emitter).toBe(componentMock.nativeWrapper, 'wrong emitter');
-                expect(eventData.associatedEmitter).toBe(componentMock.nativeWrapper, 'wrong delegated emitter');
+                expect(eventData.emitter).toBe(componentMock.wrapper, 'wrong emitter');
+                expect(eventData.associatedEmitter).toBe(componentMock.wrapper, 'wrong delegated emitter');
                 expect(eventData.nativeEmitter).toBe(native, 'wrong native emitter');
                 expect(eventData.args[0]).toEqual(eventArgs, 'wrong event args'); // For unrecognized native args, the transformer should return the native args
                 expect(eventData.nativeArgs[0]).toEqual(eventArgs, 'wrong native event args');
@@ -137,7 +137,7 @@ describe('GoogleMapsInternalApiService', () =>
             {
                 expect(eventData.eventName).toBe('Event1', 'wrong event name');
                 expect(eventData.emitter).toBe(secondWrapper, 'wrong emitter');
-                expect(eventData.associatedEmitter).toBe(componentMock.nativeWrapper, 'wrong delegated emitter');
+                expect(eventData.associatedEmitter).toBe(componentMock.wrapper, 'wrong delegated emitter');
                 expect(eventData.nativeEmitter).toBe(secondNative, 'wrong native emitter');
                 expect(eventData.args[0]).toEqual(eventArgs, 'wrong event args'); // For unrecognized native args, the transformer should return the native args
                 expect(eventData.nativeArgs[0]).toEqual(eventArgs, 'wrong native event args');
@@ -177,11 +177,11 @@ describe('GoogleMapsInternalApiService', () =>
             const newValue = 10;
             const changes: SimpleChanges = { fakeProperty: new SimpleChange(1, newValue, true) };
 
-            const setterSpy = spyOn(componentMock.nativeWrapper as any, 'setFakeProperty').and.callThrough();
+            const setterSpy = spyOn(componentMock.wrapper as any, 'setFakeProperty').and.callThrough();
 
-            service.delegateInputChangesToNativeObject(changes, componentMock.nativeWrapper);
+            service.delegateInputChangesToNativeObject(changes, componentMock.wrapper);
 
-            const native = await componentMock.nativeWrapper.native;
+            const native = await componentMock.wrapper.native;
 
             expect(setterSpy).toHaveBeenCalledTimes(1);
             expect(native.fakeProperty).toBe(newValue);

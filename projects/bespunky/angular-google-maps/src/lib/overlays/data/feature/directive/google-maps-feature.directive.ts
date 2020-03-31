@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
-import { Directive, Input, Output } from '@angular/core';
+import { Directive, Output } from '@angular/core';
 
 import { IGoogleMapsFeature } from '../i-google-maps-feature';
-import { Wrapper } from '../../../../core/decorators/wrapper.decorator';
 import { GoogleMapsFeatureFactoryProvider } from '../google-maps-feature-factory.provider';
 import { GoogleMapsLifecycleBase } from '../../../../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsEventData } from '../../../../core/abstraction/events/google-maps-event-data';
@@ -13,12 +12,8 @@ import { Hook } from '../../../../core/decorators/hook.decorator';
     exportAs: 'feature',
     providers: [ GoogleMapsFeatureFactoryProvider ]
 })
-export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase
+export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase<IGoogleMapsFeature>
 {
-    @Wrapper @Input() public feature?: IGoogleMapsFeature;
-    
-    @Input() public options?: google.maps.Data.FeatureOptions;
-
     /** Fired when a feature is added to the collection. */
     @Hook('addfeature')     @Output() public addFeature          : Observable<GoogleMapsEventData>;
     /** Fired for a click on the geometry. */
@@ -46,21 +41,19 @@ export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase
         
     ngOnInit()
     {
-        super.ngOnInit();
-
-        this.feature.data.addFeature(this.feature);
+        this.wrapper.data.addFeature(this.wrapper);
     }
 
     ngOnDestroy()
     {
-        this.feature.data.removeFeature(this.feature);
+        this.wrapper.data.removeFeature(this.wrapper);
     }
 
     protected initEmitters()
     {
         // Hook emitters to the data object's event, but filter out events not related with this specific feature
         this.api.hookAndSetEmitters(this,
-                                    this.feature.data,
-                                    (event: GoogleMapsEventData) => this.feature.native.then(native => event.nativeArgs.some(arg => arg.feature === native)));
+                                    this.wrapper.data,
+                                    (event: GoogleMapsEventData) => this.wrapper.native.then(native => event.nativeArgs.some(arg => arg.feature === native)));
     }
 }
