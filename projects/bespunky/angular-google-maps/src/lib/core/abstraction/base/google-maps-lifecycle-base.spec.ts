@@ -12,7 +12,7 @@ import { Wrapper, WrapperInputSymbol } from '../../decorators/wrapper.decorator'
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
-    let api: GoogleMapsInternalApiService;
+    let internalApi: GoogleMapsInternalApiService;
     let mockComponent: MockComponent;
     let later: { promise: Promise<void>, resolve: () => void, reject: (reason: any) => void };
     let createNativeWrapper: EmittingNativeWrapperFactory;
@@ -20,8 +20,10 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
 
     beforeEach(async () =>
     {
-        ({ internalApi: api, component: mockComponent, debugElement } = await configureGoogleMapsTestingModule({
-            componentType: MockComponent
+        ({ internalApi: internalApi, component: mockComponent, debugElement } = await configureGoogleMapsTestingModule({
+            componentType: MockComponent,
+            // hookAndSetEmitters is called in the constructor so spy before component creation
+            beforeComponentInit: (api, internalApi) => spyOn(internalApi, 'hookAndSetEmitters').and.stub()
         }));
 
         later = (mockComponent as any).waitForComponentInit;
@@ -29,9 +31,7 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
         // The provider is defined at component level, so it only exists in the element's context. TestBed.inject() won't work here.
         createNativeWrapper = debugElement.injector.get(WrapperFactory) as EmittingNativeWrapperFactory;
 
-        spyOn(api, 'hookEmitters').and.stub();
-        spyOn(api, 'unhookEmitters').and.stub();
-        spyOn(api, 'delegateInputChangesToNativeObject').and.stub();
+        spyOn(internalApi, 'delegateInputChangesToNativeObject').and.stub();
     });
 
     describe('basically', () =>
@@ -44,7 +44,7 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
         {
             spyOn(console, 'warn');
 
-            const noWrapperComponent = new MockNoWrapperComponent(api, () => void 0);
+            const noWrapperComponent = new MockNoWrapperComponent(internalApi, () => void 0);
 
             expect((noWrapperComponent as any).wrapperInputName).toBe(DefaultWrapperInputName);
             expect(console.warn).toHaveBeenCalledTimes(1);
@@ -56,10 +56,31 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
             expect(later.resolve instanceof Function).toBeTruthy();
             expect(later.reject instanceof Function).toBeTruthy();
         });
+
+        it('should hook emitters and set them to the component members', () =>
+        {
+            const hookArgs: any[] = (internalApi.hookAndSetEmitters as jasmine.Spy).calls.mostRecent().args;
+
+            expect(internalApi.hookAndSetEmitters).toHaveBeenCalledTimes(1);
+            expect(hookArgs[0]).toBe(mockComponent);
+            expect(hookArgs[1]).toBe(EventsMapStub);
+        });
     });
 
     describe('upon calling `ngOnInit()`', () =>
     {
+        describe('basically', () =>
+        {
+            beforeEach(() =>
+            {
+                spyOn(later, 'resolve').and.stub();
+
+                mockComponent.ngOnInit();
+            });
+
+            it('should resolve the wait for init promise', () => expect(later.resolve).toHaveBeenCalledTimes(1));
+        });
+
         describe('with a wrapper instance input from the template', () =>
         {
             it('should the input to `nativeWrapper`', () =>
@@ -95,44 +116,6 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
                 expect(mockComponent.nativeWrapper).toBeDefined(mockComponentRaw.createNativeWrapper.calls.mostRecent().returnValue);
             });
         });
-
-        describe('basically', () =>
-        {
-            beforeEach(() =>
-            {
-                spyOn(later, 'resolve').and.stub();
-
-                mockComponent.ngOnInit();
-            });
-
-            it('should initialize the native wrapper', () => expect(mockComponent.nativeWrapper).toBeDefined());
-
-            it('should resolve the wait for init promise', () => expect(later.resolve).toHaveBeenCalledTimes(1));
-
-            it('should hook emitters to the component', () =>
-            {
-                const hookArgs: any[] = (api.hookEmitters as jasmine.Spy).calls.mostRecent().args;
-
-                expect(api.hookEmitters).toHaveBeenCalledTimes(1);
-                expect(hookArgs[0]).toBe(mockComponent);
-                expect(hookArgs[1]).toBe(EventsMapStub);
-            });
-        });
-    });
-
-    describe('upon calling `ngOnDestroy()', () =>
-    {
-        // beforeEach(() => mockComponent.ngOnInit());
-        // beforeEach(() => mockComponent.ngOnDestroy());
-
-        // it('should unhook all emitters from the component', () =>
-        // {
-        //     const hookArgs: any[] = (api.unhookEmitters as jasmine.Spy).calls.mostRecent().args;
-
-        //     expect(api.unhookEmitters).toHaveBeenCalledTimes(1);
-        //     expect(hookArgs[0]).toBe(mockComponent.nativeWrapper);
-        //     expect(hookArgs[1]).toBe(EventsMapStub);
-        // });
     });
 
     describe('when changes are detected', () =>
@@ -143,13 +126,13 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
 
             mockComponent.ngOnChanges(changes);
 
-            expect(api.delegateInputChangesToNativeObject).not.toHaveBeenCalled();
+            expect(internalApi.delegateInputChangesToNativeObject).not.toHaveBeenCalled();
 
             mockComponent.ngOnInit();
 
             tick();
 
-            expect(api.delegateInputChangesToNativeObject).toHaveBeenCalledTimes(1);
+            expect(internalApi.delegateInputChangesToNativeObject).toHaveBeenCalledTimes(1);
         }));
     });
 });
@@ -159,11 +142,11 @@ const EventsMapStub = [{ name: 'Event1', reference: 'event1' }];
 function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 {
     return {
-        listenTo: () => Promise.resolve(() => void 0),
+        listenTo       : () => Promise.resolve(() => void 0),
         stopListeningTo: () => Promise.resolve(),
-        clearListeners: () => Promise.resolve(),
-        native: Promise.resolve({}),
-        custom: null
+        clearListeners : () => Promise.resolve(),
+        native         : Promise.resolve({}),
+        custom         : null
     };
 }
 

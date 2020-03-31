@@ -62,12 +62,15 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
 {
     /** (Optional) Custom configuration for the Google Maps API. */
     moduleConfig?: GoogleMapsConfig,
-    /**
-     * (Optional) The type of component being tested. If specified, will declare the component, compile it, and extract
-     * the fixture, component, debugElement, and the native element objects. */
-    componentType?: Type<TComponent>,
     /** (Optional) A function used to apply additional changes to the module definition before creating the TestBed. */
     customize?: (moduleDef: TestModuleMetadata) => void;
+    /**
+     * (Optional) The type of component being tested. If specified, will declare the component, compile it, and extract
+     * the fixture, component, debugElement, and the native element objects.
+     */
+    componentType?: Type<TComponent>,
+    /** (Optional) A function to execute before the component is created. Example use case could be spying on a component's constructor. */
+    beforeComponentInit?: (api: GoogleMapsApiService, internalApi: GoogleMapsInternalApiService) => void,
     /** (Optional) Configures the automation of jasmine spies. */
     spies?: {
         /** `true` to fake the execution of `api.runOutsideAngular()` (@see `fakeTheRunOutsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
@@ -116,18 +119,6 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     
     // Create the TestBed
     const testBed = TestBed.configureTestingModule(moduleConfig);
-    
-    // If a component is being tested, compile it and retrieve its relevant instances
-    if (componentType)
-    {
-        await testBed.compileComponents();
-        
-        fixture = TestBed.createComponent(componentType);
-
-        component    = fixture.componentInstance;
-        debugElement = fixture.debugElement;
-        element      = debugElement.nativeElement;
-    }
 
     // Retrieve useful services and tools
     const api         = TestBed.inject(GoogleMapsApiService);
@@ -135,6 +126,23 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
 
     const runOutsideAngular = options.spies.fakeRunOutsideAngular ? fakeTheRunOutsideAngularMethod(api) : spyOn(api, 'runOutsideAngular').and.callThrough();
 
+    const spies = { runOutsideAngular };
+
+    if (options.beforeComponentInit)
+        options.beforeComponentInit(api, internalApi);
+
+    // If a component is being tested, compile it and retrieve its relevant instances
+    if (componentType)
+    {
+        await testBed.compileComponents();
+
+        fixture = TestBed.createComponent(componentType);
+
+        component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
+        element = debugElement.nativeElement;
+    }
+
     // Return all extracted services and objects for easier use
-    return { fixture, component, debugElement, element, api, internalApi, spies: { runOutsideAngular } };
+    return { fixture, component, debugElement, element, api, internalApi, spies };
 }
