@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange, Component, Input } from '@angular/core';
+import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange, Component, Input, Output } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
@@ -10,8 +10,8 @@ import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-dat
 import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../abstraction/tokens/wrapper-factory.token';
-import { EventsMap } from '../abstraction/tokens/event-map.token';
 import { Wrapper } from '../decorators/wrapper.decorator';
+import { Hook } from '../decorators/hook.decorator';
 
 describe('GoogleMapsInternalApiService', () =>
 {
@@ -86,16 +86,16 @@ describe('GoogleMapsInternalApiService', () =>
         });
     });
 
-    describe('upon calling `hookEmitters()', () =>
+    describe('upon calling `hookAndSetEmitters()', () =>
     {
-        it('should hook emitters but skip hooking events with no matching emitter or no observers', () =>
+        it('should assign observables to the component\'s output members', () =>
         {
             // Subscribe to the first event so it won't be skiped for having no observers
             componentMock.event1.subscribe(() => 'event1');
 
             spyOn(componentMock.nativeWrapper, 'listenTo').and.callThrough();
 
-            service.hookEmitters(componentMock, EventsMapStub);
+            service.hookEmitters(componentMock);
 
             // If listenTo() was called once, only one event1 got hooked and we won
             expect(componentMock.nativeWrapper.listenTo).toHaveBeenCalledTimes(1);
@@ -120,7 +120,7 @@ describe('GoogleMapsInternalApiService', () =>
                 done();
             });
 
-            service.hookEmitters(componentMock, EventsMapStub);
+            service.hookEmitters(componentMock);
 
             native.raiseEvent(eventArgs);
         });
@@ -145,7 +145,7 @@ describe('GoogleMapsInternalApiService', () =>
                 done();
             });
 
-            service.hookEmitters(componentMock, EventsMapStub, secondWrapper);
+            service.hookEmitters(componentMock, secondWrapper);
 
             secondNative.raiseEvent(eventArgs);
         });
@@ -170,26 +170,6 @@ describe('GoogleMapsInternalApiService', () =>
         // }));
     });
 
-    describe('upon calling `unhookEmitters()`', () =>
-    {
-        it('should remove all listeners from the native object', () =>
-        {
-            // // Subscribe to the first event so it won't be skiped for having no observers
-            // componentMock.event1.subscribe(() => 'event1');
-
-            // service.hookEmitters(componentMock, EventsMapStub);
-
-            // expect(componentMock.wrapper.listeners.length).toBe(1);
-
-            // spyOn(componentMock.nativeWrapper, 'stopListeningTo').and.callThrough();
-
-            // service.unhookEmitters(componentMock.nativeWrapper, EventsMapStub);
-
-            // expect(componentMock.nativeWrapper.clearListenersFor).toHaveBeenCalledTimes(EventsMapStub.length);
-            // expect(componentMock.wrapper.listeners.length).toBe(0);
-        });
-    });
-
     describe('upon calling `delegateInputChangesToNativeObject()`', () =>
     {        
         it('should pass any detected changes to the wrapper\'s appropriate setter', async () =>
@@ -208,11 +188,6 @@ describe('GoogleMapsInternalApiService', () =>
         });
     });
 });
-
-const EventsMapStub = [
-    { name: 'Event1', reference: 'native_event1' },
-    { name: 'Event2', reference: 'native_event2' }
-];
 
 class MockWrapper implements IGoogleMapsNativeObjectEmittingWrapper
 {
@@ -259,15 +234,14 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 
 @Component({
     providers: [
-        { provide: WrapperFactory, useFactory: () => createNativeWrapper },
-        { provide: EventsMap, useValue: EventsMapStub }
+        { provide: WrapperFactory, useFactory: () => createNativeWrapper }
     ]
 })
 class MockComponent extends GoogleMapsLifecycleBase implements OnInit
 {
     public options?: any;
 
-    public event1: EventEmitter<void> = new EventEmitter();
+    @Hook('native_event1') @Output() public event1: EventEmitter<any>;
 
     @Wrapper @Input() public wrapper: MockWrapper;
 }

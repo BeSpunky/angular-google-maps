@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import { BehaviorSubject, fromEventPattern, from, Observable, defer } from 'rxjs';
-import { filter, switchMap, mergeMap, last, withLatestFrom, pluck } from 'rxjs/operators';
+import { BehaviorSubject, fromEventPattern } from 'rxjs';
+import { filter, switchMap, pluck } from 'rxjs/operators';
 import { Injectable, NgZone, EventEmitter, SimpleChanges, Inject } from '@angular/core';
 import { promiseLater } from '@bespunky/angular-zen';
 
@@ -13,7 +13,7 @@ import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-map
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
-import { IGoogleMapsNativeObject } from '../abstraction/native/i-google-maps-native-object';
+import { HookOutputSymbol } from '../decorators/hook.decorator';
     
 @Injectable({
     providedIn: 'root'
@@ -52,6 +52,8 @@ export class GoogleMapsInternalApiService
      * Event arguments are automatically transformed using the `EventDataTransformService`.
      * If the native object is different to the one contained in the emitting component, you can pass it in using the `nativeWrapper` argument.
      *
+     * @deprecated Use `hookAndSetEmitters()` instead.
+     * 
      * @param {GoogleMapsLifecycleBase} emittingComponent The component/directive emitting the events using Angular `EventEmitter`s.
      * @param {GoogleMapsEventsMap} eventsMap The map of native events supported by the native object to unregister from.
      * @param {IGoogleMapsNativeObjectEmittingWrapper} [nativeWrapper=emittingComponent.nativeWrapper] (Optional) The wrapper of the native object that defines the events. Default is `emittingComponent.nativeWrapper`.
@@ -85,10 +87,11 @@ export class GoogleMapsInternalApiService
         }
     }
 
-    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase, nativeWrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.nativeWrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
-        
+        const eventsMap = Reflect.getMetadata(HookOutputSymbol, emittingComponent) as GoogleMapsEventsMap;
+
         for (const event of eventsMap)
         {
             let emitter = fromEventPattern(
@@ -117,6 +120,8 @@ export class GoogleMapsInternalApiService
 
     /**
      * Unregisters event listeners from the native object.
+     * 
+     * @deprecated Use `hookAndSetEmitters()` instead of `hookEmitters()` to they will automatically unhook by angular.
      * 
      * @param {IGoogleMapsNativeObjectEmittingWrapper} nativeWrapper The native wrapper for which event handlers were previously registered and hooked to another component.
      * @param {GoogleMapsEventsMap} eventMap The map of native events supported by the native object to unregister from.

@@ -46,12 +46,9 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnChanges
 
     constructor(
         protected api: GoogleMapsInternalApiService,
-        @Inject(WrapperFactory)             protected createNativeWrapper: EmittingNativeWrapperFactory,
-        @Inject(EventsMap     ) @Optional() protected eventsMap?         : GoogleMapsEventsMap
+        @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory
     )
     {
-        this.eventsMap = eventsMap || []; // A default value of [] doesn't get assigned if eventsMap is null
-
         this.initEmitters();
         this.initNativeWrapperInputName();
     
@@ -82,7 +79,7 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnChanges
 
     /**
      * Executed by the constructor, before angular attempts to bind events. Calls the `api.hookAndSetEmitters()` method with the appropriate implementation.
-     * The default call is `api.hookAndSetEmitters(this, this.eventsMap)` which will hook native events to this component instance using the inner wrapper
+     * The default call is `api.hookAndSetEmitters(this)` which will hook native events to this component instance using the inner wrapper
      * and no event filtering. Override this method to change implementation.
      * 
      * @protected
@@ -90,7 +87,7 @@ export abstract class GoogleMapsLifecycleBase implements OnInit, OnChanges
      */
     protected initEmitters()
     {
-        this.api.hookAndSetEmitters(this, this.eventsMap);
+        this.api.hookAndSetEmitters(this);
     }
 
     private initNativeWrapperInputName(): void
