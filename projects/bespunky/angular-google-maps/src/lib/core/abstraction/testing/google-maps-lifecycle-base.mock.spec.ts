@@ -17,4 +17,7 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
 @Component({
     providers: [ { provide: WrapperFactory, useFactory: () => createNativeWrapper } ]
 })
-export class MockLifecycleComponent extends GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper> { }
+export class MockLifecycleComponent extends GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper>
+{
+
+}

@@ -38,8 +38,8 @@ export function createGoogleMapsTestModuleMetadata(config?: GoogleMapsConfig): T
 }
 
 /**
- * Creates a jasmine spy on the `runOutsideAngular()` method of the api which fakes its execution.
- * The fake implementation skips actually running the code outside of angular and proceeds with executing
+ * Creates a jasmine spy on the `runOutsideAngular()` or `runInsideAngular()` method of the api which fakes its execution.
+ * The fake implementation skips actually running the code outside/outside of angular and proceeds with executing
  * it directly (when the api is ready to use).
  *
  * @export
@@ -125,6 +125,7 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     const internalApi = TestBed.inject(GoogleMapsInternalApiService);
 
     const runOutsideAngular = options.spies.fakeRunOutsideAngular ? fakeTheRunOutsideAngularMethod(api) : spyOn(api, 'runOutsideAngular').and.callThrough();
+    const runInsideAngular = options.spies.fakeRunInsideAngular ? fakeTheRunInsideAngularMethod(api) : spyOn(api, 'runInsideAngular').and.callThrough();
 
     const spies = { runOutsideAngular };
 

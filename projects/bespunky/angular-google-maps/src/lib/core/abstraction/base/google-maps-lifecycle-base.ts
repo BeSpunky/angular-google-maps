@@ -28,7 +28,7 @@ import { WrapperFactory } from '../tokens/wrapper-factory.token';
  */
 export abstract class GoogleMapsLifecycleBase<TWrapper extends IGoogleMapsNativeObjectEmittingWrapper> implements OnChanges
 {
-    public wrapper: TWrapper;
+    private nativeWrapper: TWrapper;
 
     constructor(protected api: GoogleMapsInternalApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory<TWrapper>)
     {
@@ -41,6 +41,11 @@ export abstract class GoogleMapsLifecycleBase<TWrapper extends IGoogleMapsNative
         this.api.delegateInputChangesToNativeObject(changes, this.wrapper);
     }
 
+    public get wrapper(): TWrapper
+    {
+        return this.nativeWrapper;
+    }
+
     /**
      * Creates the native wrapper instance for this component and sets it to the `wrapper` property.
      * The default implementation simply calls the provided wrapper factory without specifying options.
@@ -51,7 +56,7 @@ export abstract class GoogleMapsLifecycleBase<TWrapper extends IGoogleMapsNative
      */
     protected initNativeWrapper(): void
     {
-        this.wrapper = this.createNativeWrapper();
+        this.nativeWrapper = this.createNativeWrapper();
     }
     
     /**
