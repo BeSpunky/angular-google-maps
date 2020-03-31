@@ -16,8 +16,9 @@ import { Hook } from '../../../core/decorators/hook.decorator';
 export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase
 {
     @Wrapper @Input() public marker?: IGoogleMapsMarker;
-    @Input  () public options?      : google.maps.MarkerOptions;
-    @Input  () public position?     : google.maps.LatLng | google.maps.LatLngLiteral;
+
+    @Input() public options?      : google.maps.MarkerOptions;
+    @Input() public position?     : google.maps.LatLng | google.maps.LatLngLiteral;
 
     /** Fired when the marker's animation property changes. */
     @Hook('animation_changed') @Output() public animationChanged      : Observable<GoogleMapsEventData>;

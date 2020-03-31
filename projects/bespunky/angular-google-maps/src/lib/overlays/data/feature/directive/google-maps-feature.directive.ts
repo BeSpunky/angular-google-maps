@@ -16,6 +16,7 @@ import { Hook } from '../../../../core/decorators/hook.decorator';
 export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase
 {
     @Wrapper @Input() public feature?: IGoogleMapsFeature;
+    
     @Input() public options?: google.maps.Data.FeatureOptions;
 
     /** Fired when a feature is added to the collection. */

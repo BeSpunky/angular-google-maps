@@ -16,6 +16,7 @@ import { Hook } from '../../../core/decorators/hook.decorator';
 export class GoogleMapsDataDirective extends GoogleMapsOverlayLifecycleBase
 {
     @Wrapper @Input() public dataLayer?: IGoogleMapsData;
+    
     @Input() public options?: google.maps.Data.DataOptions;
 
     /** Fired when a feature is added to the collection. */

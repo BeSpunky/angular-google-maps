@@ -18,11 +18,11 @@ import { Hook                     } from '../../core/decorators/hook.decorator';
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase
 {
-    // Bound properties
     @Wrapper @Input() public map: IGoogleMap;
-    @Input   () public options? : google.maps.MapOptions;
-    @Input   () public center?  : google.maps.LatLng;
-    @Input   () public zoom?    : ZoomLevel;
+
+    @Input() public options? : google.maps.MapOptions;
+    @Input() public center?  : google.maps.LatLng;
+    @Input() public zoom?    : ZoomLevel;
 
     /** Fired when the viewport bounds have changed. */
     @Hook('bounds_changed')     @Output() public boundsChanged      : Observable<GoogleMapsEventData>;
