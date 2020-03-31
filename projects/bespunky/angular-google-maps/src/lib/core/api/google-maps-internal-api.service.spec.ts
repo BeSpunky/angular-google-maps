@@ -39,8 +39,6 @@ describe('GoogleMapsInternalApiService', () =>
         loader = TestBed.inject(GoogleMapsApiLoader);
 
         spyOn(zone, 'runOutsideAngular').and.callFake((fn: () => void) => fn());
-
-        componentMock.ngOnInit();
     });
 
     describe('basically', () =>
@@ -99,7 +97,7 @@ describe('GoogleMapsInternalApiService', () =>
             componentMock.event1.subscribe(() => void 0);
 
             expect(componentMock.wrapper.listenTo).toHaveBeenCalledTimes(1);
-            expect(componentMock.wrapper.listeners.length).toBe(1);
+            expect(componentMock.listeners.length).toBe(1);
         });
 
         it('should create a callback that generates an event data object and emit the event', async (done: DoneFn) =>
@@ -237,11 +235,12 @@ function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
         { provide: WrapperFactory, useFactory: () => createNativeWrapper }
     ]
 })
-class MockComponent extends GoogleMapsLifecycleBase implements OnInit
+class MockComponent extends GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper>
 {
-    public options?: any;
-
     @Hook('native_event1') @Output() public event1: EventEmitter<any>;
 
-    @Wrapper @Input() public wrapper: MockWrapper;
+    public get listeners(): any[]
+    {
+        return (this.wrapper as any).listeners;
+    }
 }

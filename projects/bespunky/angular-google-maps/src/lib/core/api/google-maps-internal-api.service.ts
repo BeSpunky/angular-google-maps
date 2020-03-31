@@ -62,7 +62,7 @@ export class GoogleMapsInternalApiService
      * @see `google-maps-feature.directive.ts` for more info.
      * @param {(event: GoogleMapsEventData) => boolean} shouldEmit (Optional) A function that will determine if the a specific event should be emitted or not.
      */
-    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase, eventsMap: GoogleMapsEventsMap = [], wrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookEmitters(emittingComponent: GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper>, eventsMap: GoogleMapsEventsMap = [], wrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
         
@@ -87,7 +87,7 @@ export class GoogleMapsInternalApiService
         }
     }
 
-    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase, wrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper>, wrapper: IGoogleMapsNativeObjectEmittingWrapper = emittingComponent.wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.openApi.eventsData;
         const eventsMap = (Reflect.getMetadata(HookOutputSymbol, emittingComponent) || []) as GoogleMapsEventsMap;

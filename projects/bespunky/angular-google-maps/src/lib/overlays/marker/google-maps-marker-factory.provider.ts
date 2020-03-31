@@ -9,7 +9,7 @@ export function NativeMarkerWrapperFactoryProvider(api: GoogleMapsApiService, ma
 {
     return function NativeMarkerWrapperFactory(options?: google.maps.MarkerOptions)
     {
-        return new GoogleMapsMarker(api, mapComponent.map, options);
+        return new GoogleMapsMarker(api, mapComponent.wrapper, options);
     };
 }
 

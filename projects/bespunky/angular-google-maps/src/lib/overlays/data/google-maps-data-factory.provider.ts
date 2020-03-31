@@ -9,7 +9,7 @@ export function NativeDataWrapperFactoryProvider(api: GoogleMapsApiService, mapC
 {
     return function NativeDataWrapperFactory(options?: google.maps.Data.DataOptions)
     {        
-        return new GoogleMapsData(api, mapComponent.map, options);
+        return new GoogleMapsData(api, mapComponent.wrapper, options);
     };
 }
 

@@ -10,7 +10,7 @@ export function NativeFeatureWrapperFactoryProvider(api: GoogleMapsApiService, d
 {
     return function NativeFeatureWrapperFactory(options?: google.maps.Data.FeatureOptions)
     {
-        return new GoogleMapsFeature(api, dataDirective.dataLayer, options);
+        return new GoogleMapsFeature(api, dataDirective.wrapper, options);
     };
 }
 

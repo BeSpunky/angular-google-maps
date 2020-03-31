@@ -1,19 +1,20 @@
 
-import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
+import { MockEmittingWrapper } from '../testing/google-maps-emitting-wrapper.mock.spec';
 
 describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
 {
     let api: GoogleMapsApiService;
-    let mockWrapper: MockWrapper;
+    let mockWrapper: MockEmittingWrapper;
+    const mockNative: IGoogleMapsNativeObject = {};
 
     beforeEach(async () =>
     {
         ({ api } = await configureGoogleMapsTestingModule());
 
-        mockWrapper = new MockWrapper(api, mockNative);
+        mockWrapper = new MockEmittingWrapper(api, mockNative);
     });
 
     it('should create an instance when instantiated by a derived class', () =>
@@ -40,17 +41,4 @@ describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
     });
 });
 
-const mockNative: IGoogleMapsNativeObject = {};
 
-class MockWrapper extends GoogleMapsNativeObjectEmittingWrapper<IGoogleMapsNativeObject>
-{
-    constructor(api: GoogleMapsApiService, private mockNativeObject: IGoogleMapsNativeObject)
-    {
-        super(api);
-    }
-
-    public createNativeObject(): IGoogleMapsNativeObject
-    {
-        return this.mockNativeObject;
-    }
-}

@@ -2,25 +2,26 @@ import { SimpleChange, SimpleChanges, Component, DebugElement, Input } from '@an
 import { fakeAsync, tick } from '@angular/core/testing';
 
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { GoogleMapsLifecycleBase, DefaultWrapperInputName } from './google-maps-lifecycle-base';
+import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
 import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
-import { Wrapper, WrapperInputSymbol } from '../../decorators/wrapper.decorator';
+import { MockLifecycleComponent } from '../testing/google-maps-lifecycle-base.mock.spec';
+import { MockEmittingWrapper } from '../testing/google-maps-emitting-wrapper.mock.spec';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
     let internalApi: GoogleMapsInternalApiService;
-    let mockComponent: MockComponent;
+    let mockComponent: MockLifecycleComponent;
     let later: { promise: Promise<void>, resolve: () => void, reject: (reason: any) => void };
-    let createNativeWrapper: EmittingNativeWrapperFactory;
+    let createNativeWrapper: EmittingNativeWrapperFactory<MockEmittingWrapper>;
     let debugElement: DebugElement;
 
     beforeEach(async () =>
     {
         ({ internalApi: internalApi, component: mockComponent, debugElement } = await configureGoogleMapsTestingModule({
-            componentType: MockComponent,
+            componentType: MockLifecycleComponent,
             // hookAndSetEmitters is called in the constructor so spy before component creation
             beforeComponentInit: (api, internalApi) => spyOn(internalApi, 'hookAndSetEmitters').and.stub()
         }));
@@ -28,26 +29,14 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
         later = (mockComponent as any).waitForComponentInit;
 
         // The provider is defined at component level, so it only exists in the element's context. TestBed.inject() won't work here.
-        createNativeWrapper = debugElement.injector.get(WrapperFactory) as EmittingNativeWrapperFactory;
+        createNativeWrapper = debugElement.injector.get(WrapperFactory) as EmittingNativeWrapperFactory<MockEmittingWrapper>;
 
         spyOn(internalApi, 'delegateInputChangesToNativeObject').and.stub();
     });
 
     describe('basically', () =>
     {
-        beforeEach(() => mockComponent.ngOnInit());
-
         it('should create an instance', () => expect(mockComponent).toBeTruthy());
-
-        it('should warn and assign a default name for the native wrapper input if @Wrapper was not used', () =>
-        {
-            spyOn(console, 'warn');
-
-            const noWrapperComponent = new MockNoWrapperComponent(internalApi, () => void 0);
-
-            expect((noWrapperComponent as any).wrapperInputName).toBe(DefaultWrapperInputName);
-            expect(console.warn).toHaveBeenCalledTimes(1);
-        });
 
         it('should create and store a promise for later use when instantiated', () =>
         {
@@ -72,28 +61,9 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
             beforeEach(() =>
             {
                 spyOn(later, 'resolve').and.stub();
-
-                mockComponent.ngOnInit();
             });
 
             it('should resolve the wait for init promise', () => expect(later.resolve).toHaveBeenCalledTimes(1));
-        });
-
-        describe('with a wrapper instance input from the template', () =>
-        {
-            it('should the input to `wrapper`', () =>
-            {
-                const wrapper = createNativeWrapper();
-
-                // Simulate `@Input()` assignment of the wrapper from using template
-                mockComponent.dummyInputWrapper = wrapper;
-
-                // Allow the component to initialize
-                mockComponent.ngOnInit();
-
-                // Verify that `wrapper` assigned with the wrapper passed in from the template
-                expect(mockComponent.wrapper).toBe(wrapper);
-            });
         });
 
         describe('with no wrapper instance from an input member', () =>
@@ -105,9 +75,6 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
                 const mockComponentRaw = mockComponent as any;
 
                 spyOn(mockComponentRaw, 'createNativeWrapper').and.callThrough();
-
-                // Allow the component to initialize
-                mockComponent.ngOnInit();
 
                 expect(mockComponentRaw.createNativeWrapper).toHaveBeenCalledTimes(1);
                 // Verify that `wrapper` was assigned with a new wrapper created using the `createNativeWrapper()` method
@@ -126,44 +93,9 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
 
             expect(internalApi.delegateInputChangesToNativeObject).not.toHaveBeenCalled();
 
-            mockComponent.ngOnInit();
-
             tick();
 
             expect(internalApi.delegateInputChangesToNativeObject).toHaveBeenCalledTimes(1);
         }));
     });
 });
-
-function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
-{
-    return {
-        listenTo       : () => Promise.resolve(() => void 0),
-        stopListeningTo: () => Promise.resolve(),
-        clearListeners : () => Promise.resolve(),
-        native         : Promise.resolve({}),
-        custom         : null
-    };
-}
-
-const componentDef = {
-    providers: [
-        { provide: WrapperFactory, useFactory: () => createNativeWrapper }
-    ]
-};
-
-@Component(componentDef)
-class MockComponent extends GoogleMapsLifecycleBase
-{
-    public options?: any;
-
-    @Wrapper @Input() public dummyInputWrapper: IGoogleMapsNativeObjectEmittingWrapper;
-}
-
-@Component(componentDef)
-class MockNoWrapperComponent extends GoogleMapsLifecycleBase
-{
-    public options?: any;
-
-    @Input() public dummyInputWrapper: IGoogleMapsNativeObjectEmittingWrapper;
-}

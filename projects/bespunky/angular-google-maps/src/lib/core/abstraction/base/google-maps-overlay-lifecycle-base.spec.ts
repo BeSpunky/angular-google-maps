@@ -9,6 +9,7 @@ import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
+import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
 
 describe('GoogleMapsOverlayLifecycleBase', () =>
 {
@@ -57,7 +58,4 @@ function overlayFactory(api: GoogleMapsApiService)
         { provide: WrapperFactory, useFactory: (api) => () => overlayFactory(api), deps: [GoogleMapsApiService] }
     ]
 })
-class MockComponent extends GoogleMapsOverlayLifecycleBase
-{
-    public options?: any;
-}
+class MockComponent extends GoogleMapsOverlayLifecycleBase<IGoogleMapsDrawableOverlay> { }
