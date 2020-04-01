@@ -4,11 +4,9 @@ import { IGoogleMapsData } from "../../overlays/data/i-google-maps-data";
 
 export class MockGoogleMap implements IGoogleMap
 {
-    native = this.nativeMap;
-
     custom: any;
 
-    constructor(private nativeMap: any = {}) { }
+    constructor(public native: any = {}) { }
 
     createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
     {

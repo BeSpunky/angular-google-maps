@@ -9,11 +9,11 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
                 extends GoogleMapsNativeObjectEmittingWrapper<TNative>
                 implements IGoogleMapsDrawableOverlay<TNative>
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, public readonly type: OverlayType)
+    constructor(api: GoogleMapsApiService, public map: IGoogleMap, public readonly type: OverlayType, ...nativeArgs: any[])
     {
-        super(api);
+        super(api, ...nativeArgs);
 
-        if (map) this.setContainingMap(map);
+        this.attach(map);
     }
 
     /**
@@ -27,19 +27,16 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
     {
         this.map = map;
 
-        // Wait for the map object to create, then for the drawable to create, then set the map to the drawable
-        return this.api.runOutsideAngular(() => (this.native.setMap(map.native)));
+        this.api.runOutsideAngular(() => this.native.setMap(map.native));
     }
 
     /**
-     * Removes the overlay from the specified map. If possible, prefer using the `GoogleMap.removeOverlay()` method instead.
+     * Removes the overlay from the map it is attached to. If possible, prefer using the `GoogleMap.removeOverlay()` method instead.
      * If not possible, it is the responsability of the caller to remove the overlay from the `OverlayTracker` in the `GoogleMap.overlays` object.
      * Otherwise, inconsistencies and unexpected behaviours might occur.
      */
     public detach(): void
     {
-        this.map = null;
-
-        return this.api.runOutsideAngular(() => this.native.setMap(null));
+        this.attach(null);
     }
 }

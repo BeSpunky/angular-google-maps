@@ -5,17 +5,16 @@ import { GoogleMapsConfig, GoogleMapsLibrary, DefaultApiLocation, HttpProtocol, 
 
 describe('LazyGoogleMapsApiLoader', () =>
 {
-    let config: GoogleMapsConfig;
+    let config         : GoogleMapsConfig;
     let scriptLoaderSpy: jasmine.SpyObj<LazyLoaderService>;
-    let lazyApiLoader: LazyGoogleMapsApiLoader;
-    let buildApiUrlSpy: jasmine.Spy;
+    let lazyApiLoader  : LazyGoogleMapsApiLoader;
+    let buildApiUrlSpy : jasmine.Spy;
 
     function initLazyApiLoader()
     {
         lazyApiLoader = new LazyGoogleMapsApiLoader(config, scriptLoaderSpy);
 
-        buildApiUrlSpy = spyOn<any>(lazyApiLoader, 'buildApiUrl');
-        buildApiUrlSpy.and.callThrough();
+        buildApiUrlSpy = spyOn<any>(lazyApiLoader, 'buildApiUrl').and.callThrough();
     }
 
     beforeEach(() =>
