@@ -29,4 +29,20 @@ export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.
      * @returns {any} A promise for the GeoJson object.
      */
     toGeoJson(): Promise<any>;
+
+    /* ------------------------------------- Native wrappers -------------------------------------- *
+     * Documentation in: https://developers.google.com/maps/documentation/javascript/reference/data *
+     * -------------------------------------------------------------------------------------------- */
+
+    getControlPosition(): google.maps.ControlPosition;
+    setControlPosition(position: google.maps.ControlPosition): void;
+
+    getControls(): string[];
+    setControls(controls: string[]): void;
+
+    getDrawingMode(): string;
+    setDrawingMode(mode: string): void;
+
+    getStyle(): google.maps.Data.StylingFunction | google.maps.Data.StyleOptions;
+    setStyle(style: google.maps.Data.StylingFunction | google.maps.Data.StyleOptions): void;
 }
