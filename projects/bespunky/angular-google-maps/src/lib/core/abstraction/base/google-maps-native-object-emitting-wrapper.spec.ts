@@ -1,44 +1,92 @@
 
-// import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-// import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-// import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
-// import { MockEmittingWrapper } from '../testing/google-maps-emitting-wrapper.mock.spec';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
+import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
+import { MockNative } from '../testing/raw-mocks/native.mock';
 
-// describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
-// {
-//     let api: GoogleMapsApiService;
-//     let mockWrapper: MockEmittingWrapper;
-//     const mockNative: IGoogleMapsNativeObject = {};
+describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
+{
+    let api                : GoogleMapsApiService;
+    let runInsideAngular   : jasmine.Spy;
+    let mockNative         : MockNative;
+    let mockWrapper        : GoogleMapsNativeObjectEmittingWrapperTest;
+    let listener           : any;
+    let cancelClickListener: () => void;
+    let cancelMouseListener: () => void;
 
-//     beforeEach(async () =>
-//     {
-//         ({ api } = await configureGoogleMapsTestingModule());
+    beforeEach(async () =>
+    {
+        ({ api, spies: { runInsideAngular } } = await configureGoogleMapsTestingModule());
 
-//         mockWrapper = new MockEmittingWrapper(api, mockNative);
-//     });
+        mockNative  = new MockNative();
+        mockWrapper = new GoogleMapsNativeObjectEmittingWrapperTest(api, mockNative);
+        
+        listener            = jasmine.createSpyObj('listener', ['handleClick', 'handleMouse']);
+        cancelClickListener = mockWrapper.listenTo('click', listener.handleClick);
+        cancelMouseListener = mockWrapper.listenTo('mouseover', listener.handleMouse);
+    });
 
-//     it('should create an instance when instantiated by a derived class', () =>
-//     {
-//         expect(mockWrapper).toBeTruthy();
-//     });
+    function triggerClick()
+    {
+        google.maps.event.trigger(mockWrapper.native, 'click');
+    }
 
-//     it('should wait for the native object then register a listener when calling `listenTo()`', async () =>
-//     {
-//         spyOn(google.maps.event, 'addListener').and.callThrough();
+    function triggerMouseover()
+    {
+        google.maps.event.trigger(mockWrapper.native, 'mouseover');
+    }
 
-//         await mockWrapper.listenTo('dummyEvent', () => true);
+    it('should create an instance when instantiated by a derived class', () => expect(mockWrapper).toBeTruthy());
 
-//         expect(google.maps.event.addListener).toHaveBeenCalledTimes(1);
-//     });
+    it('should register a handler that runs inside angular when calling `listenTo()`', () =>
+    {
+        triggerClick();
 
-//     it('should wait for the native object then unregister all listeners when calling `stopListeningTo()', async () =>
-//     {
-//         // spyOn(google.maps.event, 'clearListeners').and.callFake((native, eventName) => true);
+        expect(listener.handleClick).toHaveBeenCalledTimes(1);
+        expect(runInsideAngular).toHaveBeenCalledTimes(1);
+    });
 
-//         // await mockWrapper.clearListenersFor('dummyEvent');
+    it('should return a function that unregisters a specific handler registered using `listenTo()`', () =>
+    {
+        cancelClickListener();
 
-//         // expect(google.maps.event.clearListeners).toHaveBeenCalledTimes(1);
-//     });
-// });
+        triggerClick();
+        triggerMouseover();
 
+        expect(listener.handleClick).not.toHaveBeenCalled();
+        expect(listener.handleMouse).toHaveBeenCalledTimes(1);
+    });
+
+    it('should unregister all handlers for an event when calling `stopListeningTo()', () =>
+    {
+        mockWrapper.stopListeningTo('click');
+
+        triggerClick();
+        triggerMouseover();
+
+        expect(listener.handleClick).not.toHaveBeenCalled();
+        expect(listener.handleMouse).toHaveBeenCalledTimes(1);
+    });
+
+    it('should unregisters all handlers when calling `clearListeners()`', () =>
+    {
+        mockWrapper.clearListeners();
+
+        triggerClick();
+        triggerMouseover();
+
+        triggerMouseover();
+
+        expect(listener.handleClick).not.toHaveBeenCalled();
+        expect(listener.handleMouse).not.toHaveBeenCalled();
+    });
+});
+
+class GoogleMapsNativeObjectEmittingWrapperTest extends GoogleMapsNativeObjectEmittingWrapper<MockNative>
+{
+    protected createNativeObject(mockNative: MockNative): MockNative
+    {
+        return mockNative;
+    }
+}
 

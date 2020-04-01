@@ -19,7 +19,10 @@ export abstract class GoogleMapsNativeObjectEmittingWrapper<TNative extends IGoo
         const handleEventInAngular = (...args: any[]) => this.api.runInsideAngular(() => handleEvent(args));
 
         // Register the handler and return the remove function
-        return google.maps.event.addListener(this.native, eventName, handleEventInAngular).remove;
+        const listener = google.maps.event.addListener(this.native, eventName, handleEventInAngular);
+
+        // Flatten the object and bind the function to it, so it could execute correctly independently of the `this` value when it's called
+        return listener.remove.bind(listener);
     }
 
     public stopListeningTo(eventName: string): void
