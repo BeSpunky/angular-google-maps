@@ -7,9 +7,9 @@ export abstract class GoogleMapsNativeObjectEmittingWrapper<TNative extends IGoo
               extends GoogleMapsNativeObjectWrapper<TNative>
            implements IGoogleMapsNativeObjectEmittingWrapper<TNative>
 {
-    constructor(api: GoogleMapsApiService)
+    constructor(api: GoogleMapsApiService, ...nativeArgs: any[])
     {
-        super(api);
+        super(api, ...nativeArgs);
     }
 
     public listenTo(eventName: string, handleEvent: (...args: any[]) => void): () => void

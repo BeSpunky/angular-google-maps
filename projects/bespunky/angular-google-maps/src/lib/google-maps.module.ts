@@ -1,7 +1,7 @@
 import 'reflect-metadata'; // Imported once here. No need to import in other places.
 
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
-import { ZenModule } from '@bespunky/angular-zen';
+import { ZenModule, UniversalModule } from '@bespunky/angular-zen';
 
 import { LazyGoogleMapsApiLoader } from './core/loaders/lazy-google-maps-api-loader';
 import { GoogleMapsApiLoader } from './core/loaders/google-maps-api-loader';
@@ -17,7 +17,7 @@ import { SafeDirective } from './core/api/safe.directive';
 
 @NgModule({
     declarations: [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective, GoogleMapsFeatureDirective, SafeDirective],
-    imports:      [ZenModule],
+    imports:      [ZenModule, UniversalModule.forRoot()],
     exports:      [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective, GoogleMapsFeatureDirective, SafeDirective]
 })
 export class GoogleMapsModule

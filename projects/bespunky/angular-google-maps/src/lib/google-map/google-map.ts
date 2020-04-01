@@ -26,17 +26,17 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         private   options?  : google.maps.MapOptions
     )
     {
-        super(api);
+        super(api, mapElement);
     }
 
-    protected createNativeObject(): google.maps.Map
+    protected createNativeObject(mapElement: ElementRef): google.maps.Map
     {
         const options = Object.assign({}, {
             center: Defaults.Center,
             zoom  : Defaults.ZoomLevel,
         }, this.options);
 
-        return new google.maps.Map(this.mapElement.nativeElement, options);
+        return new google.maps.Map(mapElement.nativeElement, options);
     }
 
     public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
