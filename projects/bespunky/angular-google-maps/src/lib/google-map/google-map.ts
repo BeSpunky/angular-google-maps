@@ -62,7 +62,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     public removeOverlay<TOverlay extends DrawableOverlay>(overlay: TOverlay): void
     {
         // Overlay removal will cause rendering. Run outside...
-        this.api.runOutsideAngular(() => overlay.removeFromMap());
+        this.api.runOutsideAngular(() => overlay.detach());
 
         this.overlays.remove(overlay);
     }

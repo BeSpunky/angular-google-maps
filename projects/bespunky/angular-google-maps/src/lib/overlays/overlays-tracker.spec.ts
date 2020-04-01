@@ -152,11 +152,11 @@ class StubGoogleMapsMarker implements IGoogleMapsMarker
     {
         throw new Error("Method not implemented.");
     }
-    setContainingMap(map: IGoogleMap): void
+    attach(map: IGoogleMap): void
     {
         throw new Error("Method not implemented.");
     }
-    removeFromMap(): void
+    detach(): void
     {
         throw new Error("Method not implemented.");
     }

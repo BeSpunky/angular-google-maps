@@ -17,11 +17,11 @@ export interface IGoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDra
      *
      * @param {IGoogleMap} map The map to dispaly the overlay on.
      */
-    setContainingMap(map: IGoogleMap): void;
+    attach(map: IGoogleMap): void;
     /**
      * Removes the overlay from the specified map. If possible, prefer using the `GoogleMap.removeOverlay()` method instead.
      * If not possible, it is the responsability of the caller to remove the overlay from the `OverlayTracker` in the `GoogleMap.overlays` object.
      * Otherwise, inconsistencies and unexpected behaviours might occur.
      */
-    removeFromMap(): void;
+    detach(): void;
 }

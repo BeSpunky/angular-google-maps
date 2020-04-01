@@ -23,7 +23,7 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
      *
      * @param {IGoogleMap} map The map to dispaly the overlay on.
      */
-    public setContainingMap(map: IGoogleMap): void
+    public attach(map: IGoogleMap): void
     {
         this.map = map;
 
@@ -36,7 +36,7 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
      * If not possible, it is the responsability of the caller to remove the overlay from the `OverlayTracker` in the `GoogleMap.overlays` object.
      * Otherwise, inconsistencies and unexpected behaviours might occur.
      */
-    public removeFromMap(): void
+    public detach(): void
     {
         this.map = null;
 
