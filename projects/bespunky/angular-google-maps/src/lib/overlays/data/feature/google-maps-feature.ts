@@ -9,16 +9,16 @@ import { GoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction
 @NativeObjectWrapper
 export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
-    constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, private options?: google.maps.Data.FeatureOptions)
+    constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, options?: google.maps.Data.FeatureOptions)
     {
-        super(api);
+        super(api, options);
 
         this.data.addFeature(this);
     }
 
-    protected createNativeObject(): google.maps.Data.Feature
+    protected createNativeObject(options?: google.maps.Data.FeatureOptions): google.maps.Data.Feature
     {
-        return new google.maps.Data.Feature(this.options);
+        return new google.maps.Data.Feature(options);
     }
 
     public toGeoJson(): Promise<any>
@@ -27,17 +27,17 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     }
 
     @Wrap()
-    getId(): number | string { return null; }
+    getId(): number | string { return void 0; }
 
     @Wrap()
-    getGeometry(): google.maps.Data.Geometry { return null; }
+    getGeometry(): google.maps.Data.Geometry { return void 0; }
 
     @Wrap() @OutsideAngular
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void { return null; }
+    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void { return void 0; }
 
     @Wrap()
-    getProperty(name: string): any { return null; }
+    getProperty(name: string): any { return void 0; }
 
     @Wrap() @OutsideAngular
-    setProperty(name: string, value: any): any { return null; }
+    setProperty(name: string, value: any): any { return void 0; }
 }

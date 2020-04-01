@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Directive, Output } from '@angular/core';
+import { Directive, Output, Input } from '@angular/core';
 
 import { GoogleMapsOverlayLifecycleBase } from '../../../core/abstraction/base/google-maps-overlay-lifecycle-base';
 import { IGoogleMapsData } from '../i-google-maps-data';
@@ -14,6 +14,11 @@ import { Hook } from '../../../core/decorators/hook.decorator';
 })
 export class GoogleMapsDataDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsData>
 {
+    @Input() public controlPosition?: google.maps.ControlPosition;
+    @Input() public controls?       : string[];
+    @Input() public drawingMode?    : string;
+    @Input() public style?          : google.maps.Data.StylingFunction | google.maps.Data.StyleOptions;
+
     /** Fired when a feature is added to the collection. */
     @Hook('addfeature')     @Output() public addFeature          : Observable<GoogleMapsEventData>;
     /** Fired for a click on the geometry. */

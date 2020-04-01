@@ -14,7 +14,19 @@ import { IGoogleMapsMarker } from '../i-google-maps-marker';
 })
 export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsMarker>
 {
-    @Input() public position?     : google.maps.LatLng | google.maps.LatLngLiteral;
+    @Input() public animation?: google.maps.Animation;
+    @Input() public clickable?: boolean;
+    @Input() public cursor?   : string;
+    @Input() public draggable?: boolean;
+    @Input() public icon?     : string | google.maps.Icon | google.maps.Symbol;
+    @Input() public label?    : string;
+    @Input() public opacity?  : number;
+    @Input() public options?  : google.maps.MarkerOptions;
+    @Input() public position? : google.maps.LatLng | google.maps.LatLngLiteral;
+    @Input() public shape?    : google.maps.MarkerShape;
+    @Input() public title?    : string;
+    @Input() public visible?  : boolean;
+    @Input() public zIndex?   : number;
 
     /** Fired when the marker's animation property changes. */
     @Hook('animation_changed') @Output() public animationChanged      : Observable<GoogleMapsEventData>;

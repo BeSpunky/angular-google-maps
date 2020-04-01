@@ -67,10 +67,35 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return new Promise(resolve => this.native.loadGeoJson(url, options, resolve));
     }
 
+    
     // Marked private so the addFeature() method will be the one exposed to the user
     @Wrap() @OutsideAngular
-    private add(feature: google.maps.Data.Feature): void { return null; }
+    private add(feature: google.maps.Data.Feature): void { return void 0; }
 
     @Wrap('getFeatureById')
-    findFeature(id: string | number): google.maps.Data.Feature { return null; }
+    findFeature(id: string | number): google.maps.Data.Feature { return void 0; }
+
+    @Wrap()
+    getControlPosition(): google.maps.ControlPosition { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setControlPosition(position: google.maps.ControlPosition): void { return void 0; }
+
+    @Wrap()
+    getControls(): string[] { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setControls(controls: string[]): void { return void 0; }
+
+    @Wrap()
+    getDrawingMode(): string { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setDrawingMode(mode: string): void { return void 0; }
+
+    @Wrap()
+    getStyle(): google.maps.Data.StylingFunction | google.maps.Data.StyleOptions { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setStyle(style: google.maps.Data.StylingFunction | google.maps.Data.StyleOptions): void { return void 0; }
 }

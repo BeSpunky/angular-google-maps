@@ -19,11 +19,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
 {
     public readonly overlays = new OverlaysTracker();
 
-    constructor(
-        protected api       : GoogleMapsApiService,
-        mapElement: ElementRef,
-        private   options?  : google.maps.MapOptions
-    )
+    constructor(protected api: GoogleMapsApiService, mapElement: ElementRef, private options?: google.maps.MapOptions)
     {
         super(api, mapElement);
     }
@@ -71,15 +67,68 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         this.overlays.remove(overlay);
     }
 
-    @Wrap()
-    getCenter(): google.maps.LatLng { return null; }
+    // TODO: Implement facilitating transformations for fitBounts, panTo, panToBounds
+    @Wrap() @OutsideAngular
+    fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { return void 0; }
+    
+    @Wrap() @OutsideAngular
+    panTo(position: google.maps.LatLng | google.maps.LatLngLiteral): void { return void 0; }
+    
+    @Wrap() @OutsideAngular
+    panToBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { return void 0; }
+    
 
     @Wrap() @OutsideAngular
-    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): void { return null; }
-
-    @Wrap()
-    getZoom(): number { return null; }
+    panBy(x: number, y: number): void { return void 0; }
 
     @Wrap() @OutsideAngular
-    setZoom(zoomLevel: ZoomLevel | number): void { return null; }
+    setOptions(options: google.maps.MapOptions): void { return void 0; }
+
+    @Wrap()
+    getBounds(): google.maps.LatLngBounds { return void 0; }
+
+    @Wrap()
+    getCenter(): google.maps.LatLng { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): void { return void 0; }
+
+    @Wrap()
+    getClickableIcons(): boolean { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setClickableIcons(clickable: boolean): void { return void 0; }
+
+    @Wrap()
+    getHeading(): number { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setHeading(heading: number): void { return void 0; }
+
+    @Wrap('getMapTypeId')
+    getMapType(): string | google.maps.MapTypeId { return void 0; }
+
+    @Wrap('setMapTypeId') @OutsideAngular
+    setMapType(type: string | google.maps.MapTypeId): void { return void 0; }
+
+    @Wrap()
+    getProjection(): google.maps.Projection { return void 0; }
+
+    @Wrap()
+    getStreetView(): google.maps.StreetViewPanorama { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setStreetView(panorama: google.maps.StreetViewPanorama): void { return void 0; }
+
+    @Wrap()
+    getTilt(): number { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setTilt(tilt: number): void { return void 0; }
+
+    @Wrap()
+    getZoom(): number { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setZoom(zoomLevel: ZoomLevel | number): void { return void 0; }
 }

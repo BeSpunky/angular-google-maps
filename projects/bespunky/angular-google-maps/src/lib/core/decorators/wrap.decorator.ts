@@ -7,7 +7,7 @@ export const WrapSymbol = Symbol('wrapNativeFunction');
  * 
  * This should be used inside classes marked with `@NativeObjectWrapper`.
  * You do not need to provide any implementation for the method, as it will be replaced anyways.
- * An empty body with a dummy return value will suffice.
+ * An empty body with a `return void 0;` statement or anything else will suffice.
  * 
  * Can be used together with `@OutsideAngular`.
  *

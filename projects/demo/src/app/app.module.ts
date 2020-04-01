@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
         BrowserModule,
         GoogleMapsModule.forRoot({
             apiUrl: {
-                key: 'AIzaSyCbRqlAlzwFodU8EMnS3CJDwr1UuRiGjQY'
+                key: 'AIzaSyD2W_Cuuh-njEbh709te-kmcttVUlGoYeA'
             },
         })
     ],

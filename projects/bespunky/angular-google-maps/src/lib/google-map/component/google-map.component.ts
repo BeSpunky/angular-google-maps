@@ -18,8 +18,14 @@ import { Hook                     } from '../../core/decorators/hook.decorator';
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
 {
-    @Input() public center?  : google.maps.LatLng;
-    @Input() public zoom?    : ZoomLevel;
+    @Input() public center?        : google.maps.LatLng | google.maps.LatLngBoundsLiteral;
+    @Input() public clickableIcons?: boolean;
+    @Input() public heading?       : number;
+    @Input() public mapType?       : string | google.maps.MapTypeId;
+    @Input() public options?       : google.maps.MapOptions;
+    @Input() public streetView?    : google.maps.StreetViewPanorama;
+    @Input() public tilt?          : number;
+    @Input() public zoom?          : ZoomLevel;
 
     /** Fired when the viewport bounds have changed. */
     @Hook('bounds_changed')     @Output() public boundsChanged      : Observable<GoogleMapsEventData>;

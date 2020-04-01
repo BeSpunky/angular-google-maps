@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Directive, Output } from '@angular/core';
+import { Directive, Output, Input } from '@angular/core';
 
 import { IGoogleMapsFeature } from '../i-google-maps-feature';
 import { GoogleMapsFeatureFactoryProvider } from '../google-maps-feature-factory.provider';
@@ -14,6 +14,8 @@ import { Hook } from '../../../../core/decorators/hook.decorator';
 })
 export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase<IGoogleMapsFeature>
 {
+    @Input() public geometry?: google.maps.Data.Geometry;
+    
     /** Fired when a feature is added to the collection. */
     @Hook('addfeature')     @Output() public addFeature          : Observable<GoogleMapsEventData>;
     /** Fired for a click on the geometry. */
