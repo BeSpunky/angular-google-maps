@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '../../testing/setup';
+import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { GoogleMapsData } from './google-maps-data';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { GoogleMap } from '../../google-map/google-map';

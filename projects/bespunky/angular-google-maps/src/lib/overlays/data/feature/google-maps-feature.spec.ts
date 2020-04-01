@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '../../../testing/setup';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsFeature } from './google-maps-feature';
 import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
 import { GoogleMap } from '../../../google-map/google-map';
@@ -22,7 +22,7 @@ describe('GoogleMapsFeature', () =>
 
         map = new GoogleMap(api, new ElementRef(elementStub));
         data = new GoogleMapsData(api, map);
-        feature = new GoogleMapsFeature(data, api, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }) });
+        feature = new GoogleMapsFeature(api, data, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }) });
     });
 
     it('should create an instance', () => expect(feature).toBeTruthy());

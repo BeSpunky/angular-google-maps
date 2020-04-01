@@ -1,4 +1,4 @@
-import { configureGoogleMapsTestingModule } from '../testing/setup';
+import { configureGoogleMapsTestingModule } from '../testing/setup.spec';
 import { OverlaysTracker } from "./overlays-tracker";
 import { IGoogleMap } from '../google-map/i-google-map';
 import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
@@ -46,10 +46,24 @@ describe('OverlayTracker', () =>
 
 class StubGoogleMapsMarker implements IGoogleMapsMarker
 {
+    public map: IGoogleMap;
     public native: Promise<any>;
     public custom: any;
 
     constructor(public type: OverlayType) { }
+    
+    listenTo(eventName: string, handler: (...args: any[]) => void): Promise<() => void>
+    {
+        throw new Error("Method not implemented.");
+    }
+    stopListeningTo(eventName: string): Promise<void>
+    {
+        throw new Error("Method not implemented.");
+    }
+    clearListeners(): Promise<void>
+    {
+        throw new Error("Method not implemented.");
+    }
     
     getPosition(): Promise<google.maps.LatLng>
     {
@@ -69,14 +83,6 @@ class StubGoogleMapsMarker implements IGoogleMapsMarker
         throw new Error("Method not implemented.");
     }
     removeFromMap(): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    listenTo(eventName: string, handler: () => void): Promise<void>
-    {
-        throw new Error("Method not implemented.");
-    }
-    stopListeningTo(eventName: string): Promise<void>
     {
         throw new Error("Method not implemented.");
     }

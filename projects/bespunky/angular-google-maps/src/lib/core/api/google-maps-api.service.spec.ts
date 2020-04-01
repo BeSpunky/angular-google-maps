@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { configureGoogleMapsTestingModule, IGoogleMapsTestingModuleConfigOptions } from '../../testing/setup';
+import { configureGoogleMapsTestingModule, IGoogleMapsTestingModuleConfigOptions } from '../../testing/setup.spec';
 
 describe('GoogleMapsApiService', () =>
 {

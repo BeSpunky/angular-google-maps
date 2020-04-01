@@ -1,14 +1,18 @@
-import { IGoogleMapsNativeObjectWrapper } from '../../../core/abstraction/base/i-google-maps-native-object-wrapper';
+import { IGoogleMapsData } from '../i-google-maps-data';
+import { IGoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction/base/i-google-maps-native-object-emitting-wrapper';
 
-export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectWrapper
+export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>
 {
-    getId(): Promise<number | string>;
-    
-    getGeometry(): Promise<google.maps.Data.Geometry>;
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>;
+    /** The data object this feature was added to. */
+    readonly data: IGoogleMapsData;
 
-    getProperty(name: string): Promise<any>;
-    setProperty(name: string, value: any): Promise<any>;
+    getId(): number | string;
+    
+    getGeometry(): google.maps.Data.Geometry;
+    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void;
+
+    getProperty(name: string): any;
+    setProperty(name: string, value: any): any;
 
     /**
      * Should create the GeoJson representation of the feature and provide it as an object when the promise resolves.

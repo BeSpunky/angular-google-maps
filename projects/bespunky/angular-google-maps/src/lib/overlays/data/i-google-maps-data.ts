@@ -2,15 +2,15 @@ import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google
 import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 import { Coord } from '../../core/abstraction/types/geometry-utils.type';
 
-export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay
+export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.Data>
 {
-    createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): Promise<IGoogleMapsFeature>;
+    createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
 
-    addFeature(feature: google.maps.Data.Feature): Promise<void>;
+    addFeature(feature: google.maps.Data.Feature | IGoogleMapsFeature): void;
     
-    findFeature(id: string | number): Promise<google.maps.Data.Feature>;
+    findFeature(id: string | number): google.maps.Data.Feature;
 
-    removeFeature(featureOrId: google.maps.Data.Feature | number | string): Promise<google.maps.Data.Feature>;
+    removeFeature(featureOrId: google.maps.Data.Feature | IGoogleMapsFeature | number | string): google.maps.Data.Feature;
 
     /**
      * Should download GeoJson data from the specified url, interpret it and create map features for it.
@@ -18,7 +18,7 @@ export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay
 
      * @param {string} url The url to the GeoJson data to download.
      * @param {google.maps.Data.GeoJsonOptions} [options] (Optional) Configures the process of reading the GeoJson.
-     * @returns {Promise<google.maps.Data.Feature[]>} A promise for the features representing the geometries added from the GeoJson.
+     * @returns {google.maps.Data.Feature[]} A promise for the features representing the geometries added from the GeoJson.
      */
     loadGeoJson(url: string, options?: google.maps.Data.GeoJsonOptions): Promise<google.maps.Data.Feature[]>;
 
@@ -26,7 +26,7 @@ export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay
      * Should create the GeoJson representation of the data and provide it as an object when the promise resolves.
      * Will automatically take care of the callback required by Google Maps Api internally.
      *
-     * @returns {Promise<any>} A promise for the GeoJson object.
+     * @returns {any} A promise for the GeoJson object.
      */
     toGeoJson(): Promise<any>;
 }

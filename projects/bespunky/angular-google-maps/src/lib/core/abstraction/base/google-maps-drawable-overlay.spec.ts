@@ -1,11 +1,11 @@
 
-import { configureGoogleMapsTestingModule } from '../../../testing/setup';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 import { IGoogleMap } from '../../../google-map/i-google-map';
-import { IGoogleMapsMarker } from '../../../overlays/marker/i-google-maps-marker';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { OverlayType } from './overlay-type.enum';
+import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
 
 describe('GoogleMapsDrawableOverlay (abstract)', () =>
 {
@@ -35,8 +35,6 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
         expect(DrawableOverlayMock.prototype.setContainingMap).toHaveBeenCalledTimes(1);
         expect(DrawableOverlayMock.prototype.setContainingMap).toHaveBeenCalledWith(mockMap);
     });
-
-    it('should retrieve the map when calling `getContainingMap()`', () => expect(mockOverlay.getContainingMap()).toBe(mockMap));
 
     it('should set a new containing map to the overlay outside of angular when calling `setContainingMap()`', async () =>
     {
@@ -74,30 +72,12 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
     });
 });
 
-class MockGoogleMap implements IGoogleMap
-{
-    native = Promise.resolve(this.nativeMapMock);
-
-    custom: any;
-
-    constructor(private nativeMapMock: object) { }
-
-
-    getCenter(): Promise<google.maps.LatLng> { throw new Error('Method not implemented.'); }
-    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void> { throw new Error('Method not implemented.'); }
-    getZoom(): Promise<number> { throw new Error('Method not implemented.'); }
-    setZoom(zoomLevel: number): Promise<void> { throw new Error('Method not implemented.'); }
-    createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): Promise<IGoogleMapsMarker> { throw new Error("Method not implemented."); }
-    listenTo(eventName: string, handler: () => void): Promise<void> { throw new Error('Method not implemented.'); }
-    stopListeningTo(eventName: string): Promise<void> { throw new Error('Method not implemented.'); }
-}
-
 class NativeDrawableOverlayMock implements IGoogleMapsNativeDrawableOverlay
 {
     public nativeMap: any;
 
     setMap(map: google.maps.Map): void { this.nativeMap = map; }
-    addListener(eventName: string, handler: () => void): void { throw new Error('Method not implemented.'); }
+    addListener(): void { throw new Error('Method not implemented.'); }
 }
 
 class DrawableOverlayMock extends GoogleMapsDrawableOverlay<NativeDrawableOverlayMock>

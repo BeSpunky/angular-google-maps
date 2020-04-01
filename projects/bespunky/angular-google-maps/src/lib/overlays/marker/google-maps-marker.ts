@@ -22,8 +22,8 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
     }
 
     @Wrap()
-    getPosition(): Promise<google.maps.LatLng> { return null; }
+    getPosition(): google.maps.LatLng { return null; }
     
     @Wrap() @OutsideAngular
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void> { return null; }
+    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void { return null; }
 }

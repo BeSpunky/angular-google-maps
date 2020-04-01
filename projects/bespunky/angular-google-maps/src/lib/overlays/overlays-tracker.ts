@@ -1,22 +1,25 @@
-import { IGoogleMapsMarker } from './marker/i-google-maps-marker';
-import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
 import { OverlayType } from '../core/abstraction/base/overlay-type.enum';
+import { IGoogleMapsMarker } from './marker/i-google-maps-marker';
+import { IGoogleMapsData } from './data/i-google-maps-data';
+import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
 
 export class OverlaysTracker
 {
     public markers: IGoogleMapsMarker[] = [];
+    public dataLayers: IGoogleMapsData[] = [];
 
     private map = {
-        [OverlayType.Marker]: this.markers
+        [OverlayType.Marker]: this.markers,
+        [OverlayType.Data]: this.dataLayers
         // TODO: Add here any new supported overlay type collection
     };
 
-    public add(overlay: IGoogleMapsDrawableOverlay)
+    public add(overlay: DrawableOverlay)
     {
         this.detectCollection(overlay).push(overlay);
     }
 
-    public remove(overlay: IGoogleMapsDrawableOverlay)
+    public remove(overlay: DrawableOverlay)
     {
         const collection = this.detectCollection(overlay);
         const index      = collection.indexOf(overlay);
@@ -25,7 +28,7 @@ export class OverlaysTracker
             collection.splice(index, 1);
     }
 
-    private detectCollection(overlay: IGoogleMapsDrawableOverlay): IGoogleMapsDrawableOverlay[]
+    private detectCollection(overlay: DrawableOverlay): DrawableOverlay[]
     {
         const collection = this.map[overlay.type];
 
