@@ -10,7 +10,7 @@ export function NativeMapWrapperFactoryProvider(api: GoogleMapsApiService, eleme
     {
         const mapElement = (element.nativeElement as HTMLElement).querySelector('.google-map');
     
-        if (!mapElement) throw new Error('[NativeMaprWrapperFactory] Map element not found in template. Did you add a div.google-map element?');
+        if (!mapElement) throw new Error('[NativeMapWrapperFactory] Map element not found in template. Did you add a div.google-map element?');
 
         return new GoogleMap(api, new ElementRef(mapElement), options);
     };

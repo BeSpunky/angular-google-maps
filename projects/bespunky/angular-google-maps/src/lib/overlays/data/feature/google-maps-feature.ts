@@ -21,25 +21,23 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
         return new google.maps.Data.Feature(this.options);
     }
 
-    public async toGeoJson(): Promise<any>
+    public toGeoJson(): Promise<any>
     {
-        await this.native;
-
-        return new Promise(resolve => this.nativeObject.toGeoJson(resolve));
+        return new Promise(resolve => this.native.toGeoJson(resolve));
     }
 
     @Wrap()
-    getId(): Promise<number | string> { return null; }
+    getId(): number | string { return null; }
 
     @Wrap()
-    getGeometry(): Promise<google.maps.Data.Geometry> { return null; }
+    getGeometry(): google.maps.Data.Geometry { return null; }
 
     @Wrap() @OutsideAngular
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): Promise<void> { return null; }
+    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void { return null; }
 
     @Wrap()
-    getProperty(name: string): Promise<any> { return null; }
+    getProperty(name: string): any { return null; }
 
     @Wrap() @OutsideAngular
-    setProperty(name: string, value: any): Promise<any> { return null; }
+    setProperty(name: string, value: any): any { return null; }
 }

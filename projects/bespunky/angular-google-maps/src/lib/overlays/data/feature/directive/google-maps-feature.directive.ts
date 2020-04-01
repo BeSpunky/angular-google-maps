@@ -54,6 +54,6 @@ export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase<IGoogleM
         // Hook emitters to the data object's event, but filter out events not related with this specific feature
         this.api.hookAndSetEmitters(this,
                                     this.wrapper.data,
-                                    (event: GoogleMapsEventData) => this.wrapper.native.then(native => event.nativeArgs.some(arg => arg.feature === native)));
+                                    (event: GoogleMapsEventData) => event.nativeArgs.some(arg => arg.feature === this.wrapper.native));
     }
 }

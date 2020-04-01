@@ -2,7 +2,8 @@ import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wr
 import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 
-export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsNativeObject> implements IGoogleMapsNativeObjectWrapper                                                   
+export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsNativeObject>
+           implements IGoogleMapsNativeObjectWrapper<TNative>
 {
     public custom: any;
 
@@ -16,9 +17,9 @@ export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsN
         });
     }
 
-    public get native(): Promise<TNative>
+    public get native(): TNative
     {
-        return this.api.whenReady.then(() => this.nativeObject);
+        return this.nativeObject;
     }
 
     protected abstract createNativeObject(): TNative;

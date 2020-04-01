@@ -22,7 +22,7 @@ export class AppComponent
     {
         if (!(event instanceof GoogleMapsEventData)) return;
 
-        const feature = new GoogleMapsFeature(this.api, this.data.dataLayer, { geometry: new google.maps.Data.Point(event.args[0].position) });
+        const feature = new GoogleMapsFeature(this.api, this.data.wrapper, { geometry: new google.maps.Data.Point(event.args[0].position) });
 
         this.features.push(feature);
 
@@ -39,6 +39,6 @@ export class AppComponent
     {
         if (!(event instanceof GoogleMapsEventData)) return;
 
-        console.log(`feature hovered ${this.features.indexOf(event.delegatedEmitter as GoogleMapsFeature)}`);
+        console.log(`feature hovered ${this.features.indexOf(event.associatedEmitter as GoogleMapsFeature)}`);
     }
 }

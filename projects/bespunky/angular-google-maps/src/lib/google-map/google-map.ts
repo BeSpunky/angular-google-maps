@@ -13,6 +13,7 @@ import { Wrap } from '../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
 import { Coord } from '../core/abstraction/types/geometry-utils.type';
 import { GoogleMapsData } from '../overlays/data/google-maps-data';
+import { IGoogleMapsNativeDrawableOverlay } from '../core/abstraction/native/i-google-maps-native-drawable-overlay';
 
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
@@ -38,7 +39,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         return new google.maps.Map(this.mapElement.nativeElement, options);
     }
 
-    public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): Promise<GoogleMapsMarker>
+    public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
     {        
         options = Object.assign({}, options, { position: this.api.geometry.toCoordLiteral(position) });
         
@@ -46,40 +47,40 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         return this.createOverlay(() => new GoogleMapsMarker(this.api, this, options));
     }
 
-    public createDataLayer(options?: google.maps.Data.DataOptions): Promise<GoogleMapsData>
+    public createDataLayer(options?: google.maps.Data.DataOptions): GoogleMapsData
     {
         return this.createOverlay(() => new GoogleMapsData(this.api, this, options));
     }
 
     // TODO: Add here create methods for any new featured overlay type (e.g. polygons, polylines, etc.)
 
-    private async createOverlay<TOverlay extends IGoogleMapsDrawableOverlay>(createObject: () => TOverlay): Promise<TOverlay>
+    private createOverlay<TOverlay extends IGoogleMapsDrawableOverlay<IGoogleMapsNativeDrawableOverlay>>(createObject: () => TOverlay): TOverlay
     {
         // Overlay creation will cause rendering. Run outside...
-        const overlay = await this.api.runOutsideAngular(createObject);
+        const overlay = this.api.runOutsideAngular(createObject);
 
         this.overlays.add(overlay);
 
         return overlay;
     }
 
-    public async removeOverlay(overlay: IGoogleMapsDrawableOverlay): Promise<void>
+    public removeOverlay<TOverlay extends IGoogleMapsDrawableOverlay<IGoogleMapsNativeDrawableOverlay>>(overlay: TOverlay): void
     {
         // Overlay removal will cause rendering. Run outside...
-        await this.api.runOutsideAngular(() => overlay.removeFromMap());
+        this.api.runOutsideAngular(() => overlay.removeFromMap());
 
         this.overlays.remove(overlay);
     }
 
     @Wrap()
-    getCenter(): Promise<google.maps.LatLng> { return null; }
+    getCenter(): google.maps.LatLng { return null; }
 
     @Wrap() @OutsideAngular
-    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void> { return null; }
+    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): void { return null; }
 
     @Wrap()
-    getZoom(): Promise<number> { return null; }
+    getZoom(): number { return null; }
 
     @Wrap() @OutsideAngular
-    setZoom(zoomLevel: ZoomLevel | number): Promise<void> { return null; }
+    setZoom(zoomLevel: ZoomLevel | number): void { return null; }
 }

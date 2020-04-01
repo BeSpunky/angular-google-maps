@@ -1,4 +1,4 @@
-<bs-google-map (click)="onClick($event)">
+<bs-google-map *bsSafe (click)="onClick($event)">
     <bs-google-maps-data>
         <bs-google-maps-feature *ngFor="let feature of features" [feature]="feature" (mouseOver)="onFeatureHover($event)"></bs-google-maps-feature>
     </bs-google-maps-data>
