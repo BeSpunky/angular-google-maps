@@ -20,10 +20,79 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
     {
         return new google.maps.Marker(this.options);
     }
-
-    @Wrap()
-    getPosition(): google.maps.LatLng { return null; }
     
     @Wrap() @OutsideAngular
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void { return null; }
+    setOptions(options: google.maps.MarkerOptions): void { return void 0; }
+
+    @Wrap()
+    getAnimation(): google.maps.Animation { return void 0; }
+
+    @Wrap()
+    setAnimation(animation?: google.maps.Animation): void { return void 0; }
+
+    @Wrap()
+    getClickable(): boolean { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setClickable(clickable: boolean): void { return void 0; }
+
+    @Wrap()
+    getCursor(): string { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setCursor(cursor: string): void { return void 0; }
+
+    @Wrap()
+    getDraggable(): boolean { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setDraggable(draggable: boolean): void { return void 0; }
+
+    @Wrap()
+    getIcon(): string | google.maps.Icon | google.maps.Symbol { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setIcon(icon: string | google.maps.Icon | google.maps.Symbol): void { return void 0; }
+
+    @Wrap()
+    getLabel(): google.maps.MarkerLabel { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setLabel(label: string | google.maps.MarkerLabel): void { return void 0; }
+
+    @Wrap()
+    getOpacity(): number { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setOpacity(opacity: number): void { return void 0; }
+  
+    @Wrap()
+    getPosition(): google.maps.LatLng { return void 0; }
+    
+    @Wrap() @OutsideAngular
+    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void { return void 0; }
+
+    @Wrap()
+    getShape(): google.maps.MarkerShape { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setShape(shape: google.maps.MarkerShape): void { return void 0; }
+
+    @Wrap()
+    getTitle(): string { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setTitle(title: string): void { return void 0; }
+
+    @Wrap()
+    getVisible(): boolean { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setVisible(visible: boolean): void { return void 0; }
+
+    @Wrap()
+    getZIndex(): number { return void 0; }
+
+    @Wrap() @OutsideAngular
+    setZIndex(zIndex: number): void { return void 0; }
 }
