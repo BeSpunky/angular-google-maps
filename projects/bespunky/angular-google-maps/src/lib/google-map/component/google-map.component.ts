@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
 import { IGoogleMap               } from '../i-google-map';
 import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
@@ -10,10 +10,11 @@ import { GoogleMapsEventData      } from '../../core/abstraction/events/google-m
 import { Hook                     } from '../../core/decorators/hook.decorator';
 
 @Component({
-    selector: 'bs-google-map',
-    templateUrl: './google-map.component.html',
-    styleUrls: ['./google-map.component.css'],
-    providers: [ GoogleMapFactoryProvider ]
+    selector     : 'bs-google-map',
+    templateUrl  : './google-map.component.html',
+    styleUrls    : ['./google-map.component.css'],
+    providers    : [GoogleMapFactoryProvider],
+    encapsulation: ViewEncapsulation.None
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
 {

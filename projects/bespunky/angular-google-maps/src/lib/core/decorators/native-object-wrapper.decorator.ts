@@ -1,5 +1,6 @@
 import { Type } from '@angular/core';
 
+import { IGoogleMapsNativeObject } from '../abstraction/native/i-google-maps-native-object';
 import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
 import { OutsideAngularSymbol } from './outside-angular.decorator';
 import { WrapSymbol } from './wrap.decorator';
@@ -15,7 +16,7 @@ import { WrapSymbol } from './wrap.decorator';
  *  
  * @see `@Wrap` and `@OutsideAngular` to understand the implementation provided the decorators.
  */
-export function NativeObjectWrapper(wrapper: Type<IGoogleMapsNativeObjectWrapper>): void
+export function NativeObjectWrapper(wrapper: Type<IGoogleMapsNativeObjectWrapper<IGoogleMapsNativeObject>>): void
 {
     // Find all decorated methods
     const wrappedMap     = Reflect.getMetadata(WrapSymbol,           wrapper.prototype) as { [name: string]: string } || {};
@@ -32,19 +33,17 @@ export function NativeObjectWrapper(wrapper: Type<IGoogleMapsNativeObjectWrapper
     outsideAngular.forEach(methodName => wrapOutside(wrapper, methodName));
 }
 
-function wrapNative(wrapper: Type<IGoogleMapsNativeObjectWrapper>, wrapperName: string, nativeName: string): void
+function wrapNative(wrapper: Type<IGoogleMapsNativeObjectWrapper<IGoogleMapsNativeObject>>, wrapperName: string, nativeName: string): void
 {
-    wrapper.prototype[wrapperName] = async function(...args: any[])
+    wrapper.prototype[wrapperName] = function(...args: any[])
     {
-        const native = (await this.native);
-    
         // As the function is assigned to the prototype, not the instance, the original function should be bound
         // to the instance of the native object for which the call was triggered. Hence the call to `apply(native, args)`.
-        return native[nativeName].apply(native, args);
+        return this.native[nativeName].apply(this.native, args);
     };
 }
 
-function wrapOutside(wrapper: Type<IGoogleMapsNativeObjectWrapper>, wrapperName: string): void
+function wrapOutside(wrapper: Type<IGoogleMapsNativeObjectWrapper<IGoogleMapsNativeObject>>, wrapperName: string): void
 {
     const original = wrapper.prototype[wrapperName] as (...args: any[]) => any;
 

@@ -4,6 +4,7 @@ import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
 import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
+import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
 /**
  * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.
@@ -26,7 +27,8 @@ import { WrapperFactory } from '../tokens/wrapper-factory.token';
  * 
  * @see GoogleMapsComponent source code for an example.
  */
-export abstract class GoogleMapsLifecycleBase<TWrapper extends IGoogleMapsNativeObjectEmittingWrapper> implements OnChanges
+export abstract class GoogleMapsLifecycleBase<TWrapper extends IGoogleMapsNativeObjectEmittingWrapper<IGoogleMapsNativeObject>>
+                implements OnChanges
 {
     private nativeWrapper: TWrapper;
 

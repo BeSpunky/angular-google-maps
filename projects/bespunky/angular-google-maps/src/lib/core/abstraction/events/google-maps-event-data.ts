@@ -12,7 +12,7 @@ export class GoogleMapsEventData implements IGoogleMapsEventData
          * If a component was hooked to events of another wrapper, this will be the other wrapper. In case you need access only to the component's inner wrapper,
          * use `associatedEmitter` instead.
          */
-        public emitter: IGoogleMapsNativeObjectEmittingWrapper,
+        public emitter: IGoogleMapsNativeObjectEmittingWrapper<IGoogleMapsNativeObject>,
         /** The native object which actually emitted the event. */
         public nativeEmitter: IGoogleMapsNativeObject,
         /** A transformed version of the native arguments provided in the native event. Cleaner, easier to use. */
@@ -20,6 +20,6 @@ export class GoogleMapsEventData implements IGoogleMapsEventData
         /** The native arguments provided in the native event. */
         public nativeArgs: any,
         /** The wrapper this event is related to. This is always the inner wrapper of the hooked component. */
-        public associatedEmitter: IGoogleMapsNativeObjectEmittingWrapper
+        public associatedEmitter: IGoogleMapsNativeObjectEmittingWrapper<IGoogleMapsNativeObject>
     ) { }
 }

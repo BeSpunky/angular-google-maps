@@ -1,8 +1,10 @@
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { OverlayType } from './overlay-type.enum';
 
-export interface IGoogleMapsDrawableOverlay extends IGoogleMapsNativeObjectEmittingWrapper
+export interface IGoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay>
+         extends IGoogleMapsNativeObjectEmittingWrapper<TNative>
 {
     readonly map: IGoogleMap;
     /** Useful when reflection is complex or not possible. */
