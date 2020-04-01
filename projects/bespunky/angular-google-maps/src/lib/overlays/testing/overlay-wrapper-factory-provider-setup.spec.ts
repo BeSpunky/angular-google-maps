@@ -3,10 +3,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.token';
-import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
 import { GoogleMapComponent } from '../../google-map/component/google-map.component';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { MockGoogleMap } from '../../google-map/testing/google-map.mock.spec';
+import { DrawableOverlay } from '../../core/abstraction/types/drawable-overlay.type';
 
 function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider)
 {
@@ -27,7 +27,7 @@ function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider
     return TestBed.inject(WrapperFactory);
 }
 
-export function itShouldCreateOverlayWrapper(factoryProvider: FactoryProvider, wrapperType: Type<IGoogleMapsDrawableOverlay>)
+export function itShouldCreateOverlayWrapper(factoryProvider: FactoryProvider, wrapperType: Type<DrawableOverlay>)
 {
     it(`should allow the creation of a new ${wrapperType.name} object when injected`, () =>
     {

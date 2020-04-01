@@ -10,6 +10,7 @@ import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec'
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
 import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
+import { DrawableOverlay } from '../types/drawable-overlay.type';
 
 describe('GoogleMapsOverlayLifecycleBase', () =>
 {
@@ -44,7 +45,10 @@ class MockOverlay extends GoogleMapsDrawableOverlay<IGoogleMapsNativeDrawableOve
 {
     protected createNativeObject(): IGoogleMapsNativeDrawableOverlay
     {
-        return { setMap: () => void 0 };
+        return {
+            getMap: () => void 0,
+            setMap: () => void 0
+        };
     }
 }
 
@@ -58,4 +62,4 @@ function overlayFactory(api: GoogleMapsApiService)
         { provide: WrapperFactory, useFactory: (api) => () => overlayFactory(api), deps: [GoogleMapsApiService] }
     ]
 })
-class MockComponent extends GoogleMapsOverlayLifecycleBase<IGoogleMapsDrawableOverlay> { }
+class MockComponent extends GoogleMapsOverlayLifecycleBase<DrawableOverlay> { }

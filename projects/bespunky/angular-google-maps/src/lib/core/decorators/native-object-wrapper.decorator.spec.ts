@@ -1,7 +1,7 @@
 import { NativeObjectWrapper } from './native-object-wrapper.decorator';
-import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
 import { Wrap } from './wrap.decorator';
 import { OutsideAngular } from './outside-angular.decorator';
+import { Wrapper } from '../abstraction/types/wrapper.type';
 
 describe('@NativeObjectWrapper()', () =>
 {
@@ -35,7 +35,7 @@ describe('@NativeObjectWrapper()', () =>
 });
 
 @NativeObjectWrapper
-class MockMarkerWrapper implements IGoogleMapsNativeObjectWrapper
+class MockMarkerWrapper implements Wrapper
 {
     public mockNative = {
         getTitle: () => void 0,

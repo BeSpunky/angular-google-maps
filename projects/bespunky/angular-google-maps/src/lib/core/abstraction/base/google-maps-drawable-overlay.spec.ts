@@ -76,6 +76,10 @@ class NativeDrawableOverlayMock implements IGoogleMapsNativeDrawableOverlay
 {
     public nativeMap: any;
 
+    getMap(): google.maps.Map | google.maps.StreetViewPanorama
+    {
+        return this.nativeMap;
+    }
     setMap(map: google.maps.Map): void { this.nativeMap = map; }
     addListener(): void { throw new Error('Method not implemented.'); }
 }

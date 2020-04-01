@@ -1,15 +1,9 @@
-import { GoogleMapsNativeObjectWrapper } from "../base/google-maps-native-object-wrapper";
-import { GoogleMapsApiService } from '../../api/google-maps-api.service';
+// import { Wrapper } from '../types/wrapper.type';
+// import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
-export class MockNativeWrapper extends GoogleMapsNativeObjectWrapper<object>
-{
-    constructor(api: GoogleMapsApiService, public mockNativeObject: object)
-    {
-        super(api);
-    }
+// export class MockWrapper implements Wrapper
+// {
+//     custom: any;
 
-    protected createNativeObject(): object
-    {
-        return this.mockNativeObject;
-    }
-}
+//     constructor(public native: IGoogleMapsNativeObject) { }
+// }

@@ -7,7 +7,7 @@ import { GoogleMap } from './google-map';
 import { Defaults } from '../core/config/defaults';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
-import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
+import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
 
 const elementStub: any = document.createElement('div');
 
@@ -79,7 +79,7 @@ describe('GoogleMap', () =>
             // There should be an overlay stored in the tracker from the previous test
             const overlayTrackerSpy = spyOn(map.overlays, 'remove');
 
-            await map.removeOverlay(dummyOverlay as IGoogleMapsDrawableOverlay);
+            await map.removeOverlay(dummyOverlay as DrawableOverlay);
 
             expect(runOutsideAngular).toHaveBeenCalledTimes(1);
             expect(overlayTrackerSpy).toHaveBeenCalledTimes(1);

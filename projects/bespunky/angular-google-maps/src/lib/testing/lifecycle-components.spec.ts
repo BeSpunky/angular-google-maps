@@ -6,7 +6,7 @@ import { ViewChild } from '@angular/core';
 import { GoogleMapsLifecycleBase } from '../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapComponent } from '../google-map/component/google-map.component';
 import { GoogleMap } from '../google-map/google-map';
-import { IGoogleMapsNativeObjectEmittingWrapper } from '../core/abstraction/base/i-google-maps-native-object-emitting-wrapper';
+import { EmittingWrapper } from '../core/abstraction/types/emitting-wrapper.type';
 
 export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string): string
 {
@@ -34,7 +34,7 @@ export class LifecycleTestsHostComponentBase
     @ViewChild(GoogleMapComponent)
     public mapComponent: GoogleMapComponent;
     @ViewChild('testedComponent')
-    public testedComponent: GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper>;
+    public testedComponent: GoogleMapsLifecycleBase<EmittingWrapper>;
 
     public map: GoogleMap;
 }
