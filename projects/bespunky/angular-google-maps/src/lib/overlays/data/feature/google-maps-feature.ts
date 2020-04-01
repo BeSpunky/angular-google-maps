@@ -9,16 +9,16 @@ import { GoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction
 @NativeObjectWrapper
 export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
-    constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, private options?: google.maps.Data.FeatureOptions)
+    constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, options?: google.maps.Data.FeatureOptions)
     {
-        super(api);
+        super(api, options);
 
         this.data.addFeature(this);
     }
 
-    protected createNativeObject(): google.maps.Data.Feature
+    protected createNativeObject(options?: google.maps.Data.FeatureOptions): google.maps.Data.Feature
     {
-        return new google.maps.Data.Feature(this.options);
+        return new google.maps.Data.Feature(options);
     }
 
     public toGeoJson(): Promise<any>
