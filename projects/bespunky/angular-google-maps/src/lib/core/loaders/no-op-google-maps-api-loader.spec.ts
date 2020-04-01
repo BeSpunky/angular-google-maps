@@ -4,7 +4,7 @@ import { WindowRef } from '@bespunky/angular-zen';
 describe('NoOpGoogleMapsApiLoader', () =>
 {
     let windowRef: WindowRef;
-    let loader: NoOpGoogleMapsApiLoader;
+    let loader   : NoOpGoogleMapsApiLoader;
 
     beforeEach(() =>
     {
@@ -13,10 +13,7 @@ describe('NoOpGoogleMapsApiLoader', () =>
         loader = new NoOpGoogleMapsApiLoader(windowRef);
     });
 
-    it('should create an instance', () =>
-    {
-        expect(loader).toBeTruthy();
-    });
+    it('should create an instance', () => expect(loader).toBeTruthy());
 
     it('should return a resolved promise if google maps api is already present in `window`', () =>
     {

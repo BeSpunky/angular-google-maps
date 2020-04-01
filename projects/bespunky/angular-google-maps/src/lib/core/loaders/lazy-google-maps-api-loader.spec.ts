@@ -35,15 +35,9 @@ describe('LazyGoogleMapsApiLoader', () =>
         initLazyApiLoader();
     });
 
-    it('should create an instance', () =>
-    {
-        expect(lazyApiLoader).toBeTruthy();
-    });
+    it('should create an instance', () => expect(lazyApiLoader).toBeTruthy());
 
-    it('should return a promise when calling `load()`', () =>
-    {
-        expect(lazyApiLoader.load() instanceof Promise).toBeTruthy();
-    });
+    it('should return a promise when calling `load()`', () => expect(lazyApiLoader.load() instanceof Promise).toBeTruthy());
 
     it('should use default values to build api url when calling `buildApiUrl()` and nullables don\'t have a value', () =>
     {
