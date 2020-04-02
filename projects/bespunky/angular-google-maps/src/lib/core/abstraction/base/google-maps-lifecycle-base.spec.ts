@@ -1,23 +1,18 @@
-import { SimpleChange, Component, Output, EventEmitter, Input } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
-import { MockEmittingWrapper } from '../testing/mock-emitting-wrapper.spec';
-import { WrapperFactory } from '../tokens/wrapper-factory.token';
-import { MockNative } from '../testing/mock-native.spec';
-import { GoogleMapsEventData } from '../events/google-maps-event-data';
 import { Observable } from 'rxjs';
-import { Hook } from '../../decorators/hook.decorator';
+import { MockComponentWithLifecycle } from '../testing/mock-component.spec';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
     let api          : GoogleMapsInternalApiService;
-    let mockComponent: GoogleMapsLifecycleBaseTest;
+    let mockComponent: MockComponentWithLifecycle;
 
     beforeEach(async () =>
     {
-        ({ internalApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: GoogleMapsLifecycleBaseTest }));
+        ({ internalApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: MockComponentWithLifecycle }));
     });
 
     it('should create an instance', () => expect(mockComponent).toBeTruthy());
@@ -40,18 +35,3 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
         expect(native.property).toBe('dummy');
     });
 });
-
-function CreateWrapperFactoryProvider()
-{
-    return () => new MockEmittingWrapper(new MockNative());
-}
-
-@Component({
-    providers: [{ provide: WrapperFactory, useFactory: CreateWrapperFactoryProvider }]
-})
-class GoogleMapsLifecycleBaseTest extends GoogleMapsLifecycleBase<MockEmittingWrapper<MockNative>>
-{
-    @Input() property: any;
-
-    @Hook() @Output() click: EventEmitter<GoogleMapsEventData>;
-}
