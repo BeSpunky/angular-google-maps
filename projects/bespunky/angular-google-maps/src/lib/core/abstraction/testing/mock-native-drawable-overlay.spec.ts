@@ -1,6 +1,7 @@
 import { MockNative } from './mock-native.spec';
+import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 
-export class MockNativeDrawableOverlay extends MockNative
+export class MockNativeDrawableOverlay extends MockNative implements IGoogleMapsNativeDrawableOverlay
 {
     public nativeMap: any;
 

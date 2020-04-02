@@ -10,8 +10,6 @@ export abstract class GoogleMapsOverlayLifecycleBase<TWrapper extends DrawableOv
 {
     ngOnDestroy()
     {
-        if (!this.wrapper) return;
-
         this.wrapper.map.removeOverlay(this.wrapper);
     }
 }

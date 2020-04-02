@@ -49,7 +49,7 @@ function CreateWrapperFactoryProvider()
 @Component({
     providers: [{ provide: WrapperFactory, useFactory: CreateWrapperFactoryProvider }]
 })
-class GoogleMapsLifecycleBaseTest extends GoogleMapsLifecycleBase<MockEmittingWrapper>
+class GoogleMapsLifecycleBaseTest extends GoogleMapsLifecycleBase<MockEmittingWrapper<MockNative>>
 {
     @Input() property: any;
 

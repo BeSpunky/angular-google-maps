@@ -1,65 +1,47 @@
-// import { Component } from '@angular/core';
-// import { ComponentFixture } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { ComponentFixture } from '@angular/core/testing';
 
-// import { GoogleMapsOverlayLifecycleBase } from './google-maps-overlay-lifecycle-base';
-// import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
-// import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
-// import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-// import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-// import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
-// import { WrapperFactory } from '../tokens/wrapper-factory.token';
-// import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
-// import { IGoogleMapsDrawableOverlay } from './i-google-maps-drawable-overlay';
-// import { DrawableOverlay } from '../types/drawable-overlay.type';
+import { GoogleMapsOverlayLifecycleBase } from './google-maps-overlay-lifecycle-base';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
+import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
+import { WrapperFactory } from '../tokens/wrapper-factory.token';
+import { DrawableOverlay } from '../types/drawable-overlay.type';
+import { MockDrawableOverlay } from '../testing/mock-drawable-overlay.spec';
+import { MockNativeDrawableOverlay } from '../testing/mock-native-drawable-overlay.spec';
 
-// describe('GoogleMapsOverlayLifecycleBase', () =>
-// {
-//     let component: MockComponent;
-//     let fixture: ComponentFixture<MockComponent>
+describe('GoogleMapsOverlayLifecycleBase', () =>
+{
+    let component: GoogleMapsOverlayLifecycleBaseTest;
+    let fixture: ComponentFixture<GoogleMapsOverlayLifecycleBaseTest>
 
-//     beforeEach(async () =>
-//     {
-//         ({ component, fixture } = await configureGoogleMapsTestingModule({ componentType: MockComponent }));
-//     });
+    beforeEach(async () =>
+    {
+        ({ component, fixture } = await configureGoogleMapsTestingModule({ componentType: GoogleMapsOverlayLifecycleBaseTest }));
+    });
 
-//     it('should create an instance', () => expect(component).toBeTruthy());
+    it('should create an instance', () => expect(component).toBeTruthy());
 
-//     it('should remove remove the overlay from the map on destroy and continue executing the destroy chain', () =>
-//     {
-//         // const removeOverlay    = spyOn(mockMap, 'removeOverlay').and.stub();
-//         // const superNgOnDestroy = spyOn(GoogleMapsLifecycleBase.prototype, 'ngOnDestroy').and.stub();
+    it('should remove remove the overlay from the map on destroy', () =>
+    {
+        spyOn(mockMap, 'removeOverlay').and.stub();
   
-//         // component.ngOnInit();
+        fixture.destroy();
 
-//         // fixture.destroy();
+        expect(mockMap.removeOverlay).toHaveBeenCalledTimes(1);
+    });
+});
 
-//         // expect(removeOverlay).toHaveBeenCalledTimes(1);
-//         // expect(superNgOnDestroy).toHaveBeenCalledTimes(1);
-//         // expect(removeOverlay).toHaveBeenCalledBefore(superNgOnDestroy);
-//     });
-// });
+const mockMap = new MockGoogleMap();
 
-// const mockMap = new MockGoogleMap();
+function OverlayFactoryProvider()
+{
+    return () => new MockDrawableOverlay(mockMap, new MockNativeDrawableOverlay());
+}
 
-// class MockOverlay extends GoogleMapsDrawableOverlay<IGoogleMapsNativeDrawableOverlay>
-// {
-//     protected createNativeObject(): IGoogleMapsNativeDrawableOverlay
-//     {
-//         return {
-//             getMap: () => void 0,
-//             setMap: () => void 0
-//         };
-//     }
-// }
-
-// function overlayFactory(api: GoogleMapsApiService)
-// {
-//     return new MockOverlay(api, mockMap, 0);
-// }
-
-// @Component({
-//     providers: [
-//         { provide: WrapperFactory, useFactory: (api) => () => overlayFactory(api), deps: [GoogleMapsApiService] }
-//     ]
-// })
-// class MockComponent extends GoogleMapsOverlayLifecycleBase<DrawableOverlay> { }
+@Component({
+    providers: [
+        { provide: WrapperFactory, useFactory: OverlayFactoryProvider, deps: [GoogleMapsApiService] }
+    ]
+})
+class GoogleMapsOverlayLifecycleBaseTest extends GoogleMapsOverlayLifecycleBase<DrawableOverlay> { }

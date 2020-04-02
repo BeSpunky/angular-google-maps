@@ -6,9 +6,11 @@ import { Wrap } from '../../decorators/wrap.decorator';
 import { OutsideAngular } from '../../decorators/outside-angular.decorator';
 
 @NativeObjectWrapper
-export class MockEmittingWrapper extends MockWrapper implements IGoogleMapsNativeObjectEmittingWrapper<MockNative>
+export class MockEmittingWrapper<TNative extends MockNative>
+     extends MockWrapper
+  implements IGoogleMapsNativeObjectEmittingWrapper<TNative>
 {
-    constructor(public native: MockNative)
+    constructor(public native: TNative)
     {
         super(native);
     }
