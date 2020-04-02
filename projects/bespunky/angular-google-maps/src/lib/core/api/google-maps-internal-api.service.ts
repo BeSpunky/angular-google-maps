@@ -96,21 +96,11 @@ export class GoogleMapsInternalApiService
         {
             let emitter = fromEventPattern(
                 // Hook native event to observable subscribe
-                (handler) =>
-                {
-                    console.log(`listening to ${event.reference}`);
-                    return wrapper.listenTo(event.reference, handler);
-                },
+                (handler)                      => wrapper.listenTo(event.reference, handler),
                 // Hook unregister function to observable unsubscribe
-                (_, stopListening: () => void) => {
-                    console.log(`unlistening to ${event.reference}`);
-                    return stopListening();
-                },
+                (_, stopListening: () => void) => stopListening(),
                 // Map, simplify and storng-type event args
-                (...nativeArgs: any)           => {
-                    console.log(`mapping event data...`, nativeArgs);
-                    return new GoogleMapsEventData(event.name, wrapper, this, transfrom.auto(nativeArgs), nativeArgs, emittingComponent.wrapper);
-                }
+                (...nativeArgs: any)           => new GoogleMapsEventData(event.name, wrapper, this, transfrom.auto(nativeArgs), nativeArgs, emittingComponent.wrapper)
             );
             
             // If a filtering function was provided, pipe it in

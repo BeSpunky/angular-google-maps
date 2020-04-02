@@ -1,46 +1,57 @@
-// import { SimpleChange, SimpleChanges } from '@angular/core';
-// import { fakeAsync, tick } from '@angular/core/testing';
+import { SimpleChange, Component, Output, EventEmitter, Input } from '@angular/core';
 
-// import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-// import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-// import { MockLifecycleComponent } from '../testing/google-maps-lifecycle-base.mock.spec';
-// import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
+import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
+import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
+import { MockEmittingWrapper } from '../testing/mock-emitting-wrapper.spec';
+import { WrapperFactory } from '../tokens/wrapper-factory.token';
+import { MockNative } from '../testing/mock-native.spec';
+import { GoogleMapsEventData } from '../events/google-maps-event-data';
+import { Observable } from 'rxjs';
+import { Hook } from '../../decorators/hook.decorator';
 
-// describe('GoogleMapsLifecycleBase (abstract)', () =>
-// {
-//     let api: GoogleMapsInternalApiService;
-//     let mockComponent: MockLifecycleComponent;
+describe('GoogleMapsLifecycleBase (abstract)', () =>
+{
+    let api          : GoogleMapsInternalApiService;
+    let mockComponent: GoogleMapsLifecycleBaseTest;
 
-//     beforeEach(async () =>
-//     {
-//         ({ internalApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: MockLifecycleComponent }));
-//     });
+    beforeEach(async () =>
+    {
+        ({ internalApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: GoogleMapsLifecycleBaseTest }));
+    });
 
-//     describe('basically', () =>
-//     {
-//         it('should create an instance', () => expect(mockComponent).toBeTruthy());
+    it('should create an instance', () => expect(mockComponent).toBeTruthy());
 
-//         it('should instantiate the wrapper member', () => expect(mockComponent.wrapper).toBeDefined());
+    it('should instantiate the wrapper member', () => expect(mockComponent.wrapper).toBeDefined());
 
-//         // it('should hook emitters and set them to the component members', () => expect(mockComponent.wrapper)
-//         // {
-//         // });
-//     });
+    it('should assign emitters to the component @Output members', () => expect(mockComponent.click instanceof Observable).toBeTruthy());
 
-//     describe('when changes are detected', () =>
-//     {
-//         it('wait for component initialization and delegate the changes to the native object', fakeAsync(() =>
-//         {
-//         spyOn(api, 'delegateInputChangesToNativeObject').and.stub();
-//         const changes: SimpleChanges = { value: new SimpleChange(1, 10, true) };
+    it('delegate @Input changes to the native object', () =>
+    {
+        const native = mockComponent.wrapper.native;
 
-//             mockComponent.ngOnChanges(changes);
+        expect(native.property).toBeUndefined();
 
-//             expect(api.delegateInputChangesToNativeObject).not.toHaveBeenCalled();
+        mockComponent.property = 'dummy';
 
-//             tick();
+        // As changes are not made from a host template, ngOnChanges is called manually
+        mockComponent.ngOnChanges({ property: new SimpleChange(undefined, mockComponent.property, false) });
+        
+        expect(native.property).toBe('dummy');
+    });
+});
 
-//             expect(api.delegateInputChangesToNativeObject).toHaveBeenCalledTimes(1);
-//         }));
-//     });
-// });
+function CreateWrapperFactoryProvider()
+{
+    return () => new MockEmittingWrapper(new MockNative());
+}
+
+@Component({
+    providers: [{ provide: WrapperFactory, useFactory: CreateWrapperFactoryProvider }]
+})
+class GoogleMapsLifecycleBaseTest extends GoogleMapsLifecycleBase<MockEmittingWrapper>
+{
+    @Input() property: any;
+
+    @Hook() @Output() click: EventEmitter<GoogleMapsEventData>;
+}
