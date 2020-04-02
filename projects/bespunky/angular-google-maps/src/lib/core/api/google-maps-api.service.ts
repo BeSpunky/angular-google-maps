@@ -1,16 +1,17 @@
 import * as _ from 'lodash';
-import { Injectable, NgZone, Inject, OnDestroy } from '@angular/core';
+import { Injectable, NgZone, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { EventDataTransformService } from '../../utils/transform/event-data-transform.service';
 import { GeometryTransformService } from '../../utils/transform/geometry-transform.service';
+import { take } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class GoogleMapsApiService implements OnDestroy
+export class GoogleMapsApiService
 {
     private mapsApiReady: Promise<void>;
 
@@ -23,12 +24,7 @@ export class GoogleMapsApiService implements OnDestroy
         private waitForApiPromiseCreation: BehaviorSubject<Promise<void>>)
     {
         // Fetch the promise created by the internal api and store it
-        this.waitForApiPromiseCreation.subscribe(promise => this.mapsApiReady = promise);
-    }
-
-    ngOnDestroy()
-    {
-        this.waitForApiPromiseCreation.unsubscribe();
+        this.waitForApiPromiseCreation.pipe(take(1)).subscribe(promise => this.mapsApiReady = promise);
     }
 
     public get whenReady(): Promise<void>
@@ -36,22 +32,22 @@ export class GoogleMapsApiService implements OnDestroy
         return this.mapsApiReady;
     }
 
-    public runOutsideAngular(fn: () => any): any
+    public runOutsideAngular<TResult>(fn: () => TResult): TResult
     {
         return this.zone.runOutsideAngular(fn);
     }
 
-    public runInsideAngular(fn: () => any): any
+    public runInsideAngular<TResult>(fn: () => TResult): TResult
     {
         return this.zone.run(fn);
     }
     
-    public runOutsideAngularWhenReady(fn: () => any): Promise<any>
+    public runOutsideAngularWhenReady<TResult>(fn: () => TResult): Promise<TResult>
     {
         return this.zone.runOutsideAngular(() => this.whenReady.then(fn));
     }
 
-    public runInsideAngularWhenReady(fn: () => any): Promise<any>
+    public runInsideAngularWhenReady<TResult>(fn: () => TResult): Promise<TResult>
     {
         return this.zone.run(() => this.whenReady.then(fn));
     }
