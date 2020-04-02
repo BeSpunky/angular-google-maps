@@ -48,7 +48,7 @@ export function createGoogleMapsTestModuleMetadata(config?: GoogleMapsConfig): T
  */
 export function fakeTheRunXsideAngularMethod(api: GoogleMapsApiService, methodName: 'runInsideAngular' | 'runOutsideAngular'): jasmine.Spy
 {
-    return spyOn(api, methodName).and.callFake(fn => fn());
+    return spyOn(api, methodName).and.callFake((fn: () => void) => fn());
 }
 
 /**
@@ -100,10 +100,10 @@ const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
  */
 export async function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMapsTestingModuleConfigOptions)
 {
-    let fixture: ComponentFixture<TComponent>;
-    let component: TComponent;
+    let fixture     : ComponentFixture<TComponent>;
+    let component   : TComponent;
     let debugElement: DebugElement;
-    let element: ElementRef;
+    let element     : ElementRef;
 
     options = Object.assign({}, defaultModuleConfigOptions, options);
 
@@ -142,9 +142,9 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
 
         fixture = TestBed.createComponent(componentType);
 
-        component = fixture.componentInstance;
+        component    = fixture.componentInstance;
         debugElement = fixture.debugElement;
-        element = debugElement.nativeElement;
+        element      = debugElement.nativeElement;
     }
 
     // Return all extracted services and objects for easier use

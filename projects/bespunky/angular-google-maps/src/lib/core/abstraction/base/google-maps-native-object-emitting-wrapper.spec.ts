@@ -2,7 +2,7 @@
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
-import { MockNative } from '../testing/raw-mocks/native.mock';
+import { MockNative } from '../testing/mock-native.spec';
 
 describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
 {

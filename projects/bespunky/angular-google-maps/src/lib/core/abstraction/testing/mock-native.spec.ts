@@ -1,11 +1,11 @@
-import { IGoogleMapsNativeObject } from '../../native/i-google-maps-native-object';
+import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
 export class MockNative implements IGoogleMapsNativeObject
 {
     public property: any;
     public listeners = {};
 
-    public listenTo(eventName: string, handler: (...args: any[]) => void): () => void
+    public googleEventsListenTo(eventName: string, handler: (...args: any[]) => void): () => void
     {
         if (!this.listeners[eventName])
             this.listeners[eventName] = [];
@@ -17,21 +17,21 @@ export class MockNative implements IGoogleMapsNativeObject
         return () => handlers.splice(handlers.findIndex(handler), 1);
     }
 
-    public stopListeningTo(eventName: string): void
+    public googleEventsStopListeningTo(eventName: string): void
     {
         this.listeners[eventName] = [];
     }
 
-    public clearListeners(): void
+    public googleEventsClearListeners(): void
     {
         this.listeners = {};
     }
 
-    public raiseEvent(eventName: string, ...args: any[])
+    public googleEventsRaise(eventName: string, ...args: any[])
     {
         const handlers = this.listeners[eventName] || [];
 
-        handlers.forEach(handle => handlers(...args));
+        handlers.forEach(handle => handle(...args));
     }
     
     public getProperty(): any

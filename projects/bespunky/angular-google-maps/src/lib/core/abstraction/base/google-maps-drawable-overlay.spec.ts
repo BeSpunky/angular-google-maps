@@ -1,59 +1,67 @@
 
-// import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-// import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-// import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
-// import { MockNativeDrawableOverlay } from '../testing/native-overlay.mock.spec';
-// import { MockDrawableOverlay } from '../testing/drawable-overlay.mock.spec';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
+import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
+import { MockNativeDrawableOverlay } from '../testing/mock-native-drawable-overlay.spec';
+import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
 
-// describe('GoogleMapsDrawableOverlay (abstract)', () =>
-// {
-//     let api              : GoogleMapsApiService;
-//     let runOutsideAngular: jasmine.Spy;
-//     let mockMap          : MockGoogleMap;
-//     let mockNativeOverlay: MockNativeDrawableOverlay;
-//     let mockOverlay      : MockDrawableOverlay;
+describe('GoogleMapsDrawableOverlay (abstract)', () =>
+{
+    let api              : GoogleMapsApiService;
+    let runOutsideAngular: jasmine.Spy;
+    let mockMap          : MockGoogleMap;
+    let mockNativeOverlay: MockNativeDrawableOverlay;
+    let mockOverlay      : GoogleMapsDrawableOverlayTest;
 
-//     beforeAll(async () =>
-//     {
-//         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
+    beforeAll(async () =>
+    {
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-//         mockMap           = new MockGoogleMap({ id: 1, zoom: 1 });
-//         mockNativeOverlay = new MockNativeDrawableOverlay();
-//         mockOverlay       = new MockDrawableOverlay(api, mockMap, mockNativeOverlay);
-//     });
+        mockMap           = new MockGoogleMap({ id: 1, zoom: 1 });
+        mockNativeOverlay = new MockNativeDrawableOverlay();
+        mockOverlay       = new GoogleMapsDrawableOverlayTest(api, mockMap, 0, mockNativeOverlay);
+    });
 
-//     it('should be created', () => expect(mockOverlay).toBeTruthy());
+    it('should be created', () => expect(mockOverlay).toBeTruthy());
 
-//     it('should add the overlay to the map on instantiation', () => expect(mockOverlay.map).toBe(mockMap));
+    it('should add the overlay to the map on instantiation', () => expect(mockOverlay.map).toBe(mockMap));
 
-//     it('should add the overlay to the map outside angular when calling `attach()`', () =>
-//     {
-//         runOutsideAngular.calls.reset();
+    it('should add the overlay to the map outside angular when calling `attach()`', () =>
+    {
+        runOutsideAngular.calls.reset();
 
-//         const secondNativeMap = { id: 2, zoom: 2 };
-//         const secondMap = new MockGoogleMap(secondNativeMap); // First one was `mockMap`
+        const secondNativeMap = { id: 2, zoom: 2 };
+        const secondMap = new MockGoogleMap(secondNativeMap); // First one was `mockMap`
 
-//         mockOverlay.attach(secondMap);
+        mockOverlay.attach(secondMap);
 
-//         expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-//         // The map wrapper should have been updated
-//         expect(mockOverlay.map).toBe(secondMap);
-//         // The inner native map should have been updated
-//         expect(mockNativeOverlay.nativeMap).toBe(secondNativeMap);
-//     });
+        expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+        // The map wrapper should have been updated
+        expect(mockOverlay.map).toBe(secondMap);
+        // The inner native map should have been updated
+        expect(mockNativeOverlay.nativeMap).toBe(secondNativeMap);
+    });
 
-//     it('should remove the overlay from the map outside angular when calling `detach()`', () =>
-//     {
-//         runOutsideAngular.calls.reset();
+    it('should remove the overlay from the map outside angular when calling `detach()`', () =>
+    {
+        runOutsideAngular.calls.reset();
 
-//         expect(mockNativeOverlay.nativeMap).toBeDefined();
+        expect(mockNativeOverlay.nativeMap).toBeDefined();
 
-//         mockOverlay.detach();
+        mockOverlay.detach();
 
-//         expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-//         // The map wrapper should have been updated
-//         expect(mockOverlay.map).toBeNull();
-//         // The native object should have no map assigned to it
-//         expect(mockNativeOverlay.nativeMap).toBeNull();
-//     });
-// });
+        expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+        // The map wrapper should have been updated
+        expect(mockOverlay.map).toBeNull();
+        // The native object should have no map assigned to it
+        expect(mockNativeOverlay.nativeMap).toBeNull();
+    });
+});
+
+class GoogleMapsDrawableOverlayTest extends GoogleMapsDrawableOverlay<MockNativeDrawableOverlay>
+{
+    protected createNativeObject(mockNative: MockNativeDrawableOverlay): MockNativeDrawableOverlay
+    {
+        return mockNative;
+    }
+}

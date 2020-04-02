@@ -27,7 +27,7 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
     {
         this.map = map;
 
-        this.api.runOutsideAngular(() => this.native.setMap(map.native));
+        this.setNativeMapOutside(map.native);
     }
 
     /**
@@ -37,6 +37,13 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
      */
     public detach(): void
     {
-        this.attach(null);
+        this.map = null;
+
+        this.setNativeMapOutside(null);
+    }
+
+    private setNativeMapOutside(map: google.maps.Map)
+    {
+        this.api.runOutsideAngular(() => this.native.setMap(map));
     }
 }
