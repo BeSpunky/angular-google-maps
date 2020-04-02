@@ -19,17 +19,17 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
 {
     public readonly overlays = new OverlaysTracker();
 
-    constructor(protected api: GoogleMapsApiService, mapElement: ElementRef, private options?: google.maps.MapOptions)
+    constructor(protected api: GoogleMapsApiService, mapElement: ElementRef, options?: google.maps.MapOptions)
     {
-        super(api, mapElement);
+        super(api, mapElement, options);
     }
 
-    protected createNativeObject(mapElement: ElementRef): google.maps.Map
+    protected createNativeObject(mapElement: ElementRef, options?: google.maps.MapOptions): google.maps.Map
     {
-        const options = Object.assign({}, {
+        options = Object.assign({}, {
             center: Defaults.Center,
             zoom  : Defaults.ZoomLevel,
-        }, this.options);
+        }, options);
 
         return new google.maps.Map(mapElement.nativeElement, options);
     }
