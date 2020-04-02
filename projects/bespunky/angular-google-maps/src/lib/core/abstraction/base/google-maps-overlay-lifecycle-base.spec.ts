@@ -13,30 +13,31 @@ import { MockNativeDrawableOverlay } from '../testing/mock-native-drawable-overl
 describe('GoogleMapsOverlayLifecycleBase', () =>
 {
     let component: GoogleMapsOverlayLifecycleBaseTest;
-    let fixture: ComponentFixture<GoogleMapsOverlayLifecycleBaseTest>
+    let fixture  : ComponentFixture<GoogleMapsOverlayLifecycleBaseTest>
+    let mockMap  : MockGoogleMap;
 
     beforeEach(async () =>
     {
         ({ component, fixture } = await configureGoogleMapsTestingModule({ componentType: GoogleMapsOverlayLifecycleBaseTest }));
+        
+        mockMap = component.wrapper.map as MockGoogleMap;
+
+        spyOn(mockMap, 'removeOverlay').and.stub();
     });
 
     it('should create an instance', () => expect(component).toBeTruthy());
 
     it('should remove remove the overlay from the map on destroy', () =>
     {
-        spyOn(mockMap, 'removeOverlay').and.stub();
-  
         fixture.destroy();
 
         expect(mockMap.removeOverlay).toHaveBeenCalledTimes(1);
     });
 });
 
-const mockMap = new MockGoogleMap();
-
 function OverlayFactoryProvider()
 {
-    return () => new MockDrawableOverlay(mockMap, new MockNativeDrawableOverlay());
+    return () => new MockDrawableOverlay(new MockGoogleMap(), new MockNativeDrawableOverlay());
 }
 
 @Component({

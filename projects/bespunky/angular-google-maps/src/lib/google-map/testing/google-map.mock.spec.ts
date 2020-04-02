@@ -8,112 +8,118 @@ export class MockGoogleMap implements IGoogleMap
 
     constructor(public native: any = {}) { }
 
+    // A simple logger to avoid swallowing executing transparently
+    private logCall(methodName: string): any
+    {
+        console.log(`MockGoogleMap.${methodName}() called. No action taken.`);
+    }
+
     createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('createMarker');
     }
     createDataLayer(options?: google.maps.Data.DataOptions): IGoogleMapsData
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('createDataLayer');
     }
     removeOverlay<TOverlay extends import("../../core/abstraction/types/drawable-overlay.type").DrawableOverlay>(overlay: TOverlay): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('removeOverlay');
     }
     fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('fitBounds');
     }
     panBy(x: number, y: number): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('panBy');
     }
     panTo(position: google.maps.LatLng | google.maps.LatLngLiteral): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('panTo');
     }
     panToBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('panToBounds');
     }
     setOptions(options: google.maps.MapOptions): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setOptions');
     }
     getBounds(): google.maps.LatLngBounds
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getBounds');
     }
     getCenter(): google.maps.LatLng
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getCenter');
     }
     setCenter(position: google.maps.LatLng | google.maps.LatLngLiteral): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setCenter');
     }
     getClickableIcons(): boolean
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getClickableIcons');
     }
     setClickableIcons(clickable: boolean): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setClickableIcons');
     }
     getHeading(): number
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getHeading');
     }
     setHeading(heading: number): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setHeading');
     }
     getMapType(): string | google.maps.MapTypeId
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getMapType');
     }
     setMapType(type: string | google.maps.MapTypeId): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setMapType');
     }
     getProjection(): google.maps.Projection
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getProjection');
     }
     getStreetView(): google.maps.StreetViewPanorama
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getStreetView');
     }
     setStreetView(panorama: google.maps.StreetViewPanorama): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setStreetView');
     }
     getTilt(): number
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getTilt');
     }
     setTilt(tilt: number): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setTilt');
     }
     getZoom(): number
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('getZoom');
     }
     setZoom(zoomLevel: number): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('setZoom');
     }
     listenTo(eventName: string, handler: (...args: any[]) => void): () => void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('listenTo');
     }
     stopListeningTo(eventName: string): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('stopListeningTo');
     }
     clearListeners(): void
     {
-        throw new Error("Method not implemented.");
+        return this.logCall('clearListeners');
     }
 }
