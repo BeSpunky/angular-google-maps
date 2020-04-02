@@ -16,6 +16,6 @@ export class NoOpGoogleMapsApiLoader extends GoogleMapsApiLoader
 
         if (window?.google?.maps) return Promise.resolve();
 
-        throw new Error('[NoOpGoogleMapsApiLoader] Google Maps API is not found on `window.google.maps`. Either load it yourself before `GoogleMapsModule` is loaded or use the default `LazyGoogleMapsApiLoader` provider for `GoogleMapsApiLoader`.');
+        return Promise.reject('[NoOpGoogleMapsApiLoader] Google Maps API is not found on `window.google.maps`. Either load it yourself before `GoogleMapsModule` is loaded or use the default `LazyGoogleMapsApiLoader` provider for `GoogleMapsApiLoader`.');
     }
 }
