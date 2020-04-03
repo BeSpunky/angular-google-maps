@@ -7,16 +7,20 @@ import { WrapperFactory } from "../tokens/wrapper-factory.token";
 import { GoogleMapsLifecycleBase } from "../base/google-maps-lifecycle-base";
 import { GoogleMapsEventData } from '../events/google-maps-event-data';
 
-export function CreateWrapperFactoryProvider()
+export function WrapperFactoryProvider()
 {
     return () => new MockEmittingWrapper(new MockNative());
 }
 
 @Component({
-    providers: [{ provide: WrapperFactory, useFactory: CreateWrapperFactoryProvider }]
+    selector: 'test-lifecycle',
+    template: '<div></div>',
+    providers: [{ provide: WrapperFactory, useFactory: WrapperFactoryProvider }]
 })
 export class MockComponentWithLifecycle extends GoogleMapsLifecycleBase<MockEmittingWrapper<MockNative>>
 {
+    public readonly NativeClickEventName = 'native_click';
+
     @Input() property: any;
 
     @Hook('native_click') @Output() click: EventEmitter<GoogleMapsEventData>;
