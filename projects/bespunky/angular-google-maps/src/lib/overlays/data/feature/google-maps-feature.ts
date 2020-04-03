@@ -33,11 +33,11 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     getGeometry(): google.maps.Data.Geometry { return void 0; }
 
     @Wrap() @OutsideAngular
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void { return void 0; }
+    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void { }
 
     @Wrap()
     getProperty(name: string): any { return void 0; }
 
     @Wrap() @OutsideAngular
-    setProperty(name: string, value: any): any { return void 0; }
+    setProperty(name: string, value: any): void { }
 }

@@ -70,7 +70,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     
     // Marked private so the addFeature() method will be the one exposed to the user
     @Wrap() @OutsideAngular
-    private add(feature: google.maps.Data.Feature): void { return void 0; }
+    private add(feature: google.maps.Data.Feature): void { }
 
     @Wrap('getFeatureById')
     findFeature(id: string | number): google.maps.Data.Feature { return void 0; }
@@ -79,23 +79,23 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     getControlPosition(): google.maps.ControlPosition { return void 0; }
 
     @Wrap() @OutsideAngular
-    setControlPosition(position: google.maps.ControlPosition): void { return void 0; }
+    setControlPosition(position: google.maps.ControlPosition): void { }
 
     @Wrap()
     getControls(): string[] { return void 0; }
 
     @Wrap() @OutsideAngular
-    setControls(controls: string[]): void { return void 0; }
+    setControls(controls: string[]): void { }
 
     @Wrap()
     getDrawingMode(): string { return void 0; }
 
     @Wrap() @OutsideAngular
-    setDrawingMode(mode: string): void { return void 0; }
+    setDrawingMode(mode: string): void { }
 
     @Wrap()
     getStyle(): google.maps.Data.StylingFunction | google.maps.Data.StyleOptions { return void 0; }
 
     @Wrap() @OutsideAngular
-    setStyle(style: google.maps.Data.StylingFunction | google.maps.Data.StyleOptions): void { return void 0; }
+    setStyle(style: google.maps.Data.StylingFunction | google.maps.Data.StyleOptions): void { }
 }
