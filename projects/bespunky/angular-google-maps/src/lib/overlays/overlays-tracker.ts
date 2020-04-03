@@ -5,12 +5,12 @@ import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type
 
 export class OverlaysTracker
 {
-    public markers: IGoogleMapsMarker[] = [];
-    public dataLayers: IGoogleMapsData[] = [];
+    public markers   : IGoogleMapsMarker[] = [];
+    public dataLayers: IGoogleMapsData  [] = [];
 
     private map = {
         [OverlayType.Marker]: this.markers,
-        [OverlayType.Data]: this.dataLayers
+        [OverlayType.Data  ]: this.dataLayers
         // TODO: Add here any new supported overlay type collection
     };
 
