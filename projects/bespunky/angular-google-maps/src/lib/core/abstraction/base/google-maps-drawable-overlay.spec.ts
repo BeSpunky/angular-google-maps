@@ -1,7 +1,7 @@
 
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
+import { MockGoogleMap } from '../../../google-map/testing/mock-google-map.spec';
 import { MockNativeDrawableOverlay } from '../testing/mock-native-drawable-overlay.spec';
 import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
 

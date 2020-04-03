@@ -4,7 +4,7 @@ import { ComponentFixture } from '@angular/core/testing';
 import { GoogleMapsOverlayLifecycleBase } from './google-maps-overlay-lifecycle-base';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { MockGoogleMap } from '../../../google-map/testing/google-map.mock.spec';
+import { MockGoogleMap } from '../../../google-map/testing/mock-google-map.spec';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
 import { DrawableOverlay } from '../types/drawable-overlay.type';
 import { MockDrawableOverlay } from '../testing/mock-drawable-overlay.spec';

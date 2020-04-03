@@ -5,7 +5,7 @@ import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.token';
 import { GoogleMapComponent } from '../../google-map/component/google-map.component';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { MockGoogleMap } from '../../google-map/testing/google-map.mock.spec';
+import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
 import { DrawableOverlay } from '../../core/abstraction/types/drawable-overlay.type';
 
 function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider)
