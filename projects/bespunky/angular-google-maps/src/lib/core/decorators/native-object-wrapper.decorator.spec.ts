@@ -1,55 +1,54 @@
-// import { NativeObjectWrapper } from './native-object-wrapper.decorator';
-// import { Wrap } from './wrap.decorator';
-// import { OutsideAngular } from './outside-angular.decorator';
-// import { Wrapper } from '../abstraction/types/wrapper.type';
+import { MockWrapper } from '../abstraction/testing/mock-wrapper.spec';
+import { MockNative } from '../abstraction/testing/mock-native.spec';
+import { NativeObjectWrapper } from './native-object-wrapper.decorator';
+import { Wrapper } from '../abstraction/types/wrapper.type';
 
-// describe('@NativeObjectWrapper()', () =>
-// {
-//     let wrapper: MockMarkerWrapper;
+describe('@NativeObjectWrapper()', () =>
+{
+    let wrapper: MockWrapper;
 
-//     beforeEach(() => wrapper = new MockMarkerWrapper());
+    beforeEach(() => wrapper = new MockWrapper(new MockNative()));
 
-//     it('should provide async implementation for methods marked with `@Wrap`', () =>
-//     {
-//         expect(wrapper.whatsTheTitle() instanceof Promise).toBeTruthy();
-//         expect(wrapper.setTitle()      instanceof Promise).toBeTruthy();
-//     });
+    it('should provide an implementation for methods marked with `@Wrap`', () => expect(() => wrapper.getProperty()).not.toThrow());
 
-//     it('should call the native function when calling the wrapper method', async () =>
-//     {
-//         spyOn(wrapper.mockNative, 'getTitle');
+    it('should call the native function when calling the wrapper method', () =>
+    {
+        spyOn(wrapper.native, 'getProperty');
 
-//         await wrapper.whatsTheTitle();
+        wrapper.getProperty();
 
-//         expect(wrapper.mockNative.getTitle).toHaveBeenCalledTimes(1);
-//     });
-
-//     it('should wrap methods marked `@OutsideAngular` with async functions that wait for api ready and execute outside angular', async () =>
-//     {
-//         spyOn(wrapper.api, 'runOutsideAngular').and.callThrough();
-
-//         await wrapper.setTitle();
-
-//         expect(wrapper.api.runOutsideAngular).toHaveBeenCalledTimes(1);
-//     });
-// });
-
-// @NativeObjectWrapper
-// class MockMarkerWrapper implements Wrapper
-// {
-//     public mockNative = {
-//         getTitle: () => void 0,
-//         setTitle: () => void 0,
-//     };
+        expect(wrapper.native.getProperty).toHaveBeenCalledTimes(1);
+    });
     
-//     native = Promise.resolve(this.mockNative);
-//     custom: any;
+    // Also tests renaming wrapped functions
+    it('should pass args to the native function and provide its return value', () =>
+    {
+        const nativeGetter = spyOn(wrapper.native, 'findById');
 
-//     api = { runOutsideAngular: (fn: Function) => Promise.resolve(fn.call(this)) };
+        const result       = wrapper.find(123);
+        const nativeResult = nativeGetter.calls.mostRecent().returnValue;
 
-//     @Wrap('getTitle')
-//     whatsTheTitle(): Promise<string> { return null; }
-    
-//     @Wrap() @OutsideAngular
-//     setTitle(): Promise<any> { return null; }
-// }
+        expect(wrapper.native.findById).toHaveBeenCalledTimes(1);
+        expect(nativeGetter.calls.mostRecent().args[0]).toBe(123);
+        expect(result).toBe(nativeResult);
+    });
+
+    it('should wrap methods marked `@OutsideAngular` with function that executes outside angular', () =>
+    {
+        wrapper.setProperty(123);
+
+        expect(wrapper.api.runOutsideAngular).toHaveBeenCalledTimes(1);
+    });
+
+    it('should warn if no method was marked for wrapping', () =>
+    {
+        const warn = spyOn(console, 'warn');
+
+        class NoWrappers implements Wrapper { native: any; custom: any; }
+
+        NativeObjectWrapper(NoWrappers);
+
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn.calls.mostRecent().args[0]).toMatch(/No method marked/);
+    });
+});
