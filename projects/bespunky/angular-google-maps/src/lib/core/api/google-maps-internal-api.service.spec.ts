@@ -78,7 +78,7 @@ describe('GoogleMapsInternalApiService', () =>
         {
             expect(component.click instanceof Observable).toBeTruthy();
             
-            component.wrapper.native.googleEventsRaise(component.NativeClickEventName);
+            component.wrapper.events.raise(component.NativeClickEventName);
             
             const event = handleClick.calls.mostRecent().args[0] as GoogleMapsEventData;
 
@@ -99,7 +99,7 @@ describe('GoogleMapsInternalApiService', () =>
                 done();
             });
 
-            secondWrapper.native.googleEventsRaise(component.NativeClickEventName);
+            secondWrapper.events.raise(component.NativeClickEventName);
         });
 
         it('should allow adding a filter to hooked events', fakeAsync(() =>
@@ -113,18 +113,18 @@ describe('GoogleMapsInternalApiService', () =>
 
             component.click.subscribe(handler.handle);
 
-            const native = component.wrapper.native;
+            const events = component.wrapper.events;
 
-            native.googleEventsRaise(component.NativeClickEventName, shouldEmitArgs);    tick();
-            native.googleEventsRaise(component.NativeClickEventName, shouldNotEmitArgs); tick();
-            native.googleEventsRaise(component.NativeClickEventName, shouldEmitArgs);    tick();
+            events.raise(component.NativeClickEventName, shouldEmitArgs);    tick();
+            events.raise(component.NativeClickEventName, shouldNotEmitArgs); tick();
+            events.raise(component.NativeClickEventName, shouldEmitArgs);    tick();
 
             expect(handler.handle).toHaveBeenCalledTimes(2);
         }));
 
         it('should hook observable unsubscribes to the native object', fakeAsync(() =>
         {
-            const nativeListeners = component.wrapper.native.listeners[component.NativeClickEventName];
+            const nativeListeners = component.wrapper.events.listeners[component.NativeClickEventName];
 
             expect(nativeListeners.length).toBe(1);
 
@@ -132,7 +132,7 @@ describe('GoogleMapsInternalApiService', () =>
 
             expect(nativeListeners.length).toBe(0);
 
-            component.wrapper.native.googleEventsRaise(component.NativeClickEventName); tick();
+            component.wrapper.events.raise(component.NativeClickEventName); tick();
 
             expect(testHost.handleClick).not.toHaveBeenCalled();
         }));
@@ -143,7 +143,7 @@ describe('GoogleMapsInternalApiService', () =>
             const latLng        = new google.maps.LatLng(latLngLiteral);
             const nativeArgs    = { latLng };
                 
-            component.wrapper.native.googleEventsRaise(component.NativeClickEventName, nativeArgs);
+            component.wrapper.events.raise(component.NativeClickEventName, nativeArgs);
             
             const event = handleClick.calls.mostRecent().args[0] as GoogleMapsEventData;
 

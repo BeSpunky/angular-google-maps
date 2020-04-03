@@ -1,15 +1,16 @@
 import { MockEmittingWrapper } from './mock-emitting-wrapper.spec';
 import { IGoogleMapsDrawableOverlay } from '../base/i-google-maps-drawable-overlay';
-import { MockNativeDrawableOverlay } from './mock-native-drawable-overlay.spec';
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { OverlayType } from '../base/overlay-type.enum';
+import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 
-export class MockDrawableOverlay extends MockEmittingWrapper<MockNativeDrawableOverlay> implements IGoogleMapsDrawableOverlay<MockNativeDrawableOverlay>
+export class MockDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay>
+     extends MockEmittingWrapper<TNative> implements IGoogleMapsDrawableOverlay<TNative>
 {
     map: IGoogleMap;
     type: OverlayType;
 
-    constructor(map: IGoogleMap, native: MockNativeDrawableOverlay)
+    constructor(map: IGoogleMap, public native: TNative)
     {
         super(native);
         

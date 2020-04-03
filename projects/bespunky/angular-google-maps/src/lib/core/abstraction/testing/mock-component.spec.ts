@@ -14,6 +14,7 @@ export function WrapperFactoryProvider()
 
 @Component({
     selector: 'test-lifecycle',
+    template: '<div></div>',
     providers: [{ provide: WrapperFactory, useFactory: WrapperFactoryProvider }]
 })
 export class MockComponentWithLifecycle extends GoogleMapsLifecycleBase<MockEmittingWrapper<MockNative>>

@@ -1,11 +1,14 @@
 import { MockWrapper } from './mock-wrapper.spec';
-import { MockNative } from './mock-native.spec';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../base/i-google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
+import { MockGoogleEvents } from './mock-events-manager.spec';
 
-export class MockEmittingWrapper<TNative extends MockNative>
-     extends MockWrapper
+export class MockEmittingWrapper<TNative extends IGoogleMapsNativeObject>
+     extends MockWrapper<TNative>
   implements IGoogleMapsNativeObjectEmittingWrapper<TNative>
 {
+    public events = new MockGoogleEvents();
+
     constructor(public native: TNative)
     {
         super(native);
@@ -13,16 +16,16 @@ export class MockEmittingWrapper<TNative extends MockNative>
 
     listenTo(eventName: string, handler: (...args: any[]) => void): () => void
     {
-        return this.native.googleEventsListenTo(eventName, handler);
+        return this.events.listenTo(eventName, handler);
     }
 
     stopListeningTo(eventName: string): void
     {
-        this.native.googleEventsStopListeningTo(eventName);
+        this.events.stopListeningTo(eventName);
     }
 
     clearListeners(): void
     {
-        this.native.googleEventsClearListeners();
+        this.events.clearListeners();
     }
 }

@@ -1,17 +1,18 @@
 import { IGoogleMapsNativeObjectWrapper } from '../base/i-google-maps-native-object-wrapper';
 import { NativeObjectWrapper } from '../../decorators/native-object-wrapper.decorator';
-import { MockNative } from './mock-native.spec';
 import { Wrap } from '../../decorators/wrap.decorator';
 import { OutsideAngular } from '../../decorators/outside-angular.decorator';
+import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
+import { MockNative } from './mock-native.spec';
 
 @NativeObjectWrapper
-export class MockWrapper implements IGoogleMapsNativeObjectWrapper<MockNative>
+export class MockWrapper<TNative extends IGoogleMapsNativeObject = MockNative> implements IGoogleMapsNativeObjectWrapper<TNative>
 {
     public api = jasmine.createSpyObj('MockWrapperApiService', ['runOutsideAngular']);
 
     custom: any;
 
-    constructor(public native: MockNative)
+    constructor(public native: TNative)
     {
         this.api.runOutsideAngular.and.callFake(fn => fn());
     }
