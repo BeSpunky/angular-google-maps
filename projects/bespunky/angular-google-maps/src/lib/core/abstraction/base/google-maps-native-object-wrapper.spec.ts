@@ -2,14 +2,13 @@
 import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { MockNative } from '../testing/mock-native.spec';
-import { MockWrapper } from '../testing/mock-wrapper.spec';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 
 describe('GoogleMapsNativeObjectWrapper (abstract)', () =>
 {
     let api              : GoogleMapsApiService;
     let runOutsideAngular: jasmine.Spy;
-    let mockWrapper      : MockWrapper;
+    let mockWrapper      : GoogleMapsNativeObjectWrapperTest;
 
     beforeEach(async () =>
     {
