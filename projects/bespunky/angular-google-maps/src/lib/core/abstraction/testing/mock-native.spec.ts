@@ -43,4 +43,9 @@ export class MockNative implements IGoogleMapsNativeObject
     {
         this.property = value;
     }
+
+    public findById(id: any)
+    {
+        return `item ${id}`;
+    }
 }

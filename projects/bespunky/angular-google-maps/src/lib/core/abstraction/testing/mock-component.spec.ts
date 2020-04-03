@@ -14,14 +14,15 @@ export function WrapperFactoryProvider()
 
 @Component({
     selector: 'test-lifecycle',
-    template: '<div></div>',
     providers: [{ provide: WrapperFactory, useFactory: WrapperFactoryProvider }]
 })
 export class MockComponentWithLifecycle extends GoogleMapsLifecycleBase<MockEmittingWrapper<MockNative>>
 {
-    public readonly NativeClickEventName = 'native_click';
+    public readonly NativeClickEventName  = 'click';
+    public readonly NativeChangeEventName = 'dummy_change';
 
     @Input() property: any;
 
-    @Hook('native_click') @Output() click: EventEmitter<GoogleMapsEventData>;
+    @Hook()               @Output() click      : EventEmitter<GoogleMapsEventData>;
+    @Hook('dummy_change') @Output() dummyChange: EventEmitter<GoogleMapsEventData>;
 }
