@@ -16,7 +16,7 @@ describe('GoogleMapsFeatureDirective', () =>
     {
         ({ internalApi: api } = await configureGoogleMapsTestingModule());
 
-        directive = new GoogleMapsFeatureDirective(api, () => new MockGoogleMapsFeature(new MockGoogleMapsData(new MockGoogleMap())));
+       directive = new GoogleMapsFeatureDirective(api, () => new MockGoogleMapsFeature(new MockGoogleMapsData(new MockGoogleMap())));
     });
 
     it('should create an instance', () => expect(directive).toBeTruthy());

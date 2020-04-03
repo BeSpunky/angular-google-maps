@@ -1,8 +1,9 @@
 import { IGoogleMapsData } from '../i-google-maps-data';
 import { MockDrawableOverlay } from '../../../core/abstraction/testing/mock-drawable-overlay.spec';
-import { MockNativeDrawableOverlay } from '../../../core/abstraction/testing/mock-native-drawable-overlay.spec';
 import { IGoogleMap } from '../../../google-map/i-google-map';
+import { MockFill } from '../../../testing/mock-fill.decorator.spec';
 
+@MockFill
 export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
     constructor(public map: IGoogleMap)
