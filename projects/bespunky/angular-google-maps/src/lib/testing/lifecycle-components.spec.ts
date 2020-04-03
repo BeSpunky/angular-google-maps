@@ -10,7 +10,7 @@ import { EmittingWrapper } from '../core/abstraction/types/emitting-wrapper.type
 
 export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string): string
 {
-    return `<bs-google-map [map]="map" [center]="center">${testedComponentTemplate}</bs-google-map>`;
+    return `<bs-google-map [center]="center">${testedComponentTemplate}</bs-google-map>`;
 }
 
 /**
@@ -24,12 +24,12 @@ export function createLifecycleTestingHostComponentTemplate(testedComponentTempl
  *     @Component({
  *         template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-data #testedComponent></bs-google-maps-data>')
  *     })
- *     class TestHostComponent extends LifecycleTestsHostComponentBase { } 
+ *     class TestHostComponent extends LifecycleComponentTestHost { } 
  * ```
  * 
- * @class LifecycleTestsHostComponentBase
+ * @class LifecycleComponentTestHost
  */
-export class LifecycleTestsHostComponentBase
+export class LifecycleComponentTestHost
 {
     @ViewChild(GoogleMapComponent)
     public mapComponent: GoogleMapComponent;
