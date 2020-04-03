@@ -11,14 +11,14 @@ import { OutsideAngular } from '../../core/decorators/outside-angular.decorator'
 @NativeObjectWrapper
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, private options?: google.maps.ReadonlyMarkerOptions)
+    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.ReadonlyMarkerOptions)
     {
-        super(api, map, OverlayType.Marker);
+        super(api, map, OverlayType.Marker, options);
     }
 
-    protected createNativeObject(): google.maps.Marker
+    protected createNativeObject(options?: google.maps.ReadonlyMarkerOptions): google.maps.Marker
     {
-        return new google.maps.Marker(this.options);
+        return new google.maps.Marker(options);
     }
     
     @Wrap() @OutsideAngular

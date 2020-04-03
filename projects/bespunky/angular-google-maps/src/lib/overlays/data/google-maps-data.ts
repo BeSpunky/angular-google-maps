@@ -13,14 +13,14 @@ import { GoogleMapsFeature } from './feature/google-maps-feature';
 @NativeObjectWrapper
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, private options?: google.maps.Data.DataOptions)
+    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.Data.DataOptions)
     {
-        super(api, map, OverlayType.Data);
+        super(api, map, OverlayType.Data, options);
     }
 
-    protected createNativeObject(): google.maps.Data
+    protected createNativeObject(options?: google.maps.Data.DataOptions): google.maps.Data
     {
-        return new google.maps.Data(this.options);
+        return new google.maps.Data(options);
     }
 
     @OutsideAngular
