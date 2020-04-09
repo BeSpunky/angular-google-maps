@@ -9,10 +9,14 @@ import { OutsideAngular } from '../../core/decorators/outside-angular.decorator'
 import { Coord } from '../../core/abstraction/types/geometry-utils.type';
 import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 import { GoogleMapsFeature } from './feature/google-maps-feature';
+import { isGoogleMapsFeatureOptions } from '../../core/abstraction/type-guards/feature-options-type-guard';
+import { FeatureTracker } from './feature-tracker';
 
 @NativeObjectWrapper
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
+    public readonly features = new FeatureTracker();
+
     constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.Data.DataOptions)
     {
         super(api, map, OverlayType.Data, options);
@@ -28,32 +32,34 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     {
         options = Object.assign({}, options, { geometry: new google.maps.Data.Point(position) });
 
-        return new GoogleMapsFeature(this.api, this, options);
+        return this.addFeature(options);
     }
 
-    public addFeature(feature: google.maps.Data.Feature | IGoogleMapsFeature): void
+    public addFeature(feature: IGoogleMapsFeature): IGoogleMapsFeature;
+    public addFeature(options: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
+    public addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature
     {
-        const nativeFeature = feature instanceof google.maps.Data.Feature ? feature : feature.native;
+        if (isGoogleMapsFeatureOptions(feature))
+            feature = new GoogleMapsFeature(this.api, this, feature);
 
-        return this.add(nativeFeature);
-    }
-
-    public removeFeature(feature: google.maps.Data.Feature): google.maps.Data.Feature;
-    public removeFeature(feature: IGoogleMapsFeature): google.maps.Data.Feature;
-    public removeFeature(featureId: string | number): google.maps.Data.Feature;
-    @OutsideAngular
-    public removeFeature(featureOrId: string | number | google.maps.Data.Feature | IGoogleMapsFeature): google.maps.Data.Feature
-    {
-        // If it's a native feature, use it
-        const feature = featureOrId instanceof google.maps.Data.Feature ? featureOrId :
-            // If it's a wrapping feature, fetch native and use it
-            typeof featureOrId === 'object' ? featureOrId.native :
-                // This is an id, find feature and use it
-                this.native.getFeatureById(featureOrId);
-
-        this.native.remove(feature);
+        this.add(feature.native);
+        this.features.add(feature);
 
         return feature;
+    }
+
+    public removeFeature(feature: google.maps.Data.Feature): IGoogleMapsFeature;
+    public removeFeature(feature: IGoogleMapsFeature): IGoogleMapsFeature;
+    public removeFeature(featureId: string | number): IGoogleMapsFeature;
+    @OutsideAngular
+    public removeFeature(featureOrId: string | number | google.maps.Data.Feature | IGoogleMapsFeature): IGoogleMapsFeature
+    {
+        const removed = this.features.remove(featureOrId);
+
+        if (removed)
+            this.native.remove(removed.native);
+
+        return removed;
     }
 
     public toGeoJson(): Promise<any>

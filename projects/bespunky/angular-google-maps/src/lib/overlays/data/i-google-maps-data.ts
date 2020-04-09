@@ -6,11 +6,11 @@ export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.
 {
     createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
 
-    addFeature(feature: google.maps.Data.Feature | IGoogleMapsFeature): void;
+    addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature;
     
     findFeature(id: string | number): google.maps.Data.Feature;
 
-    removeFeature(featureOrId: google.maps.Data.Feature | IGoogleMapsFeature | number | string): google.maps.Data.Feature;
+    removeFeature(featureOrId: google.maps.Data.Feature | IGoogleMapsFeature | number | string): IGoogleMapsFeature;
 
     /**
      * Should download GeoJson data from the specified url, interpret it and create map features for it.

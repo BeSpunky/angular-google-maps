@@ -2,6 +2,8 @@ import { IGoogleMapsData } from '../i-google-maps-data';
 import { MockDrawableOverlay } from '../../../core/abstraction/testing/mock-drawable-overlay.spec';
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { MockFill } from '../../../testing/mock-fill.decorator.spec';
+import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
+import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
 
 @MockFill
 export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> implements IGoogleMapsData
@@ -11,11 +13,11 @@ export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> im
         super(map, new google.maps.Data());
     }
     
-    createMarker(position: import("../../../core/abstraction/types/geometry-utils.type").Coord, options?: google.maps.Data.FeatureOptions): import("../feature/i-google-maps-feature").IGoogleMapsFeature
+    createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
         throw new Error("Method not implemented.");
     }
-    addFeature(feature: import("../feature/i-google-maps-feature").IGoogleMapsFeature | google.maps.Data.Feature): void
+    addFeature(feature: IGoogleMapsFeature | google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
         throw new Error("Method not implemented.");
     }
@@ -23,7 +25,7 @@ export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> im
     {
         throw new Error("Method not implemented.");
     }
-    removeFeature(featureOrId: string | number | import("../feature/i-google-maps-feature").IGoogleMapsFeature | google.maps.Data.Feature): google.maps.Data.Feature
+    removeFeature(featureOrId: string | number | IGoogleMapsFeature | google.maps.Data.Feature): IGoogleMapsFeature
     {
         throw new Error("Method not implemented.");
     }

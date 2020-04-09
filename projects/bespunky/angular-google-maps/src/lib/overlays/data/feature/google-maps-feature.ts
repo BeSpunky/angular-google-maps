@@ -12,8 +12,6 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, options?: google.maps.Data.FeatureOptions)
     {
         super(api, options);
-
-        this.data.addFeature(this);
     }
 
     protected createNativeObject(options?: google.maps.Data.FeatureOptions): google.maps.Data.Feature
