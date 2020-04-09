@@ -2,7 +2,6 @@ import { IGoogleMapsFeature } from '../i-google-maps-feature';
 import { IGoogleMapsData } from '../../i-google-maps-data';
 import { MockEmittingWrapper } from '../../../../core/abstraction/testing/mock-emitting-wrapper.spec';
 import { MockFill } from '../../../../testing/mock-fill.decorator.spec';
-import { IGoogleMapsNativeObject } from '../../../../core/abstraction/native/i-google-maps-native-object';
 
 @MockFill
 export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
