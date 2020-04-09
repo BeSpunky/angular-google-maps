@@ -74,7 +74,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     }
 
     
-    // Marked private so the addFeature() method will be the one exposed to the user
+    // Marked private so the addFeature() method will be the one exposed to the user, but this will be used in auto property delegation
     @Wrap() @OutsideAngular
     private add(feature: google.maps.Data.Feature): void { }
 
