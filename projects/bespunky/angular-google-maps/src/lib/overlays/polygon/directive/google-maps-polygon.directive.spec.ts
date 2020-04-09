@@ -4,6 +4,7 @@ import { ComponentFixture } from '@angular/core/testing';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '../../../testing/lifecycle-components.spec';
 import { GoogleMapsPolygonDirective } from './google-maps-polygon.directive';
+import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
 
 /**
  * -- NOTE --
@@ -34,4 +35,7 @@ describe('GoogleMapsPolygonDirective', () =>
 @Component({
     template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-polygon [path]="path" #testedComponent></bs-google-maps-polygon>')
 })
-class TestHostComponent extends LifecycleComponentTestHost { }
+class TestHostComponent extends LifecycleComponentTestHost
+{
+    public path: Coord[] = [{ lat: 20, lng: 20 }];
+}
