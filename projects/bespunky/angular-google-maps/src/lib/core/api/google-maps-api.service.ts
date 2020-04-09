@@ -6,7 +6,7 @@ import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { EventDataTransformService } from '../../utils/transform/event-data-transform.service';
 import { GeometryTransformService } from '../../utils/transform/geometry-transform.service';
-import { take } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +24,7 @@ export class GoogleMapsApiService
         private waitForApiPromiseCreation: BehaviorSubject<Promise<void>>)
     {
         // Fetch the promise created by the internal api and store it
-        this.waitForApiPromiseCreation.pipe(take(1)).subscribe(promise => this.mapsApiReady = promise);
+        this.waitForApiPromiseCreation.pipe(takeWhile(promise => !promise, true)).subscribe(promise => this.mapsApiReady = promise);
     }
 
     public get whenReady(): Promise<void>
