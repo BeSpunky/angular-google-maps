@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapComponent } from './google-map.component';
 import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
-import { LifecycleTestsHostComponentBase, createLifecycleTestingHostComponentTemplate } from '../../testing/lifecycle-components.spec';
+import { LifecycleComponentTestHost, createLifecycleTestingHostComponentTemplate } from '../../testing/lifecycle-components.spec';
 
 /**
  * -- NOTE --
@@ -34,7 +34,7 @@ describe('GoogleMapComponent', () =>
 @Component({
     template: createLifecycleTestingHostComponentTemplate('')
 })
-class TestHostComponent extends LifecycleTestsHostComponentBase
+class TestHostComponent extends LifecycleComponentTestHost
 {
     public center: google.maps.LatLng;
 }

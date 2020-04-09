@@ -12,8 +12,6 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, options?: google.maps.Data.FeatureOptions)
     {
         super(api, options);
-
-        this.data.addFeature(this);
     }
 
     protected createNativeObject(options?: google.maps.Data.FeatureOptions): google.maps.Data.Feature
@@ -33,11 +31,11 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     getGeometry(): google.maps.Data.Geometry { return void 0; }
 
     @Wrap() @OutsideAngular
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void { return void 0; }
+    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void { }
 
     @Wrap()
     getProperty(name: string): any { return void 0; }
 
     @Wrap() @OutsideAngular
-    setProperty(name: string, value: any): any { return void 0; }
+    setProperty(name: string, value: any): void { }
 }

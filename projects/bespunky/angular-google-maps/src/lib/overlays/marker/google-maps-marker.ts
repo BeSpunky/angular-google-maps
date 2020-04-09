@@ -11,88 +11,88 @@ import { OutsideAngular } from '../../core/decorators/outside-angular.decorator'
 @NativeObjectWrapper
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, private options?: google.maps.ReadonlyMarkerOptions)
+    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.ReadonlyMarkerOptions)
     {
-        super(api, map, OverlayType.Marker);
+        super(api, map, OverlayType.Marker, options);
     }
 
-    protected createNativeObject(): google.maps.Marker
+    protected createNativeObject(options?: google.maps.ReadonlyMarkerOptions): google.maps.Marker
     {
-        return new google.maps.Marker(this.options);
+        return new google.maps.Marker(options);
     }
     
     @Wrap() @OutsideAngular
-    setOptions(options: google.maps.MarkerOptions): void { return void 0; }
+    setOptions(options: google.maps.MarkerOptions): void { }
 
     @Wrap()
     getAnimation(): google.maps.Animation { return void 0; }
 
     @Wrap()
-    setAnimation(animation?: google.maps.Animation): void { return void 0; }
+    setAnimation(animation?: google.maps.Animation): void { }
 
     @Wrap()
     getClickable(): boolean { return void 0; }
 
     @Wrap() @OutsideAngular
-    setClickable(clickable: boolean): void { return void 0; }
+    setClickable(clickable: boolean): void { }
 
     @Wrap()
     getCursor(): string { return void 0; }
 
     @Wrap() @OutsideAngular
-    setCursor(cursor: string): void { return void 0; }
+    setCursor(cursor: string): void { }
 
     @Wrap()
     getDraggable(): boolean { return void 0; }
 
     @Wrap() @OutsideAngular
-    setDraggable(draggable: boolean): void { return void 0; }
+    setDraggable(draggable: boolean): void { }
 
     @Wrap()
     getIcon(): string | google.maps.Icon | google.maps.Symbol { return void 0; }
 
     @Wrap() @OutsideAngular
-    setIcon(icon: string | google.maps.Icon | google.maps.Symbol): void { return void 0; }
+    setIcon(icon: string | google.maps.Icon | google.maps.Symbol): void { }
 
     @Wrap()
     getLabel(): google.maps.MarkerLabel { return void 0; }
 
     @Wrap() @OutsideAngular
-    setLabel(label: string | google.maps.MarkerLabel): void { return void 0; }
+    setLabel(label: string | google.maps.MarkerLabel): void { }
 
     @Wrap()
     getOpacity(): number { return void 0; }
 
     @Wrap() @OutsideAngular
-    setOpacity(opacity: number): void { return void 0; }
+    setOpacity(opacity: number): void { }
   
     @Wrap()
     getPosition(): google.maps.LatLng { return void 0; }
     
     @Wrap() @OutsideAngular
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void { return void 0; }
+    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void { }
 
     @Wrap()
     getShape(): google.maps.MarkerShape { return void 0; }
 
     @Wrap() @OutsideAngular
-    setShape(shape: google.maps.MarkerShape): void { return void 0; }
+    setShape(shape: google.maps.MarkerShape): void { }
 
     @Wrap()
     getTitle(): string { return void 0; }
 
     @Wrap() @OutsideAngular
-    setTitle(title: string): void { return void 0; }
+    setTitle(title: string): void { }
 
     @Wrap()
     getVisible(): boolean { return void 0; }
 
     @Wrap() @OutsideAngular
-    setVisible(visible: boolean): void { return void 0; }
+    setVisible(visible: boolean): void { }
 
     @Wrap()
     getZIndex(): number { return void 0; }
 
     @Wrap() @OutsideAngular
-    setZIndex(zIndex: number): void { return void 0; }
+    setZIndex(zIndex: number): void { }
 }

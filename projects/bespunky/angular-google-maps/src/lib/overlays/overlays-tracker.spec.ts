@@ -1,15 +1,11 @@
-import { configureGoogleMapsTestingModule } from '../testing/setup.spec';
 import { OverlaysTracker } from "./overlays-tracker";
-import { IGoogleMap } from '../google-map/i-google-map';
-import { IGoogleMapsDrawableOverlay } from '../core/abstraction/base/i-google-maps-drawable-overlay';
-import { IGoogleMapsMarker } from './marker/i-google-maps-marker';
-import { OverlayType } from '../core/abstraction/base/overlay-type.enum';
+import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
+import { MockMarker } from './marker/testing/mock-marker.spec';
+import { MockGoogleMap } from '../google-map/testing/mock-google-map.spec';
 
 describe('OverlayTracker', () =>
 {
     let overlays = new OverlaysTracker();
-
-    beforeEach(() => configureGoogleMapsTestingModule());
 
     it('should create an instance', () => expect(overlays).toBeDefined());
 
@@ -17,7 +13,7 @@ describe('OverlayTracker', () =>
     {
         expect(overlays.markers.length).toBe(0);
         
-        const marker = new StubGoogleMapsMarker(OverlayType.Marker);
+        const marker = new MockMarker(new MockGoogleMap());
         
         overlays.add(marker);
 
@@ -40,50 +36,6 @@ describe('OverlayTracker', () =>
         // Define a type that doesn't exist
         const dummyOverlay = { type:  -1000 };
 
-        expect(() => overlays.add(dummyOverlay as IGoogleMapsDrawableOverlay)).toThrowError(/supported/);
+        expect(() => overlays.add(dummyOverlay as DrawableOverlay)).toThrowError(/supported/);
     });
 });
-
-class StubGoogleMapsMarker implements IGoogleMapsMarker
-{
-    public map: IGoogleMap;
-    public native: Promise<any>;
-    public custom: any;
-
-    constructor(public type: OverlayType) { }
-    
-    listenTo(eventName: string, handler: (...args: any[]) => void): Promise<() => void>
-    {
-        throw new Error("Method not implemented.");
-    }
-    stopListeningTo(eventName: string): Promise<void>
-    {
-        throw new Error("Method not implemented.");
-    }
-    clearListeners(): Promise<void>
-    {
-        throw new Error("Method not implemented.");
-    }
-    
-    getPosition(): Promise<google.maps.LatLng>
-    {
-        throw new Error("Method not implemented.");
-    }
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): Promise<void>
-    {
-        throw new Error("Method not implemented.");
-    }
-
-    getContainingMap(): IGoogleMap
-    {
-        throw new Error("Method not implemented.");
-    }
-    setContainingMap(map: IGoogleMap): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    removeFromMap(): void
-    {
-        throw new Error("Method not implemented.");
-    }
-}

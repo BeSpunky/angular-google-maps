@@ -1,246 +1,196 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { NgZone, EventEmitter, OnInit, SimpleChanges, SimpleChange, Component, Input, Output } from '@angular/core';
+import { NgZone, Component, ViewChild, SimpleChanges, SimpleChange } from '@angular/core';
+import { TestBed, inject, async, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
-import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
+import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
+import { MockComponentWithLifecycle } from '../abstraction/testing/mock-component.spec';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
-import { IGoogleMapsTestingModuleConfigOptions, configureGoogleMapsTestingModule } from '../../testing/setup.spec';
-import { IGoogleMapsNativeObjectEmittingWrapper } from '../abstraction/base/i-google-maps-native-object-emitting-wrapper';
-import { WrapperFactory } from '../abstraction/tokens/wrapper-factory.token';
-import { Hook } from '../decorators/hook.decorator';
+import { MockEmittingWrapper } from '../abstraction/testing/mock-emitting-wrapper.spec';
+import { MockNative } from '../abstraction/testing/mock-native.spec';
 
 describe('GoogleMapsInternalApiService', () =>
 {
-    let service      : GoogleMapsInternalApiService;
-    let tokenNextSpy : jasmine.Spy;
-    let zone         : NgZone;
-    let loader       : GoogleMapsApiLoader;
-    let componentMock: MockComponent;
+    let zone       : NgZone;
+    let loader     : GoogleMapsApiLoader;
+    let api        : GoogleMapsInternalApiService;
+    let fixture    : ComponentFixture<TestHost>;
+    let testHost   : TestHost;
+    let component  : MockComponentWithLifecycle;
+    let handleClick: jasmine.Spy;
 
     beforeEach(async () =>
     {
-        const waitToken = new BehaviorSubject<Promise<void>>(null);
-
-        tokenNextSpy = spyOn(waitToken, 'next').and.callThrough();
-
-        const testConfig: IGoogleMapsTestingModuleConfigOptions = {
-            componentType: MockComponent,
-            customize: (moduleDef) => moduleDef.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken })
-        };
-
-        spyOn(MockWrapper.prototype, 'listenTo').and.callThrough();
-
-        ({ internalApi: service, component: componentMock } = await configureGoogleMapsTestingModule(testConfig));
+        ({ internalApi: api, fixture, component: testHost } = await configureGoogleMapsTestingModule({
+            componentType: TestHost,
+            customize: (def) => def.declarations.push(MockComponentWithLifecycle)
+        }));
 
         zone   = TestBed.inject(NgZone);
         loader = TestBed.inject(GoogleMapsApiLoader);
 
-        spyOn(zone, 'runOutsideAngular').and.callFake((fn: () => void) => fn());
+        // Allow angular to create the inner component and fetch it with ViewChild
+        fixture.detectChanges();
+
+        component   = testHost.component;
+        handleClick = spyOn(testHost, 'handleClick');
+
+        spyOn(zone, 'runOutsideAngular').and.callFake(fn => fn());
     });
 
     describe('basically', () =>
     {
-        it('should be created', () => expect(service).toBeTruthy());
+        it('should be created', () => expect(api).toBeTruthy());
 
-        it('should create a promise for later use and store it', () =>
-        {
-            expect(service.waitForApi).toBeTruthy();
-            expect(service.waitForApi.promise instanceof Promise).toBeTruthy();
-            expect(service.waitForApi.resolve instanceof Function).toBeTruthy();
-            expect(service.waitForApi.reject instanceof Function).toBeTruthy();
-        });
+        it('should expose a promise that resolves when the api is loaded', () => expect(api.whenReady instanceof Promise).toBeTruthy());
 
-        it('should set the created promise to the `GoogleMapsApiReadyPromise` token', () =>
-        {
-            expect(tokenNextSpy).toHaveBeenCalledTimes(1);
-            expect(tokenNextSpy.calls.mostRecent().args[0]).toBe(service.waitForApi.promise);
-        });
+        it('should notify subscribers of the promise through the `GoogleMapsApiReadyPromise` token', inject([GoogleMapsApiReadyPromise], (promiseSubject: BehaviorSubject<Promise<void>>) => expect(promiseSubject.value).toBe(api.whenReady)));
     });
 
-    describe('upon calling `load()`', () =>
+    describe('calling `load()`', () =>
     {
-        it('should load google maps api script outside of angular and resolve the api promise', (done: DoneFn) =>
+        it('should resolve the api ready promise and load maps api outside of angular', async(() =>
         {
-            spyOn(loader, 'load').and.callFake(() => new Promise<void>(resolve => resolve()));
-            spyOn(service.waitForApi, 'resolve').and.callFake(done);
-
-            service.load();
-
-            expect(zone.runOutsideAngular).toHaveBeenCalledTimes(1);
-            expect(loader.load).toHaveBeenCalledTimes(1);
-        });
-
-        it('should reject the api promise if the loader failed to fetch the script', (done: DoneFn) =>
-        {
-            spyOn(loader, 'load').and.callFake(() => new Promise<void>((resolve, reject) => reject()));
-            spyOn(service.waitForApi, 'reject').and.callFake(done);
-
-            service.load();
-
-            expect(zone.runOutsideAngular).toHaveBeenCalledTimes(1);
-            expect(loader.load).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    describe('upon calling `hookAndSetEmitters()', () =>
-    {
-        it('should assign observables to the component\'s @Output() members', () =>
-        {
-            expect(componentMock.event1 instanceof Observable).toBeTruthy();
-        });
-
-        it('should register an event handler with the native wrapper on subscriptions', () =>
-        {
-            componentMock.event1.subscribe(() => void 0);
-
-            expect(componentMock.wrapper.listenTo).toHaveBeenCalledTimes(1);
-            expect(componentMock.listeners.length).toBe(1);
-        });
-
-        it('should create a callback that generates an event data object and emit the event', async (done: DoneFn) =>
-        {
-            const eventArgs = { value: 'dummy' };
-
-            const native = await componentMock.wrapper.native;
-            // Subscribe to the first event so it won't be skiped for having no observers
-            componentMock.event1.subscribe((eventData: GoogleMapsEventData) =>
-            {
-                expect(eventData.eventName).toBe('Event1', 'wrong event name');
-                expect(eventData.emitter).toBe(componentMock.wrapper, 'wrong emitter');
-                expect(eventData.associatedEmitter).toBe(componentMock.wrapper, 'wrong delegated emitter');
-                expect(eventData.nativeEmitter).toBe(native, 'wrong native emitter');
-                expect(eventData.args[0]).toEqual(eventArgs, 'wrong event args'); // For unrecognized native args, the transformer should return the native args
-                expect(eventData.nativeArgs[0]).toEqual(eventArgs, 'wrong native event args');
-
-                done();
-            });
-
-            service.hookEmitters(componentMock);
-
-            native.raiseEvent(eventArgs);
-        });
+            api.load();
         
-        it('should be able to hook events of a wrapper different to the component\'s inner wrapper', async (done: DoneFn) =>
+            api.whenReady.then(() => expect(zone.runOutsideAngular).toHaveBeenCalledTimes(1));
+        }));
+
+        it('should reject the api ready promise on failure', async(() =>
         {
-            const eventArgs = { value: 'dummy' };
+            spyOn(loader, 'load').and.returnValue(Promise.reject('Dummy Error: Failed to load maps api'));
 
-            const secondWrapper = createNativeWrapper.call({});
-            const secondNative = await secondWrapper.native;
+            api.load();
+        
+            api.whenReady.catch(error => expect(error).toMatch(/Failed to load/));
+        }));
+    });
 
-            // Subscribe to the first event so it won't be skiped for having no observers
-            componentMock.event1.subscribe((eventData: GoogleMapsEventData) =>
+    describe('calling `hookAndSetEmitters()', () =>
+    {
+        // As angular already applied event binding to the observables created on construction time.
+        // Tests calling hookAndSetEmitters will replace the observables in the component but will
+        // not updating angular's event binding, therefore they must manually subscribes to the new observables.
+
+        it('should hook events and assign observables to an emitting component', () =>
+        {
+            expect(component.click instanceof Observable).toBeTruthy();
+            
+            component.wrapper.events.raise(component.NativeClickEventName);
+            
+            const event = handleClick.calls.mostRecent().args[0] as GoogleMapsEventData;
+
+            expect(event.nativeEmitter).toBe(component.wrapper.native);
+        });
+
+        it('should allow hooking events to a wrapper external to the component', (done: DoneFn) =>
+        {
+            const secondWrapper = new MockEmittingWrapper(new MockNative());
+
+            api.hookAndSetEmitters(component, secondWrapper);
+
+            component.click.subscribe((e: GoogleMapsEventData) =>
             {
-                expect(eventData.eventName).toBe('Event1', 'wrong event name');
-                expect(eventData.emitter).toBe(secondWrapper, 'wrong emitter');
-                expect(eventData.associatedEmitter).toBe(componentMock.wrapper, 'wrong delegated emitter');
-                expect(eventData.nativeEmitter).toBe(secondNative, 'wrong native emitter');
-                expect(eventData.args[0]).toEqual(eventArgs, 'wrong event args'); // For unrecognized native args, the transformer should return the native args
-                expect(eventData.nativeArgs[0]).toEqual(eventArgs, 'wrong native event args');
+                expect(e.emitter).toBe(secondWrapper);
+                expect(e.nativeEmitter).toBe(secondWrapper.native);
 
                 done();
             });
 
-            service.hookEmitters(componentMock, secondWrapper);
-
-            secondNative.raiseEvent(eventArgs);
+            secondWrapper.events.raise(component.NativeClickEventName);
         });
 
-        // it('should allow filtering of events', fakeAsync(async () =>
-        // {
-        //     const shouldEmitArgs    = { shouldEmit: true };
-        //     const shouldNotEmitArgs = { shouldEmit: false };
+        it('should allow adding a filter to hooked events', fakeAsync(() =>
+        {
+            const shouldEmitArgs    = { shouldEmit: true };
+            const shouldNotEmitArgs = { shouldEmit: false };
 
-        //     spyOn(componentMock.event1, 'emit').and.callThrough();
+            const handler = jasmine.createSpyObj('eventHandler', ['handle']);
 
-        //     componentMock.event1.subscribe(() => )
-        //     service.hookEmitters(componentMock, EventsMapStub, null, (event) => event.nativeArgs.shouldEmit);
+            api.hookAndSetEmitters(component, null, (event) => event.nativeArgs[0].shouldEmit);
 
-        //     const native = await componentMock.wrapper.native;
+            component.click.subscribe(handler.handle);
+
+            const events = component.wrapper.events;
+
+            events.raise(component.NativeClickEventName, shouldEmitArgs);    tick();
+            events.raise(component.NativeClickEventName, shouldNotEmitArgs); tick();
+            events.raise(component.NativeClickEventName, shouldEmitArgs);    tick();
+
+            expect(handler.handle).toHaveBeenCalledTimes(2);
+        }));
+
+        it('should hook observable unsubscribes to the native object', fakeAsync(() =>
+        {
+            const nativeListeners = component.wrapper.events.listeners[component.NativeClickEventName];
+
+            expect(nativeListeners.length).toBe(1);
+
+            fixture.destroy();
+
+            expect(nativeListeners.length).toBe(0);
+
+            component.wrapper.events.raise(component.NativeClickEventName); tick();
+
+            expect(testHost.handleClick).not.toHaveBeenCalled();
+        }));
+
+        it('should transform and wrap native event args', () =>
+        {
+            const latLngLiteral = { lat: 20, lng: 20 };
+            const latLng        = new google.maps.LatLng(latLngLiteral);
+            const nativeArgs    = { latLng };
+                
+            component.wrapper.events.raise(component.NativeClickEventName, nativeArgs);
             
-        //     native.raiseEvent(shouldEmitArgs);
-        //     native.raiseEvent(shouldNotEmitArgs);
+            const event = handleClick.calls.mostRecent().args[0] as GoogleMapsEventData;
 
-        //     tick();
-        //     expect(componentMock.event1.emit).toHaveBeenCalledTimes(1);
-        // }));
+            expect(event.eventName        ).toBe   ('click',                     'wrong event name');
+            expect(event.emitter          ).toBe   (component.wrapper,           'wrong emitter');
+            expect(event.associatedEmitter).toBe   (component.wrapper,           'wrong delegated emitter');
+            expect(event.nativeEmitter    ).toBe   (component.wrapper.native,    'wrong native emitter');
+            expect(event.nativeArgs[0]    ).toBe   (nativeArgs,                  'wrong native event args');
+            expect(event.args[0]          ).toEqual({ position: latLngLiteral }, 'wrong event args');
+        });
     });
 
-    describe('upon calling `delegateInputChangesToNativeObject()`', () =>
+    describe('calling `delegateInputChangesToNativeObject()`', () =>
     {        
-        it('should pass any detected changes to the wrapper\'s appropriate setter', async () =>
+        it('should delegate input changes to their corresponding native setter', () =>
+        {
+            spyOn(component.wrapper, 'setProperty').and.callThrough();
+
+            const newValue = 10;
+            const changes: SimpleChanges = { property: new SimpleChange(1, newValue, true) };
+
+            api.delegateInputChangesToNativeObject(changes, component.wrapper);
+
+            expect(component.wrapper.setProperty).toHaveBeenCalledTimes(1);
+            expect(component.wrapper.native.property).toBe(newValue);
+        });
+
+        it('should ignore inputs with not setter implementation on the wrapper', () =>
         {
             const newValue = 10;
-            const changes: SimpleChanges = { fakeProperty: new SimpleChange(1, newValue, true) };
+            const changes: SimpleChanges = { nonExistantProperty: new SimpleChange(1, newValue, true) };
 
-            const setterSpy = spyOn(componentMock.wrapper as any, 'setFakeProperty').and.callThrough();
-
-            service.delegateInputChangesToNativeObject(changes, componentMock.wrapper);
-
-            const native = await componentMock.wrapper.native;
-
-            expect(setterSpy).toHaveBeenCalledTimes(1);
-            expect(native.fakeProperty).toBe(newValue);
+            expect(() => api.delegateInputChangesToNativeObject(changes, component.wrapper)).not.toThrow();
         });
     });
 });
 
-class MockWrapper implements IGoogleMapsNativeObjectEmittingWrapper
-{
-    public listeners = [];
-    public mockNative = {
-        raiseEvent: (args: any) => this.listeners.forEach(handler => handler.call(this.mockNative, args)),
-        fakeProperty: null
-    };
-
-    listenTo(eventName: string, handler: (...args: any[]) => void): Promise<() => void>
-    {
-        this.listeners.push(handler);
-
-        return Promise.resolve(() => void 0);
-    }
-
-    stopListeningTo(eventName: string): Promise<void>
-    {
-        this.listeners = [];
-
-        return Promise.resolve();
-    }
-
-    clearListeners(): Promise<void>
-    {
-        this.listeners = [];
-
-        return Promise.resolve();
-    }
-
-    setFakeProperty(value: any)
-    {
-        this.mockNative.fakeProperty = value;
-    }
-    
-    native = Promise.resolve(this.mockNative);
-    custom: any;    
-}
-
-function createNativeWrapper(): IGoogleMapsNativeObjectEmittingWrapper
-{
-    return new MockWrapper();
-}
-
 @Component({
-    providers: [
-        { provide: WrapperFactory, useFactory: () => createNativeWrapper }
-    ]
+    template: '<test-lifecycle (click)="handleClick($event)"></test-lifecycle>'
 })
-class MockComponent extends GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper>
+class TestHost
 {
-    @Hook('native_event1') @Output() public event1: EventEmitter<any>;
+    @ViewChild(MockComponentWithLifecycle)
+    public component: MockComponentWithLifecycle;
 
-    public get listeners(): any[]
+    public handleClick(e: GoogleMapsEventData)
     {
-        return (this.wrapper as any).listeners;
+
     }
 }

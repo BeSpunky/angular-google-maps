@@ -1,91 +1,137 @@
-import { ElementRef } from '@angular/core';
-
 import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { GoogleMapsData } from './google-maps-data';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { GoogleMap } from '../../google-map/google-map';
-
-const elementStub = document.createElement('div');
+import { MockGoogleMapsFeature } from './feature/testing/mock-google-maps-feature.spec';
+import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
+import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 
 describe('GoogleMapsData', () =>
 {
     let api: GoogleMapsApiService;
     let runOutsideAngular: jasmine.Spy;
+    let map: MockGoogleMap;
     let data: GoogleMapsData;
-    let map: GoogleMap;
 
     beforeEach(async () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        map = new GoogleMap(api, new ElementRef(elementStub));
+        map = new MockGoogleMap();
         data = new GoogleMapsData(api, map);
-    });
-
-    it('should create an instance', () => expect(data).toBeTruthy());
-    
-    it('should find and remove a feature outside angular when passing an id to `removeFeature()`', async () =>
-    {
-        const feature = new google.maps.Data.Feature({ geometry: new google.maps.Data.Point({ lng: 1, lat: 1 }), id: 'tested' });
-
-        data.addFeature(feature);
-
-        const native = await data.native;
-
-        spyOn(native, 'remove').and.stub();
 
         runOutsideAngular.calls.reset();
-
-        await data.removeFeature('tested');
-
-        expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-        expect(native.remove).toHaveBeenCalledTimes(1);
-        expect(native.remove).toHaveBeenCalledWith(feature);
     });
 
-    it('should remove a feature outside angular when passing a feature object to `removeFeature()`', async () =>
+    describe('basically', () =>
     {
-        const feature = new google.maps.Data.Feature({ geometry: new google.maps.Data.Point({ lng: 1, lat: 1 }), id: 'tested' });
-
-        data.addFeature(feature);
-
-        const native = await data.native;
-
-        spyOn(native, 'remove').and.stub();
-
-        runOutsideAngular.calls.reset();
-
-        await data.removeFeature(feature);
-
-        expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-        expect(native.remove).toHaveBeenCalledTimes(1);
-        expect(native.remove).toHaveBeenCalledWith(feature);
+        it('should create an instance', () => expect(data).toBeTruthy());
     });
 
-    it('should load a GeoJson outside of angular when calling `loadGeoJson()`', async () =>
+    describe('calling `addFeature()`', () =>
     {
-        const url = 'https://dummyurl.json';
-        const options: google.maps.Data.GeoJsonOptions = { idPropertyName: 'id' };
-        const native = await data.native;
+        function testAdd(featureData: () => any)
+        {
+            spyOn(data.native, 'add');
 
-        const loadSpy = spyOn(native, 'loadGeoJson').and.callFake((url, options, callback) => callback());
+            const feature = data.addFeature(featureData());
 
-        runOutsideAngular.calls.reset();
+            expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+            expect(data.native.add).toHaveBeenCalledTimes(1);
+            expect(data.native.add).toHaveBeenCalledWith(feature.native);
+        }
 
-        await data.loadGeoJson(url, options);
+        it('should wrap and add a native feature to the data outside angular', () => testAdd(() => ({ geometry: new google.maps.Data.Point({ lat: 20, lng: 20 }) })));
 
-        expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-        expect(loadSpy).toHaveBeenCalledTimes(1);
-        expect(loadSpy.calls.argsFor(0)[0]).toBe(url);
-        expect(loadSpy.calls.argsFor(0)[1]).toBe(options);
+        it('should add a wrapper feature to the data outside angular',         () => testAdd(() => new MockGoogleMapsFeature(data)));
+
+        it('should notify tracker of new features', () =>
+        {
+            expect(data.features.isEmpty).toBeTruthy();
+
+            data.addFeature(new MockGoogleMapsFeature(data));
+
+            expect(data.features.hasFeatures).toBeTruthy();
+        });
     });
 
-    it('should return a GeoJson object representing the data when calling `toGeoJson()`', async () =>
+    describe('calling `removeFeature()`', () =>
     {
-        const geoJson = await data.toGeoJson();
+        function testRemove(removeBy: (feature: IGoogleMapsFeature) => any)
+        {
+            spyOn(data.native, 'remove');
+
+            const feature = data.addFeature({ id: 'tested', geometry: new google.maps.Data.Point({ lat: 20, lng: 20 }) });
+            
+            runOutsideAngular.calls.reset();
+
+            const removed = data.removeFeature(removeBy(feature));
+
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+            expect(data.native.remove).toHaveBeenCalledTimes(1);
+            expect(data.native.remove).toHaveBeenCalledWith(feature.native);
+            expect(removed).toBe(feature);
+        }
+
+        it('should find and remove a native feature outside angular and return the removed feature',  () => testRemove(feature => feature.native));
         
-        expect(typeof geoJson).toBe('object');
-        expect(geoJson.type).toBe('FeatureCollection');
-        expect(geoJson?.features instanceof Array).toBeTruthy();
+        it('should find and remove a wrapper feature outside angular and return the removed feature', () => testRemove(feature => feature));
+
+        it('should find and remove a feature by id outside angular and return the removed feature',   () => testRemove(feature => feature.native.getId()));
+
+        it('should return null if the feature is not found', () => expect(data.removeFeature(new MockGoogleMapsFeature(data))).toBeNull());
+
+        it('should notify tracker of removed feature', () =>
+        {
+            const feature = new MockGoogleMapsFeature(data);
+
+            data.features.add(feature);
+            data.removeFeature(feature);
+
+            expect(data.features.isEmpty).toBeTruthy();
+        });
+    });
+
+    describe('GeoJson handling', () =>
+    {
+        it('should load GeoJson data from a url when calling `loadGeoJson()` outside angular', async () =>
+        {
+            const url = 'https://dummyurl.json';
+            const options: google.maps.Data.GeoJsonOptions = { idPropertyName: 'id' };
+            const native = data.native;
+    
+            const loadSpy = spyOn(native, 'loadGeoJson').and.callFake((url, options, callback) => callback());
+    
+            runOutsideAngular.calls.reset();
+    
+            await data.loadGeoJson(url, options);
+    
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+            expect(loadSpy).toHaveBeenCalledTimes(1);
+            expect(loadSpy.calls.argsFor(0)[0]).toBe(url);
+            expect(loadSpy.calls.argsFor(0)[1]).toBe(options);
+        });
+
+        it('should convert and return the data in its GeoJson representation when calling `toGeoJson()`', async () =>
+        {
+            const geoJson = await data.toGeoJson();
+            
+            expect(typeof geoJson).toBe('object');
+            expect(geoJson.type).toBe('FeatureCollection');
+            expect(geoJson?.features instanceof Array).toBeTruthy();
+        });
+    });
+
+    describe('Overlay management', () =>
+    {
+        it('should create, add and return a marker feature outside angular when calling `createMarker()`', async () =>
+        {
+            // Adding geometry options to make sure it is overriden by the position argument
+            const feature = data.createMarker({ lat: 20, lng: 20 }, { id: 'bombom', geometry: new google.maps.Data.Point({ lat: 10, lng: 10 }) });
+
+            const geoJson = await feature.toGeoJson();
+            
+            expect(geoJson.geometry.type).toBe('Point');
+            expect(geoJson.geometry.coordinates).toEqual([20, 20]);
+        });
     });
 });

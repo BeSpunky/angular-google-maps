@@ -1,80 +1,76 @@
-import { BehaviorSubject } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { GoogleMapsApiService } from './google-maps-api.service';
-import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { configureGoogleMapsTestingModule, IGoogleMapsTestingModuleConfigOptions } from '../../testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 
 describe('GoogleMapsApiService', () =>
 {
-    let service: GoogleMapsApiService;
-    let waitForApiPromiseCreation: BehaviorSubject<Promise<void>>;
-    let tokenSubscribeSpy: jasmine.Spy;
+    let api : GoogleMapsApiService;
+    let zone: NgZone;
 
     beforeEach(async () =>
     {
-        const waitToken = new BehaviorSubject<Promise<void>>(null);
+        ({ api: api } = await configureGoogleMapsTestingModule({
+            spies: {
+                fakeRunInsideAngular : false,
+                fakeRunOutsideAngular: false
+            }
+        }));
+        
+        zone = TestBed.inject(NgZone);
 
-        tokenSubscribeSpy = spyOn(waitToken, 'subscribe').and.callThrough();
-
-        const testConfig: IGoogleMapsTestingModuleConfigOptions = {
-            customize: (moduleDef) => moduleDef.providers.push({ provide: GoogleMapsApiReadyPromise, useValue: waitToken }),
-            spies: { fakeRunOutsideAngular: false }
-        };
-
-        ({ api: service } = await configureGoogleMapsTestingModule(testConfig));
-
-        waitForApiPromiseCreation = TestBed.inject(GoogleMapsApiReadyPromise);
+        spyOn(zone, 'run').and.callFake(fn => fn());
+        spyOn(zone, 'runOutsideAngular').and.callFake(fn => fn());
     });
 
-    it('should create an instance', () => expect(service).toBeTruthy());
+    it('should create an instance', () => expect(api).toBeTruthy());
 
-    it('should subscribe to the api promise creation observable and store the `mapsApiReady` promise', () =>
+    it('should provide a promise for indicating that maps api is ready', () => expect(api.whenReady instanceof Promise).toBeTruthy());
+
+    it('should allow access to the configuration passed to Google Maps API', () => expect(api.config).toBeDefined());
+    
+    it('should allow access event data transformation api', () => expect(api.eventsData).toBeDefined());
+    
+    it('should allow access geometry api', () => expect(api.geometry).toBeDefined());
+
+    it('should bring code execution to angular context', () =>
     {
-        expect(tokenSubscribeSpy).toHaveBeenCalledTimes(1);
+        const task = () => 'done';
 
-        waitForApiPromiseCreation.next(new Promise(() => ({})));
+        const result = api.runInsideAngular(task);
 
-        expect((service as any).mapsApiReady instanceof Promise).toBeTruthy();
+        expect(result).toBe('done');
+        expect(zone.run).toHaveBeenCalledTimes(1);
     });
 
-    it('should allow retrieving the promise easily using the `whenReady` getter', () =>
+    it('should take code execution to outside of angular context', () =>
     {
-        const promise = new Promise<void>(() => ({}));
+        const task = () => 'done';
 
-        waitForApiPromiseCreation.next(promise);
+        const result = api.runOutsideAngular(task);
 
-        expect(service.whenReady).toBe(promise);
+        expect(result).toBe('done');
+        expect(zone.runOutsideAngular).toHaveBeenCalledTimes(1);
+    });
+    
+    it('should bring code execution to angular context when Google Maps API is ready', async () =>
+    {
+        const task = () => 'done';
+
+        const result = await api.runInsideAngularWhenReady(task);
+
+        expect(result).toBe('done');
+        expect(zone.run).toHaveBeenCalledTimes(1);
     });
 
-    it('should unsubscribe from the api promise creation observable on destroy', () =>
+    it('should take code execution to outside of angular context when Google Maps API is ready', async () =>
     {
-        spyOn(waitForApiPromiseCreation, 'unsubscribe');
+        const task = () => 'done';
 
-        service.ngOnDestroy();
+        const result = await api.runOutsideAngularWhenReady(task);
 
-        expect(waitForApiPromiseCreation.unsubscribe).toHaveBeenCalledTimes(1);
-    });
-
-    it('should allow running given function outside of angular when the maps api is ready', (done: DoneFn) =>
-    {
-        const promise = new Promise<void>((resolve) => resolve());
-
-        waitForApiPromiseCreation.next(promise);
-
-        const zone = TestBed.get(NgZone);
-
-        const whenReadySpy = spyOnProperty(service, 'whenReady', 'get').and.callThrough();
-
-        spyOn(zone, 'runOutsideAngular').and.callFake((fn: () => void) => fn());
-
-        // This will call the fake `runOutsideAngular()` function which will have the `done()` function execute when the api promise resolves.
-        // If the api promise doesn't resolve, `done()` will never be called and the test will fail.
-        service.runOutsideAngular(done);
-
-        // Expect the promise to be fetched and NgZone's function to be executed on the way to glory
-        expect(whenReadySpy).toHaveBeenCalledTimes(1);
+        expect(result).toBe('done');
         expect(zone.runOutsideAngular).toHaveBeenCalledTimes(1);
     });
 });

@@ -1,46 +1,33 @@
 import { ElementRef } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 
-import { configureGoogleMapsTestingModule } from "../testing/setup.spec";
 import { GoogleMapFactoryProvider } from './google-map-factory.provider';
-import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token';
 import { GoogleMap } from './google-map';
-
-function setup(withClass: boolean)
-{
-    // Simulate <bs-google-map><div class="google-map"></div></bs-google-map>
-    const mapComponentElement = document.createElement('div');
-    const mapElement = document.createElement('div');
-    
-    if (withClass) mapElement.className = 'google-map';
-
-    mapComponentElement.append(mapElement);
-
-    configureGoogleMapsTestingModule({
-        customize: (def) =>
-        {
-            def.providers.push(GoogleMapFactoryProvider);
-            def.providers.push({ provide: ElementRef, useValue: new ElementRef(mapComponentElement) });
-        }
-    });
-
-    return TestBed.inject(WrapperFactory);
-}
+import { itShouldCreateWrapper } from '../overlays/testing/wrapper-factory-provider-test-setup.spec';
+import { configureGoogleMapsTestingModule } from '../testing/setup.spec';
+import { TestBed } from '@angular/core/testing';
+import { UniversalService } from '@bespunky/angular-zen';
+import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token';
 
 describe('GoogleMapFactoryProvider', () =>
 {
-    it('should allow the creation of a new GoogleMap object when injected', () =>
-    {
-        const createMap = setup(true);
-
-        expect(createMap instanceof Function).toBeTruthy();
-        expect(createMap() instanceof GoogleMap).toBeTruthy();
+    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, {
+        provide: ElementRef,
+        useValue: new ElementRef(document.createElement('div'))
     });
 
-    it('should throw an error if the component doesn\'t define a div.google-map element', () =>
+    it('should return null when used in non-browser platforms', async () =>
     {
-        const createMap = setup(false);
+        await configureGoogleMapsTestingModule({
+            customize: def =>
+            {
+                def.providers.push({ provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') });
+                def.providers.push({ provide: ElementRef, useValue: new ElementRef({}) });
+                def.providers.push(GoogleMapFactoryProvider);
+            }
+        });
 
-        expect(() => createMap()).toThrow();
+        const createWrapper = TestBed.inject(WrapperFactory);
+
+        expect(createWrapper()).toBeNull();
     });
 });

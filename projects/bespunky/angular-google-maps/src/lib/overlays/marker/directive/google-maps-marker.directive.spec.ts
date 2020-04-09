@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { LifecycleTestsHostComponentBase, createLifecycleTestingHostComponentTemplate } from '../../../testing/lifecycle-components.spec';
+import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '../../../testing/lifecycle-components.spec';
 import { GoogleMapsMarkerDirective } from './google-maps-marker.directive';
 
 /**
@@ -34,4 +34,4 @@ describe('GoogleMapsMarkerDirective', () =>
 @Component({
     template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-marker [position]="center" #testedComponent></bs-google-maps-marker>')
 })
-class TestHostComponent extends LifecycleTestsHostComponentBase { }
+class TestHostComponent extends LifecycleComponentTestHost { }

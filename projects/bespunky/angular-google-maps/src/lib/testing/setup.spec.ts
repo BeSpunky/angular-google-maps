@@ -14,7 +14,7 @@ import { GoogleMapsInternalApiService } from '../core/api/google-maps-internal-a
 
 /** The default dummy config to use when loading the `GoogleMapsModule` for testing. */
 export const defaultTestApiConfig: GoogleMapsConfig = {
-    apiUrl: 'dummyurl'
+    apiUrl: { key: 'testing-key' }
 };
 
 /**
@@ -46,9 +46,9 @@ export function createGoogleMapsTestModuleMetadata(config?: GoogleMapsConfig): T
  * @param {GoogleMapsApiService} api The api instance to spy on.
  * @returns {jasmine.Spy} A jasmine spy which can be used to count calls to `api.runOutsideAngular()`.
  */
-export function fakeTheRunOutsideAngularMethod(api: GoogleMapsApiService): jasmine.Spy
+export function fakeTheRunXsideAngularMethod(api: GoogleMapsApiService, methodName: 'runInsideAngular' | 'runOutsideAngular'): jasmine.Spy
 {
-    return spyOn(api, 'runOutsideAngular').and.callFake((fn: () => void) => api.whenReady.then(fn));
+    return spyOn(api, methodName).and.callFake((fn: () => void) => fn());
 }
 
 /**
@@ -73,13 +73,16 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
     beforeComponentInit?: (api: GoogleMapsApiService, internalApi: GoogleMapsInternalApiService) => void,
     /** (Optional) Configures the automation of jasmine spies. */
     spies?: {
-        /** `true` to fake the execution of `api.runOutsideAngular()` (@see `fakeTheRunOutsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
+        /** `true` to fake the execution of `api.runInsideAngular()` (@see `fakeTheRunXsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
+        fakeRunInsideAngular?: boolean
+        /** `true` to fake the execution of `api.runOutsideAngular()` (@see `fakeTheRunXsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
         fakeRunOutsideAngular?: boolean
     }
 }
 
 const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
     spies: {
+        fakeRunInsideAngular: true,
         fakeRunOutsideAngular: true
     }
 };
@@ -97,10 +100,10 @@ const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
  */
 export async function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMapsTestingModuleConfigOptions)
 {
-    let fixture: ComponentFixture<TComponent>;
-    let component: TComponent;
+    let fixture     : ComponentFixture<TComponent>;
+    let component   : TComponent;
     let debugElement: DebugElement;
-    let element: ElementRef;
+    let element     : ElementRef;
 
     options = Object.assign({}, defaultModuleConfigOptions, options);
 
@@ -124,10 +127,10 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     const api         = TestBed.inject(GoogleMapsApiService);
     const internalApi = TestBed.inject(GoogleMapsInternalApiService);
 
-    const runOutsideAngular = options.spies.fakeRunOutsideAngular ? fakeTheRunOutsideAngularMethod(api) : spyOn(api, 'runOutsideAngular').and.callThrough();
-    const runInsideAngular = options.spies.fakeRunInsideAngular ? fakeTheRunInsideAngularMethod(api) : spyOn(api, 'runInsideAngular').and.callThrough();
+    const runInsideAngular  = options.spies.fakeRunInsideAngular  ? fakeTheRunXsideAngularMethod(api, 'runInsideAngular')  : spyOn(api, 'runInsideAngular').and.callThrough();
+    const runOutsideAngular = options.spies.fakeRunOutsideAngular ? fakeTheRunXsideAngularMethod(api, 'runOutsideAngular') : spyOn(api, 'runOutsideAngular').and.callThrough();
 
-    const spies = { runOutsideAngular };
+    const spies = { runInsideAngular, runOutsideAngular };
 
     if (options.beforeComponentInit)
         options.beforeComponentInit(api, internalApi);
@@ -139,9 +142,9 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
 
         fixture = TestBed.createComponent(componentType);
 
-        component = fixture.componentInstance;
+        component    = fixture.componentInstance;
         debugElement = fixture.debugElement;
-        element = debugElement.nativeElement;
+        element      = debugElement.nativeElement;
     }
 
     // Return all extracted services and objects for easier use

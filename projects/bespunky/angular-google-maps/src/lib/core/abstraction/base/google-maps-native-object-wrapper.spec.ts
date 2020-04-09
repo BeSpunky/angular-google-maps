@@ -1,28 +1,33 @@
 
+import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
+import { MockNative } from '../testing/mock-native.spec';
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-import { MockNativeWrapper } from '../testing/google-maps-native-wrapper.mock.spec';
 
 describe('GoogleMapsNativeObjectWrapper (abstract)', () =>
 {
-    let api: GoogleMapsApiService;
-    let mockNative: object;
-    let mockWrapper: MockNativeWrapper;
+    let api              : GoogleMapsApiService;
+    let runOutsideAngular: jasmine.Spy;
+    let mockWrapper      : GoogleMapsNativeObjectWrapperTest;
 
     beforeEach(async () =>
     {
-        ({ api } = await configureGoogleMapsTestingModule());
+        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        mockNative = {};
-
-        mockWrapper = new MockNativeWrapper(api, mockNative);
+        mockWrapper = new GoogleMapsNativeObjectWrapperTest(api);
     });
 
     it('should create an instance when instantiated by a derived class', () => expect(mockWrapper).toBeTruthy());
 
-    it('should instantiate the native wrapper and return it via the `native` property', async () =>
-    {
-        expect(mockWrapper.native instanceof Promise).toBeTruthy();
-        expect(await mockWrapper.native).toBe(mockNative);
-    });
+    it('should instantiate a new native object outside angular', () => expect(runOutsideAngular).toHaveBeenCalledTimes(1));
+
+    it('should instantiate and assign a new native object to the accessible through the `native` property', () => expect(mockWrapper.native instanceof MockNative).toBeTruthy());
 });
+
+class GoogleMapsNativeObjectWrapperTest extends GoogleMapsNativeObjectWrapper<MockNative>
+{
+    protected createNativeObject(...nativeArgs: any[]): MockNative
+    {
+        return new MockNative();
+    }
+}

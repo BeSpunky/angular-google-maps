@@ -1,55 +1,54 @@
+import { MockWrapper } from '../abstraction/testing/mock-wrapper.spec';
+import { MockNative } from '../abstraction/testing/mock-native.spec';
 import { NativeObjectWrapper } from './native-object-wrapper.decorator';
-import { IGoogleMapsNativeObjectWrapper } from '../abstraction/base/i-google-maps-native-object-wrapper';
-import { Wrap } from './wrap.decorator';
-import { OutsideAngular } from './outside-angular.decorator';
+import { Wrapper } from '../abstraction/types/wrapper.type';
 
 describe('@NativeObjectWrapper()', () =>
 {
-    let wrapper: MockMarkerWrapper;
+    let wrapper: MockWrapper;
 
-    beforeEach(() => wrapper = new MockMarkerWrapper());
+    beforeEach(() => wrapper = new MockWrapper(new MockNative()));
 
-    it('should provide async implementation for methods marked with `@Wrap`', () =>
+    it('should provide an implementation for methods marked with `@Wrap`', () => expect(() => wrapper.getProperty()).not.toThrow());
+
+    it('should call the native function when calling the wrapper method', () =>
     {
-        expect(wrapper.whatsTheTitle() instanceof Promise).toBeTruthy();
-        expect(wrapper.setTitle()      instanceof Promise).toBeTruthy();
+        spyOn(wrapper.native, 'getProperty');
+
+        wrapper.getProperty();
+
+        expect(wrapper.native.getProperty).toHaveBeenCalledTimes(1);
+    });
+    
+    // Also tests renaming wrapped functions
+    it('should pass args to the native function and provide its return value', () =>
+    {
+        const nativeGetter = spyOn(wrapper.native, 'findById');
+
+        const result       = wrapper.find(123);
+        const nativeResult = nativeGetter.calls.mostRecent().returnValue;
+
+        expect(wrapper.native.findById).toHaveBeenCalledTimes(1);
+        expect(nativeGetter.calls.mostRecent().args[0]).toBe(123);
+        expect(result).toBe(nativeResult);
     });
 
-    it('should call the native function when calling the wrapper method', async () =>
+    it('should wrap methods marked `@OutsideAngular` with function that executes outside angular', () =>
     {
-        spyOn(wrapper.mockNative, 'getTitle');
-
-        await wrapper.whatsTheTitle();
-
-        expect(wrapper.mockNative.getTitle).toHaveBeenCalledTimes(1);
-    });
-
-    it('should wrap methods marked `@OutsideAngular` with async functions that wait for api ready and execute outside angular', async () =>
-    {
-        spyOn(wrapper.api, 'runOutsideAngular').and.callThrough();
-
-        await wrapper.setTitle();
+        wrapper.setProperty(123);
 
         expect(wrapper.api.runOutsideAngular).toHaveBeenCalledTimes(1);
     });
+
+    it('should warn if no method was marked for wrapping', () =>
+    {
+        const warn = spyOn(console, 'warn');
+
+        class NoWrappers implements Wrapper { native: any; custom: any; }
+
+        NativeObjectWrapper(NoWrappers);
+
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn.calls.mostRecent().args[0]).toMatch(/No method marked/);
+    });
 });
-
-@NativeObjectWrapper
-class MockMarkerWrapper implements IGoogleMapsNativeObjectWrapper
-{
-    public mockNative = {
-        getTitle: () => void 0,
-        setTitle: () => void 0,
-    };
-    
-    native = Promise.resolve(this.mockNative);
-    custom: any;
-
-    api = { runOutsideAngular: (fn: Function) => Promise.resolve(fn.call(this)) };
-
-    @Wrap('getTitle')
-    whatsTheTitle(): Promise<string> { return null; }
-    
-    @Wrap() @OutsideAngular
-    setTitle(): Promise<any> { return null; }
-}

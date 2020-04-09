@@ -1,10 +1,12 @@
-import { NoOpGoogleMapsApiLoader } from './no-op-google-maps-api-loader';
+import { async } from '@angular/core/testing';
 import { WindowRef } from '@bespunky/angular-zen';
+
+import { NoOpGoogleMapsApiLoader } from './no-op-google-maps-api-loader';
 
 describe('NoOpGoogleMapsApiLoader', () =>
 {
     let windowRef: WindowRef;
-    let loader: NoOpGoogleMapsApiLoader;
+    let loader   : NoOpGoogleMapsApiLoader;
 
     beforeEach(() =>
     {
@@ -13,12 +15,9 @@ describe('NoOpGoogleMapsApiLoader', () =>
         loader = new NoOpGoogleMapsApiLoader(windowRef);
     });
 
-    it('should create an instance', () =>
-    {
-        expect(loader).toBeTruthy();
-    });
+    it('should create an instance', () => expect(loader).toBeTruthy());
 
-    it('should return a resolved promise if google maps api is already present in `window`', () =>
+    it('should resolve if google maps api is already present in `window`', () =>
     {
         windowRef.nativeWindow.google = { maps: {} };
 
@@ -29,8 +28,8 @@ describe('NoOpGoogleMapsApiLoader', () =>
         promise.then(() => expect(true).toBeTruthy());
     });
 
-    it('should throw an error if google maps api is not present in `window`', () =>
+    it('should reject if google maps api is not present in `window`', async(() =>
     {
-        expect(() => loader.load()).toThrowError(/Google Maps API is not found/);
-    });
+        loader.load().catch(error => expect(error).toMatch(/Google Maps API is not found/));
+    }));
 });

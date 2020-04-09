@@ -6,11 +6,11 @@ import { ViewChild } from '@angular/core';
 import { GoogleMapsLifecycleBase } from '../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapComponent } from '../google-map/component/google-map.component';
 import { GoogleMap } from '../google-map/google-map';
-import { IGoogleMapsNativeObjectEmittingWrapper } from '../core/abstraction/base/i-google-maps-native-object-emitting-wrapper';
+import { EmittingWrapper } from '../core/abstraction/types/emitting-wrapper.type';
 
 export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string): string
 {
-    return `<bs-google-map [map]="map" [center]="center">${testedComponentTemplate}</bs-google-map>`;
+    return `<bs-google-map [center]="center">${testedComponentTemplate}</bs-google-map>`;
 }
 
 /**
@@ -24,17 +24,17 @@ export function createLifecycleTestingHostComponentTemplate(testedComponentTempl
  *     @Component({
  *         template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-data #testedComponent></bs-google-maps-data>')
  *     })
- *     class TestHostComponent extends LifecycleTestsHostComponentBase { } 
+ *     class TestHostComponent extends LifecycleComponentTestHost { } 
  * ```
  * 
- * @class LifecycleTestsHostComponentBase
+ * @class LifecycleComponentTestHost
  */
-export class LifecycleTestsHostComponentBase
+export class LifecycleComponentTestHost
 {
     @ViewChild(GoogleMapComponent)
     public mapComponent: GoogleMapComponent;
     @ViewChild('testedComponent')
-    public testedComponent: GoogleMapsLifecycleBase<IGoogleMapsNativeObjectEmittingWrapper>;
+    public testedComponent: GoogleMapsLifecycleBase<EmittingWrapper>;
 
     public map: GoogleMap;
 }

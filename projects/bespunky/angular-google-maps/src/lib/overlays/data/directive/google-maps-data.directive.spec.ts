@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapsDataDirective } from './google-maps-data.directive';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { LifecycleTestsHostComponentBase, createLifecycleTestingHostComponentTemplate } from '../../../testing/lifecycle-components.spec';
+import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '../../../testing/lifecycle-components.spec';
 
 /**
  * -- NOTE --
@@ -34,4 +34,4 @@ describe('GoogleMapsDataDirective', () =>
 @Component({
     template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-data #testedComponent></bs-google-maps-data>'),
 })
-class TestHostComponent extends LifecycleTestsHostComponentBase { }
+class TestHostComponent extends LifecycleComponentTestHost { }
