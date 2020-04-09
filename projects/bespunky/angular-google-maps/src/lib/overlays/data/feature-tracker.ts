@@ -26,4 +26,14 @@ export class FeatureTracker
 
         return feature;
     }
+
+    public get isEmpty(): boolean
+    {
+        return this.features.length === 0;
+    }
+    
+    public get hasFeatures(): boolean
+    {
+        return this.features.length > 0;
+    }
 }
