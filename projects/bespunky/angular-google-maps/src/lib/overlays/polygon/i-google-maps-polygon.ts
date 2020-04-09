@@ -7,15 +7,15 @@ export interface IGoogleMapsPolygon extends IGoogleMapsDrawableOverlay<google.ma
     setPath(coords: Coord[] | Coord[][]): void;
 
     // Options delegators
-    setClickable(clickable: boolean): void;
-    setFillColor(color: string): void
-    setFillOpacity(opacity: number): void
-    setStrokeColor(color: string): void
-    setStrokeOpacity(opacity: number): void
-    setStrokePosition(position: google.maps.StrokePosition): void
-    setStrokeWeight(weight: number): void
-    setZIndex(zIndex: number): void
-    setGeodesic(geodesic: boolean): void
+    setClickable     (clickable: boolean)                  : void;
+    setFillColor     (color: string)                       : void;
+    setFillOpacity   (opacity: number)                     : void;
+    setStrokeColor   (color: string)                       : void;
+    setStrokeOpacity (opacity: number)                     : void;
+    setStrokePosition(position: google.maps.StrokePosition): void;
+    setStrokeWeight  (weight: number)                      : void;
+    setZIndex        (zIndex: number)                      : void;
+    setGeodesic      (geodesic: boolean)                   : void;
 
     /* ---------------------------------------- Native wrappers -------------------------------------- *
      * Documentation in: https://developers.google.com/maps/documentation/javascript/reference/polygon *

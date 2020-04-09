@@ -14,11 +14,21 @@ import { GoogleMapsApiReadyPromiseProvider } from './core/api/google-maps-api-re
 import { GoogleMapsDataDirective } from './overlays/data/directive/google-maps-data.directive';
 import { GoogleMapsFeatureDirective } from './overlays/data/feature/directive/google-maps-feature.directive';
 import { SafeDirective } from './core/api/safe.directive';
+import { GoogleMapsPolygonDirective } from './overlays/polygon/directive/google-maps-polygon.directive';
+
+export const exported = [
+    GoogleMapComponent,
+    GoogleMapsMarkerDirective,
+    GoogleMapsDataDirective,
+    GoogleMapsFeatureDirective,
+    GoogleMapsPolygonDirective,
+    SafeDirective
+];
 
 @NgModule({
-    declarations: [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective, GoogleMapsFeatureDirective, SafeDirective],
+    declarations: exported,
     imports:      [ZenModule, UniversalModule.forRoot()],
-    exports:      [GoogleMapComponent, GoogleMapsMarkerDirective, GoogleMapsDataDirective, GoogleMapsFeatureDirective, SafeDirective]
+    exports:      exported
 })
 export class GoogleMapsModule
 {
