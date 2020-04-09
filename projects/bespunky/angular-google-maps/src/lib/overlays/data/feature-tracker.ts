@@ -2,38 +2,39 @@ import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 
 export class FeatureTracker
 {
-    public readonly features: IGoogleMapsFeature[] = [];
+    public readonly list: IGoogleMapsFeature[] = [];
+    // TODO: Improve read access by maintaining an index map object
 
     public add(feature: IGoogleMapsFeature)
     {        
-        this.features.push(feature);
+        this.list.push(feature);
     }
 
     public remove(featureOrId: string | number | google.maps.Data.Feature | IGoogleMapsFeature): IGoogleMapsFeature
     {
         // If it's a native feature, use it
-        const index = featureOrId instanceof google.maps.Data.Feature ? this.features.findIndex(feature => feature.native === featureOrId) :
+        const index = featureOrId instanceof google.maps.Data.Feature ? this.list.findIndex(feature => feature.native === featureOrId) :
             // If it's a wrapping feature, fetch native and use it
-            typeof featureOrId === 'object' ? this.features.indexOf(featureOrId) :
+            typeof featureOrId === 'object' ? this.list.indexOf(featureOrId) :
                 // This is an id, find feature and use it
-                this.features.findIndex(feature => feature.getId() === featureOrId);
+                this.list.findIndex(feature => feature.getId() === featureOrId);
 
         if (index === -1) return null;
         
-        const feature = this.features[index];
+        const feature = this.list[index];
 
-        this.features.splice(index, 1);
+        this.list.splice(index, 1);
 
         return feature;
     }
 
     public get isEmpty(): boolean
     {
-        return this.features.length === 0;
+        return this.list.length === 0;
     }
     
     public get hasFeatures(): boolean
     {
-        return this.features.length > 0;
+        return this.list.length > 0;
     }
 }
