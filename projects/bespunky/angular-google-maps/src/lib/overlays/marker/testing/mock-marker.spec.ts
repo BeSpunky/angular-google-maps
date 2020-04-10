@@ -3,6 +3,7 @@ import { MockDrawableOverlay } from "../../../core/abstraction/testing/mock-draw
 import { IGoogleMapsMarker } from "../i-google-maps-marker";
 import { OverlayType } from '../../../core/abstraction/base/overlay-type.enum';
 import { IGoogleMap } from '../../../google-map/i-google-map';
+import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
 
 @MockFill
 export class MockMarker extends MockDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
@@ -74,11 +75,11 @@ export class MockMarker extends MockDrawableOverlay<google.maps.Marker> implemen
     {
         throw new Error("Method not implemented.");
     }
-    getPosition(): google.maps.LatLng
+    getPosition(): google.maps.LatLngLiteral
     {
         throw new Error("Method not implemented.");
     }
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void
+    setPosition(position: Coord): void
     {
         throw new Error("Method not implemented.");
     }

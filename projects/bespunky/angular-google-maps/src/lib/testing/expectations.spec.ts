@@ -3,7 +3,7 @@
  */
 
 import { Coord } from '../core/abstraction/types/geometry-utils.type';
-
+import { GeometryTransformService } from '../core/api/transform/geometry-transform.service';
 /**
  * Shortcuts expecting a literal position match with a native LatLng object.
  * Uses `toBeCloseTo()` with 6 digits precision.
@@ -11,10 +11,12 @@ import { Coord } from '../core/abstraction/types/geometry-utils.type';
  * @param position1 The first coordinate to compare.
  * @param position2 The second coordinate to compare.
  */
-export function expectPositionEquals(position1: Coord, position2: Coord)
+export function expectPositionEquals(position1: Coord, position2: Coord, geometry?: GeometryTransformService)
 {
-    position1 = position1 instanceof google.maps.LatLng ? position1.toJSON() : position1;
-    position2 = position2 instanceof google.maps.LatLng ? position2.toJSON() : position2;
+    geometry = geometry || new GeometryTransformService();
+
+    position1 = geometry.toLiteralCoord(position1);
+    position2 = geometry.toLiteralCoord(position2);
     
     expect(position1.lat).toBeCloseTo(position2.lat, 6);
     expect(position1.lng).toBeCloseTo(position2.lng, 6);

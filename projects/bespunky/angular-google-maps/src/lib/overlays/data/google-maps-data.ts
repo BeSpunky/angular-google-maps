@@ -30,7 +30,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     @OutsideAngular
     public createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
-        options = Object.assign({}, options, { geometry: new google.maps.Data.Point(position) });
+        options = Object.assign({}, options, { geometry: new google.maps.Data.Point(this.api.geometry.toLiteralCoord(position)) });
 
         return this.addFeature(options);
     }
