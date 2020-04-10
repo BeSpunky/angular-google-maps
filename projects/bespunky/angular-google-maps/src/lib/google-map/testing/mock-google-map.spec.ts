@@ -19,7 +19,7 @@ export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implemen
     {
         throw new Error("Method not implemented.");
     }
-    removeOverlay<TOverlay extends import("../../core/abstraction/types/drawable-overlay.type").DrawableOverlay>(overlay: TOverlay): void
+    removeOverlay<TOverlay extends import("../../core/abstraction/types/abstraction").DrawableOverlay>(overlay: TOverlay): void
     {
         throw new Error("Method not implemented.");
     }

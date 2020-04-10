@@ -7,13 +7,12 @@ import { promiseLater } from '@bespunky/angular-zen';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { GoogleMapsApiService } from './google-maps-api.service';
-import { GoogleMapsEventsMap } from '../abstraction/types/google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../abstraction/types/events-map.type';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
 import { HookOutputSymbol } from '../decorators/hook.decorator';
-import { EmittingWrapper } from '../abstraction/types/emitting-wrapper.type';
-import { Wrapper } from '../abstraction/types/wrapper.type';
+import { EmittingWrapper, Wrapper } from '../abstraction/types/abstraction';
     
 @Injectable({
     providedIn: 'root'

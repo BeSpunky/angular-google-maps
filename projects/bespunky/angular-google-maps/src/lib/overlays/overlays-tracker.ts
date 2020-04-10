@@ -1,7 +1,7 @@
 import { OverlayType } from '../core/abstraction/base/overlay-type.enum';
 import { IGoogleMapsMarker } from './marker/i-google-maps-marker';
 import { IGoogleMapsData } from './data/i-google-maps-data';
-import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
+import { DrawableOverlay } from '../core/abstraction/types/abstraction';
 import { IGoogleMapsPolygon } from './polygon/i-google-maps-polygon';
 
 export class OverlaysTracker

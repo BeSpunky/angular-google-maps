@@ -2,7 +2,7 @@ import { IGoogleMapsNativeObjectEmittingWrapper } from '../core/abstraction/base
 import { IGoogleMapsMarker } from '../overlays/marker/i-google-maps-marker';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { IGoogleMapsData } from '../overlays/data/i-google-maps-data';
-import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
+import { DrawableOverlay } from '../core/abstraction/types/abstraction';
 
 export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Map>
 {

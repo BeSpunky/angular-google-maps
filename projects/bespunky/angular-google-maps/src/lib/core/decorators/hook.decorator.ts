@@ -1,4 +1,4 @@
-import { GoogleMapsEventsMap } from '../abstraction/types/google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../abstraction/types/events-map.type';
 
 export const HookOutputSymbol = Symbol('LifecycleComponent.HookOutput');
 

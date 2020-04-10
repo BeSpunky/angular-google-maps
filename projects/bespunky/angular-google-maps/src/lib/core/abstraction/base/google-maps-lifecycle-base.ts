@@ -1,9 +1,8 @@
 import { OnChanges, SimpleChanges, Inject } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-import { EmittingNativeWrapperFactory } from '../types/native-wrapper-provider.type';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
-import { EmittingWrapper } from '../types/emitting-wrapper.type';
+import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstraction';
 
 /**
  * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.

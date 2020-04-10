@@ -12,7 +12,7 @@ import { Wrap } from '../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
 import { Coord } from '../core/abstraction/types/geometry.type';
 import { GoogleMapsData } from '../overlays/data/google-maps-data';
-import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
+import { DrawableOverlay } from '../core/abstraction/types/abstraction';
 
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
