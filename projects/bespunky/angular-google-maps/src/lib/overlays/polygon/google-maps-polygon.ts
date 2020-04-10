@@ -1,6 +1,6 @@
 import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-maps-drawable-overlay';
 import { IGoogleMapsPolygon } from './i-google-maps-polygon';
-import { Coord } from '../../core/abstraction/types/geometry-utils.type';
+import { MultiPath } from '../../core/abstraction/types/geometry-utils.type';
 import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
 import { Wrap } from '../../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
@@ -23,13 +23,13 @@ export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Pol
 
     public getPath(): google.maps.LatLngLiteral[][]
     {
-        return this.api.geometry.toMultiPath(this.native.getPaths());
+        return this.api.geometry.toLiteralMultiPath(this.native.getPaths());
     }
 
     @OutsideAngular
-    public setPath(coords: Coord[] | Coord[][]): void
+    public setPath(coords: MultiPath): void
     {
-        this.native.setPaths(this.api.geometry.toMultiPath(coords));
+        this.native.setPaths(this.api.geometry.toLiteralMultiPath(coords));
     }
 
     setClickable     (clickable: boolean)                        : void { this.setOptions({ clickable }); }

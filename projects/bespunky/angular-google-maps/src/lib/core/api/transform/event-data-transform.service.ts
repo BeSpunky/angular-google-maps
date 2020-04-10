@@ -32,7 +32,7 @@ export class EventDataTransformService
     public mouseEvent(event: google.maps.MouseEvent): IGoogleMapsMouseEvent
     {
         return {
-            position: this.geometry.toCoordLiteral(event.latLng)
+            position: this.geometry.toLiteralCoord(event.latLng)
         };
     }
 

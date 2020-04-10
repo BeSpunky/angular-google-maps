@@ -36,7 +36,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
 
     public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
     {        
-        options = Object.assign({}, options, { position: this.api.geometry.toCoordLiteral(position) });
+        options = Object.assign({}, options, { position: this.api.geometry.toLiteralCoord(position) });
         
         // Marker creation will cause rendering. Run outside...
         return this.createOverlay(() => new GoogleMapsMarker(this.api, this, options));
