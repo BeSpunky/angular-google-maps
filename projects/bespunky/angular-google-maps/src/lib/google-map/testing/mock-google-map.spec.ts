@@ -3,6 +3,7 @@ import { IGoogleMapsMarker } from "../../overlays/marker/i-google-maps-marker";
 import { IGoogleMapsData } from "../../overlays/data/i-google-maps-data";
 import { MockEmittingWrapper } from '../../core/abstraction/testing/mock-emitting-wrapper.spec';
 import { MockFill } from '../../testing/mock-fill.decorator.spec';
+import { Coord, CoordPath } from '../../core/abstraction/types/geometry.type';
 
 @MockFill
 export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implements IGoogleMap
@@ -11,7 +12,7 @@ export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implemen
     {
         super(native);
     }
-    createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
+    createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
     {
         throw new Error("Method not implemented.");
     }

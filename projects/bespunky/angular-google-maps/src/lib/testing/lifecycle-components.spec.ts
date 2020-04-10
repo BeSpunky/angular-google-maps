@@ -6,7 +6,7 @@ import { ViewChild } from '@angular/core';
 import { GoogleMapsLifecycleBase } from '../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapComponent } from '../google-map/component/google-map.component';
 import { GoogleMap } from '../google-map/google-map';
-import { EmittingWrapper } from '../core/abstraction/types/emitting-wrapper.type';
+import { EmittingWrapper } from '../core/abstraction/types/abstraction';
 
 export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string): string
 {

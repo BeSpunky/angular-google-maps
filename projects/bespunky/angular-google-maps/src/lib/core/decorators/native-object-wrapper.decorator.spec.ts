@@ -1,7 +1,7 @@
 import { MockWrapper } from '../abstraction/testing/mock-wrapper.spec';
 import { MockNative } from '../abstraction/testing/mock-native.spec';
 import { NativeObjectWrapper } from './native-object-wrapper.decorator';
-import { Wrapper } from '../abstraction/types/wrapper.type';
+import { Wrapper } from '../abstraction/types/abstraction';
 
 describe('@NativeObjectWrapper()', () =>
 {

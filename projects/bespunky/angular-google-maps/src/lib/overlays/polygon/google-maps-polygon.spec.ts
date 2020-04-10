@@ -4,7 +4,7 @@ import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { GoogleMapsPolygon } from './google-maps-polygon';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
-import { Path, CoordPath, FlatCoord, NativeCoord } from '../../core/abstraction/types/geometry.type';
+import { CoordPath, FlatCoord, NativeCoord } from '../../core/abstraction/types/geometry.type';
 
 describe('GoogleMapsPolygon', () =>
 {
