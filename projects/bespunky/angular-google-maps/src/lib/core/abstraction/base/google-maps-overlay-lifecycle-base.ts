@@ -1,5 +1,5 @@
 import { GoogleMapsLifecycleBase } from './google-maps-lifecycle-base';
-import { DrawableOverlay } from '../types/drawable-overlay.type';
+import { DrawableOverlay } from '../types/abstraction';
 
 /**
  * Provides everything `GoogleMapsLifecycleBase` provides and also takes care of removing the overlay wrapper from the map.

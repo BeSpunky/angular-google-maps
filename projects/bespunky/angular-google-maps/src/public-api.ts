@@ -4,24 +4,20 @@
 
 // Modules
 export * from './lib/google-maps.module';
-
-// ==== Core ====
-
-// Providers
-export * from './lib/core/api/safe.directive';
-export * from './lib/core/api/google-maps-api.service';
 export * from './lib/core/config/google-maps-config';
 export * from './lib/core/loaders/google-maps-api-loader';
 export * from './lib/core/loaders/lazy-google-maps-api-loader';
 export * from './lib/core/loaders/no-op-google-maps-api-loader';
 
-export * from './lib/utils/transform/event-data-transform.service';
+// API
+export * from './lib/core/api/safe.directive';
+export * from './lib/core/api/google-maps-api.service';
+export * from './lib/core/api/transform/event-data-transform.service';
+export * from './lib/core/api/transform/geometry-transform.service';
 
 // Classes & Enums
 export * from './lib/core/config/defaults';
 export * from './lib/core/abstraction/events/google-maps-event-data';
-
-// ==== End Core ====
 
 // Map
 export * from './lib/google-map/google-map';
@@ -31,6 +27,10 @@ export * from './lib/google-map/types/zoom-level.enum';
 // Markers
 export * from './lib/overlays/marker/google-maps-marker';
 export * from './lib/overlays/marker/directive/google-maps-marker.directive';
+
+// Polygons
+export * from './lib/overlays/polygon/google-maps-polygon';
+export * from './lib/overlays/polygon/directive/google-maps-polygon.directive';
 
 // Data Layer
 export * from './lib/overlays/data/google-maps-data';

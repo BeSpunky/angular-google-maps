@@ -1,5 +1,5 @@
 import { OverlaysTracker } from "./overlays-tracker";
-import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
+import { DrawableOverlay } from '../core/abstraction/types/abstraction';
 import { MockMarker } from './marker/testing/mock-marker.spec';
 import { MockGoogleMap } from '../google-map/testing/mock-google-map.spec';
 

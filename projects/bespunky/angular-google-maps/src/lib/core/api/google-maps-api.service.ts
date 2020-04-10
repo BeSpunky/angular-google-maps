@@ -4,8 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsConfig } from '../config/google-maps-config';
-import { EventDataTransformService } from '../../utils/transform/event-data-transform.service';
-import { GeometryTransformService } from '../../utils/transform/geometry-transform.service';
+import { EventDataTransformService } from './transform/event-data-transform.service';
+import { GeometryTransformService } from './transform/geometry-transform.service';
 import { takeWhile } from 'rxjs/operators';
 
 @Injectable({

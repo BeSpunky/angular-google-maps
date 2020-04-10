@@ -6,7 +6,7 @@ import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
 import { Wrap } from '../../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
-import { Coord } from '../../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../../core/abstraction/types/geometry.type';
 import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 import { GoogleMapsFeature } from './feature/google-maps-feature';
 import { isGoogleMapsFeatureOptions } from '../../core/abstraction/type-guards/feature-options-type-guard';
@@ -30,7 +30,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     @OutsideAngular
     public createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
-        options = Object.assign({}, options, { geometry: new google.maps.Data.Point(position) });
+        options = Object.assign({}, options, { geometry: new google.maps.Data.Point(this.api.geometry.toLiteralCoord(position)) });
 
         return this.addFeature(options);
     }

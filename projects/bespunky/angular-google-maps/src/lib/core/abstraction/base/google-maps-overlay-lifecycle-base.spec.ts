@@ -6,7 +6,7 @@ import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { MockGoogleMap } from '../../../google-map/testing/mock-google-map.spec';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
-import { DrawableOverlay } from '../types/drawable-overlay.type';
+import { DrawableOverlay } from '../types/abstraction';
 import { MockDrawableOverlay } from '../testing/mock-drawable-overlay.spec';
 import { MockNativeDrawableOverlay } from '../testing/mock-native-drawable-overlay.spec';
 

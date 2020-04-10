@@ -2,7 +2,7 @@ import { Type } from '@angular/core';
 
 import { OutsideAngularSymbol } from './outside-angular.decorator';
 import { WrapSymbol } from './wrap.decorator';
-import { Wrapper } from '../abstraction/types/wrapper.type';
+import { Wrapper } from '../abstraction/types/abstraction';
 
 /**
  * Should be placed over classes implementing `IGoogleMapsNativeObjectWrapper` (directly or indirectly).

@@ -1,16 +1,19 @@
 import { OverlayType } from '../core/abstraction/base/overlay-type.enum';
 import { IGoogleMapsMarker } from './marker/i-google-maps-marker';
 import { IGoogleMapsData } from './data/i-google-maps-data';
-import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
+import { DrawableOverlay } from '../core/abstraction/types/abstraction';
+import { IGoogleMapsPolygon } from './polygon/i-google-maps-polygon';
 
 export class OverlaysTracker
 {
-    public markers   : IGoogleMapsMarker[] = [];
-    public dataLayers: IGoogleMapsData  [] = [];
+    public markers   : IGoogleMapsMarker [] = [];
+    public polygons  : IGoogleMapsPolygon[] = [];
+    public dataLayers: IGoogleMapsData   [] = [];
 
     private map = {
-        [OverlayType.Marker]: this.markers,
-        [OverlayType.Data  ]: this.dataLayers
+        [OverlayType.Marker] : this.markers,
+        [OverlayType.Polygon]: this.polygons,
+        [OverlayType.Data]   : this.dataLayers,
         // TODO: Add here any new supported overlay type collection
     };
 

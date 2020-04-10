@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { IGoogleMapsMouseEvent } from '../../core/abstraction/events/i-google-maps-mouse-event';
-import { isGoogleMapsMouseEvent } from '../../core/abstraction/type-guards/mouse-event-type-guard';
+import { IGoogleMapsMouseEvent } from '../../abstraction/events/i-google-maps-mouse-event';
+import { isGoogleMapsMouseEvent } from '../../abstraction/type-guards/mouse-event-type-guard';
 import { GeometryTransformService } from './geometry-transform.service';
 
 @Injectable({
@@ -32,7 +32,7 @@ export class EventDataTransformService
     public mouseEvent(event: google.maps.MouseEvent): IGoogleMapsMouseEvent
     {
         return {
-            position: this.geometry.toCoordLiteral(event.latLng)
+            position: this.geometry.toLiteralCoord(event.latLng)
         };
     }
 

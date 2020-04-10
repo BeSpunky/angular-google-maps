@@ -6,7 +6,9 @@ import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMap } from './google-map';
 import { Defaults } from '../core/config/defaults';
 import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
+import { GoogleMapsPolygon } from '../overlays/polygon/google-maps-polygon';
 import { GoogleMapsData } from '../overlays/data/google-maps-data';
+import { FlatCoord } from '../core/abstraction/types/geometry.type';
 
 const elementStub: any = document.createElement('div');
 
@@ -60,6 +62,19 @@ describe('GoogleMap', () =>
 
             expect(marker instanceof GoogleMapsMarker).toBeTruthy();
             expectPositionEquals(marker.getPosition(), Defaults.Center);
+        });
+
+        it('should create a polygon outside angular when calling `createPolygon()`', () => 
+        {            
+            const flatPath = [[10, 20], [20, 30], [30, 40]] as FlatCoord[];
+            const polygon = map.createPolygon(flatPath);
+            
+            // Overlay creation ends up in more than one calls to runOutsideAngular().
+            // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
+            expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsPolygon)).toBeTruthy();
+
+            expect(polygon instanceof GoogleMapsPolygon).toBeTruthy();
+            expect(polygon.getPath()).toEqual(api.geometry.toLiteralMultiPath(flatPath));
         });
         
         it('should create a data layer outside angular when calling `createDataLayer()`', () => 

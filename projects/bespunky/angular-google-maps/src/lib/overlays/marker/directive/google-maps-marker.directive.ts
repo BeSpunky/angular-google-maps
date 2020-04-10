@@ -6,6 +6,7 @@ import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.p
 import { GoogleMapsEventData } from '../../../core/abstraction/events/google-maps-event-data';
 import { Hook } from '../../../core/decorators/hook.decorator';
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
+import { Coord } from '../../../core/abstraction/types/geometry.type';
 
 @Directive({
     selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
@@ -22,7 +23,7 @@ export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase<IG
     @Input() public label?    : string;
     @Input() public opacity?  : number;
     @Input() public options?  : google.maps.MarkerOptions;
-    @Input() public position? : google.maps.LatLng | google.maps.LatLngLiteral;
+    @Input() public position? : Coord;
     @Input() public shape?    : google.maps.MarkerShape;
     @Input() public title?    : string;
     @Input() public visible?  : boolean;

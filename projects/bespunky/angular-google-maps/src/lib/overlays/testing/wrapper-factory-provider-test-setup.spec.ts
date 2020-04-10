@@ -6,7 +6,7 @@ import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.to
 import { GoogleMapComponent } from '../../google-map/component/google-map.component';
 import { GoogleMapsInternalApiService } from '../../core/api/google-maps-internal-api.service';
 import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
-import { EmittingWrapper } from '../../core/abstraction/types/emitting-wrapper.type';
+import { EmittingWrapper } from '../../core/abstraction/types/abstraction';
 
 function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider, ...deps: Provider[])
 {

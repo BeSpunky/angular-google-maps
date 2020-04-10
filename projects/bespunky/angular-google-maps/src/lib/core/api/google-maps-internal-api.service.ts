@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { upperFirst, camelCase } from 'lodash';
 import { BehaviorSubject, fromEventPattern } from 'rxjs';
 import { filter, switchMap, pluck } from 'rxjs/operators';
 import { Injectable, NgZone, SimpleChanges, Inject } from '@angular/core';
@@ -7,13 +7,12 @@ import { promiseLater } from '@bespunky/angular-zen';
 import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
 import { GoogleMapsConfig } from '../config/google-maps-config';
 import { GoogleMapsApiService } from './google-maps-api.service';
-import { GoogleMapsEventsMap } from '../abstraction/types/google-maps-events-map.type';
+import { GoogleMapsEventsMap } from '../abstraction/types/events-map.type';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
 import { HookOutputSymbol } from '../decorators/hook.decorator';
-import { EmittingWrapper } from '../abstraction/types/emitting-wrapper.type';
-import { Wrapper } from '../abstraction/types/wrapper.type';
+import { EmittingWrapper, Wrapper } from '../abstraction/types/abstraction';
     
 @Injectable({
     providedIn: 'root'
@@ -103,7 +102,7 @@ export class GoogleMapsInternalApiService
             );
 
             // Set the observable to the event emitter property
-            emittingComponent[_.camelCase(event.name)] = emitter;
+            emittingComponent[camelCase(event.name)] = emitter;
         }
     }
 
@@ -112,7 +111,7 @@ export class GoogleMapsInternalApiService
     {
         for (const propertyName in changes)
         {
-            const setterName = `set${_.upperFirst(propertyName)}`;
+            const setterName = `set${upperFirst(propertyName)}`;
 
             // If the wrapper has a setter for the property name, this will set the new values of @Input() values to the native object's properties
             if (setterName in wrapper)

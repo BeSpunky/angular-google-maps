@@ -1,8 +1,10 @@
 import { IGoogleMap } from "../i-google-map";
 import { IGoogleMapsMarker } from "../../overlays/marker/i-google-maps-marker";
+import { IGoogleMapsPolygon } from '../../overlays/polygon/i-google-maps-polygon';
 import { IGoogleMapsData } from "../../overlays/data/i-google-maps-data";
 import { MockEmittingWrapper } from '../../core/abstraction/testing/mock-emitting-wrapper.spec';
 import { MockFill } from '../../testing/mock-fill.decorator.spec';
+import { Coord, CoordPath } from '../../core/abstraction/types/geometry.type';
 
 @MockFill
 export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implements IGoogleMap
@@ -11,7 +13,11 @@ export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implemen
     {
         super(native);
     }
-    createMarker(position: google.maps.LatLng | google.maps.LatLngLiteral, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
+    createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
+    {
+        throw new Error("Method not implemented.");
+    }
+    createPolygon(path: CoordPath, options?: google.maps.PolygonOptions): IGoogleMapsPolygon
     {
         throw new Error("Method not implemented.");
     }
@@ -19,7 +25,7 @@ export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implemen
     {
         throw new Error("Method not implemented.");
     }
-    removeOverlay<TOverlay extends import("../../core/abstraction/types/drawable-overlay.type").DrawableOverlay>(overlay: TOverlay): void
+    removeOverlay<TOverlay extends import("../../core/abstraction/types/abstraction").DrawableOverlay>(overlay: TOverlay): void
     {
         throw new Error("Method not implemented.");
     }
