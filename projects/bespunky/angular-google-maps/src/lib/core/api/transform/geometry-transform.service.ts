@@ -31,7 +31,7 @@ export class GeometryTransformService
      */
     public toLiteralMultiPath(path: CoordPath): google.maps.LatLngLiteral[][]
     {
-        if (!this.isMultiPath(path)) path = this.castMultPath(path);
+        if (!this.isMultiPath(path)) path = this.castMultiPath(path);
 
         // Check for multipath represented as a google.maps.MVCArray object.
         if (path instanceof google.maps.MVCArray)
@@ -49,7 +49,7 @@ export class GeometryTransformService
      * @param {CoordPath} path The path to cast as a multi-path.
      * @returns {MultiPath} The multi-path representation of the given path.
      */
-    public castMultPath(path: CoordPath): MultiPath
+    public castMultiPath(path: CoordPath): MultiPath
     {
         if (this.isMultiPath(path)) return path as MultiPath;
         
