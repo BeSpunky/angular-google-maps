@@ -1,5 +1,6 @@
 import { IGoogleMap } from "../i-google-map";
 import { IGoogleMapsMarker } from "../../overlays/marker/i-google-maps-marker";
+import { IGoogleMapsPolygon } from '../../overlays/polygon/i-google-maps-polygon';
 import { IGoogleMapsData } from "../../overlays/data/i-google-maps-data";
 import { MockEmittingWrapper } from '../../core/abstraction/testing/mock-emitting-wrapper.spec';
 import { MockFill } from '../../testing/mock-fill.decorator.spec';
@@ -13,6 +14,10 @@ export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implemen
         super(native);
     }
     createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
+    {
+        throw new Error("Method not implemented.");
+    }
+    createPolygon(path: CoordPath, options?: google.maps.PolygonOptions): IGoogleMapsPolygon
     {
         throw new Error("Method not implemented.");
     }

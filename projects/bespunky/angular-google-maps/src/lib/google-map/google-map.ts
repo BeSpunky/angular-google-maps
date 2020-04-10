@@ -10,9 +10,10 @@ import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { Wrap } from '../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
-import { Coord } from '../core/abstraction/types/geometry.type';
+import { Coord, CoordPath } from '../core/abstraction/types/geometry.type';
 import { GoogleMapsData } from '../overlays/data/google-maps-data';
 import { DrawableOverlay } from '../core/abstraction/types/abstraction';
+import { GoogleMapsPolygon } from '../overlays/polygon/google-maps-polygon';
 
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
@@ -40,6 +41,13 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         
         // Marker creation will cause rendering. Run outside...
         return this.createOverlay(() => new GoogleMapsMarker(this.api, this, options));
+    }
+    
+    public createPolygon(path: CoordPath, options?: google.maps.PolygonOptions): GoogleMapsPolygon
+    {
+        options = Object.assign({}, options, { paths: this.api.geometry.toLiteralMultiPath(path) });
+
+        return this.createOverlay(() => new GoogleMapsPolygon(this.api, this, options));
     }
 
     public createDataLayer(options?: google.maps.Data.DataOptions): GoogleMapsData
