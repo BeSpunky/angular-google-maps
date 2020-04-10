@@ -3,7 +3,7 @@ import { Directive, Input, Output } from '@angular/core';
 
 import { GoogleMapsOverlayLifecycleBase } from '../../../core/abstraction/base/google-maps-overlay-lifecycle-base';
 import { IGoogleMapsPolygon } from '../i-google-maps-polygon';
-import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../../../core/abstraction/types/geometry.type';
 import { Hook } from '../../../core/decorators/hook.decorator';
 import { GoogleMapsEventData } from '../../../core/abstraction/events/google-maps-event-data';
 import { GoogleMapsPolygonFactoryProvider } from '../google-maps-polygon-factory.provider';

@@ -4,7 +4,7 @@ import { ComponentFixture } from '@angular/core/testing';
 import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '../../../testing/lifecycle-components.spec';
 import { GoogleMapsPolygonDirective } from './google-maps-polygon.directive';
-import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../../../core/abstraction/types/geometry.type';
 
 /**
  * -- NOTE --

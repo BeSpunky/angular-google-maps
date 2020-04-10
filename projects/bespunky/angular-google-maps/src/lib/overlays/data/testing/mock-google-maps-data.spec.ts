@@ -3,7 +3,7 @@ import { MockDrawableOverlay } from '../../../core/abstraction/testing/mock-draw
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { MockFill } from '../../../testing/mock-fill.decorator.spec';
 import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
-import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../../../core/abstraction/types/geometry.type';
 
 @MockFill
 export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> implements IGoogleMapsData

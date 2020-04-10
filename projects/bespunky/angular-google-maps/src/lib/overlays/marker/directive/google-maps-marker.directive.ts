@@ -6,7 +6,7 @@ import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.p
 import { GoogleMapsEventData } from '../../../core/abstraction/events/google-maps-event-data';
 import { Hook } from '../../../core/decorators/hook.decorator';
 import { IGoogleMapsMarker } from '../i-google-maps-marker';
-import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../../../core/abstraction/types/geometry.type';
 
 @Directive({
     selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',

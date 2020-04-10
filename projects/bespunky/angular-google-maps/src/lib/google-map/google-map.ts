@@ -10,7 +10,7 @@ import { GoogleMapsMarker } from '../overlays/marker/google-maps-marker';
 import { ZoomLevel } from './types/zoom-level.enum';
 import { Wrap } from '../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../core/decorators/outside-angular.decorator';
-import { Coord } from '../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../core/abstraction/types/geometry.type';
 import { GoogleMapsData } from '../overlays/data/google-maps-data';
 import { DrawableOverlay } from '../core/abstraction/types/drawable-overlay.type';
 

@@ -2,7 +2,7 @@ import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { GoogleMapsMarker } from './google-maps-marker';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
 import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
-import { Coord } from '../../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../../core/abstraction/types/geometry.type';
 
 describe('GoogleMapsMarker', () =>
 {
@@ -26,7 +26,7 @@ describe('GoogleMapsMarker', () =>
         // Also tests the getPosition method
         function testPosition(makeCoord: () => Coord)
         {
-            spyOn(marker.native, 'setPosition');
+            spyOn(marker.native, 'setPosition').and.callThrough();
 
             const coord   = makeCoord();
             const literal = api.geometry.toLiteralCoord(coord);

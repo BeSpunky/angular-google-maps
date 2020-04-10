@@ -3,7 +3,7 @@ import { MockDrawableOverlay } from "../../../core/abstraction/testing/mock-draw
 import { IGoogleMapsMarker } from "../i-google-maps-marker";
 import { OverlayType } from '../../../core/abstraction/base/overlay-type.enum';
 import { IGoogleMap } from '../../../google-map/i-google-map';
-import { Coord } from '../../../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../../../core/abstraction/types/geometry.type';
 
 @MockFill
 export class MockMarker extends MockDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker

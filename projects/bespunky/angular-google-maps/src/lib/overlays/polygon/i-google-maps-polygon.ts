@@ -1,10 +1,10 @@
 import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
-import { MultiPath } from '../../core/abstraction/types/geometry-utils.type';
+import { CoordPath } from '../../core/abstraction/types/geometry.type';
 
 export interface IGoogleMapsPolygon extends IGoogleMapsDrawableOverlay<google.maps.Polygon>
 {
     getPath(): google.maps.LatLngLiteral[][];
-    setPath(coords: MultiPath): void;
+    setPath(coords: CoordPath): void;
 
     // Options delegators
     setClickable     (clickable: boolean)                  : void;

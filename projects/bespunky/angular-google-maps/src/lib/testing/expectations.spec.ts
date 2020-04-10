@@ -2,7 +2,7 @@
  * Provides util functions to shortcut `expect()` statements.
  */
 
-import { Coord } from '../core/abstraction/types/geometry-utils.type';
+import { Coord } from '../core/abstraction/types/geometry.type';
 import { GeometryTransformService } from '../core/api/transform/geometry-transform.service';
 /**
  * Shortcuts expecting a literal position match with a native LatLng object.
