@@ -7,6 +7,7 @@ import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-ma
 import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 import { Wrap } from '../../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
+import { Coord } from '../../core/abstraction/types/geometry-utils.type';
 
 @NativeObjectWrapper
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
@@ -19,6 +20,17 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
     protected createNativeObject(options?: google.maps.ReadonlyMarkerOptions): google.maps.Marker
     {
         return new google.maps.Marker(options);
+    }
+    
+    public getPosition(): google.maps.LatLngLiteral
+    {
+        return this.api.geometry.toLiteralCoord(this.native.getPosition());
+    }
+    
+    @OutsideAngular
+    public setPosition(position: Coord): void
+    {
+        this.native.setPosition(this.api.geometry.toLiteralCoord(position));
     }
     
     @Wrap() @OutsideAngular
@@ -66,12 +78,6 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
     @Wrap() @OutsideAngular
     setOpacity(opacity: number): void { }
   
-    @Wrap()
-    getPosition(): google.maps.LatLng { return void 0; }
-    
-    @Wrap() @OutsideAngular
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void { }
-
     @Wrap()
     getShape(): google.maps.MarkerShape { return void 0; }
 

@@ -1,7 +1,11 @@
 import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
+import { Coord } from '../../core/abstraction/types/geometry-utils.type';
 
 export interface IGoogleMapsMarker extends IGoogleMapsDrawableOverlay<google.maps.Marker>
 {
+    getPosition(): google.maps.LatLngLiteral;
+    setPosition(coord: Coord): void;
+
     /* --------------------------------------- Native wrappers -------------------------------------- *
      * Documentation in: https://developers.google.com/maps/documentation/javascript/reference/marker *
      * ---------------------------------------------------------------------------------------------- */
@@ -28,9 +32,6 @@ export interface IGoogleMapsMarker extends IGoogleMapsDrawableOverlay<google.map
 
     getOpacity(): number;
     setOpacity(opacity: number): void;
-
-    getPosition(): google.maps.LatLng;
-    setPosition(position: google.maps.LatLng | google.maps.LatLngLiteral): void;
 
     getShape(): google.maps.MarkerShape;
     setShape(shape: google.maps.MarkerShape): void;
