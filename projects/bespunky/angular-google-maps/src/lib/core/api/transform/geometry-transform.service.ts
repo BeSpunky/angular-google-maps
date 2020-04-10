@@ -78,13 +78,11 @@ export class GeometryTransformService
      */
     public isFlatCoord(coord: any): boolean
     {
-        return coord instanceof Array
+        return coord instanceof Array 
             && coord.length === 2
             // Latitude range
-            && coord[0] >= -90
-            && coord[0] <= 90
+            && coord[0] >= -90  && coord[0] <= 90
             // Longitude range
-            && coord[1] >= -180
-            && coord[1] <= 180;
+            && coord[1] >= -180 && coord[1] <= 180;
     }
 }
