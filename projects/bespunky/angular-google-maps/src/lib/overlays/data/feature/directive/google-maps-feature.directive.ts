@@ -6,6 +6,7 @@ import { GoogleMapsFeatureFactoryProvider } from '../google-maps-feature-factory
 import { GoogleMapsLifecycleBase } from '../../../../core/abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsEventData } from '../../../../core/abstraction/events/google-maps-event-data';
 import { Hook } from '../../../../core/decorators/hook.decorator';
+import { Coord, CoordPath } from '../../../../core/abstraction/types/geometry.type';
 
 @Directive({
     selector: 'bs-google-maps-feature, [bsGoogleMapsFeature]',
@@ -14,7 +15,13 @@ import { Hook } from '../../../../core/decorators/hook.decorator';
 })
 export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase<IGoogleMapsFeature>
 {
+    // The `geometry` property will delegate to the feature's geometry, but requires the user to create have an instantiated
+    // `Data.Geometry` object. The quick geometry properties on the other hand, will create and set the inner feature geometry
+    // automatically. Only one property should be set at a time. Either `geometry` or one of the quick setters.
+    // Using both, or more than one quick geometry setter at a time, could lead to inconsistancies.
     @Input() public geometry?: google.maps.Data.Geometry;
+    @Input() public marker?  : Coord;
+    @Input() public polygon? : CoordPath;
     
     /** Fired when a feature is added to the collection. */
     @Hook('addfeature')     @Output() public addFeature          : Observable<GoogleMapsEventData>;
