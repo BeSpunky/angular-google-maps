@@ -1,10 +1,11 @@
 import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
 import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
-import { Coord } from '../../core/abstraction/types/geometry.type';
+import { Coord, CoordPath } from '../../core/abstraction/types/geometry.type';
 
 export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.Data>
 {
     createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
+    createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
 
     addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature;
     
