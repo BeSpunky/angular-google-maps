@@ -30,7 +30,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     @OutsideAngular
     public createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
-        options = this.buildOptions(new google.maps.Data.Point(this.api.geometry.toLiteralCoord(position)), options);
+        options = this.buildOptions(this.api.geometry.createDataPoint(position), options);
 
         return this.addFeature(options);
     }
@@ -38,7 +38,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     @OutsideAngular
     public createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
-        options = this.buildOptions(new google.maps.Data.Polygon(this.api.geometry.toLiteralMultiPath(path)), options);
+        options = this.buildOptions(this.api.geometry.createDataPolygon(path), options);
 
         return this.addFeature(options);
     }

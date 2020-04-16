@@ -85,4 +85,14 @@ export class GeometryTransformService
             // Longitude range
             && coord[1] >= -180 && coord[1] <= 180;
     }
+
+    public createDataPoint(position: Coord): google.maps.Data.Point
+    {
+        return new google.maps.Data.Point(this.toLiteralCoord(position));
+    }
+
+    public createDataPolygon(path: CoordPath): google.maps.Data.Polygon
+    {
+        return new google.maps.Data.Polygon(this.toLiteralMultiPath(path));
+    }
 }
