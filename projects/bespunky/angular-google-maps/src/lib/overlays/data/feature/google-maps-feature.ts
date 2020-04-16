@@ -5,6 +5,7 @@ import { NativeObjectWrapper } from '../../../core/decorators/native-object-wrap
 import { Wrap } from '../../../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../../../core/decorators/outside-angular.decorator';
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction/base/google-maps-native-object-emitting-wrapper';
+import { Coord, CoordPath } from '../../../core/abstraction/types/geometry.type';
 
 @NativeObjectWrapper
 export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
@@ -17,6 +18,16 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     protected createNativeObject(options?: google.maps.Data.FeatureOptions): google.maps.Data.Feature
     {
         return new google.maps.Data.Feature(options);
+    }
+
+    public setMarker(position: Coord): void
+    {
+        this.setGeometry(this.api.geometry.createDataPoint(position));
+    }
+
+    public setPolygon(path: CoordPath): void
+    {
+        this.setGeometry(this.api.geometry.createDataPolygon(path));
     }
 
     public toGeoJson(): Promise<any>
