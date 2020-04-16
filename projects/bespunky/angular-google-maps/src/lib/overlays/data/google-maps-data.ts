@@ -6,7 +6,7 @@ import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
 import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
 import { Wrap } from '../../core/decorators/wrap.decorator';
 import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
-import { Coord } from '../../core/abstraction/types/geometry.type';
+import { Coord, CoordPath } from '../../core/abstraction/types/geometry.type';
 import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 import { GoogleMapsFeature } from './feature/google-maps-feature';
 import { isGoogleMapsFeatureOptions } from '../../core/abstraction/type-guards/feature-options-type-guard';
@@ -30,9 +30,22 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     @OutsideAngular
     public createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
-        options = Object.assign({}, options, { geometry: new google.maps.Data.Point(this.api.geometry.toLiteralCoord(position)) });
+        options = this.buildOptions(new google.maps.Data.Point(this.api.geometry.toLiteralCoord(position)), options);
 
         return this.addFeature(options);
+    }
+
+    @OutsideAngular
+    public createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
+    {
+        options = this.buildOptions(new google.maps.Data.Polygon(this.api.geometry.toLiteralMultiPath(path)), options);
+
+        return this.addFeature(options);
+    }
+
+    private buildOptions(geometry: google.maps.Data.Geometry, baseOptions?: google.maps.Data.FeatureOptions): google.maps.Data.FeatureOptions
+    {
+        return Object.assign({}, baseOptions, { geometry });
     }
 
     public addFeature(feature: IGoogleMapsFeature): IGoogleMapsFeature;
