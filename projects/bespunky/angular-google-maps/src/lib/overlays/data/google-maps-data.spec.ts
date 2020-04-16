@@ -126,12 +126,31 @@ describe('GoogleMapsData', () =>
         it('should create, add and return a marker feature outside angular when calling `createMarker()`', async () =>
         {
             // Adding geometry options to make sure it is overriden by the position argument
-            const feature = data.createMarker({ lat: 20, lng: 20 }, { id: 'bombom', geometry: new google.maps.Data.Point({ lat: 10, lng: 10 }) });
+            const feature = data.createMarker({ lat: 20, lng: 21 }, { id: 'bombom', geometry: new google.maps.Data.Point({ lat: 10, lng: 10 }) });
 
             const geoJson = await feature.toGeoJson();
             
+            expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+            expect(geoJson.id).toBe('bombom');
             expect(geoJson.geometry.type).toBe('Point');
-            expect(geoJson.geometry.coordinates).toEqual([20, 20]);
+            expect(geoJson.geometry.coordinates).toEqual([21, 20]);
+        });
+
+        it('should create, add and return a polygon feature outside angular when calling `createPolygon()`', async () =>
+        {
+            // Adding geometry options to make sure it is overriden by the path argument
+            const feature = data.createPolygon([
+                { lat: 20, lng: 21 },
+                { lat: 21, lng: 22 },
+                { lat: 22, lng: 23 }
+            ], { id: 'bombom', geometry: new google.maps.Data.Point({ lat: 10, lng: 10 }) });
+
+            const geoJson = await feature.toGeoJson();
+            
+            expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+            expect(geoJson.id).toBe('bombom');
+            expect(geoJson.geometry.type).toBe('Polygon');
+            expect(geoJson.geometry.coordinates).toEqual([[[21, 20],[22,21],[23,22],[21,20]]]);
         });
     });
 });
