@@ -1,5 +1,7 @@
-<bs-google-map *bsSafe (click)="onClick(dataLayer, $event)" [center]="{ lat: 31.152775, lng: 34.818484 }">
-    <bs-google-maps-data #dataLayer="dataLayer"></bs-google-maps-data>
+<bs-google-map *bsSafe (click)="onClick(dataLayer, $event)" [center]="{ lat: 31.152775, lng: 34.818484 }" [zoom]="3">
+    <bs-google-maps-data #dataLayer="dataLayer">
+        <bs-google-maps-feature [polygon]="[[0,0],[1,1],[20,2]]"></bs-google-maps-feature>
+    </bs-google-maps-data>
     <bs-google-maps-marker (click)="onMarkerClick($event)" [position]="{ lat: 31.852775, lng: 34.818484 }"></bs-google-maps-marker>
     <bs-google-maps-marker (click)="onMarkerClick($event)" [position]="{ lat: 31.152775, lng: 34.818484 }"></bs-google-maps-marker>
     <bs-google-maps-marker (click)="onMarkerClick($event)" [position]="{ lat: 31.752775, lng: 34.818484 }"></bs-google-maps-marker>

@@ -1,10 +1,24 @@
 import { IGoogleMapsData } from '../i-google-maps-data';
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction/base/i-google-maps-native-object-emitting-wrapper';
+import { Coord, CoordPath } from '../../../core/abstraction/types/geometry.type';
 
 export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>
 {
     /** The data object this feature was added to. */
     readonly data: IGoogleMapsData;
+
+    /**
+     * Replaces the geometry of this feature with a marker geometry.
+     *
+     * @param {Coord} position The position of the marker on the map.
+     */
+    setMarker(position: Coord): void;
+    /**
+     * Replaces the geometry of this feature with a polygon geometry.
+     *
+     * @param {CoordPath} path The polygon's path.
+     */
+    setPolygon(path: CoordPath): void;
 
     getId(): number | string;
     
