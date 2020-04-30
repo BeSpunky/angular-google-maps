@@ -1,4 +1,4 @@
-import { OnChanges, SimpleChanges, Inject } from '@angular/core';
+import { OnChanges, SimpleChanges, Inject, Injectable, Directive } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
@@ -25,6 +25,7 @@ import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstract
  * 
  * @see GoogleMapsComponent source code for an example.
  */
+@Directive()
 export abstract class GoogleMapsLifecycleBase<TWrapper extends EmittingWrapper>
                 implements OnChanges
 {
