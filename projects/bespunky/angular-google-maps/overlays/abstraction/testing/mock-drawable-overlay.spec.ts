@@ -1,6 +1,6 @@
-import { MockEmittingWrapper } from './mock-emitting-wrapper.spec';
+import { MockEmittingWrapper } from '../../../src/lib/core/abstraction/testing/mock-emitting-wrapper.spec';
 import { IGoogleMapsDrawableOverlay } from '../base/i-google-maps-drawable-overlay';
-import { IGoogleMap } from '../../../google-map/i-google-map';
+import { IGoogleMap } from '../../../src/lib/google-map/i-google-map';
 import { OverlayType } from '../base/overlay-type.enum';
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 

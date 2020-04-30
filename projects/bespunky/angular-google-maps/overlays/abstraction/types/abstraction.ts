@@ -1,0 +1,1 @@
+export type DrawableOverlay = IGoogleMapsDrawableOverlay<IGoogleMapsNativeDrawableOverlay>;
