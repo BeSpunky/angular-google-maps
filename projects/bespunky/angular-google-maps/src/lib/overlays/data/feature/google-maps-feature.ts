@@ -7,6 +7,7 @@ import { OutsideAngular } from '../../../core/decorators/outside-angular.decorat
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction/base/google-maps-native-object-emitting-wrapper';
 import { Coord, CoordPath } from '../../../core/abstraction/types/geometry.type';
 
+// @dynamic
 @NativeObjectWrapper
 export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {

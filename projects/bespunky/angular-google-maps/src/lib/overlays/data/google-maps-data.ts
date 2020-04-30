@@ -12,6 +12,7 @@ import { GoogleMapsFeature } from './feature/google-maps-feature';
 import { isGoogleMapsFeatureOptions } from '../../core/abstraction/type-guards/feature-options-type-guard';
 import { FeatureTracker } from './feature-tracker';
 
+// @dynamic
 @NativeObjectWrapper
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {

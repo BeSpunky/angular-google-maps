@@ -15,6 +15,7 @@ import { GoogleMapsData } from '../overlays/data/google-maps-data';
 import { DrawableOverlay } from '../core/abstraction/types/abstraction';
 import { GoogleMapsPolygon } from '../overlays/polygon/google-maps-polygon';
 
+// @dynamic
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
