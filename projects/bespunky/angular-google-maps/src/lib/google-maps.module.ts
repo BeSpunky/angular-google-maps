@@ -1,7 +1,8 @@
 import 'reflect-metadata'; // Imported once here. No need to import in other places.
 
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
-import { ZenModule, UniversalModule } from '@bespunky/angular-zen';
+import { UniversalModule } from '@bespunky/angular-zen/universal';
+import { AsyncModule } from '@bespunky/angular-zen/async';
 
 import { LazyGoogleMapsApiLoader } from './core/loaders/lazy-google-maps-api-loader';
 import { GoogleMapsApiLoader } from './core/loaders/google-maps-api-loader';
@@ -27,7 +28,7 @@ export const exported = [
 
 @NgModule({
     declarations: exported,
-    imports:      [ZenModule, UniversalModule.forRoot()],
+    imports:      [AsyncModule, UniversalModule],
     exports:      exported
 })
 export class GoogleMapsModule
