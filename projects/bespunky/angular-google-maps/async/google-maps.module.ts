@@ -4,8 +4,8 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { GoogleMapsModule as SyncGoogleMapsModule, GoogleMapsApiLoader } from '@bespunky/angular-google-maps/core';
 import { LazyGoogleMapsApiLoader } from './services/lazy-google-maps-api-loader';
-import { GoogleMapsConfig } from './services/google-maps-config';
-import { SafeDirective } from './directives/safe.directive';
+import { GoogleMapsConfig        } from './services/google-maps-config';
+import { SafeDirective           } from './directives/safe.directive';
 
 // Import and re-export the core google maps module so it does all the work
 @NgModule({

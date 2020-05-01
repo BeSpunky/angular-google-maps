@@ -1,24 +1,21 @@
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from "@angular/core";
-import { GoogleMapsMarkerDirective            } from './modules/marker/directive/google-maps-marker.directive';
-import { GoogleMapsPolygonDirective           } from './modules/polygon/directive/google-maps-polygon.directive';
-import { GoogleMapsDataDirective              } from './modules/data/directive/google-maps-data.directive';
-import { GoogleMapsFeatureDirective           } from './modules/data/feature/directive/google-maps-feature.directive';
-import { GoogleMapWithOverlaysFactoryProvider } from './modules/google-map/google-map-with-overlays-factory.provider';
-import { GoogleMapsMarkerFactoryProvider      } from './modules/marker/google-maps-marker-factory.provider';
-import { GoogleMapsPolygonFactoryProvider     } from './modules/polygon/google-maps-polygon-factory.provider';
-import { GoogleMapsDataFactoryProvider        } from './modules/data/google-maps-data-factory.provider';
-import { GoogleMapsFeatureFactoryProvider     } from './modules/data/feature/google-maps-feature-factory.provider';
+import { GoogleMapWithOverlaysModule } from './modules/google-map/google-map-with-overlays.module';
+import { GoogleMapsMarkerModule      } from './modules/marker/google-maps-marker.module';
+import { GoogleMapsPolygonModule     } from './modules/polygon/google-maps-polygon.module';
+import { GoogleMapsDataModule        } from './modules/data/google-maps-data.module';
+import { GoogleMapsFeatureModule     } from './modules/data/feature/google-maps-feature.module';
 
-const components = [
-    GoogleMapsMarkerDirective,
-    GoogleMapsPolygonDirective,
-    GoogleMapsDataDirective,
-    GoogleMapsFeatureDirective
+const modules = [
+    GoogleMapWithOverlaysModule, // Given that GoogleMapsWithOverlaysModule is imported AFTER the GoogleMapsModule, this will override the default map provider
+    GoogleMapsMarkerModule,
+    GoogleMapsPolygonModule,
+    GoogleMapsDataModule,
+    GoogleMapsFeatureModule
 ];
 
 @NgModule({
-    declarations: components,
-    exports     : components
+    imports: modules,
+    exports: modules
 })
 export class GoogleMapsOverlaysModule
 {
@@ -28,16 +25,9 @@ export class GoogleMapsOverlaysModule
             throw new Error('GoogleMapsOverlaysModule was previously loaded somewhere. Make sure there is only one place where you import it.');
     }
 
+    // Not really needed. Only implemented the design pattern to remind the user to only import once.
     static forRoot(): ModuleWithProviders<GoogleMapsOverlaysModule>
     {
-        return {
-            ngModule : GoogleMapsOverlaysModule,
-            providers: [
-                GoogleMapWithOverlaysFactoryProvider, // Given that GoogleMapsOverlaysModule is imported AFTER GoogleMapsModule, this will override the map provider from the core package
-                GoogleMapsMarkerFactoryProvider,
-                GoogleMapsPolygonFactoryProvider,
-                GoogleMapsDataFactoryProvider,
-                GoogleMapsFeatureFactoryProvider
-            ]
-        };
-    }}
+        return { ngModule : GoogleMapsOverlaysModule };
+    }
+}

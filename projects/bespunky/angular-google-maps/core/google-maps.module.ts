@@ -8,14 +8,12 @@ import { GoogleMapsApiLoader               } from './api/loader/google-maps-api-
 import { NoOpGoogleMapsApiLoader           } from './api/loader/no-op-google-maps-api-loader';
 import { GoogleMapsApiReadyPromiseProvider } from './api/loader/google-maps-api-ready.token';
 import { GoogleMapsInternalApiService      } from './api/google-maps-internal-api.service';
-import { GoogleMapFactoryProvider          } from './modules/google-map/google-map-factory.provider';
-import { GoogleMapComponent                } from './modules/google-map/component/google-map.component';
+import { GoogleMapModule                   } from './modules/google-map/google-map.module';
 
 @NgModule({
-    declarations: [GoogleMapComponent],
-    imports     : [CoreModule, UniversalModule],
-    exports     : [GoogleMapComponent],
-    providers   : [GoogleMapsApiReadyPromiseProvider, GoogleMapFactoryProvider]
+    imports     : [GoogleMapModule, CoreModule, UniversalModule],
+    exports     : [GoogleMapModule],
+    providers   : [GoogleMapsApiReadyPromiseProvider]
 })
 export class GoogleMapsModule
 {
@@ -28,6 +26,7 @@ export class GoogleMapsModule
                        .catch(this.onApiLoadError);
     }
 
+    // This is overriden by the async GoogleMapsModule to provide a different loader
     static forRoot(): ModuleWithProviders<GoogleMapsModule>
     {
         return {
