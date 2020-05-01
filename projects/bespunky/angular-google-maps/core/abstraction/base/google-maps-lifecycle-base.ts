@@ -1,4 +1,4 @@
-import { OnChanges, SimpleChanges, Inject, Injectable, Directive } from '@angular/core';
+import { OnChanges, SimpleChanges, Inject, Directive } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
