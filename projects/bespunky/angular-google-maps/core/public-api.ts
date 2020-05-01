@@ -1,3 +1,6 @@
+// Module
+export * from './google-maps.module';
+
 // Abstraction
 export * from './abstraction/base/i-google-maps-native-object-wrapper';
 export * from './abstraction/base/i-google-maps-native-object-emitting-wrapper';
