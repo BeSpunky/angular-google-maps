@@ -16,32 +16,15 @@ import { GoogleMapsDataDirective } from './overlays/data/directive/google-maps-d
 import { GoogleMapsFeatureDirective } from './overlays/data/feature/directive/google-maps-feature.directive';
 import { SafeDirective } from './core/api/safe.directive';
 import { GoogleMapsPolygonDirective } from './overlays/polygon/directive/google-maps-polygon.directive';
+import { GoogleMapsModule as SyncGoogleMapsModule } from '@bespunky/angular-google-maps/core';
 
-export const exported = [
-    GoogleMapComponent,
-    GoogleMapsMarkerDirective,
-    GoogleMapsDataDirective,
-    GoogleMapsFeatureDirective,
-    GoogleMapsPolygonDirective,
-    SafeDirective
-];
-
+// Import and re-export the core google maps module so it does all the work
 @NgModule({
-    declarations: exported,
-    imports:      [AsyncModule, UniversalModule],
-    exports:      exported
+    declarations: [SafeDirective],
+    exports:      [SafeDirective, SyncGoogleMapsModule]
 })
-export class GoogleMapsModule
+export class GoogleMapsModule extends SyncGoogleMapsModule
 {
-    constructor(@Optional() @SkipSelf() googleMapsModule: GoogleMapsModule, private api: GoogleMapsInternalApiService)
-    {
-        if (googleMapsModule)
-            throw new Error('GoogleMapsModule was previously loaded somewhere. Make sure there is only one place where you import it.');
-
-        this.api.load().then(this.onApiLoaded)
-                       .catch(this.onApiLoadError);
-    }
-
     static forRoot(config: GoogleMapsConfig): ModuleWithProviders<GoogleMapsModule>
     {
         return {
@@ -53,17 +36,5 @@ export class GoogleMapsModule
                 { provide: GoogleMapsConfig, useValue: config }
             ]
         };
-    }
-
-    private onApiLoaded()
-    {
-        // TODO: Notify anyone??
-    }
-
-    private onApiLoadError(error: any)
-    {
-        // TODO: Notify anyone??
-
-        console.log('[GoogleMapsModule] Google Maps API failed to load:', error);
     }
 }

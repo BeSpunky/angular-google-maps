@@ -3,7 +3,7 @@ import { ElementRef } from '@angular/core';
 import { GoogleMapFactoryProvider } from './google-map-factory.provider';
 import { GoogleMap } from './google-map';
 import { itShouldCreateWrapper } from '../overlays/testing/wrapper-factory-provider-test-setup.spec';
-import { configureGoogleMapsTestingModule } from '../testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { TestBed } from '@angular/core/testing';
 import { UniversalService } from '@bespunky/angular-zen';
 import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token';

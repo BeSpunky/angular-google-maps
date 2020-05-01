@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapsOverlayLifecycleBase } from './google-maps-overlay-lifecycle-base';
 import { GoogleMapsApiService } from '../../../src/lib/core/api/google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../../../src/lib/testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { MockGoogleMap } from '../../../src/lib/google-map/testing/mock-google-map.spec';
 import { WrapperFactory } from '../../../src/lib/core/abstraction/tokens/wrapper-factory.token';
 import { DrawableOverlay } from '../../../src/lib/core/abstraction/types/abstraction';

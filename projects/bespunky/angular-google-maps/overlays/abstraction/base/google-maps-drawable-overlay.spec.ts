@@ -1,5 +1,5 @@
 
-import { configureGoogleMapsTestingModule } from '../../../src/lib/testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsApiService } from '../../../src/lib/core/api/google-maps-api.service';
 import { MockGoogleMap } from '../../../src/lib/google-map/testing/mock-google-map.spec';
 import { MockNativeDrawableOverlay } from '../testing/mock-native-drawable-overlay.spec';

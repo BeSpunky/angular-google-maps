@@ -5,10 +5,10 @@
 import { DebugElement, ElementRef, Type } from '@angular/core';
 import { TestModuleMetadata, TestBed, ComponentFixture } from '@angular/core/testing';
 
-import { GoogleMapsModule } from '../google-maps.module';
+import { GoogleMapsModule } from '../src/lib/google-maps.module';
 import { GoogleMapsConfig } from '../core/config/google-maps-config';
 import { GoogleMapsApiLoader } from '../core/loaders/google-maps-api-loader';
-import { NoOpGoogleMapsApiLoader } from '../core/loaders/no-op-google-maps-api-loader';
+import { NoOpGoogleMapsApiLoader } from '../src/lib/core/loaders/no-op-google-maps-api-loader';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMapsInternalApiService } from '../core/api/google-maps-internal-api.service';
 
