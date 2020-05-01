@@ -4,7 +4,7 @@ import { IGoogleMapsMarker  } from '../marker/i-google-maps-marker';
 import { IGoogleMapsPolygon } from '../polygon/i-google-maps-polygon';
 import { IGoogleMapsData    } from '../data/i-google-maps-data';
 
-export interface IGoogleMapsWithOverlays extends IGoogleMap
+export interface IGoogleMapWithOverlays extends IGoogleMap
 {
     createMarker    (position: Coord, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker;
     createPolygon   (path: CoordPath, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsPolygon;

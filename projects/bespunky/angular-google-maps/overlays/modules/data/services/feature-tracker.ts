@@ -1,4 +1,4 @@
-import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
+import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
 
 export class FeatureTracker
 {

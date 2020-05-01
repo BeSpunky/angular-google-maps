@@ -1,5 +1,5 @@
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from "@angular/core";
-import { GoogleMapWithOverlaysModule } from './modules/google-map/google-map-with-overlays.module';
+import { GoogleMapWithOverlaysModule } from './modules/map/google-map-with-overlays.module';
 import { GoogleMapsMarkerModule      } from './modules/marker/google-maps-marker.module';
 import { GoogleMapsPolygonModule     } from './modules/polygon/google-maps-polygon.module';
 import { GoogleMapsDataModule        } from './modules/data/google-maps-data.module';

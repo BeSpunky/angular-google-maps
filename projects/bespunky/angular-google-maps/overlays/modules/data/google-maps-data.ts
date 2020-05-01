@@ -1,11 +1,11 @@
 import { GoogleMapsApiService, IGoogleMap, NativeObjectWrapper, Wrap, OutsideAngular, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay  } from '../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType                } from '../abstraction/base/overlay-type.enum';
-import { isGoogleMapsFeatureOptions } from '../abstraction/type-guards/feature-options-type-guard';
+import { GoogleMapsDrawableOverlay  } from '../../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType                } from '../../abstraction/base/overlay-type.enum';
+import { isGoogleMapsFeatureOptions } from '../../abstraction/type-guards/feature-options-type-guard';
 import { IGoogleMapsData            } from './i-google-maps-data';
 import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
 import { GoogleMapsFeature          } from './feature/google-maps-feature';
-import { FeatureTracker             } from './feature-tracker';
+import { FeatureTracker             } from './services/feature-tracker';
 
 // @dynamic
 @NativeObjectWrapper

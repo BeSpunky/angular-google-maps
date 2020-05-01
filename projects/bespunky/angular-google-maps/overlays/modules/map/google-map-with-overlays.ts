@@ -1,12 +1,12 @@
 import { GoogleMap, Coord } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsWithOverlays } from './i-google-maps-with-overlays';
-import { DrawableOverlay         } from '../../abstraction/types/abstraction';
-import { OverlaysTracker         } from '../../services/overlays-tracker';
-import { GoogleMapsMarker        } from '../marker/google-maps-marker';
-import { GoogleMapsPolygon       } from '../polygon/google-maps-polygon';
-import { GoogleMapsData          } from '../data/google-maps-data';
+import { IGoogleMapWithOverlays } from './i-google-map-with-overlays';
+import { DrawableOverlay        } from '../../abstraction/types/abstraction';
+import { OverlaysTracker        } from '../../services/overlays-tracker';
+import { GoogleMapsMarker       } from '../marker/google-maps-marker';
+import { GoogleMapsPolygon      } from '../polygon/google-maps-polygon';
+import { GoogleMapsData         } from '../data/google-maps-data';
 
-export class GoogleMapWithOverlays extends GoogleMap implements IGoogleMapsWithOverlays
+export class GoogleMapWithOverlays extends GoogleMap implements IGoogleMapWithOverlays
 {
     public readonly overlays = new OverlaysTracker();
     

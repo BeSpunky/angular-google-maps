@@ -1,8 +1,8 @@
 import { FeatureTracker } from './feature-tracker';
-import { MockGoogleMapsFeature } from './feature/testing/mock-google-maps-feature.spec';
-import { MockGoogleMapsData } from './testing/mock-google-maps-data.spec';
-import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
-import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
+import { MockGoogleMapsFeature } from '../feature/testing/mock-google-maps-feature.spec';
+import { MockGoogleMapsData } from '../testing/mock-google-maps-data.spec';
+import { MockGoogleMap } from '../../map/testing/mock-google-map.spec';
+import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
 
 describe('FeatureTracker', () =>
 {
