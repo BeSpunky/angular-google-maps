@@ -32,10 +32,10 @@ export * from './decorators/outside-angular.decorator';
 export * from './decorators/hook.decorator';
 
 // Map
-export * from './modules/google-map/google-map.module';
-export * from './modules/google-map/i-google-map';
-export * from './modules/google-map/google-map';
-export * from './modules/google-map/google-map-factory.provider';
-export * from './modules/google-map/component/google-map.component';
-export * from './modules/google-map/types/zoom-level.enum';
-export * from './modules/google-map/types/defaults';
+export * from './modules/map/google-map.module';
+export * from './modules/map/i-google-map';
+export * from './modules/map/google-map';
+export * from './modules/map/google-map-factory.provider';
+export * from './modules/map/component/google-map.component';
+export * from './modules/map/types/zoom-level.enum';
+export * from './modules/map/types/defaults';

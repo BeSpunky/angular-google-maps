@@ -8,7 +8,7 @@ import { GoogleMapsApiLoader               } from './api/loader/google-maps-api-
 import { NoOpGoogleMapsApiLoader           } from './api/loader/no-op-google-maps-api-loader';
 import { GoogleMapsApiReadyPromiseProvider } from './api/loader/google-maps-api-ready.token';
 import { GoogleMapsInternalApiService      } from './api/google-maps-internal-api.service';
-import { GoogleMapModule                   } from './modules/google-map/google-map.module';
+import { GoogleMapModule                   } from './modules/map/google-map.module';
 
 @NgModule({
     imports     : [GoogleMapModule, CoreModule, UniversalModule],
