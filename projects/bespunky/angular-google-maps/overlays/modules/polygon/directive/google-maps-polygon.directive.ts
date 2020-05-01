@@ -1,17 +1,12 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { GoogleMapsOverlayLifecycleBase } from '../../../core/abstraction/base/google-maps-overlay-lifecycle-base';
-import { IGoogleMapsPolygon } from '../i-google-maps-polygon';
-import { Coord } from '../../../core/abstraction/types/geometry.type';
-import { Hook } from '../../../core/decorators/hook.decorator';
-import { GoogleMapsEventData } from '../../../core/abstraction/events/google-maps-event-data';
-import { GoogleMapsPolygonFactoryProvider } from '../google-maps-polygon-factory.provider';
+import { GoogleMapsOverlayLifecycleBase, Coord, Hook, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsPolygon               } from '../i-google-maps-polygon';
 
 @Directive({    
     selector: 'bs-google-maps-polygon, [bsGoogleMapsPolygon]',
-    exportAs: 'polygon',
-    providers: [ GoogleMapsPolygonFactoryProvider ]
+    exportAs: 'polygon'
 })
 export class GoogleMapsPolygonDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsPolygon>
 {

@@ -5,7 +5,7 @@
   "projects": {
     "@bespunky/angular-google-maps": {
       "root": "projects/bespunky/angular-google-maps",
-      "sourceRoot": "projects/bespunky/angular-google-maps/src",
+      "sourceRoot": "projects/bespunky/angular-google-maps",
       "projectType": "library",
       "prefix": "bs",
       "architect": {

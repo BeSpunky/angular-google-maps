@@ -1,16 +1,11 @@
-import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-maps-drawable-overlay';
-import { IGoogleMapsData } from './i-google-maps-data';
-import { IGoogleMap } from '../../google-map/i-google-map';
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
-import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
-import { Wrap } from '../../core/decorators/wrap.decorator';
-import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
-import { Coord, CoordPath } from '../../core/abstraction/types/geometry.type';
-import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
-import { GoogleMapsFeature } from './feature/google-maps-feature';
-import { isGoogleMapsFeatureOptions } from '../../core/abstraction/type-guards/feature-options-type-guard';
-import { FeatureTracker } from './feature-tracker';
+import { GoogleMapsApiService, IGoogleMap, NativeObjectWrapper, Wrap, OutsideAngular, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay  } from '../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType                } from '../abstraction/base/overlay-type.enum';
+import { isGoogleMapsFeatureOptions } from '../abstraction/type-guards/feature-options-type-guard';
+import { IGoogleMapsData            } from './i-google-maps-data';
+import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
+import { GoogleMapsFeature          } from './feature/google-maps-feature';
+import { FeatureTracker             } from './feature-tracker';
 
 // @dynamic
 @NativeObjectWrapper

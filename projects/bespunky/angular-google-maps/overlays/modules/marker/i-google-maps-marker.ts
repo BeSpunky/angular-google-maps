@@ -1,5 +1,5 @@
-import { IGoogleMapsDrawableOverlay } from '../../core/abstraction/base/i-google-maps-drawable-overlay';
-import { Coord } from '../../core/abstraction/types/geometry.type';
+import { Coord } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsDrawableOverlay } from '../abstraction/base/i-google-maps-drawable-overlay';
 
 export interface IGoogleMapsMarker extends IGoogleMapsDrawableOverlay<google.maps.Marker>
 {

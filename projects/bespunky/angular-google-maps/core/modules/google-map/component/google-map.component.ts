@@ -3,17 +3,15 @@ import { Observable } from 'rxjs';
 import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
 import { IGoogleMap               } from '../i-google-map';
-import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
 import { ZoomLevel                } from '../types/zoom-level.enum';
-import { GoogleMapsLifecycleBase  } from '../../core/abstraction/base/google-maps-lifecycle-base';
-import { GoogleMapsEventData      } from '../../core/abstraction/events/google-maps-event-data';
-import { Hook                     } from '../../core/decorators/hook.decorator';
+import { GoogleMapsLifecycleBase  } from '../../../abstraction/base/google-maps-lifecycle-base';
+import { GoogleMapsEventData      } from '../../../abstraction/events/google-maps-event-data';
+import { Hook                     } from '../../../decorators/hook.decorator';
 
 @Component({
     selector     : 'bs-google-map',
     templateUrl  : './google-map.component.html',
     styleUrls    : ['./google-map.component.css'],
-    providers    : [GoogleMapFactoryProvider],
     encapsulation: ViewEncapsulation.None
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>

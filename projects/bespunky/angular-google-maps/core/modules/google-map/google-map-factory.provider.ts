@@ -1,23 +1,17 @@
 import { ElementRef, FactoryProvider } from '@angular/core';
-import { DocumentRef, UniversalService } from '@bespunky/angular-zen';
+import { DocumentRef      } from '@bespunky/angular-zen/core';
+import { UniversalService } from '@bespunky/angular-zen/universal';
 
-import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token';
-import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
+import { createAndAppendMapElement } from '@bespunky/angular-google-maps/_internal'
+import { WrapperFactory } from '../../abstraction/tokens/wrapper-factory.token';
+import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 import { GoogleMap } from './google-map';
 
-export function NativeMapWrapperFactoryProvider(api: GoogleMapsApiService, element: ElementRef, documentRef: DocumentRef, universal: UniversalService)
+export function NativeMapWrapperFactoryProvider(api: GoogleMapsApiService, document: DocumentRef, universal: UniversalService): (element: ElementRef, options?: google.maps.MapOptions) => GoogleMap
 {    
-    return function NativeMapWrapperFactory(options?: google.maps.MapOptions)
+    return function NativeMapWrapperFactory(element: ElementRef, options?: google.maps.MapOptions): GoogleMap
     {
-        if (!universal.isPlatformBrowser) return null; // TODO: Test with Angular Universal app and see if this doesn't break the chain of contained directives
-
-        // Create a container div for the map
-        const mapElement = documentRef.nativeDocument.createElement('div');
-        // Mark it with a class for external css styling
-        mapElement.className = 'google-map';
-        
-        // Add it to the current component template
-        element.nativeElement.appendChild(mapElement);
+        const mapElement = createAndAppendMapElement(element, document, universal);
 
         return new GoogleMap(api, new ElementRef(mapElement), options);
     };
@@ -26,5 +20,5 @@ export function NativeMapWrapperFactoryProvider(api: GoogleMapsApiService, eleme
 export const GoogleMapFactoryProvider: FactoryProvider = {
     provide   : WrapperFactory,
     useFactory: NativeMapWrapperFactoryProvider,
-    deps      : [GoogleMapsApiService, ElementRef, DocumentRef, UniversalService]
+    deps      : [GoogleMapsApiService, DocumentRef, UniversalService]
 }

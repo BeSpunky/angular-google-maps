@@ -1,5 +1,6 @@
-import { GoogleMapsLifecycleBase } from '../../../src/lib/core/abstraction/base/google-maps-lifecycle-base';
-import { DrawableOverlay } from '../../../src/lib/core/abstraction/types/abstraction';
+import { GoogleMapsLifecycleBase } from '@bespunky/angular-google-maps/core';
+
+import { DrawableOverlay } from '../types/abstraction';
 
 /**
  * Provides everything `GoogleMapsLifecycleBase` provides and also takes care of removing the overlay wrapper from the map.

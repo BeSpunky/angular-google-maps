@@ -1,5 +1,6 @@
 import { Directive, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { GoogleMapsApiService } from './google-maps-api.service';
+
+import { GoogleMapsApiService } from '@bespunky/angular-google-maps/core';
 
 @Directive({
     selector: '[bsSafe]'

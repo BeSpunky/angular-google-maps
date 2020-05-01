@@ -1,4 +1,4 @@
-import { OnChanges, SimpleChanges, Inject, Directive } from '@angular/core';
+import { OnChanges, SimpleChanges, Inject, Directive, ElementRef } from '@angular/core';
 
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { WrapperFactory } from '../tokens/wrapper-factory.token';
@@ -31,7 +31,7 @@ export abstract class GoogleMapsLifecycleBase<TWrapper extends EmittingWrapper>
 {
     private nativeWrapper: TWrapper;
 
-    constructor(protected api: GoogleMapsInternalApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory<TWrapper>)
+    constructor(protected api: GoogleMapsInternalApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory<TWrapper>, protected element: ElementRef)
     {
         this.initNativeWrapper();
         this.initEmitters();
@@ -57,7 +57,7 @@ export abstract class GoogleMapsLifecycleBase<TWrapper extends EmittingWrapper>
      */
     protected initNativeWrapper(): void
     {
-        this.nativeWrapper = this.createNativeWrapper();
+        this.nativeWrapper = this.createNativeWrapper(this.element);
     }
     
     /**

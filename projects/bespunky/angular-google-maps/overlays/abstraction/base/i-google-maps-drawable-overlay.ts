@@ -1,6 +1,6 @@
-import { IGoogleMapsNativeObjectEmittingWrapper } from '../../../src/lib/core/abstraction/base/i-google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsNativeObjectEmittingWrapper, IGoogleMap } from '@bespunky/angular-google-maps/core';
+
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
-import { IGoogleMap } from '../../../src/lib/google-map/i-google-map';
 import { OverlayType } from './overlay-type.enum';
 
 export interface IGoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay>

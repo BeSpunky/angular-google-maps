@@ -1,11 +1,6 @@
-import { IGoogleMapsFeature } from './i-google-maps-feature';
+import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Wrap, OutsideAngular, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData } from '../i-google-maps-data';
-import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
-import { NativeObjectWrapper } from '../../../core/decorators/native-object-wrapper.decorator';
-import { Wrap } from '../../../core/decorators/wrap.decorator';
-import { OutsideAngular } from '../../../core/decorators/outside-angular.decorator';
-import { GoogleMapsNativeObjectEmittingWrapper } from '../../../core/abstraction/base/google-maps-native-object-emitting-wrapper';
-import { Coord, CoordPath } from '../../../core/abstraction/types/geometry.type';
+import { IGoogleMapsFeature } from './i-google-maps-feature';
 
 // @dynamic
 @NativeObjectWrapper

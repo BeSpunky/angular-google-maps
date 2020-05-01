@@ -1,9 +1,7 @@
 import { FactoryProvider } from '@angular/core';
 
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.token';
+import { GoogleMapsApiService, WrapperFactory, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsPolygon } from './google-maps-polygon';
-import { GoogleMapComponent } from '../../google-map/component/google-map.component';
 
 export function NativePolygonWrapperFactoryProvider(api: GoogleMapsApiService, mapComponent: GoogleMapComponent)
 {

@@ -1,18 +1,8 @@
-import { IGoogleMapsNativeObjectEmittingWrapper } from '../core/abstraction/base/i-google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/i-google-maps-native-object-emitting-wrapper';
 import { ZoomLevel } from './types/zoom-level.enum';
-import { DrawableOverlay } from '../core/abstraction/types/abstraction';
-import { Coord, CoordPath } from '../core/abstraction/types/geometry.type';
-import { IGoogleMapsMarker } from '../overlays/marker/i-google-maps-marker';
-import { IGoogleMapsPolygon } from '../overlays/polygon/i-google-maps-polygon';
-import { IGoogleMapsData } from '../overlays/data/i-google-maps-data';
 
 export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Map>
 {
-    createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker;
-    createPolygon(path: CoordPath, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsPolygon;
-    createDataLayer(options?: google.maps.Data.DataOptions): IGoogleMapsData;
-    removeOverlay<TOverlay extends DrawableOverlay>(overlay: TOverlay): void;
-
     /* ------------------------------------- Native wrappers ------------------------------------- *
      * Documentation in: https://developers.google.com/maps/documentation/javascript/reference/map *
      * ------------------------------------------------------------------------------------------- */

@@ -1,13 +1,8 @@
 
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { IGoogleMap } from '../../google-map/i-google-map';
-import { IGoogleMapsMarker } from './i-google-maps-marker';
-import { NativeObjectWrapper } from '../../core/decorators/native-object-wrapper.decorator';
-import { GoogleMapsDrawableOverlay } from '../../core/abstraction/base/google-maps-drawable-overlay';
-import { OverlayType } from '../../core/abstraction/base/overlay-type.enum';
-import { Wrap } from '../../core/decorators/wrap.decorator';
-import { OutsideAngular } from '../../core/decorators/outside-angular.decorator';
-import { Coord } from '../../core/abstraction/types/geometry.type';
+import { GoogleMapsApiService, IGoogleMap, NativeObjectWrapper, Wrap, OutsideAngular, Coord } from '@bespunky/angular-google-mapse/core';
+import { GoogleMapsDrawableOverlay } from '../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType               } from '../abstraction/base/overlay-type.enum';
+import { IGoogleMapsMarker         } from './i-google-maps-marker';
 
 // @dynamic
 @NativeObjectWrapper

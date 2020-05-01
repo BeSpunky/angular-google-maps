@@ -1,16 +1,13 @@
 import { Observable } from 'rxjs';
 import { Directive, Output, Input } from '@angular/core';
 
-import { GoogleMapsOverlayLifecycleBase } from '../../../core/abstraction/base/google-maps-overlay-lifecycle-base';
-import { IGoogleMapsData } from '../i-google-maps-data';
-import { GoogleMapsDataFactoryProvider } from '../google-maps-data-factory.provider';
-import { GoogleMapsEventData } from '../../../core/abstraction/events/google-maps-event-data';
-import { Hook } from '../../../core/decorators/hook.decorator';
+import { Hook, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayLifecycleBase } from '../../abstraction/base/google-maps-overlay-lifecycle-base';
+import { IGoogleMapsData                } from '../i-google-maps-data';
 
 @Directive({
     selector: 'bs-google-maps-data, [bsGoogleMapsData]',
-    exportAs: 'dataLayer',
-    providers: [ GoogleMapsDataFactoryProvider ]
+    exportAs: 'dataLayer'
 })
 export class GoogleMapsDataDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsData>
 {

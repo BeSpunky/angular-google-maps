@@ -1,9 +1,8 @@
 import { FactoryProvider } from '@angular/core';
 
-import { GoogleMapsFeature } from './google-maps-feature';
-import { WrapperFactory } from '../../../core/abstraction/tokens/wrapper-factory.token';
-import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
+import { GoogleMapsApiService, WrapperFactory } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDataDirective } from '../directive/google-maps-data.directive';
+import { GoogleMapsFeature } from './google-maps-feature';
 
 
 export function NativeFeatureWrapperFactoryProvider(api: GoogleMapsApiService, dataDirective: GoogleMapsDataDirective)

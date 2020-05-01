@@ -1,4 +1,4 @@
-import { IGoogleMapsNativeObject } from '../../../src/lib/core/abstraction/native/i-google-maps-native-object';
+import { IGoogleMapsNativeObject } from '@bespunky/angular-google-maps/core';
 
 /** For typing of objects like `google.maps.Marker/Polygon/Map` etc. */
 export interface IGoogleMapsNativeDrawableOverlay extends IGoogleMapsNativeObject

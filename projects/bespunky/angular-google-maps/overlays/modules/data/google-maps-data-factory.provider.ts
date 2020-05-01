@@ -1,9 +1,7 @@
 import { FactoryProvider } from '@angular/core';
 
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { WrapperFactory } from '../../core/abstraction/tokens/wrapper-factory.token';
+import { GoogleMapsApiService, WrapperFactory, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsData } from './google-maps-data';
-import { GoogleMapComponent } from '../../google-map/component/google-map.component';
 
 export function NativeDataWrapperFactoryProvider(api: GoogleMapsApiService, mapComponent: GoogleMapComponent)
 {
