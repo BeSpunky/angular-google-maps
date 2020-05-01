@@ -4,11 +4,10 @@ import { filter, switchMap, pluck } from 'rxjs/operators';
 import { Injectable, NgZone, SimpleChanges, Inject } from '@angular/core';
 import { promiseLater } from '@bespunky/angular-zen';
 
-import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
-import { GoogleMapsConfig } from '../config/google-maps-config';
+import { GoogleMapsApiLoader } from './loader/google-maps-api-loader';
+import { GoogleMapsApiReadyPromise } from './loader/google-maps-api-ready.token';
 import { GoogleMapsApiService } from './google-maps-api.service';
 import { GoogleMapsEventsMap } from '../abstraction/types/events-map.type';
-import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase } from '../abstraction/base/google-maps-lifecycle-base';
 import { HookOutputSymbol } from '../decorators/hook.decorator';
@@ -21,17 +20,16 @@ export class GoogleMapsInternalApiService
 {
     private waitForApi: { promise: Promise<void>, resolve: () => void, reject: () => any };
 
-    constructor(public config: GoogleMapsConfig,
-                public openApi: GoogleMapsApiService,
-                private loader: GoogleMapsApiLoader,
-                private zone: NgZone,
-                @Inject(GoogleMapsApiReadyPromise)
-                waitForApiReadyPromise: BehaviorSubject<Promise<void>>)
+    constructor(
+        public  openApi: GoogleMapsApiService,
+        private loader : GoogleMapsApiLoader,
+        private zone   : NgZone,
+        @Inject(GoogleMapsApiReadyPromise) apiReadyPromise: BehaviorSubject<Promise<void>>)
     {
         this.waitForApi = promiseLater();
 
         // Write the created promise to the token so it can be fetched by other services
-        waitForApiReadyPromise.next(this.waitForApi.promise);
+        apiReadyPromise.next(this.waitForApi.promise);
     }
 
     public get whenReady(): Promise<void>

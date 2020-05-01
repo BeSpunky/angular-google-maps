@@ -1,12 +1,11 @@
 import * as _ from 'lodash';
-import { Injectable, NgZone, Inject } from '@angular/core';
+import { takeWhile } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { Injectable, NgZone, Inject } from '@angular/core';
 
-import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { GoogleMapsConfig } from '../config/google-maps-config';
+import { GoogleMapsApiReadyPromise } from './loader/google-maps-api-ready.token';
 import { EventDataTransformService } from './transform/event-data-transform.service';
 import { GeometryTransformService } from './transform/geometry-transform.service';
-import { takeWhile } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -16,15 +15,13 @@ export class GoogleMapsApiService
     private mapsApiReady: Promise<void>;
 
     constructor(
-        public config: GoogleMapsConfig,
-        public eventsData: EventDataTransformService,
-        public geometry: GeometryTransformService,
-        private zone: NgZone,
-        @Inject(GoogleMapsApiReadyPromise)
-        private waitForApiPromiseCreation: BehaviorSubject<Promise<void>>)
+        public  eventsData: EventDataTransformService,
+        public  geometry  : GeometryTransformService,
+        private zone      : NgZone,
+        @Inject(GoogleMapsApiReadyPromise) private apiReadyPromise: BehaviorSubject<Promise<void>>)
     {
         // Fetch the promise created by the internal api and store it
-        this.waitForApiPromiseCreation.pipe(takeWhile(promise => !promise, true)).subscribe(promise => this.mapsApiReady = promise);
+        this.apiReadyPromise.pipe(takeWhile(promise => !promise, true)).subscribe(promise => this.mapsApiReady = promise);
     }
 
     public get whenReady(): Promise<void>

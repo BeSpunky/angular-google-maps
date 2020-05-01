@@ -3,8 +3,8 @@ import { NgZone, Component, ViewChild, SimpleChanges, SimpleChange } from '@angu
 import { TestBed, inject, async, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
-import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
-import { GoogleMapsApiLoader } from '../loaders/google-maps-api-loader';
+import { GoogleMapsApiReadyPromise } from './loader/google-maps-api-ready.token';
+import { GoogleMapsApiLoader } from './loader/google-maps-api-loader';
 import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { MockComponentWithLifecycle } from '../abstraction/testing/mock-component.spec';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
