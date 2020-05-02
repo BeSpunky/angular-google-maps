@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { GoogleMapsOverlayLifecycleBase, Coord, Hook, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+import { Coord, Hook, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayLifecycleBase   } from '../../../abstraction/base/google-maps-overlay-lifecycle-base';
 import { IGoogleMapsPolygon               } from '../i-google-maps-polygon';
 
 @Directive({    

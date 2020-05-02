@@ -1,4 +1,4 @@
-import { GoogleMap, Coord } from '@bespunky/angular-google-maps/core';
+import { GoogleMap, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapWithOverlays } from './i-google-map-with-overlays';
 import { DrawableOverlay        } from '../../abstraction/types/abstraction';
 import { OverlaysTracker        } from '../../services/overlays-tracker';

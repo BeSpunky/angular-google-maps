@@ -1,12 +1,13 @@
-import { CoordPath, NativeObjectWrapper, Wrap, OutsideAngular, GoogleMapsApiService, IGoogleMap } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay } from '../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType               } from '../abstraction/base/overlay-type.enum';
+import { CoordPath, NativeObjectWrapper, Wrap, OutsideAngular, GoogleMapsApiService } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay } from '../../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType               } from '../../abstraction/base/overlay-type.enum';
+import { IGoogleMapWithOverlays    } from '../map/i-google-map-with-overlays';
 import { IGoogleMapsPolygon        } from './i-google-maps-polygon';
 
 @NativeObjectWrapper
 export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Polygon> implements IGoogleMapsPolygon
 {
-    constructor(api: GoogleMapsApiService, map: IGoogleMap, ...nativeArgs: any[])
+    constructor(api: GoogleMapsApiService, map: IGoogleMapWithOverlays, ...nativeArgs: any[])
     {
         super(api, map, OverlayType.Polygon, ...nativeArgs);
     }

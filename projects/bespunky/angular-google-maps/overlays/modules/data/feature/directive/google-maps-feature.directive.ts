@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Directive, Output, Input } from '@angular/core';
 
 import { GoogleMapsLifecycleBase, GoogleMapsEventData, Hook, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsFeature               } from '../i-google-maps-feature';
+import { IGoogleMapsFeature } from '../i-google-maps-feature';
 
 @Directive({
     selector: 'bs-google-maps-feature, [bsGoogleMapsFeature]',

@@ -1,4 +1,4 @@
-import { IGoogleMapsNativeObjectEmittingWrapper, Coord, CoordPath } from '@bespunky/angular-google-maps/core;
+import { IGoogleMapsNativeObjectEmittingWrapper, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData } from '../i-google-maps-data';
 
 export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>

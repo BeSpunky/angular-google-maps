@@ -30,9 +30,9 @@ export * from './api/loader/no-op-google-maps-api-loader';
 
 // Decorators
 export * from './decorators/native-object-wrapper.decorator';
-export * from './decorators/wrap.decorator';
-export * from './decorators/outside-angular.decorator';
-export * from './decorators/hook.decorator';
+export { Wrap           } from './decorators/wrap.decorator';
+export { OutsideAngular } from './decorators/outside-angular.decorator';
+export { Hook           } from './decorators/hook.decorator';
 
 // Map
 export * from './modules/map/google-map.module';

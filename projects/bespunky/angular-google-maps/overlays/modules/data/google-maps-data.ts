@@ -1,7 +1,8 @@
-import { GoogleMapsApiService, IGoogleMap, NativeObjectWrapper, Wrap, OutsideAngular, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, NativeObjectWrapper, Wrap, OutsideAngular, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay  } from '../../abstraction/base/google-maps-drawable-overlay';
 import { OverlayType                } from '../../abstraction/base/overlay-type.enum';
 import { isGoogleMapsFeatureOptions } from '../../abstraction/type-guards/feature-options-type-guard';
+import { IGoogleMapWithOverlays     } from '../map/i-google-map-with-overlays';
 import { IGoogleMapsData            } from './i-google-maps-data';
 import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
 import { GoogleMapsFeature          } from './feature/google-maps-feature';
@@ -13,7 +14,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
 {
     public readonly features = new FeatureTracker();
 
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.Data.DataOptions)
+    constructor(api: GoogleMapsApiService, public map: IGoogleMapWithOverlays, options?: google.maps.Data.DataOptions)
     {
         super(api, map, OverlayType.Data, options);
     }

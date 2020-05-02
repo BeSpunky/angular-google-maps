@@ -26,7 +26,6 @@ export class GoogleMapsModule
                        .catch(this.onApiLoadError);
     }
 
-    // This is overriden by the async GoogleMapsModule to provide a different loader
     static forRoot(): ModuleWithProviders<GoogleMapsModule>
     {
         return {

@@ -1,4 +1,4 @@
-import { ZoomLevel } from '../../google-map/types/zoom-level.enum';
+import { ZoomLevel } from './zoom-level.enum';
 
 export class Defaults
 {

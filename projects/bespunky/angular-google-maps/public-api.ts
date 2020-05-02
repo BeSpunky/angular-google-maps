@@ -1,6 +1,9 @@
 /*
  * Public API Surface of angular-google-maps
  */
-export * from '@bespunky/angular-google-maps/core';
-export * from '@bespunky/angular-google-maps/async';
-export * from '@bespunky/angular-google-maps/overlays';
+import * as Core  from '@bespunky/angular-google-maps/core';
+import * as Async from '@bespunky/angular-google-maps/async';
+import * as Overlays from '@bespunky/angular-google-maps/overlays';
+
+export { Core, Async, Overlays };
+// export { Core, Async }

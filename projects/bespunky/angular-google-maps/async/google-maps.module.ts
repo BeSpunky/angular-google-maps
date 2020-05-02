@@ -14,7 +14,7 @@ import { SafeDirective           } from './directives/safe.directive';
 })
 export class GoogleMapsModule extends SyncGoogleMapsModule
 {
-    static forRoot(config: GoogleMapsConfig): ModuleWithProviders<GoogleMapsModule>
+    static forRootAsync(config: GoogleMapsConfig): ModuleWithProviders<GoogleMapsModule>
     {
         return {
             ngModule: GoogleMapsModule,
