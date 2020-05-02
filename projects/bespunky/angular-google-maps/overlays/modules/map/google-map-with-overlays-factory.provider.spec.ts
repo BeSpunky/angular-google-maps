@@ -1,30 +1,31 @@
-import { ElementRef } from '@angular/core';
-
-import { GoogleMapFactoryProvider } from './google-map-with-overlays-factory.provider';
-import { GoogleMap } from './google-map';
-import { itShouldCreateWrapper } from '../overlays/testing/wrapper-factory-provider-test-setup.spec';
-import { configureGoogleMapsTestingModule } from '../../../testing/src/setup.spec';
-import { TestBed } from '@angular/core/testing';
+import { TestBed          } from '@angular/core/testing';
+import { ElementRef       } from '@angular/core';
 import { UniversalService } from '@bespunky/angular-zen';
-import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token';
+
+import { configureGoogleMapsTestingModule                            } from '@bespunky/angular-google-maps/core/testing';
+import { itShouldCreateWrapper                                       } from '@bespunky/angular-google-maps/overlays/testing';
+import { WrapperFactory                                              } from '@bespunky/angular-google-maps/core';
+import { GoogleMapWithOverlaysFactoryProvider, GoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapWithOverlaysFactoryProvider', () =>
 {
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap);
+    itShouldCreateWrapper(GoogleMapWithOverlaysFactoryProvider, GoogleMapWithOverlays);
 
     it('should return null when used in non-browser platforms', async () =>
     {
+        const element = new ElementRef({});
+
         await configureGoogleMapsTestingModule({
             customize: def =>
             {
                 def.providers.push({ provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') });
-                def.providers.push({ provide: ElementRef, useValue: new ElementRef({}) });
-                def.providers.push(GoogleMapFactoryProvider);
+                def.providers.push({ provide: ElementRef, useValue: element });
+                def.providers.push(GoogleMapWithOverlaysFactoryProvider);
             }
         });
 
         const createWrapper = TestBed.inject(WrapperFactory);
 
-        expect(createWrapper()).toBeNull();
+        expect(createWrapper(element)).toBeNull();
     });
 });

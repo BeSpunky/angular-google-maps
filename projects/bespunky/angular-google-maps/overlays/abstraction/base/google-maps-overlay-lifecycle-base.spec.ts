@@ -1,25 +1,23 @@
 import { Component } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
-import { GoogleMapsApiService, WrapperFactory } from '@bespunky/angular-google-maps/core';
-import { DrawableOverlay } from '@bespunky/angular-google-maps/ovelays';
+import { configureGoogleMapsTestingModule                                          } from '@bespunky/angular-google-maps/core/testing';
+import { MockDrawableOverlay, MockGoogleMapWithOverlays, MockNativeDrawableOverlay } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsApiService, WrapperFactory                                      } from '@bespunky/angular-google-maps/core';
+import { DrawableOverlay                                                           } from '@bespunky/angular-google-maps/overlays';
 import { GoogleMapsOverlayLifecycleBase } from './google-maps-overlay-lifecycle-base';
-import { configureGoogleMapsTestingModule } from '../../../core/testing/helpers/setup.spec';
-import { MockGoogleMap } from '../../../core/modules/google-map/testing/mock-google-map.spec';
-import { MockDrawableOverlay } from '../../testing/mocks/mock-drawable-overlay.spec';
-import { MockNativeDrawableOverlay } from '../../testing/mocks/mock-native-drawable-overlay.spec';
 
 describe('GoogleMapsOverlayLifecycleBase', () =>
 {
     let component: GoogleMapsOverlayLifecycleBaseTest;
     let fixture  : ComponentFixture<GoogleMapsOverlayLifecycleBaseTest>
-    let mockMap  : MockGoogleMap;
+    let mockMap  : MockGoogleMapWithOverlays;
 
     beforeEach(async () =>
     {
         ({ component, fixture } = await configureGoogleMapsTestingModule({ componentType: GoogleMapsOverlayLifecycleBaseTest }));
         
-        mockMap = component.wrapper.map as MockGoogleMap;
+        mockMap = component.wrapper.map as MockGoogleMapWithOverlays;
 
         spyOn(mockMap, 'removeOverlay').and.stub();
     });
@@ -36,7 +34,7 @@ describe('GoogleMapsOverlayLifecycleBase', () =>
 
 function OverlayFactoryProvider()
 {
-    return () => new MockDrawableOverlay(new MockGoogleMap(), new MockNativeDrawableOverlay());
+    return () => new MockDrawableOverlay(new MockGoogleMapWithOverlays(), new MockNativeDrawableOverlay());
 }
 
 @Component({

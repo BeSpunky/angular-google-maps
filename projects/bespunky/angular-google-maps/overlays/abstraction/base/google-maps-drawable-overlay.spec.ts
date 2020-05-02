@@ -1,15 +1,14 @@
 
-import { configureGoogleMapsTestingModule } from '../../../core/testing/helpers/setup.spec';
-import { GoogleMapsApiService } from '../../../src/lib/core/api/google-maps-api.service';
-import { MockGoogleMap } from '../../../src/lib/google-map/testing/mock-google-map.spec';
-import { MockNativeDrawableOverlay } from '../../testing/mocks/mock-native-drawable-overlay.spec';
+import { configureGoogleMapsTestingModule, MockGoogleMap      } from '@bespunky/angular-google-maps/core/testing';
+import { MockNativeDrawableOverlay, MockGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsApiService                                 } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
 
 describe('GoogleMapsDrawableOverlay (abstract)', () =>
 {
     let api              : GoogleMapsApiService;
     let runOutsideAngular: jasmine.Spy;
-    let mockMap          : MockGoogleMap;
+    let mockMap          : MockGoogleMapWithOverlays;
     let mockNativeOverlay: MockNativeDrawableOverlay;
     let mockOverlay      : GoogleMapsDrawableOverlayTest;
 
@@ -17,7 +16,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        mockMap           = new MockGoogleMap({ id: 1, zoom: 1 });
+        mockMap           = new MockGoogleMapWithOverlays({ id: 1, zoom: 1 });
         mockNativeOverlay = new MockNativeDrawableOverlay();
         mockOverlay       = new GoogleMapsDrawableOverlayTest(api, mockMap, 0, mockNativeOverlay);
     });
@@ -31,7 +30,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
         runOutsideAngular.calls.reset();
 
         const secondNativeMap = { id: 2, zoom: 2 };
-        const secondMap = new MockGoogleMap(secondNativeMap); // First one was `mockMap`
+        const secondMap = new MockGoogleMapWithOverlays(secondNativeMap); // First one was `mockMap`
 
         mockOverlay.attach(secondMap);
 

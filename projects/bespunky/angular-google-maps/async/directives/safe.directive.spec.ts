@@ -1,9 +1,9 @@
+import { ComponentFixture      } from '@angular/core/testing';
 import { Component, ElementRef } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
 
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/async/testing';
+import { GoogleMapsApiService             } from '@bespunky/angular-google-maps/core';
 import { SafeDirective } from './safe.directive';
-import { GoogleMapsApiService } from './google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../../core/testing/helpers/setup.spec';
 
 describe('SafeDirective', () =>
 {

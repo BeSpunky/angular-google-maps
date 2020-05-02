@@ -1,8 +1,6 @@
-import { FeatureTracker } from './feature-tracker';
-import { MockGoogleMapsFeature } from '../../../testing/mocks/modules/mock-google-maps-feature.spec';
-import { MockGoogleMapsData } from '../../../testing/mocks/modules/mock-google-maps-data.spec';
-import { MockGoogleMap } from '../../map/testing/mock-google-map.spec';
+import { MockGoogleMapWithOverlays, MockGoogleMapsData, MockGoogleMapsFeature } from '@bespunky/angular-google-maps/overlays/testing';
 import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
+import { FeatureTracker     } from './feature-tracker';
 
 describe('FeatureTracker', () =>
 {
@@ -13,7 +11,7 @@ describe('FeatureTracker', () =>
     function addFeature(id?: string)
     {
         const nativeFeature = new google.maps.Data.Feature({ id, geometry: new google.maps.Data.Point({ lat: 20, lng: 20 }) });
-        const feature = new MockGoogleMapsFeature(new MockGoogleMapsData(new MockGoogleMap()), nativeFeature);
+        const feature = new MockGoogleMapsFeature(new MockGoogleMapsData(new MockGoogleMapWithOverlays()), nativeFeature);
 
         tracker.add(feature);
 

@@ -1,11 +1,12 @@
 /**
  * Provides util functions to quicker setup of tests.
  */
-
-import { DebugElement, ElementRef, Type } from '@angular/core';
 import { TestModuleMetadata, TestBed, ComponentFixture } from '@angular/core/testing';
+import { DebugElement, ElementRef, Type                } from '@angular/core';
 
-import { GoogleMapsModule, GoogleMapsComponentApiService, GoogleMapsApiService } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsModule              } from '../../google-maps.module';
+import { GoogleMapsApiService          } from '../../api/google-maps-api.service';
+import { GoogleMapsComponentApiService } from '../../api/google-maps-component-api.service';
 
 /**
  * Creates a `TestModuleMetadata` object that can be passed into `TestBed.configureTestingModule()` in order to
@@ -72,7 +73,7 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
 const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
     createTestModuleMetadata: createGoogleMapsTestModuleMetadata,
     spies: {
-        fakeRunInsideAngular: true,
+        fakeRunInsideAngular : true,
         fakeRunOutsideAngular: true
     }
 };

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { GoogleMapsApiService, GoogleMapsMarker, GoogleMapsDataDirective, GoogleMapsEventData, GoogleMapsFeature } from '@bespunky/angular-google-maps';
-import { IGoogleMapsPolygon } from '../../../bespunky/angular-google-maps/src/lib/overlays/polygon/i-google-maps-polygon';
+import { GoogleMapsApiService, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsPolygon, GoogleMapsMarker, GoogleMapsDataDirective, GoogleMapsFeature } from '@bespunky/angular-google-maps/overlays';
 
 @Component({
     selector: 'app-root',

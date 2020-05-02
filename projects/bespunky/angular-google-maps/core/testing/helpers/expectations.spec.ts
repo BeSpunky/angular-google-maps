@@ -2,7 +2,8 @@
  * Provides util functions to shortcut `expect()` statements.
  */
 
-import { GeometryTransformService, Coord } from '@bespunky/angular-google-maps/core';
+import { Coord                    } from '../../abstraction/types/geometry.type';
+import { GeometryTransformService } from '../../api/transform/geometry-transform.service';
 
 /**
  * Shortcuts expecting a literal position match with a native LatLng object.

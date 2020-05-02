@@ -1,8 +1,7 @@
-import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/core/testing';
+import { MockGoogleMapWithOverlays        } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsApiService, Coord      } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsMarker } from './google-maps-marker';
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
-import { Coord } from '../../core/abstraction/types/geometry.type';
 
 describe('GoogleMapsMarker', () =>
 {
@@ -14,7 +13,7 @@ describe('GoogleMapsMarker', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        marker = new GoogleMapsMarker(api, new MockGoogleMap());
+        marker = new GoogleMapsMarker(api, new MockGoogleMapWithOverlays());
 
         runOutsideAngular.calls.reset();
     });

@@ -1,6 +1,6 @@
+import { itShouldCreateWrapper } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsDataFactoryProvider } from './google-maps-data-factory.provider';
-import { GoogleMapsData } from './google-maps-data';
-import { itShouldCreateWrapper } from '../testing/wrapper-factory-provider-test-setup.spec';
+import { GoogleMapsData                } from './google-maps-data';
 
 describe('GoogleMapsDataFactoryProvider', () =>
 {

@@ -65,9 +65,9 @@ const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
  * @param {IGoogleMapsTestingModuleConfigOptions} [options] (Optional) The options for the configuring the test module.
  * @returns The created tools and services, ready to use.
  */
-export async function configureGoogleMapsTestingModule(options?: IGoogleMapsTestingModuleConfigOptions)
+export function configureGoogleMapsTestingModule<TComponent>(options?: IGoogleMapsTestingModuleConfigOptions)
 {
     options = Object.assign({ createTestModuleMetadata: () => createGoogleMapsTestModuleMetadata(options.moduleConfig) }, defaultModuleConfigOptions, options);
 
-    return configureGoogleMapsSyncTestingModule(options);
+    return configureGoogleMapsSyncTestingModule<TComponent>(options);
 }

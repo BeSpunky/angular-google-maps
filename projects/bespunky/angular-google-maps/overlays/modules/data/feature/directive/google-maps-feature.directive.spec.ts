@@ -1,22 +1,21 @@
 import { fakeAsync, tick } from '@angular/core/testing';
+import { ElementRef      } from '@angular/core';
 
+import { configureGoogleMapsTestingModule                                     } from '@bespunky/angular-google-maps/core/testing';
+import { MockGoogleMapWithOverlays, MockGoogleMapsData, MockGoogleMapsFeature } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsComponentApiService                                        } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsFeatureDirective } from './google-maps-feature.directive';
-import { GoogleMapsInternalApiService } from '../../../../core/api/google-maps-internal-api.service';
-import { configureGoogleMapsTestingModule } from '../../../../testing/setup.spec';
-import { MockGoogleMapsFeature } from '../../../../testing/mocks/modules/mock-google-maps-feature.spec';
-import { MockGoogleMapsData } from '../../../../testing/mocks/modules/mock-google-maps-data.spec';
-import { MockGoogleMap } from '../../../../google-map/testing/mock-google-map.spec';
 
 describe('GoogleMapsFeatureDirective', () =>
 {
     let directive: GoogleMapsFeatureDirective;
-    let api      : GoogleMapsInternalApiService;
+    let api      : GoogleMapsComponentApiService;
 
     beforeEach(async () =>
     {
-        ({ internalApi: api } = await configureGoogleMapsTestingModule());
+        ({ componentApi: api } = await configureGoogleMapsTestingModule());
 
-       directive = new GoogleMapsFeatureDirective(api, () => new MockGoogleMapsFeature(new MockGoogleMapsData(new MockGoogleMap())));
+        directive = new GoogleMapsFeatureDirective(api, () => new MockGoogleMapsFeature(new MockGoogleMapsData(new MockGoogleMapWithOverlays())), new ElementRef({}));
     });
 
     it('should create an instance', () => expect(directive).toBeTruthy());

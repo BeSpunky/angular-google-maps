@@ -1,22 +1,21 @@
-import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
-import { GoogleMapsData } from './google-maps-data';
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { MockGoogleMapsFeature } from '../../testing/mocks/modules/mock-google-maps-feature.spec';
-import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
+import { configureGoogleMapsTestingModule                 } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsApiService                             } from '@bespunky/angular-google-maps/core';
+import { MockGoogleMapsFeature, MockGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsData     } from './google-maps-data';
 import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 
 describe('GoogleMapsData', () =>
 {
-    let api: GoogleMapsApiService;
+    let api              : GoogleMapsApiService;
     let runOutsideAngular: jasmine.Spy;
-    let map: MockGoogleMap;
-    let data: GoogleMapsData;
+    let map              : MockGoogleMapWithOverlays;
+    let data             : GoogleMapsData;
 
     beforeEach(async () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        map = new MockGoogleMap();
+        map  = new MockGoogleMapWithOverlays();
         data = new GoogleMapsData(api, map);
 
         runOutsideAngular.calls.reset();
