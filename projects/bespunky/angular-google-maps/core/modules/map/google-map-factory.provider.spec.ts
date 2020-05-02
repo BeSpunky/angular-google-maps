@@ -10,10 +10,7 @@ import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token
 
 describe('GoogleMapFactoryProvider', () =>
 {
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, {
-        provide: ElementRef,
-        useValue: new ElementRef(document.createElement('div'))
-    });
+    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap);
 
     it('should return null when used in non-browser platforms', async () =>
     {

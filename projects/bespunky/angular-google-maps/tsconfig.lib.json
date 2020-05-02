@@ -13,7 +13,11 @@
         "emitDecoratorMetadata": false,
         "experimentalDecorators": true,
         "importHelpers": true,
-        "types": ["google-maps"],
+        "types": [
+            "jasmine",
+            "node",
+            "google-maps"
+        ],
         "lib": [
             "dom",
             "es2018"

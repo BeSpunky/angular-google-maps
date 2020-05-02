@@ -5,7 +5,7 @@
 import { DebugElement, ElementRef, Type } from '@angular/core';
 import { TestModuleMetadata, TestBed, ComponentFixture } from '@angular/core/testing';
 
-import { GoogleMapsModule as GoogleMapsSyncModule, GoogleMapsComponentApiService, GoogleMapsApiService } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsModule, GoogleMapsComponentApiService, GoogleMapsApiService } from '@bespunky/angular-google-maps/core';
 
 /**
  * Creates a `TestModuleMetadata` object that can be passed into `TestBed.configureTestingModule()` in order to
@@ -18,7 +18,7 @@ import { GoogleMapsModule as GoogleMapsSyncModule, GoogleMapsComponentApiService
 export function createGoogleMapsTestModuleMetadata(): TestModuleMetadata
 {
     return {
-        imports: [GoogleMapsSyncModule.forRoot()]
+        imports: [GoogleMapsModule.forRoot()]
     };
 }
 

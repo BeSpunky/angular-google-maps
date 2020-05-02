@@ -1,3 +1,4 @@
+import { ElementRef } from '@angular/core';
 
 import { GoogleMapsFeatureFactoryProvider } from './google-maps-feature-factory.provider';
 import { GoogleMapsFeature } from './google-maps-feature';
@@ -11,7 +12,7 @@ describe('GoogleMapsFeatureFactoryProvider', () =>
 {
     itShouldCreateWrapper(GoogleMapsFeatureFactoryProvider, GoogleMapsFeature, {
         provide: GoogleMapsDataDirective,
-        useFactory: (api, map) => new GoogleMapsDataDirective(api, () => new MockGoogleMapsData(map)),
-        deps: [GoogleMapsInternalApiService, MockGoogleMap]
+        useFactory: (api, map, element) => new GoogleMapsDataDirective(api, () => new MockGoogleMapsData(map), element),
+        deps: [GoogleMapsInternalApiService, MockGoogleMap, ElementRef]
     });
 });
