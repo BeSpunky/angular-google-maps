@@ -21,6 +21,7 @@ export * from './abstraction/types/geometry.type';
 
 // Api
 export * from './api/google-maps-api.service';
+export * from './api/google-maps-component-api.service';
 export * from './api/transform/event-data-transform.service';
 export * from './api/transform/geometry-transform.service';
 

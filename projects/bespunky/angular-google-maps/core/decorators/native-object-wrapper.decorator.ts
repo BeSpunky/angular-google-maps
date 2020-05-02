@@ -10,7 +10,7 @@ import { Wrapper } from '../abstraction/types/abstraction';
  * with a wrapper method that calls the native function.
  * 
  * By itself, the decorator will not have any affect. Methods must be decorated for it to do the work.
- * This is necessary for the property delegation mechanism to work (see `GoogleMapsInternalApiService.delegateInputChangesToNativeObject()`).
+ * This is necessary for the property delegation mechanism to work (see `GoogleMapsComponentApiService.delegateInputChangesToNativeObject()`).
  * You can implement the wrappers yourself but this will save you the need for repeating the same implementation each time.
  *  
  * @see `@Wrap` and `@OutsideAngular` to understand the implementation provided the decorators.
