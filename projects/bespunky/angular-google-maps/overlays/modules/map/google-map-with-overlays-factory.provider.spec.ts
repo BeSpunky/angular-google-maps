@@ -2,7 +2,7 @@ import { TestBed          } from '@angular/core/testing';
 import { ElementRef       } from '@angular/core';
 import { UniversalService } from '@bespunky/angular-zen';
 
-import { configureGoogleMapsTestingModule                            } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule                            } from '@bespunky/angular-google-maps/testing';
 import { itShouldCreateWrapper                                       } from '@bespunky/angular-google-maps/overlays/testing';
 import { WrapperFactory                                              } from '@bespunky/angular-google-maps/core';
 import { GoogleMapWithOverlaysFactoryProvider, GoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays';

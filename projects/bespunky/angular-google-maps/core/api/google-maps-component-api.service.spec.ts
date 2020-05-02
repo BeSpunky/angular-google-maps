@@ -2,8 +2,9 @@ import { Observable } from 'rxjs';
 import { fakeAsync, tick, ComponentFixture                 } from '@angular/core/testing';
 import { Component, ViewChild, SimpleChanges, SimpleChange } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, MockComponentWithLifecycle, MockEmittingWrapper, MockNative } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsComponentApiService, GoogleMapsEventData                                            } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule                            } from '@bespunky/angular-google-maps/testing';
+import { MockComponentWithLifecycle, MockEmittingWrapper, MockNative } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsComponentApiService, GoogleMapsEventData          } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsComponentApiService', () =>
 {

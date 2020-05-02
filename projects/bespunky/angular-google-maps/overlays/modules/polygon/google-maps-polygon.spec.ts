@@ -1,6 +1,6 @@
 import { upperFirst } from 'lodash';
 
-import { configureGoogleMapsTestingModule                        } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule                        } from '@bespunky/angular-google-maps/testing';
 import { MockGoogleMapWithOverlays                               } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsApiService, CoordPath, FlatCoord, NativeCoord } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsPolygon                                       } from '@bespunky/angular-google-maps/overlays';

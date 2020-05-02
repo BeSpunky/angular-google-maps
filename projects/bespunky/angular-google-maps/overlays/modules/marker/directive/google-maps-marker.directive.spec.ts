@@ -1,8 +1,9 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Component        } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsMarkerDirective                                                                                 } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
+import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsMarkerDirective                                               } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --

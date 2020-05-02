@@ -1,7 +1,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Component        } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                                          } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule                                          } from '@bespunky/angular-google-maps/testing';
 import { MockDrawableOverlay, MockGoogleMapWithOverlays, MockNativeDrawableOverlay } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsApiService, WrapperFactory                                      } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsOverlayLifecycleBase, DrawableOverlay                           } from '@bespunky/angular-google-maps/overlays';

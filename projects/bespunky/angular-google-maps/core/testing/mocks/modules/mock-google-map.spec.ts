@@ -1,6 +1,5 @@
-import { IGoogleMap } from '@bespunky/angular-google-maps/core';
-
-import { MockFill            } from '../../helpers/mock-fill.decorator.spec';
+import { MockFill            } from '@bespunky/angular-google-maps/testing';
+import { IGoogleMap          } from '@bespunky/angular-google-maps/core';
 import { MockEmittingWrapper } from '../mock-emitting-wrapper.spec';
 
 @MockFill

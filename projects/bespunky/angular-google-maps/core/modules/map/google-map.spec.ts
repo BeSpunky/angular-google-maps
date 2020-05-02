@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, expectPositionEquals } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule, expectPositionEquals } from '@bespunky/angular-google-maps/testing';
 import { GoogleMapsApiService, Defaults, GoogleMap              } from '@bespunky/angular-google-maps/core';
 
 const elementStub: any = document.createElement('div');

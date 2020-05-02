@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { NgZone  } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
 import { GoogleMapsApiService             } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsApiService', () =>

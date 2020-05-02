@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, expectPositionEquals                     } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule, expectPositionEquals                     } from '@bespunky/angular-google-maps/testing';
 import { GoogleMapsApiService, Defaults, FlatCoord                                  } from '@bespunky/angular-google-maps/core';
 import { GoogleMapWithOverlays, GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsData } from '@bespunky/angular-google-maps/overlays';
 

@@ -1,4 +1,5 @@
-import { MockFill, MockEmittingWrapper       } from '@bespunky/angular-google-maps/core/testing';
+import { MockFill                            } from '@bespunky/angular-google-maps/testing';
+import { MockEmittingWrapper                 } from '@bespunky/angular-google-maps/core/testing';
 import { Coord, CoordPath                    } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsFeature, IGoogleMapsData } from '@bespunky/angular-google-maps/overlays';
 

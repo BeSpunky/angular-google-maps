@@ -1,5 +1,5 @@
 
-import { configureGoogleMapsTestingModule, MockGoogleMap      } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule                     } from '@bespunky/angular-google-maps/testing';
 import { MockNativeDrawableOverlay, MockGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsApiService                                 } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay                            } from '@bespunky/angular-google-maps/overlays';

@@ -2,8 +2,9 @@ import { TestBed          } from '@angular/core/testing';
 import { ElementRef       } from '@angular/core';
 import { UniversalService } from '@bespunky/angular-zen';
 
-import { configureGoogleMapsTestingModule, itShouldCreateWrapper } from '@bespunky/angular-google-maps/core/testing';
-import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap     } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule                    } from '@bespunky/angular-google-maps/testing';
+import { itShouldCreateWrapper                               } from '@bespunky/angular-google-maps/core/testing';
+import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapFactoryProvider', () =>
 {

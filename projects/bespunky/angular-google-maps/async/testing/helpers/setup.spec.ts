@@ -10,7 +10,7 @@ import
 {
     IGoogleMapsTestingModuleConfigOptions as IGoogleMapsSyncTestingModuleConfigOptions,
     configureGoogleMapsTestingModule      as configureGoogleMapsSyncTestingModule
-} from '@bespunky/angular-google-maps/core/testing';
+} from '@bespunky/angular-google-maps/testing';
 
 /**
  * Creates a `TestModuleMetadeta` object that can be passed into `TestBed.configureTestingModule()` in order to
