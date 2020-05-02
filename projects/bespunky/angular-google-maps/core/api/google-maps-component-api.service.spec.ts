@@ -16,7 +16,7 @@ describe('GoogleMapsComponentApiService', () =>
 
     beforeEach(async () =>
     {
-        ({ componentApi: api, component: testHost } = await configureGoogleMapsTestingModule({
+        ({ componentApi: api, fixture, component: testHost } = await configureGoogleMapsTestingModule({
             componentType: TestHost,
             customize: (def) => def.declarations.push(MockComponentWithLifecycle)
         }));
