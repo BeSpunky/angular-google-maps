@@ -1,4 +1,4 @@
-import { IGoogleMapsNativeObject } from '../../native/i-google-maps-native-object';
+import { IGoogleMapsNativeObject } from '@bespunky/angular-google-maps/core';
 
 export class MockNative implements IGoogleMapsNativeObject
 {

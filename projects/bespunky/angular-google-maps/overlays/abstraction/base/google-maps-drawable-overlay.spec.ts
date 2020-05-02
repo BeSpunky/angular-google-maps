@@ -1,8 +1,8 @@
 
-import { configureGoogleMapsTestingModule } from '../../../testing/core/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../../core/testing/helpers/setup.spec';
 import { GoogleMapsApiService } from '../../../src/lib/core/api/google-maps-api.service';
 import { MockGoogleMap } from '../../../src/lib/google-map/testing/mock-google-map.spec';
-import { MockNativeDrawableOverlay } from '../../../testing/overlays/mocks/mock-native-drawable-overlay.spec';
+import { MockNativeDrawableOverlay } from '../../testing/mocks/mock-native-drawable-overlay.spec';
 import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
 
 describe('GoogleMapsDrawableOverlay (abstract)', () =>

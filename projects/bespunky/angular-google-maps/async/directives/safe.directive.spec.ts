@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { SafeDirective } from './safe.directive';
 import { GoogleMapsApiService } from './google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../../testing/core/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../core/testing/helpers/setup.spec';
 
 describe('SafeDirective', () =>
 {

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
 import { GoogleMapComponent } from './google-map.component';
-import { configureGoogleMapsTestingModule } from '../../../../testing/core/setup.spec';
-import { LifecycleComponentTestHost, createLifecycleTestingHostComponentTemplate } from '../../../../testing/core/lifecycle-components.spec';
+import { configureGoogleMapsTestingModule } from '../../../testing/helpers/setup.spec';
+import { LifecycleComponentTestHost, createLifecycleTestingHostComponentTemplate } from '../../../testing/helpers/lifecycle-components.spec';
 
 /**
  * -- NOTE --

@@ -1,8 +1,9 @@
 import { FactoryProvider, Type, Provider } from "@angular/core";
-import { TestBed } from '@angular/core/testing';
+import { TestBed                         } from '@angular/core/testing';
 
-import { GoogleMapComponent, GoogleMapsInternalApiService, WrapperFactory, EmittingWrapper } from '@bespunky/angular-google-maps/core';
-import { configureGoogleMapsAsyncTestingModule, MockGoogleMap                              } from '@bespunky/angular-google-maps/testing';
+import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperFactory, EmittingWrapper } from '@bespunky/angular-google-maps/core';
+import { MockGoogleMap                                                                      } from '@bespunky/angular-google-maps/core/testing';
+import { configureGoogleMapsTestingModule                                                   } from '@bespunky/angular-google-maps/async/testing';
 
 function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider, ...deps: Provider[])
 {
@@ -16,7 +17,7 @@ function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider
             def.providers.push({
                 provide: GoogleMapComponent,
                 useFactory: (api, map) => new GoogleMapComponent(api, () => map),
-                deps: [GoogleMapsInternalApiService, MockGoogleMap]
+                deps: [GoogleMapsComponentApiService, MockGoogleMap]
             });
             def.providers.push(...deps, factoryProvider);
         }

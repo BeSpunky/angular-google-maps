@@ -1,8 +1,6 @@
-import { IGoogleMapsFeature } from '../../../../overlays/modules/data/feature/i-google-maps-feature';
-import { IGoogleMapsData } from '../../../../overlays/modules/data/i-google-maps-data';
-import { MockEmittingWrapper } from '../../../../core/abstraction/testing/mock-emitting-wrapper.spec';
-import { MockFill } from '../../../../testing/mock-fill.decorator.spec';
-import { CoordPath, Coord } from '../../../../core/abstraction/types/geometry.type';
+import { MockFill, MockEmittingWrapper       } from '@bespunky/angular-google-maps/core/testing';
+import { Coord, CoordPath                    } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsFeature, IGoogleMapsData } from '@bespunky/angular-google-maps/overlays';
 
 @MockFill
 export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature

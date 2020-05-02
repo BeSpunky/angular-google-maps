@@ -1,9 +1,5 @@
-import { NativeObjectWrapper            } from '../../../decorators/native-object-wrapper.decorator';
-import { Wrap                           } from '../../../decorators/wrap.decorator';
-import { OutsideAngular                 } from '../../../decorators/outside-angular.decorator';
-import { IGoogleMapsNativeObjectWrapper } from '../../base/i-google-maps-native-object-wrapper';
-import { IGoogleMapsNativeObject        } from '../../native/i-google-maps-native-object';
-import { MockNative                     } from './mock-native.spec';
+import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectWrapper, NativeObjectWrapper, Wrap, OutsideAngular } from '@bespunky/angular-google-maps/core';
+import { MockNative } from './mock-native.spec';
 
 @NativeObjectWrapper
 export class MockWrapper<TNative extends IGoogleMapsNativeObject = MockNative> implements IGoogleMapsNativeObjectWrapper<TNative>

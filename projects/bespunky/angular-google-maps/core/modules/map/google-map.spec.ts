@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '../../../testing/core/setup.spec';
-import { expectPositionEquals } from '../../../testing/core/expectations.spec';
+import { configureGoogleMapsTestingModule } from '../../testing/helpers/setup.spec';
+import { expectPositionEquals } from '../../testing/helpers/expectations.spec';
 import { GoogleMapsApiService } from '../core/api/google-maps-api.service';
 import { GoogleMap } from './google-map';
 import { Defaults } from '../core/config/defaults';

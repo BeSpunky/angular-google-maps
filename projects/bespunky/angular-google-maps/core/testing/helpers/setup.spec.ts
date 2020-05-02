@@ -5,49 +5,23 @@
 import { DebugElement, ElementRef, Type } from '@angular/core';
 import { TestModuleMetadata, TestBed, ComponentFixture } from '@angular/core/testing';
 
-import { GoogleMapsModule as GoogleMapsSyncModule, GoogleMapsApiLoader, NoOpGoogleMapsApiLoader, GoogleMapsInternalApiService, GoogleMapsApiService, } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsModule as GoogleMapsAsyncModule, GoogleMapsConfig } from '@bespunky/angular-google-maps/async';
-
-
-/** The default dummy config to use when loading the `GoogleMapsModule` for testing. */
-export const defaultTestApiConfig: GoogleMapsConfig = {
-    apiUrl: { key: 'testing-key' }
-};
+import { GoogleMapsModule as GoogleMapsSyncModule, GoogleMapsComponentApiService, GoogleMapsApiService } from '@bespunky/angular-google-maps/core';
 
 /**
  * Creates a `TestModuleMetadata` object that can be passed into `TestBed.configureTestingModule()` in order to
- * imprort the `GoogleMapsModule` from the @bespunky/angular-google-maps/core package, with automatically provides
+ * imprort the `GoogleMapsModule` **from the @bespunky/angular-google-maps/core package**, which automatically provides
  * `NoOpGoogleMapsApiLoader` as the `GoogleMapsApiLoader` token.
  *
  * @export
  * @returns {TestModuleMetadata} A TestBed-ready module configuration.
  */
-export function createGoogleMapsSyncTestModuleMetadata(): TestModuleMetadata
+export function createGoogleMapsTestModuleMetadata(): TestModuleMetadata
 {
     return {
         imports: [GoogleMapsSyncModule.forRoot()]
     };
 }
 
-/**
- * Creates a `TestModuleMetadeta` object that can be passed into `TestBed.configureTestingModule()` in order to
- * import the `GoogleMapsModule` from the async package, and allow DI without actually downloading the API from google.
- * This changes the default `GoogleMapsApiLoader` provider to the `NoOpGoogleMapsApiLoader`.
- *
- * @export
- * @param [config] (Optional) The module configuration to use when creating the module. Default is `defaultTestApiConfig`
- * @returns A TestBed-ready module configuration.
- */
-export function createGoogleMapsAsyncTestModuleMetadata(config?: GoogleMapsConfig): TestModuleMetadata
-{
-    return {
-        imports: [GoogleMapsAsyncModule.forRoot(config || defaultTestApiConfig)],
-        providers: [
-            // Replace the script loader service so google api script will not be downloaded
-            { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader }
-        ]
-    };
-}
 
 /**
  * Creates a jasmine spy on the `runOutsideAngular()` or `runInsideAngular()` method of the api which fakes its execution.
@@ -72,10 +46,11 @@ export function fakeTheRunXsideAngularMethod(api: GoogleMapsApiService, methodNa
  */
 export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
 {
-    /** (Optional) `true` to use the async maps module; otherwise `false`. Default is `true`. */
-    async?: boolean,
-    /** (Optional) Custom configuration for the Google Maps API. Ignored when `async` if `false`.  */
-    moduleConfig?: GoogleMapsConfig,
+    /**
+     * (Optional) A function that will define the test module imports and providers for the test.
+     * Default is the `createGoogleMapsTestModuleMetadata()` function.
+     */
+    createTestModuleMetadata?: () => TestModuleMetadata
     /** (Optional) A function used to apply additional changes to the module definition before creating the TestBed. */
     customize?: (moduleDef: TestModuleMetadata) => void;
     /**
@@ -84,7 +59,7 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
      */
     componentType?: Type<TComponent>,
     /** (Optional) A function to execute before the component is created. Example use case could be spying on a component's constructor. */
-    beforeComponentInit?: (api: GoogleMapsApiService, internalApi: GoogleMapsInternalApiService) => void,
+    beforeComponentInit?: (api: GoogleMapsApiService, componentApi: GoogleMapsComponentApiService) => void,
     /** (Optional) Configures the automation of jasmine spies. */
     spies?: {
         /** `true` to fake the execution of `api.runInsideAngular()` (@see `fakeTheRunXsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
@@ -95,7 +70,7 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
 }
 
 const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
-    async: true,
+    createTestModuleMetadata: createGoogleMapsTestModuleMetadata,
     spies: {
         fakeRunInsideAngular: true,
         fakeRunOutsideAngular: true
@@ -123,7 +98,7 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     options = Object.assign({}, defaultModuleConfigOptions, options);
 
     // Create the basic testing configuration
-    const moduleConfig = options.async ? createGoogleMapsAsyncTestModuleMetadata(options.moduleConfig) : createGoogleMapsSyncTestModuleMetadata();
+    const moduleConfig  = options.createTestModuleMetadata();
     // Get the type of the component being compiled, if there is one
     const componentType = options?.componentType;
 
@@ -139,8 +114,8 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     const testBed = TestBed.configureTestingModule(moduleConfig);
 
     // Retrieve useful services and tools
-    const api         = TestBed.inject(GoogleMapsApiService);
-    const internalApi = TestBed.inject(GoogleMapsInternalApiService);
+    const api          = TestBed.inject(GoogleMapsApiService);
+    const componentApi = TestBed.inject(GoogleMapsComponentApiService);
 
     const runInsideAngular  = options.spies.fakeRunInsideAngular  ? fakeTheRunXsideAngularMethod(api, 'runInsideAngular')  : spyOn(api, 'runInsideAngular').and.callThrough();
     const runOutsideAngular = options.spies.fakeRunOutsideAngular ? fakeTheRunXsideAngularMethod(api, 'runOutsideAngular') : spyOn(api, 'runOutsideAngular').and.callThrough();
@@ -148,7 +123,7 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     const spies = { runInsideAngular, runOutsideAngular };
 
     if (options.beforeComponentInit)
-        options.beforeComponentInit(api, internalApi);
+        options.beforeComponentInit(api, componentApi);
 
     // If a component is being tested, compile it and retrieve its relevant instances
     if (componentType)
@@ -163,5 +138,5 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     }
 
     // Return all extracted services and objects for easier use
-    return { fixture, component, debugElement, element, api, internalApi, spies };
+    return { fixture, component, debugElement, element, api, componentApi, spies };
 }

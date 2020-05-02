@@ -1,6 +1,6 @@
 
 import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../../../testing/core/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../testing/helpers/setup.spec';
 import { GoogleMapsNativeObjectEmittingWrapper } from './google-maps-native-object-emitting-wrapper';
 import { MockNative } from '../testing/src/mock-native.spec';
 

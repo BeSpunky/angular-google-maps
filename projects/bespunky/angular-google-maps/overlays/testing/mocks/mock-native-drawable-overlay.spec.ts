@@ -1,5 +1,5 @@
-import { MockNative } from '@bespunky/angular-google-maps/testing'
-import { IGoogleMapsNativeDrawableOverlay } from '../../../overlays/abstraction/native/i-google-maps-native-drawable-overlay';
+import { MockNative                       } from '@bespunky/angular-google-maps/core/testing';
+import { IGoogleMapsNativeDrawableOverlay } from '@bespunky/angular-google-maps/overlays';
 
 export class MockNativeDrawableOverlay extends MockNative implements IGoogleMapsNativeDrawableOverlay
 {

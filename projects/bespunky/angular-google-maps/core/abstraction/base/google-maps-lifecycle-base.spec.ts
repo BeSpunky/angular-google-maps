@@ -1,6 +1,6 @@
 import { SimpleChange } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '../../../testing/core/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../testing/helpers/setup.spec';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { Observable } from 'rxjs';
 import { MockComponentWithLifecycle } from '../testing/src/mock-component.spec';

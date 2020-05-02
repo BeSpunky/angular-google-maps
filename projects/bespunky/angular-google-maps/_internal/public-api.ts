@@ -1,1 +1,1 @@
-export * from './create-and-append-map-element';
+export * from './helpers/create-and-append-map-element';

@@ -1,10 +1,7 @@
-import { IGoogleMap } from "../../../core/modules/map/i-google-map";
-import { IGoogleMapsMarker } from "../../overlays/marker/i-google-maps-marker";
-import { IGoogleMapsPolygon } from '../../overlays/polygon/i-google-maps-polygon';
-import { IGoogleMapsData } from "../../overlays/data/i-google-maps-data";
-import { MockEmittingWrapper } from '../../core/abstraction/testing/mock-emitting-wrapper.spec';
-import { MockFill } from '../mock-fill.decorator.spec';
-import { Coord, CoordPath } from '../../core/abstraction/types/geometry.type';
+import { IGoogleMap } from '@bespunky/angular-google-maps/core';
+
+import { MockFill            } from '../../helpers/mock-fill.decorator.spec';
+import { MockEmittingWrapper } from '../mock-emitting-wrapper.spec';
 
 @MockFill
 export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implements IGoogleMap
@@ -12,22 +9,6 @@ export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implemen
     constructor(public native: any = new google.maps.Map(document.createElement('div')))
     {
         super(native);
-    }
-    createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): IGoogleMapsMarker
-    {
-        throw new Error("Method not implemented.");
-    }
-    createPolygon(path: CoordPath, options?: google.maps.PolygonOptions): IGoogleMapsPolygon
-    {
-        throw new Error("Method not implemented.");
-    }
-    createDataLayer(options?: google.maps.Data.DataOptions): IGoogleMapsData
-    {
-        throw new Error("Method not implemented.");
-    }
-    removeOverlay<TOverlay extends import("../../core/abstraction/types/abstraction").DrawableOverlay>(overlay: TOverlay): void
-    {
-        throw new Error("Method not implemented.");
     }
     fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void
     {
