@@ -1,4 +1,5 @@
-import { MockWrapper, MockNative, NativeObjectWrapper, Wrapper } from '@bespunky/angular-google-maps/core/testing';
+import { MockWrapper, MockNative      } from '@bespunky/angular-google-maps/core/testing';
+import { NativeObjectWrapper, Wrapper } from '@bespunky/angular-google-maps/core';
 
 describe('@NativeObjectWrapper()', () =>
 {

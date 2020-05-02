@@ -1,6 +1,7 @@
 import { ElementRef } from '@angular/core';
 
-import { itShouldCreateWrapper, MockGoogleMapWithOverlays, MockGoogleMapsData         } from '@bespunky/angular-google-maps/overlays/testing';
+import { itShouldCreateWrapper                                                        } from '@bespunky/angular-google-maps/core/testing';
+import { MockGoogleMapWithOverlays, MockGoogleMapsData                                } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsComponentApiService                                                } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDataDirective, GoogleMapsFeatureFactoryProvider, GoogleMapsFeature } from '@bespunky/angular-google-maps/overlays';
 

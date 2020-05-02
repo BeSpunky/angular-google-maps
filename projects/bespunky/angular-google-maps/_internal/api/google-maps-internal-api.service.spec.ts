@@ -2,9 +2,9 @@ import { BehaviorSubject } from 'rxjs';
 import { TestBed, inject, async } from '@angular/core/testing';
 import { NgZone                 } from '@angular/core';
 
-import { configureGoogleMapsTestingModule               } from '@bespunky/angular-google-maps/testing';
-import { GoogleMapsApiReadyPromise, GoogleMapsApiLoader } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsInternalApiService                   } from '@bespunky/angular-google-maps/_internal';
+import { configureGoogleMapsTestingModule                        } from '@bespunky/angular-google-maps/testing';
+import { GoogleMapsApiLoader                                     } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsInternalApiService, GoogleMapsApiReadyPromise } from '@bespunky/angular-google-maps/_internal';
 
 describe('GoogleMapsInternalApiService', () =>
 {

@@ -28,8 +28,6 @@ describe('GoogleMapsApiService', () =>
 
     it('should provide a promise for indicating that maps api is ready', () => expect(api.whenReady instanceof Promise).toBeTruthy());
 
-    it('should allow access to the configuration passed to Google Maps API', () => expect(api.config).toBeDefined());
-    
     it('should allow access event data transformation api', () => expect(api.eventsData).toBeDefined());
     
     it('should allow access geometry api', () => expect(api.geometry).toBeDefined());
