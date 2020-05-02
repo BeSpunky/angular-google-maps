@@ -29,7 +29,7 @@ module.exports = function(config)
         browsers: ['Chrome'],
         singleRun: false,
         restartOnFileChange: true,
-        files: ['src/lib/testing/google-maps-api.js'],
+        files: ['testing/google-maps-api.js'],
         browserNoActivityTimeout: 900000 // 15min
     });
 };
