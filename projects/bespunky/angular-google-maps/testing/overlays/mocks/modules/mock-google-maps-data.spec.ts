@@ -1,9 +1,9 @@
-import { IGoogleMapsData } from '../i-google-maps-data';
+import { IGoogleMapsData } from '../../../../overlays/modules/data/i-google-maps-data';
 import { MockDrawableOverlay } from '../../../core/abstraction/testing/mock-drawable-overlay.spec';
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { MockFill } from '../../../testing/mock-fill.decorator.spec';
-import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
-import { Coord, CoordPath } from '../../../core/abstraction/types/geometry.type';
+import { IGoogleMapsFeature } from '../../../../overlays/modules/data/feature/i-google-maps-feature';
+import { Coord, CoordPath } from '../../../../core/abstraction/types/geometry.type';
 
 @MockFill
 export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> implements IGoogleMapsData

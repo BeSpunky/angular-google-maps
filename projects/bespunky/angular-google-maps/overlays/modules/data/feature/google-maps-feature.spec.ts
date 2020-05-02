@@ -3,7 +3,7 @@ import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
 import { GoogleMapsFeature } from './google-maps-feature';
 import { GoogleMapsApiService } from '../../../core/api/google-maps-api.service';
 import { MockGoogleMap } from '../../../google-map/testing/mock-google-map.spec';
-import { MockGoogleMapsData } from '../testing/mock-google-maps-data.spec';
+import { MockGoogleMapsData } from '../../../../testing/overlays/mocks/modules/mock-google-maps-data.spec';
 
 describe('GoogleMapsFeature', () =>
 {

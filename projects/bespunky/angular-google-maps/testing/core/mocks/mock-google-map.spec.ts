@@ -1,9 +1,9 @@
-import { IGoogleMap } from "../i-google-map";
+import { IGoogleMap } from "../../../core/modules/map/i-google-map";
 import { IGoogleMapsMarker } from "../../overlays/marker/i-google-maps-marker";
 import { IGoogleMapsPolygon } from '../../overlays/polygon/i-google-maps-polygon';
 import { IGoogleMapsData } from "../../overlays/data/i-google-maps-data";
 import { MockEmittingWrapper } from '../../core/abstraction/testing/mock-emitting-wrapper.spec';
-import { MockFill } from '../../../../testing/mock-fill.decorator.spec';
+import { MockFill } from '../mock-fill.decorator.spec';
 import { Coord, CoordPath } from '../../core/abstraction/types/geometry.type';
 
 @MockFill

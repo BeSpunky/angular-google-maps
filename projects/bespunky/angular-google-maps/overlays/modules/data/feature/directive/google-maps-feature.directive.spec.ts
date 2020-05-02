@@ -3,8 +3,8 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { GoogleMapsFeatureDirective } from './google-maps-feature.directive';
 import { GoogleMapsInternalApiService } from '../../../../core/api/google-maps-internal-api.service';
 import { configureGoogleMapsTestingModule } from '../../../../testing/setup.spec';
-import { MockGoogleMapsFeature } from '../testing/mock-google-maps-feature.spec';
-import { MockGoogleMapsData } from '../../testing/mock-google-maps-data.spec';
+import { MockGoogleMapsFeature } from '../../../../../testing/overlays/mocks/modules/mock-google-maps-feature.spec';
+import { MockGoogleMapsData } from '../../../../../testing/overlays/mocks/modules/mock-google-maps-data.spec';
 import { MockGoogleMap } from '../../../../google-map/testing/mock-google-map.spec';
 
 describe('GoogleMapsFeatureDirective', () =>

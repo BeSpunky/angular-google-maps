@@ -5,11 +5,11 @@ import { TestBed, inject, async, fakeAsync, tick, ComponentFixture } from '@angu
 import { GoogleMapsInternalApiService } from './google-maps-internal-api.service';
 import { GoogleMapsApiReadyPromise } from './loader/google-maps-api-ready.token';
 import { GoogleMapsApiLoader } from './loader/google-maps-api-loader';
-import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
-import { MockComponentWithLifecycle } from '../abstraction/testing/mock-component.spec';
+import { configureGoogleMapsTestingModule } from '../../testing/core/setup.spec';
+import { MockComponentWithLifecycle } from '../abstraction/testing/src/mock-component.spec';
 import { GoogleMapsEventData } from '../abstraction/events/google-maps-event-data';
-import { MockEmittingWrapper } from '../abstraction/testing/mock-emitting-wrapper.spec';
-import { MockNative } from '../abstraction/testing/mock-native.spec';
+import { MockEmittingWrapper } from '../abstraction/testing/src/mock-emitting-wrapper.spec';
+import { MockNative } from '../abstraction/testing/src/mock-native.spec';
 
 describe('GoogleMapsInternalApiService', () =>
 {

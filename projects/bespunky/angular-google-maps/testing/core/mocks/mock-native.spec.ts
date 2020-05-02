@@ -1,4 +1,4 @@
-import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
+import { IGoogleMapsNativeObject } from '../../native/i-google-maps-native-object';
 
 export class MockNative implements IGoogleMapsNativeObject
 {

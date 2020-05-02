@@ -1,7 +1,7 @@
 import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
 import { GoogleMapsData } from './google-maps-data';
 import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { MockGoogleMapsFeature } from './feature/testing/mock-google-maps-feature.spec';
+import { MockGoogleMapsFeature } from '../../../testing/overlays/mocks/modules/mock-google-maps-feature.spec';
 import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
 import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
 

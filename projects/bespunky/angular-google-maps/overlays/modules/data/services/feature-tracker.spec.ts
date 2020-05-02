@@ -1,6 +1,6 @@
 import { FeatureTracker } from './feature-tracker';
-import { MockGoogleMapsFeature } from '../feature/testing/mock-google-maps-feature.spec';
-import { MockGoogleMapsData } from '../testing/mock-google-maps-data.spec';
+import { MockGoogleMapsFeature } from '../../../../testing/overlays/mocks/modules/mock-google-maps-feature.spec';
+import { MockGoogleMapsData } from '../../../../testing/overlays/mocks/modules/mock-google-maps-data.spec';
 import { MockGoogleMap } from '../../map/testing/mock-google-map.spec';
 import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
 

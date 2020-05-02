@@ -1,6 +1,6 @@
 import { MockFill } from "../../../testing/mock-fill.decorator.spec";
 import { MockDrawableOverlay } from "../../../core/abstraction/testing/mock-drawable-overlay.spec";
-import { IGoogleMapsMarker } from "../i-google-maps-marker";
+import { IGoogleMapsMarker } from "../../../../overlays/modules/marker/i-google-maps-marker";
 import { OverlayType } from '../../../core/abstraction/base/overlay-type.enum';
 import { IGoogleMap } from '../../../google-map/i-google-map';
 import { Coord } from '../../../core/abstraction/types/geometry.type';

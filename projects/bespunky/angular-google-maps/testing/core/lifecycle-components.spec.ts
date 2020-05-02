@@ -3,10 +3,7 @@
  */
 
 import { ViewChild } from '@angular/core';
-import { GoogleMapsLifecycleBase } from '../core/abstraction/base/google-maps-lifecycle-base';
-import { GoogleMapComponent } from '../src/lib/google-map/component/google-map.component';
-import { GoogleMap } from '../src/lib/google-map/google-map';
-import { EmittingWrapper } from '../core/abstraction/types/abstraction';
+import { GoogleMapsLifecycleBase, GoogleMapComponent, GoogleMap, EmittingWrapper } from '@bespunky/angular-google-maps/core';
 
 export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string): string
 {

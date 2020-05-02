@@ -1,9 +1,9 @@
 import { SimpleChange } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '../../../testing/core/setup.spec';
 import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
 import { Observable } from 'rxjs';
-import { MockComponentWithLifecycle } from '../testing/mock-component.spec';
+import { MockComponentWithLifecycle } from '../testing/src/mock-component.spec';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
