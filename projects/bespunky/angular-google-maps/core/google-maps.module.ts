@@ -4,10 +4,9 @@ import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core
 import { CoreModule                                        } from '@bespunky/angular-zen/core';
 import { UniversalModule                                   } from '@bespunky/angular-zen/universal';
 
-import { _InternalModule, GoogleMapsInternalApiService } from '@bespunky/angular-google-maps/_internal';
-import { GoogleMapsApiLoader                           } from './api/loader/google-maps-api-loader';
-import { NoOpGoogleMapsApiLoader                       } from './api/loader/no-op-google-maps-api-loader';
-import { GoogleMapModule                               } from './modules/map/google-map.module';
+import { _InternalModule, GoogleMapsInternalApiService, GoogleMapsApiLoader } from '@bespunky/angular-google-maps/_internal';
+import { NoOpGoogleMapsApiLoader                                            } from './api/loader/no-op-google-maps-api-loader';
+import { GoogleMapModule                                                    } from './modules/map/google-map.module';
 
 @NgModule({
     imports     : [GoogleMapModule, CoreModule, UniversalModule, _InternalModule],
