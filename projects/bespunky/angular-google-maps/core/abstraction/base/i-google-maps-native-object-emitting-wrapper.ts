@@ -1,5 +1,5 @@
+import { IGoogleMapsNativeObject        } from '../native/i-google-maps-native-object';
 import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
-import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
 export interface IGoogleMapsNativeObjectEmittingWrapper<TNative extends IGoogleMapsNativeObject>
          extends IGoogleMapsNativeObjectWrapper<TNative>

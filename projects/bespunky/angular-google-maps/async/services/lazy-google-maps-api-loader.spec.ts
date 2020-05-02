@@ -1,8 +1,7 @@
 import { of } from 'rxjs';
 import { LazyLoaderService } from '@bespunky/angular-zen';
 
-import { GoogleMapsConfig, GoogleMapsLibrary, DefaultApiLocation, HttpProtocol, GoogleApiUrl } from './google-maps-config';
-import { LazyGoogleMapsApiLoader                                                             } from './lazy-google-maps-api-loader';
+import { LazyGoogleMapsApiLoader, GoogleMapsConfig, GoogleMapsLibrary, DefaultApiLocation, HttpProtocol, GoogleApiUrl } from '@bespunky/angular-google-maps/async';
 
 describe('LazyGoogleMapsApiLoader', () =>
 {

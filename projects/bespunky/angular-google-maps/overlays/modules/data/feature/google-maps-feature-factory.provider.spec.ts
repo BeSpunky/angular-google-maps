@@ -7,8 +7,8 @@ import { GoogleMapsDataDirective, GoogleMapsFeatureFactoryProvider, GoogleMapsFe
 describe('GoogleMapsFeatureFactoryProvider', () =>
 {
     itShouldCreateWrapper(GoogleMapsFeatureFactoryProvider, GoogleMapsFeature, {
-        provide: GoogleMapsDataDirective,
+        provide   : GoogleMapsDataDirective,
         useFactory: (api, map, element) => new GoogleMapsDataDirective(api, () => new MockGoogleMapsData(map), element),
-        deps: [GoogleMapsComponentApiService, MockGoogleMapWithOverlays, ElementRef]
+        deps      : [GoogleMapsComponentApiService, MockGoogleMapWithOverlays, ElementRef]
     });
 });

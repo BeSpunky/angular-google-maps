@@ -1,5 +1,3 @@
-import 'reflect-metadata'; // Imported once here. No need to import in other places.
-
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { GoogleMapsModule as SyncGoogleMapsModule, GoogleMapsApiLoader } from '@bespunky/angular-google-maps/core';

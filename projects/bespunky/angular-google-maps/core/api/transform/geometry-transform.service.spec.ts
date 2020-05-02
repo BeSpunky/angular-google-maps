@@ -1,5 +1,4 @@
-import { GeometryTransformService } from './geometry-transform.service';
-import { Coord, CoordPath, FlatCoord, Path, MultiPath } from '../../abstraction/types/geometry.type';
+import { GeometryTransformService, Coord, CoordPath, FlatCoord, Path, MultiPath } from '@bespunky/angular-google-maps/core';
 
 describe('GeometryTransformService', () =>
 {

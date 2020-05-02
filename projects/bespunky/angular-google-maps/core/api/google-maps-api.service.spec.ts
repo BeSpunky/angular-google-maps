@@ -1,8 +1,8 @@
-import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { NgZone  } from '@angular/core';
 
-import { GoogleMapsApiService } from './google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../testing/helpers/setup.spec';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsApiService             } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsApiService', () =>
 {
@@ -11,7 +11,7 @@ describe('GoogleMapsApiService', () =>
 
     beforeEach(async () =>
     {
-        ({ api: api } = await configureGoogleMapsTestingModule({
+        ({ api } = await configureGoogleMapsTestingModule({
             spies: {
                 fakeRunInsideAngular : false,
                 fakeRunOutsideAngular: false

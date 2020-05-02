@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
+import { Component        } from '@angular/core';
 
 import { configureGoogleMapsTestingModule                                          } from '@bespunky/angular-google-maps/core/testing';
 import { MockDrawableOverlay, MockGoogleMapWithOverlays, MockNativeDrawableOverlay } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsApiService, WrapperFactory                                      } from '@bespunky/angular-google-maps/core';
-import { DrawableOverlay                                                           } from '@bespunky/angular-google-maps/overlays';
-import { GoogleMapsOverlayLifecycleBase } from './google-maps-overlay-lifecycle-base';
+import { GoogleMapsOverlayLifecycleBase, DrawableOverlay                           } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsOverlayLifecycleBase', () =>
 {

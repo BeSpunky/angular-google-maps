@@ -2,6 +2,7 @@ export * from './helpers/setup.spec';
 export * from './helpers/mock-fill.decorator.spec';
 export * from './helpers/lifecycle-components.spec';
 export * from './helpers/expectations.spec';
+export * from './helpers/wrapper-factory-provider-test-setup.spec';
 
 export * from './mocks/mock-native.spec';
 export * from './mocks/mock-wrapper.spec';

@@ -3,7 +3,7 @@ import { Component, ElementRef } from '@angular/core';
 
 import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/async/testing';
 import { GoogleMapsApiService             } from '@bespunky/angular-google-maps/core';
-import { SafeDirective } from './safe.directive';
+import { SafeDirective                    } from '@bespunky/angular-google-maps/async';
 
 describe('SafeDirective', () =>
 {
@@ -15,7 +15,7 @@ describe('SafeDirective', () =>
     {
         ({ fixture, api, component: testHost } = await configureGoogleMapsTestingModule({
             componentType: TestHost,
-            customize: def => def.declarations.push(SafeDirective)
+            customize    : def => def.declarations.push(SafeDirective)
         }));
     });
 

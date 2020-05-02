@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
 
 import { configureGoogleMapsTestingModule, expectPositionEquals } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsApiService, Defaults, GoogleMap } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, Defaults, GoogleMap              } from '@bespunky/angular-google-maps/core';
 
 const elementStub: any = document.createElement('div');
 
@@ -10,11 +10,10 @@ describe('GoogleMap', () =>
     let map              : GoogleMap;
     let api              : GoogleMapsApiService;
     let mapElement       : ElementRef;
-    let runOutsideAngular: jasmine.Spy;
 
     beforeEach(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
+        ({ api } = await configureGoogleMapsTestingModule());
 
         mapElement = new ElementRef(elementStub);
         map        = new GoogleMap(api, mapElement);

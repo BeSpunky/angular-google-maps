@@ -1,7 +1,7 @@
 import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/core/testing';
 import { MockGoogleMapWithOverlays        } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsApiService, Coord      } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsMarker } from './google-maps-marker';
+import { GoogleMapsMarker                 } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsMarker', () =>
 {

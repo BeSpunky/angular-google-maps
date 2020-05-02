@@ -1,6 +1,5 @@
 import { MockGoogleMapWithOverlays, MockGoogleMapsData, MockGoogleMapsFeature } from '@bespunky/angular-google-maps/overlays/testing';
-import { IGoogleMapsFeature } from '../feature/i-google-maps-feature';
-import { FeatureTracker     } from './feature-tracker';
+import { IGoogleMapsFeature, FeatureTracker                                   } from '@bespunky/angular-google-maps/overlays';
 
 describe('FeatureTracker', () =>
 {

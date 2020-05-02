@@ -2,7 +2,7 @@
 import { configureGoogleMapsTestingModule              } from '@bespunky/angular-google-maps/core/testing';
 import { MockGoogleMapWithOverlays, MockGoogleMapsData } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsApiService                          } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsFeature } from './google-maps-feature';
+import { GoogleMapsFeature                             } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsFeature', () =>
 {

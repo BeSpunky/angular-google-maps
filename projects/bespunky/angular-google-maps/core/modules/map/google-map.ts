@@ -1,13 +1,13 @@
 import { ElementRef } from '@angular/core';
 
-import { Defaults                              } from './types/defaults';
-import { ZoomLevel                             } from './types/zoom-level.enum';
-import { IGoogleMap                            } from './i-google-map';
-import { GoogleMapsApiService                  } from '../../api/google-maps-api.service';
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
 import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator';
 import { Wrap                                  } from '../../decorators/wrap.decorator';
 import { OutsideAngular                        } from '../../decorators/outside-angular.decorator';
+import { GoogleMapsApiService                  } from '../../api/google-maps-api.service';
+import { Defaults                              } from './types/defaults';
+import { ZoomLevel                             } from './types/zoom-level.enum';
+import { IGoogleMap                            } from './i-google-map';
 
 // @dynamic
 @NativeObjectWrapper

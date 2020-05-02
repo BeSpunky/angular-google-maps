@@ -2,9 +2,8 @@ import { BehaviorSubject            } from 'rxjs';
 import { Injectable, NgZone, Inject } from '@angular/core';
 import { promiseLater               } from '@bespunky/angular-zen';
 
-import { GoogleMapsApiService      } from './google-maps-api.service';
-import { GoogleMapsApiLoader       } from './loader/google-maps-api-loader';
-import { GoogleMapsApiReadyPromise } from './loader/google-maps-api-ready.token';
+import { GoogleMapsApiLoader       } from './google-maps-api-loader';
+import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 
 @Injectable({
     providedIn: 'root'
@@ -14,9 +13,8 @@ export class GoogleMapsInternalApiService
     private waitForApi: { promise: Promise<void>, resolve: () => void, reject: () => any };
 
     constructor(
-        public  openApi: GoogleMapsApiService,
-        private loader : GoogleMapsApiLoader,
-        private zone   : NgZone,
+        private zone  : NgZone,
+        private loader: GoogleMapsApiLoader,
         @Inject(GoogleMapsApiReadyPromise) apiReadyPromise: BehaviorSubject<Promise<void>>)
     {
         this.waitForApi = promiseLater();

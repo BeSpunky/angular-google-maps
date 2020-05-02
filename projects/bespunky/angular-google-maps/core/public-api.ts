@@ -25,7 +25,6 @@ export * from './api/google-maps-component-api.service';
 export * from './api/transform/event-data-transform.service';
 export * from './api/transform/geometry-transform.service';
 
-export * from './api/loader/google-maps-api-ready.token';
 export * from './api/loader/google-maps-api-loader';
 export * from './api/loader/no-op-google-maps-api-loader';
 

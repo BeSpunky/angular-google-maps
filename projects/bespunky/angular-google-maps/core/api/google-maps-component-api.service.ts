@@ -3,12 +3,12 @@ import { fromEventPattern          } from 'rxjs';
 import { filter, switchMap, pluck  } from 'rxjs/operators';
 import { Injectable, SimpleChanges } from '@angular/core';
 
-import { GoogleMapsApiService     } from './google-maps-api.service';
 import { GoogleMapsEventsMap      } from '../abstraction/types/events-map.type';
 import { GoogleMapsEventData      } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsLifecycleBase  } from '../abstraction/base/google-maps-lifecycle-base';
-import { HookOutputSymbol         } from '../decorators/hook.decorator';
 import { EmittingWrapper, Wrapper } from '../abstraction/types/abstraction';
+import { HookOutputSymbol         } from '../decorators/hook.decorator';
+import { GoogleMapsApiService     } from './google-maps-api.service';
     
 @Injectable({
     providedIn: 'root'

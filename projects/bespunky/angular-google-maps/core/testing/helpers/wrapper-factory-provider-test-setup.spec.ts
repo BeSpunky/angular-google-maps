@@ -1,9 +1,9 @@
-import { FactoryProvider, Type, Provider, ElementRef } from "@angular/core";
-import { TestBed                         } from '@angular/core/testing';
+import { TestBed                                     } from '@angular/core/testing';
+import { FactoryProvider, Type, Provider, ElementRef } from '@angular/core';
 
-import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperFactory, EmittingWrapper } from '@bespunky/angular-google-maps/core';
-import { MockGoogleMap                                                                      } from '@bespunky/angular-google-maps/core/testing';
 import { configureGoogleMapsTestingModule                                                   } from '@bespunky/angular-google-maps/async/testing';
+import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperFactory, EmittingWrapper } from '@bespunky/angular-google-maps/core';
+import { MockGoogleMap                                                                      } from '../mocks/modules/mock-google-map.spec';
 
 function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider, ...deps: Provider[])
 {
@@ -11,16 +11,16 @@ function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider
         customize: (def) =>
         {
             def.providers.push({
-                provide: MockGoogleMap,
+                provide : MockGoogleMap,
                 useValue: new MockGoogleMap()
             });
             def.providers.push({
-                provide: GoogleMapComponent,
+                provide   : GoogleMapComponent,
                 useFactory: (api, map, element) => new GoogleMapComponent(api, () => map, element),
-                deps: [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
+                deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
             });
             def.providers.push({
-                provide: ElementRef,
+                provide : ElementRef,
                 useValue: new ElementRef(document.createElement('div'))
             });
             def.providers.push(...deps, factoryProvider);

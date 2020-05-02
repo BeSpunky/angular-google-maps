@@ -1,19 +1,17 @@
 import 'reflect-metadata'; // Imported once here. No need to import in other places.
 
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
-import { CoreModule      } from '@bespunky/angular-zen/core';
-import { UniversalModule } from '@bespunky/angular-zen/universal';
+import { CoreModule                                        } from '@bespunky/angular-zen/core';
+import { UniversalModule                                   } from '@bespunky/angular-zen/universal';
 
-import { GoogleMapsApiLoader               } from './api/loader/google-maps-api-loader';
-import { NoOpGoogleMapsApiLoader           } from './api/loader/no-op-google-maps-api-loader';
-import { GoogleMapsApiReadyPromiseProvider } from './api/loader/google-maps-api-ready.token';
-import { GoogleMapsInternalApiService      } from './api/google-maps-internal-api.service';
-import { GoogleMapModule                   } from './modules/map/google-map.module';
+import { _InternalModule, GoogleMapsInternalApiService } from '@bespunky/angular-google-maps/_internal';
+import { GoogleMapsApiLoader                           } from './api/loader/google-maps-api-loader';
+import { NoOpGoogleMapsApiLoader                       } from './api/loader/no-op-google-maps-api-loader';
+import { GoogleMapModule                               } from './modules/map/google-map.module';
 
 @NgModule({
-    imports     : [GoogleMapModule, CoreModule, UniversalModule],
-    exports     : [GoogleMapModule],
-    providers   : [GoogleMapsApiReadyPromiseProvider]
+    imports     : [GoogleMapModule, CoreModule, UniversalModule, _InternalModule],
+    exports     : [GoogleMapModule]
 })
 export class GoogleMapsModule
 {

@@ -1,8 +1,7 @@
 import { configureGoogleMapsTestingModule                 } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsApiService                             } from '@bespunky/angular-google-maps/core';
 import { MockGoogleMapsFeature, MockGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsData     } from './google-maps-data';
-import { IGoogleMapsFeature } from './feature/i-google-maps-feature';
+import { GoogleMapsApiService                             } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsData, IGoogleMapsFeature               } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsData', () =>
 {

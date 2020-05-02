@@ -1,4 +1,4 @@
-import { GoogleMapsConfig, GoogleMapsLibrary, HttpProtocol } from './google-maps-config';
+import { GoogleMapsConfig, GoogleMapsLibrary, HttpProtocol } from '@bespunky/angular-google-maps/async';
 
 describe('GoogleMapsConfig', () =>
 {

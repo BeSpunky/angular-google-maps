@@ -1,11 +1,10 @@
-import * as _ from 'lodash';
-import { takeWhile } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { takeWhile       } from 'rxjs/operators';
 import { Injectable, NgZone, Inject } from '@angular/core';
 
-import { GoogleMapsApiReadyPromise } from './loader/google-maps-api-ready.token';
+import { GoogleMapsApiReadyPromise } from '@bespunky/angular-google-maps/_internal';
 import { EventDataTransformService } from './transform/event-data-transform.service';
-import { GeometryTransformService } from './transform/geometry-transform.service';
+import { GeometryTransformService  } from './transform/geometry-transform.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,9 +14,9 @@ export class GoogleMapsApiService
     private mapsApiReady: Promise<void>;
 
     constructor(
+        private zone      : NgZone,
         public  eventsData: EventDataTransformService,
         public  geometry  : GeometryTransformService,
-        private zone      : NgZone,
         @Inject(GoogleMapsApiReadyPromise) private apiReadyPromise: BehaviorSubject<Promise<void>>)
     {
         // Fetch the promise created by the internal api and store it

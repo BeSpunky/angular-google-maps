@@ -1,12 +1,11 @@
-import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
-import { IGoogleMap               } from '../i-google-map';
-import { ZoomLevel                } from '../types/zoom-level.enum';
 import { GoogleMapsLifecycleBase  } from '../../../abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsEventData      } from '../../../abstraction/events/google-maps-event-data';
 import { Hook                     } from '../../../decorators/hook.decorator';
+import { ZoomLevel                } from '../types/zoom-level.enum';
+import { IGoogleMap               } from '../i-google-map';
 
 @Component({
     selector     : 'bs-google-map',

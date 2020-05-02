@@ -3,7 +3,7 @@ import { Component        } from '@angular/core';
 
 import { configureGoogleMapsTestingModule, createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '@bespunky/angular-google-maps/core/testing';
 import { Coord                                                                                                     } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsPolygonDirective } from './google-maps-polygon.directive';
+import { GoogleMapsPolygonDirective                                                                                } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --

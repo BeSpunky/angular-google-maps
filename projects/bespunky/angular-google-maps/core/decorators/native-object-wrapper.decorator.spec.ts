@@ -1,7 +1,4 @@
-import { MockWrapper } from '../abstraction/testing/src/mock-wrapper.spec';
-import { MockNative } from '../abstraction/testing/src/mock-native.spec';
-import { NativeObjectWrapper } from './native-object-wrapper.decorator';
-import { Wrapper } from '../abstraction/types/abstraction';
+import { MockWrapper, MockNative, NativeObjectWrapper, Wrapper } from '@bespunky/angular-google-maps/core/testing';
 
 describe('@NativeObjectWrapper()', () =>
 {

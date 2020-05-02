@@ -1,11 +1,8 @@
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, expectPositionEquals } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsApiService, Defaults, FlatCoord              } from '@bespunky/angular-google-maps/core';
-import { GoogleMapWithOverlays } from './google-map-with-overlays';
-import { GoogleMapsMarker      } from '../marker/google-maps-marker';
-import { GoogleMapsPolygon     } from '../polygon/google-maps-polygon';
-import { GoogleMapsData        } from '../data/google-maps-data';
+import { configureGoogleMapsTestingModule, expectPositionEquals                     } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsApiService, Defaults, FlatCoord                                  } from '@bespunky/angular-google-maps/core';
+import { GoogleMapWithOverlays, GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsData } from '@bespunky/angular-google-maps/overlays';
 
 const elementStub: any = document.createElement('div');
 

@@ -1,5 +1,5 @@
-import { InjectionToken, ValueProvider } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { InjectionToken, ValueProvider } from '@angular/core';
 
 export const GoogleMapsApiReadyPromise = new InjectionToken<BehaviorSubject<Promise<void>>>('GoogleMapsApiReadyPromiseToken');
 

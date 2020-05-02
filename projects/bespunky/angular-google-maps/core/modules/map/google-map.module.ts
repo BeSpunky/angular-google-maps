@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { GoogleMapComponent } from './component/google-map.component';
+import { GoogleMapComponent       } from './component/google-map.component';
 import { GoogleMapFactoryProvider } from './google-map-factory.provider';
 
 @NgModule({

@@ -2,7 +2,7 @@
 import { configureGoogleMapsTestingModule, MockGoogleMap      } from '@bespunky/angular-google-maps/core/testing';
 import { MockNativeDrawableOverlay, MockGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsApiService                                 } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay } from './google-maps-drawable-overlay';
+import { GoogleMapsDrawableOverlay                            } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsDrawableOverlay (abstract)', () =>
 {

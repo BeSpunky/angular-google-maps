@@ -1,5 +1,3 @@
-export * from './helpers/wrapper-factory-provider-test-setup.spec';
-
 export * from './mocks/mock-native-drawable-overlay.spec';
 export * from './mocks/mock-drawable-overlay.spec';
 

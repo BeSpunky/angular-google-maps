@@ -1,6 +1,5 @@
-import { itShouldCreateWrapper } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsPolygonFactoryProvider } from './google-maps-polygon-factory.provider';
-import { GoogleMapsPolygon                } from './google-maps-polygon';
+import { itShouldCreateWrapper                               } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsPolygonFactoryProvider, GoogleMapsPolygon } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsPolygonFactoryProvider', () =>
 {

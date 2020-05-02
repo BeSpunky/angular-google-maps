@@ -4,9 +4,7 @@
 import { TestModuleMetadata, TestBed, ComponentFixture } from '@angular/core/testing';
 import { DebugElement, ElementRef, Type                } from '@angular/core';
 
-import { GoogleMapsModule              } from '../../google-maps.module';
-import { GoogleMapsApiService          } from '../../api/google-maps-api.service';
-import { GoogleMapsComponentApiService } from '../../api/google-maps-component-api.service';
+import { GoogleMapsModule, GoogleMapsApiService, GoogleMapsComponentApiService } from '@bespunky/angular-google-maps/core';
 
 /**
  * Creates a `TestModuleMetadata` object that can be passed into `TestBed.configureTestingModule()` in order to

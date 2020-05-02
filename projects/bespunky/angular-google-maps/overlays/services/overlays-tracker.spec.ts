@@ -1,6 +1,5 @@
 import { MockGoogleMapWithOverlays, MockMarker } from '@bespunky/angular-google-maps/overlays/testing';
-import { DrawableOverlay } from '../abstraction/types/abstraction';
-import { OverlaysTracker } from './overlays-tracker';
+import { DrawableOverlay, OverlaysTracker      } from '@bespunky/angular-google-maps/overlays';
 
 describe('OverlayTracker', () =>
 {

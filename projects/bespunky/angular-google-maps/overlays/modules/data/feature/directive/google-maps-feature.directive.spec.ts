@@ -4,7 +4,7 @@ import { ElementRef      } from '@angular/core';
 import { configureGoogleMapsTestingModule                                     } from '@bespunky/angular-google-maps/core/testing';
 import { MockGoogleMapWithOverlays, MockGoogleMapsData, MockGoogleMapsFeature } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsComponentApiService                                        } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsFeatureDirective } from './google-maps-feature.directive';
+import { GoogleMapsFeatureDirective                                           } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsFeatureDirective', () =>
 {

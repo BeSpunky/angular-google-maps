@@ -1,6 +1,5 @@
-import { itShouldCreateWrapper } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsMarkerFactoryProvider } from './google-maps-marker-factory.provider';
-import { GoogleMapsMarker                } from './google-maps-marker';
+import { itShouldCreateWrapper                             } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsMarkerFactoryProvider, GoogleMapsMarker } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsMarkerFactoryProvider', () =>
 {
