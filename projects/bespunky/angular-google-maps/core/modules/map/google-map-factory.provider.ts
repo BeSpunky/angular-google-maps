@@ -13,7 +13,7 @@ export function NativeMapWrapperFactoryProvider(api: GoogleMapsApiService, docum
     {
         const mapElement = createAndAppendMapElement(element, document, universal);
 
-        return new GoogleMap(api, new ElementRef(mapElement), options);
+        return new GoogleMap(api, mapElement, options);
     };
 }
 

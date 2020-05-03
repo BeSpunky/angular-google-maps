@@ -11,7 +11,7 @@ export function NativeMapWithOverlaysWrapperFactoryProvider(api: GoogleMapsApiSe
     {
         const mapElement = createAndAppendMapElement(element, document, universal);
 
-        return new GoogleMapWithOverlays(api, new ElementRef(mapElement), options);
+        return new GoogleMapWithOverlays(api, mapElement, options);
     };
 }
 
