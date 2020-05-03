@@ -12,7 +12,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
     let mockNativeOverlay: MockNativeDrawableOverlay;
     let mockOverlay      : GoogleMapsDrawableOverlayTest;
 
-    beforeAll(async () =>
+    beforeEach(async () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
