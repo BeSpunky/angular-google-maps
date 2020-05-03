@@ -16,9 +16,9 @@ describe('GoogleMapFactoryProvider', () =>
 
         await configureGoogleMapsTestingModule({
             customize: def => def.providers = [
-                    { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
-                    { provide: ElementRef, useValue: element },
-                    GoogleMapFactoryProvider
+                { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
+                { provide: ElementRef, useValue: element },
+                GoogleMapFactoryProvider
             ]
         });
 

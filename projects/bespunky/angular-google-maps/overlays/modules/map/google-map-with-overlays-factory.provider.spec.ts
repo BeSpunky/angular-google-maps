@@ -17,9 +17,9 @@ describe('GoogleMapWithOverlaysFactoryProvider', () =>
 
         await configureGoogleMapsTestingModule({
             customize: def => def.providers = [
-                    { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
-                    { provide: ElementRef, useValue: element },
-                    GoogleMapWithOverlaysFactoryProvider
+                { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
+                { provide: ElementRef, useValue: element },
+                GoogleMapWithOverlaysFactoryProvider
             ]
         });
 
