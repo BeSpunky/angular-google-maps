@@ -15,12 +15,11 @@ describe('GoogleMapFactoryProvider', () =>
         const element = new ElementRef({});
 
         await configureGoogleMapsTestingModule({
-            customize: def =>
-            {
-                def.providers.push({ provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') });
-                def.providers.push({ provide: ElementRef, useValue: element });
-                def.providers.push(GoogleMapFactoryProvider);
-            }
+            customize: def => def.providers = [
+                    { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
+                    { provide: ElementRef, useValue: element },
+                    GoogleMapFactoryProvider
+            ]
         });
 
         const createWrapper = TestBed.inject(WrapperFactory);
