@@ -1,11 +1,8 @@
-import { ElementRef       } from '@angular/core';
-import { DocumentRef      } from '@bespunky/angular-zen/core';
-import { UniversalService } from '@bespunky/angular-zen/universal';
+import { ElementRef  } from '@angular/core';
+import { DocumentRef } from '@bespunky/angular-zen/core';
 
-export function createAndAppendMapElement(parent: ElementRef, document: DocumentRef, universal: UniversalService): ElementRef<HTMLElement>
+export function createAndAppendMapElement(parent: ElementRef, document: DocumentRef): ElementRef<HTMLElement>
 {
-    if (!universal.isPlatformBrowser) return null; // TODO: Test with Angular Universal app and see if this doesn't break the chain of contained directives
-
     // Create a container div for the map
     const mapElement = document.nativeDocument.createElement('div');
     // Mark it with a class for external css styling

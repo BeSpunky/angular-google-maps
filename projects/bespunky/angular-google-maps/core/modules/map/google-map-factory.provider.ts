@@ -8,13 +8,17 @@ import { GoogleMapsApiService      } from '../../api/google-maps-api.service';
 import { GoogleMap                 } from './google-map';
 
 export function NativeMapWrapperFactoryProvider(api: GoogleMapsApiService, document: DocumentRef, universal: UniversalService): (element: ElementRef, options?: google.maps.MapOptions) => GoogleMap
-{    
-    return function NativeMapWrapperFactory(element: ElementRef, options?: google.maps.MapOptions): GoogleMap
-    {
-        const mapElement = createAndAppendMapElement(element, document, universal);
+{
+    if (universal.isPlatformBrowser)
+        return function NativeMapWithOverlaysWrapperFactory(element: ElementRef, options?: google.maps.MapOptions): GoogleMap
+        {
+            const mapElement = createAndAppendMapElement(element, document);
 
-        return new GoogleMap(api, mapElement, options);
-    };
+            return new GoogleMap(api, mapElement, options);
+        };
+    
+    // TODO: Test with Angular Universal app and see if this doesn't break the chain of contained directives
+    return function NullNativeMapWrapperFactory() { return null; };
 }
 
 export const GoogleMapFactoryProvider: FactoryProvider = {
