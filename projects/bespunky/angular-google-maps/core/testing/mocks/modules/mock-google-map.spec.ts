@@ -1,11 +1,11 @@
-import { MockFill                    } from '@bespunky/angular-google-maps/testing';
-import { IGoogleMap, IMapSuperpowers } from '@bespunky/angular-google-maps/core';
-import { MockEmittingWrapper         } from '../mock-emitting-wrapper.spec';
+import { MockFill                 } from '@bespunky/angular-google-maps/testing';
+import { IGoogleMap, ISuperpowers } from '@bespunky/angular-google-maps/core';
+import { MockEmittingWrapper      } from '../mock-emitting-wrapper.spec';
 
 @MockFill
 export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
-    constructor(public native: any = new google.maps.Map(document.createElement('div')), public readonly superpowers: IMapSuperpowers = null)
+    constructor(public native: any = new google.maps.Map(document.createElement('div')), public readonly superpowers: ISuperpowers = null)
     {
         super(native);
     }
