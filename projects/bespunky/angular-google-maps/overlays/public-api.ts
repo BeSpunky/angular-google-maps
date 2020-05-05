@@ -13,8 +13,8 @@ export * from './abstraction/types/abstraction';
 
 // Superpower
 export * from './superpower/i-overlays-superpower';
-export * from './superpower/overlays-superpower.service';
-export * from './superpower/overlays-tracker';
+export * from './superpower/services/overlays-superpower.service';
+export * from './superpower/services/overlays-tracker';
 
 // Marker
 export * from './modules/marker/google-maps-marker.module';
