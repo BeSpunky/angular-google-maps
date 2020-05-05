@@ -7,7 +7,8 @@ import { WrapperFactory                } from '../../../abstraction/tokens/wrapp
 import { EmittingNativeWrapperFactory  } from '../../../abstraction/types/abstraction';
 import { GoogleMapsComponentApiService } from '../../../api/google-maps-component-api.service';
 import { Hook                          } from '../../../decorators/hook.decorator';
-import { SuperpowersService            } from '../superpowers/services/superpowers.service';
+import { SuperpowersService            } from '../superpowers/superpowers.service';
+import { GoogleMapFactoryProvider      } from '../google-map-factory.provider';
 import { ZoomLevel                     } from '../types/zoom-level.enum';
 import { IGoogleMap                    } from '../i-google-map';
 
@@ -15,7 +16,7 @@ import { IGoogleMap                    } from '../i-google-map';
     selector     : 'bs-google-map',
     templateUrl  : './google-map.component.html',
     styleUrls    : ['./google-map.component.css'],
-    providers    : [SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
+    providers    : [SuperpowersService, GoogleMapFactoryProvider], // Every map component instance will get a new instance of the superpowers to allow a clean state
     encapsulation: ViewEncapsulation.None
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
