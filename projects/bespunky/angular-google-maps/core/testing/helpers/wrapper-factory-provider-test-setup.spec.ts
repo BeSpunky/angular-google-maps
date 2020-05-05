@@ -15,13 +15,9 @@ function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider
                 useValue: new MockGoogleMap()
             });
             def.providers.push({
-                provide: SuperpowersService,
-                useValue: new SuperpowersService([])
-            });
-            def.providers.push({
                 provide   : GoogleMapComponent,
-                useFactory: (api, map, element, superpowers) => new GoogleMapComponent(api, () => map, element, superpowers),
-                deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef, SuperpowersService]
+                useFactory: (api, map, element) => new GoogleMapComponent(api, () => map, element),
+                deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
             });
             def.providers.push({
                 provide : ElementRef,

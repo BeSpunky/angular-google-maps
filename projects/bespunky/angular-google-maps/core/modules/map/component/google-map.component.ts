@@ -1,11 +1,8 @@
 import { Observable } from 'rxjs';
-import { Component, Input, Output, ViewEncapsulation, Inject, ElementRef } from '@angular/core';
+import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
 import { GoogleMapsLifecycleBase           } from '../../../abstraction/base/google-maps-lifecycle-base';
-import { GoogleMapsEventData               } from '../../../abstraction/events/google-maps-event-data';
-import { WrapperFactory                    } from '../../../abstraction/tokens/wrapper-factory.token';
-import { EmittingNativeWrapperFactory      } from '../../../abstraction/types/abstraction';
-import { GoogleMapsComponentApiService     } from '../../../api/google-maps-component-api.service';
+import { GoogleMapsEventData               } from '../../../abstraction/events/google-maps-event-data'
 import { Hook                              } from '../../../decorators/hook.decorator';
 import { SuperpowersService                } from '../superpowers/superpowers.service';
 import { GoogleMapFactoryProvider          } from '../google-map-factory.provider';
@@ -68,9 +65,4 @@ export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
     @Hook('tilt_changed')       @Output() public tiltChanged        : Observable<GoogleMapsEventData>;
     /** Fired when the map zoom property changes. */
     @Hook('idle')               @Output() public idle               : Observable<GoogleMapsEventData>;
-
-    constructor(api: GoogleMapsComponentApiService, @Inject(WrapperFactory) createNativeWrapper: EmittingNativeWrapperFactory<IGoogleMap>, element: ElementRef, public superpowers: SuperpowersService)
-    {
-        super(api, createNativeWrapper, element);
-    }
 }
