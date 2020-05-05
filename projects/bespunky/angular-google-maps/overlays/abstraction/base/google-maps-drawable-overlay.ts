@@ -1,5 +1,4 @@
-import { GoogleMapsNativeObjectEmittingWrapper, GoogleMapsApiService } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapWithOverlays           } from '../../modules/map/i-google-map-with-overlays';
+import { GoogleMapsNativeObjectEmittingWrapper, GoogleMapsApiService, IGoogleMap } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 import { IGoogleMapsDrawableOverlay       } from './i-google-maps-drawable-overlay';
 import { OverlayType                      } from './overlay-type.enum';
@@ -8,7 +7,7 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
                 extends GoogleMapsNativeObjectEmittingWrapper<TNative>
                 implements IGoogleMapsDrawableOverlay<TNative>
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMapWithOverlays, public readonly type: OverlayType, ...nativeArgs: any[])
+    constructor(api: GoogleMapsApiService, public map: IGoogleMap, public readonly type: OverlayType, ...nativeArgs: any[])
     {
         super(api, ...nativeArgs);
 
@@ -22,7 +21,7 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
      *
      * @param {IGoogleMap} map The map to dispaly the overlay on.
      */
-    public attach(map: IGoogleMapWithOverlays): void
+    public attach(map: IGoogleMap): void
     {
         this.map = map;
 

@@ -1,6 +1,7 @@
 import { GoogleMapsLifecycleBase } from '@bespunky/angular-google-maps/core';
 
-import { DrawableOverlay } from '../types/abstraction';
+import { DrawableOverlay           } from '../types/abstraction';
+import { OverlaysSuperpower } from '../../superpower/services/overlays-superpower.service';
 
 /**
  * Provides everything `GoogleMapsLifecycleBase` provides and also takes care of removing the overlay wrapper from the map.
@@ -11,6 +12,6 @@ export abstract class GoogleMapsOverlayLifecycleBase<TWrapper extends DrawableOv
 {
     ngOnDestroy()
     {
-        this.wrapper.map.removeOverlay(this.wrapper);
+        this.wrapper.map.superpowers.use(OverlaysSuperpower).removeOverlay(this.wrapper);
     }
 }

@@ -1,16 +1,19 @@
 import { Observable } from 'rxjs';
 import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
-import { GoogleMapsLifecycleBase  } from '../../../abstraction/base/google-maps-lifecycle-base';
-import { GoogleMapsEventData      } from '../../../abstraction/events/google-maps-event-data';
-import { Hook                     } from '../../../decorators/hook.decorator';
-import { ZoomLevel                } from '../types/zoom-level.enum';
-import { IGoogleMap               } from '../i-google-map';
+import { GoogleMapsLifecycleBase           } from '../../../abstraction/base/google-maps-lifecycle-base';
+import { GoogleMapsEventData               } from '../../../abstraction/events/google-maps-event-data'
+import { Hook                              } from '../../../decorators/hook.decorator';
+import { SuperpowersService                } from '../superpowers/superpowers.service';
+import { GoogleMapFactoryProvider          } from '../google-map-factory.provider';
+import { ZoomLevel                         } from '../types/zoom-level.enum';
+import { IGoogleMap                        } from '../i-google-map';
 
 @Component({
     selector     : 'bs-google-map',
     templateUrl  : './google-map.component.html',
     styleUrls    : ['./google-map.component.css'],
+    providers    : [GoogleMapFactoryProvider, SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
     encapsulation: ViewEncapsulation.None
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>

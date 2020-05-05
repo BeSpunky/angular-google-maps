@@ -1,15 +1,14 @@
 
-import { GoogleMapsApiService, NativeObjectWrapper, Wrap, OutsideAngular, Coord } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, Wrap, OutsideAngular, Coord } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay } from '../../abstraction/base/google-maps-drawable-overlay';
 import { OverlayType               } from '../../abstraction/base/overlay-type.enum';
-import { IGoogleMapWithOverlays    } from '../map/i-google-map-with-overlays';
 import { IGoogleMapsMarker         } from './i-google-maps-marker';
 
 // @dynamic
 @NativeObjectWrapper
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMapWithOverlays, options?: google.maps.ReadonlyMarkerOptions)
+    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.ReadonlyMarkerOptions)
     {
         super(api, map, OverlayType.Marker, options);
     }
