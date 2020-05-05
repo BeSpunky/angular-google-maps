@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~9.0.6",
     "@angular/platform-browser-dynamic": "~9.0.6",
     "@angular/router": "~9.0.6",
-    "@bespunky/angular-zen": "^1.0.0",
+    "@bespunky/angular-zen": "^2.1.0",
     "core-js": "^2.5.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.4",
@@ -27,9 +27,9 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.900.6",
-    "@angular-devkit/build-ng-packagr": "~0.900.6",
-    "@angular/cli": "~9.0.6",
+    "@angular-devkit/build-angular": "~0.901.4",
+    "@angular-devkit/build-ng-packagr": "~0.901.4",
+    "@angular/cli": "~9.1.4",
     "@angular/compiler-cli": "~9.0.6",
     "@angular/language-service": "~9.0.6",
     "@types/google-maps": "^3.2.1",
