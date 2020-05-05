@@ -1,10 +1,10 @@
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/i-google-maps-native-object-emitting-wrapper';
-import { IMapSuperpowers                    } from './superpowers/i-map-superpowers';
+import { ISuperpowers                    } from './superpowers/i-superpowers';
 import { ZoomLevel                              } from './types/zoom-level.enum';
 
 export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Map>
 {
-    readonly superpowers: IMapSuperpowers;
+    readonly superpowers: ISuperpowers;
 
     /* ------------------------------------- Native wrappers ------------------------------------- *
      * Documentation in: https://developers.google.com/maps/documentation/javascript/reference/map *

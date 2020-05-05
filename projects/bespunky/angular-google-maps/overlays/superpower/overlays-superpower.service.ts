@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GoogleMapComponent, IGoogleMap, GoogleMapsApiService, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
+import { GoogleMapModule, Superpower, GoogleMapsApiService, Coord, CoordPath  } from '@bespunky/angular-google-maps/core';
 import { DrawableOverlay     } from '../abstraction/types/abstraction';
 import { GoogleMapsMarker    } from '../modules/marker/google-maps-marker';
 import { GoogleMapsPolygon   } from '../modules/polygon/google-maps-polygon';
@@ -9,17 +9,16 @@ import { OverlaysTracker     } from './overlays-tracker';
 import { IOverlaysSuperpower } from './i-overlays-superpower';
 
 @Injectable({
-    providedIn: GoogleMapComponent
+    providedIn: GoogleMapModule
 })
-export class OverlaysSuperpower implements IOverlaysSuperpower
+export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpower
 {
     public readonly type = OverlaysSuperpower;
-    public readonly map: IGoogleMap;
     
-    constructor(public overlays: OverlaysTracker, private mapComponent: GoogleMapComponent, private api: GoogleMapsApiService)
+    constructor(public overlays: OverlaysTracker, private api: GoogleMapsApiService)
     {
-        this.map = this.mapComponent.wrapper;
-    } 
+        super();
+    }
     
     public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
     {

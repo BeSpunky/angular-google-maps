@@ -45,8 +45,9 @@ export * from './modules/map/google-map-factory.provider';
 // --- Component
 export * from './modules/map/component/google-map.component';
 // --- Superpowers
-export * from './modules/map/superpowers/i-map-superpowers';
-export * from './modules/map/superpowers/i-map-superpower';
+export * from './modules/map/superpowers/i-superpowers';
+export * from './modules/map/superpowers/i-superpower';
+export * from './modules/map/superpowers/superpower';
 export * from './modules/map/superpowers/superpowers.token';
 export * from './modules/map/superpowers/superpowers.service';
 // --- Types

@@ -4,10 +4,12 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GoogleMapsModule } from '@bespunky/angular-google-maps/async';
 import { GoogleMapsOverlaysModule } from '../../../bespunky/angular-google-maps/overlays';
 import { AppComponent } from './app.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        MapComponent
     ],
     imports: [
         BrowserModule,

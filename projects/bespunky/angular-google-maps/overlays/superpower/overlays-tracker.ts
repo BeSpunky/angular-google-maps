@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GoogleMapComponent } from '@bespunky/angular-google-maps/core';
+import { GoogleMapModule    } from '@bespunky/angular-google-maps/core';
 import { OverlayType        } from '../abstraction/base/overlay-type.enum';
 import { DrawableOverlay    } from '../abstraction/types/abstraction';
 import { IGoogleMapsMarker  } from '../modules/marker/i-google-maps-marker';
@@ -8,7 +8,7 @@ import { IGoogleMapsPolygon } from '../modules/polygon/i-google-maps-polygon';
 import { IGoogleMapsData    } from '../modules/data/i-google-maps-data';
 
 @Injectable({
-    providedIn: GoogleMapComponent
+    providedIn: GoogleMapModule
 })
 export class OverlaysTracker
 {
