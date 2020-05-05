@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 
 import { GoogleMapsDataDirective       } from './directive/google-maps-data.directive';
-import { GoogleMapsDataFactoryProvider } from './google-maps-data-factory.provider';
+import { GoogleMapsFeatureModule       } from './feature/google-maps-feature.module';
 
 @NgModule({
     declarations: [GoogleMapsDataDirective],
-    exports     : [GoogleMapsDataDirective],
-    providers   : [GoogleMapsDataFactoryProvider]
+    imports     : [GoogleMapsFeatureModule],
+    exports     : [GoogleMapsDataDirective, GoogleMapsFeatureModule]
 })
 export class GoogleMapsDataModule { }

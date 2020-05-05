@@ -4,7 +4,6 @@ import { GoogleMapsApiService, WrapperFactory } from '@bespunky/angular-google-m
 import { GoogleMapsDataDirective              } from '../directive/google-maps-data.directive';
 import { GoogleMapsFeature                    } from './google-maps-feature';
 
-
 export function NativeFeatureWrapperFactoryProvider(api: GoogleMapsApiService, dataDirective: GoogleMapsDataDirective)
 {
     return function NativeFeatureWrapperFactory(element: ElementRef, options?: google.maps.Data.FeatureOptions)
