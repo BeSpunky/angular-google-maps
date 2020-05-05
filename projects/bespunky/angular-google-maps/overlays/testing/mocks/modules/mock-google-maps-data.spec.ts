@@ -1,12 +1,12 @@
-import { MockFill                                                    } from '@bespunky/angular-google-maps/testing';
-import { Coord, CoordPath                                            } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsData, IGoogleMapsFeature, IGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays';
-import { MockDrawableOverlay                                         } from '../mock-drawable-overlay.spec';
+import { MockFill                            } from '@bespunky/angular-google-maps/testing';
+import { IGoogleMap, Coord, CoordPath        } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsData, IGoogleMapsFeature } from '@bespunky/angular-google-maps/overlays';
+import { MockDrawableOverlay                 } from '../mock-drawable-overlay.spec';
 
 @MockFill
 export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
-    constructor(public map: IGoogleMapWithOverlays)
+    constructor(public map: IGoogleMap)
     {
         super(map, new google.maps.Data());
     }

@@ -5,6 +5,7 @@ import { NativeObjectWrapper                   } from '../../decorators/native-o
 import { Wrap                                  } from '../../decorators/wrap.decorator';
 import { OutsideAngular                        } from '../../decorators/outside-angular.decorator';
 import { GoogleMapsApiService                  } from '../../api/google-maps-api.service';
+import { IMapSuperpowers                       } from './superpowers/i-map-superpowers';
 import { Defaults                              } from './types/defaults';
 import { ZoomLevel                             } from './types/zoom-level.enum';
 import { IGoogleMap                            } from './i-google-map';
@@ -13,7 +14,7 @@ import { IGoogleMap                            } from './i-google-map';
 @NativeObjectWrapper
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
-    constructor(protected api: GoogleMapsApiService, mapElement: ElementRef, options?: google.maps.MapOptions)
+    constructor(public readonly superpowers: IMapSuperpowers, protected api: GoogleMapsApiService, mapElement: ElementRef, options?: google.maps.MapOptions)
     {
         super(api, mapElement, options);
     }

@@ -1,33 +1,44 @@
-import { GoogleMap, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
-import { DrawableOverlay        } from '../../abstraction/types/abstraction';
-import { OverlaysTracker        } from '../../services/overlays-tracker';
-import { GoogleMapsMarker       } from '../marker/google-maps-marker';
-import { GoogleMapsPolygon      } from '../polygon/google-maps-polygon';
-import { GoogleMapsData         } from '../data/google-maps-data';
-import { IGoogleMapWithOverlays } from './i-google-map-with-overlays';
+import { Injectable } from '@angular/core';
 
-export class GoogleMapWithOverlays extends GoogleMap implements IGoogleMapWithOverlays
+import { GoogleMapComponent, IGoogleMap, GoogleMapsApiService, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
+import { DrawableOverlay     } from '../abstraction/types/abstraction';
+import { GoogleMapsMarker    } from '../modules/marker/google-maps-marker';
+import { GoogleMapsPolygon   } from '../modules/polygon/google-maps-polygon';
+import { GoogleMapsData      } from '../modules/data/google-maps-data';
+import { OverlaysTracker     } from './overlays-tracker';
+import { IOverlaysSuperpower } from './i-overlays-superpower';
+
+@Injectable({
+    providedIn: GoogleMapComponent
+})
+export class OverlaysSuperpower implements IOverlaysSuperpower
 {
-    public readonly overlays = new OverlaysTracker();
+    public readonly type = OverlaysSuperpower;
+    public readonly map: IGoogleMap;
+    
+    constructor(public overlays: OverlaysTracker, private mapComponent: GoogleMapComponent, private api: GoogleMapsApiService)
+    {
+        this.map = this.mapComponent.wrapper;
+    } 
     
     public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
     {
         options = Object.assign({}, options, { position: this.api.geometry.toLiteralCoord(position) });
         
         // Marker creation will cause rendering. Run outside...
-        return this.createOverlay(() => new GoogleMapsMarker(this.api, this, options));
+        return this.createOverlay(() => new GoogleMapsMarker(this.api, this.map, options));
     }
     
     public createPolygon(path: CoordPath, options?: google.maps.PolygonOptions): GoogleMapsPolygon
     {
         options = Object.assign({}, options, { paths: this.api.geometry.toLiteralMultiPath(path) });
 
-        return this.createOverlay(() => new GoogleMapsPolygon(this.api, this, options));
+        return this.createOverlay(() => new GoogleMapsPolygon(this.api, this.map, options));
     }
 
     public createDataLayer(options?: google.maps.Data.DataOptions): GoogleMapsData
     {
-        return this.createOverlay(() => new GoogleMapsData(this.api, this, options));
+        return this.createOverlay(() => new GoogleMapsData(this.api, this.map, options));
     }
 
     // TODO: Add here create methods for any new featured overlay type (e.g. polygons, polylines, etc.)
