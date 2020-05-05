@@ -1,16 +1,21 @@
 import { Observable } from 'rxjs';
-import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, ViewEncapsulation, Inject, ElementRef } from '@angular/core';
 
-import { GoogleMapsLifecycleBase  } from '../../../abstraction/base/google-maps-lifecycle-base';
-import { GoogleMapsEventData      } from '../../../abstraction/events/google-maps-event-data';
-import { Hook                     } from '../../../decorators/hook.decorator';
-import { ZoomLevel                } from '../types/zoom-level.enum';
-import { IGoogleMap               } from '../i-google-map';
+import { GoogleMapsLifecycleBase       } from '../../../abstraction/base/google-maps-lifecycle-base';
+import { GoogleMapsEventData           } from '../../../abstraction/events/google-maps-event-data';
+import { WrapperFactory                } from '../../../abstraction/tokens/wrapper-factory.token';
+import { EmittingNativeWrapperFactory  } from '../../../abstraction/types/abstraction';
+import { GoogleMapsComponentApiService } from '../../../api/google-maps-component-api.service';
+import { Hook                          } from '../../../decorators/hook.decorator';
+import { SuperpowersService            } from '../superpowers/services/superpowers.service';
+import { ZoomLevel                     } from '../types/zoom-level.enum';
+import { IGoogleMap                    } from '../i-google-map';
 
 @Component({
     selector     : 'bs-google-map',
     templateUrl  : './google-map.component.html',
     styleUrls    : ['./google-map.component.css'],
+    providers    : [SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
     encapsulation: ViewEncapsulation.None
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
@@ -62,4 +67,9 @@ export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
     @Hook('tilt_changed')       @Output() public tiltChanged        : Observable<GoogleMapsEventData>;
     /** Fired when the map zoom property changes. */
     @Hook('idle')               @Output() public idle               : Observable<GoogleMapsEventData>;
+
+    constructor(api: GoogleMapsComponentApiService, @Inject(WrapperFactory) createNativeWrapper: EmittingNativeWrapperFactory<IGoogleMap>, element: ElementRef, public superpowers: SuperpowersService)
+    {
+        super(api, createNativeWrapper, element);
+    }
 }

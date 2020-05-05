@@ -1,9 +1,9 @@
 import { TestBed                                     } from '@angular/core/testing';
 import { FactoryProvider, Type, Provider, ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                                                   } from '@bespunky/angular-google-maps/async/testing';
-import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperFactory, EmittingWrapper } from '@bespunky/angular-google-maps/core';
-import { MockGoogleMap                                                                      } from '../mocks/modules/mock-google-map.spec';
+import { configureGoogleMapsTestingModule                                                                       } from '@bespunky/angular-google-maps/async/testing';
+import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperFactory, EmittingWrapper, SuperpowersService } from '@bespunky/angular-google-maps/core';
+import { MockGoogleMap                                                                                          } from '../mocks/modules/mock-google-map.spec';
 
 function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider, ...deps: Provider[])
 {
@@ -15,9 +15,13 @@ function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider
                 useValue: new MockGoogleMap()
             });
             def.providers.push({
+                provide: SuperpowersService,
+                useValue: new SuperpowersService([])
+            });
+            def.providers.push({
                 provide   : GoogleMapComponent,
-                useFactory: (api, map, element) => new GoogleMapComponent(api, () => map, element),
-                deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
+                useFactory: (api, map, element, superpowers) => new GoogleMapComponent(api, () => map, element, superpowers),
+                deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef, SuperpowersService]
             });
             def.providers.push({
                 provide : ElementRef,
