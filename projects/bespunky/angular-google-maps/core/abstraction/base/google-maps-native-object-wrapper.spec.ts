@@ -1,8 +1,7 @@
 
-import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
-import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { MockNative } from '../testing/mock-native.spec';
-import { GoogleMapsApiService } from '../../api/google-maps-api.service';
+import { configureGoogleMapsTestingModule                    } from '@bespunky/angular-google-maps/testing';
+import { MockNative                                          } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsApiService, GoogleMapsNativeObjectWrapper } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsNativeObjectWrapper (abstract)', () =>
 {

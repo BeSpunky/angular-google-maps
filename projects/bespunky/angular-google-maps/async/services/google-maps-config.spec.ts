@@ -1,4 +1,4 @@
-import { GoogleMapsConfig, GoogleMapsLibrary, HttpProtocol } from './google-maps-config';
+import { GoogleMapsConfig, GoogleMapsLibrary, HttpProtocol } from '@bespunky/angular-google-maps/async';
 
 describe('GoogleMapsConfig', () =>
 {
@@ -12,16 +12,16 @@ describe('GoogleMapsConfig', () =>
         const config = new GoogleMapsConfig();
 
         const apiUrl = {
-            key: 'dummy key',
-            language: 'en',
+            key      : 'dummy key',
+            language : 'en',
             libraries: [GoogleMapsLibrary.Drawing, GoogleMapsLibrary.Geometry],
-            location: 'maps.google.com/api',
-            protocol: HttpProtocol.Https,
-            region: 'dummy region'
+            location : 'maps.google.com/api',
+            protocol : HttpProtocol.Https,
+            region   : 'dummy region'
         };
 
         config.recycleMapObject = true;
-        config.apiUrl = apiUrl;
+        config.apiUrl           = apiUrl;
 
         expect(config.recycleMapObject).toBeTruthy();
         expect(config.apiUrl).toEqual(apiUrl);

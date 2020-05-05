@@ -1,8 +1,8 @@
-import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { NgZone  } from '@angular/core';
 
-import { GoogleMapsApiService } from './google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
+import { GoogleMapsApiService             } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsApiService', () =>
 {
@@ -11,7 +11,7 @@ describe('GoogleMapsApiService', () =>
 
     beforeEach(async () =>
     {
-        ({ api: api } = await configureGoogleMapsTestingModule({
+        ({ api } = await configureGoogleMapsTestingModule({
             spies: {
                 fakeRunInsideAngular : false,
                 fakeRunOutsideAngular: false
@@ -28,8 +28,6 @@ describe('GoogleMapsApiService', () =>
 
     it('should provide a promise for indicating that maps api is ready', () => expect(api.whenReady instanceof Promise).toBeTruthy());
 
-    it('should allow access to the configuration passed to Google Maps API', () => expect(api.config).toBeDefined());
-    
     it('should allow access event data transformation api', () => expect(api.eventsData).toBeDefined());
     
     it('should allow access geometry api', () => expect(api.geometry).toBeDefined());

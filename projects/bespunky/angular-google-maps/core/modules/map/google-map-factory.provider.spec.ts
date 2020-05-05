@@ -1,33 +1,29 @@
-import { ElementRef } from '@angular/core';
-
-import { GoogleMapFactoryProvider } from './google-map-factory.provider';
-import { GoogleMap } from './google-map';
-import { itShouldCreateWrapper } from '../overlays/testing/wrapper-factory-provider-test-setup.spec';
-import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { TestBed } from '@angular/core/testing';
+import { TestBed          } from '@angular/core/testing';
+import { ElementRef       } from '@angular/core';
 import { UniversalService } from '@bespunky/angular-zen';
-import { WrapperFactory } from '../core/abstraction/tokens/wrapper-factory.token';
+
+import { configureGoogleMapsTestingModule                    } from '@bespunky/angular-google-maps/testing';
+import { itShouldCreateWrapper                               } from '@bespunky/angular-google-maps/core/testing';
+import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapFactoryProvider', () =>
 {
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, {
-        provide: ElementRef,
-        useValue: new ElementRef(document.createElement('div'))
-    });
+    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap);
 
     it('should return null when used in non-browser platforms', async () =>
     {
+        const element = new ElementRef({});
+
         await configureGoogleMapsTestingModule({
-            customize: def =>
-            {
-                def.providers.push({ provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') });
-                def.providers.push({ provide: ElementRef, useValue: new ElementRef({}) });
-                def.providers.push(GoogleMapFactoryProvider);
-            }
+            customize: def => def.providers = [
+                { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
+                { provide: ElementRef, useValue: element },
+                GoogleMapFactoryProvider
+            ]
         });
 
         const createWrapper = TestBed.inject(WrapperFactory);
 
-        expect(createWrapper()).toBeNull();
+        expect(createWrapper(element)).toBeNull();
     });
 });

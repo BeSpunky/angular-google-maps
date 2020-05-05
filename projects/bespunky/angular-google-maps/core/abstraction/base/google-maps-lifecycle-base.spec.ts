@@ -1,18 +1,18 @@
+import { Observable   } from 'rxjs';
 import { SimpleChange } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api.service';
-import { Observable } from 'rxjs';
-import { MockComponentWithLifecycle } from '../testing/mock-component.spec';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
+import { MockComponentWithLifecycle       } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsComponentApiService    } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsLifecycleBase (abstract)', () =>
 {
-    let api          : GoogleMapsInternalApiService;
+    let api          : GoogleMapsComponentApiService;
     let mockComponent: MockComponentWithLifecycle;
 
     beforeEach(async () =>
     {
-        ({ internalApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: MockComponentWithLifecycle }));
+        ({ componentApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: MockComponentWithLifecycle }));
     });
 
     it('should create an instance', () => expect(mockComponent).toBeTruthy());

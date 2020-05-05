@@ -1,17 +1,18 @@
+import { ElementRef } from '@angular/core';
 
-import { GoogleMapsFeatureFactoryProvider } from './google-maps-feature-factory.provider';
-import { GoogleMapsFeature } from './google-maps-feature';
-import { itShouldCreateWrapper } from '../../testing/wrapper-factory-provider-test-setup.spec';
-import { GoogleMapsDataDirective } from '../directive/google-maps-data.directive';
-import { MockGoogleMapsData } from '../testing/mock-google-maps-data.spec';
-import { MockGoogleMap } from '../../../google-map/testing/mock-google-map.spec';
-import { GoogleMapsInternalApiService } from '../../../core/api/google-maps-internal-api.service';
+import { itShouldCreateWrapper                                                        } from '@bespunky/angular-google-maps/core/testing';
+import { MockGoogleMapWithOverlays, MockGoogleMapsData                                } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsComponentApiService                                                } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDataDirective, GoogleMapsFeatureFactoryProvider, GoogleMapsFeature } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsFeatureFactoryProvider', () =>
 {
-    itShouldCreateWrapper(GoogleMapsFeatureFactoryProvider, GoogleMapsFeature, {
-        provide: GoogleMapsDataDirective,
-        useFactory: (api, map) => new GoogleMapsDataDirective(api, () => new MockGoogleMapsData(map)),
-        deps: [GoogleMapsInternalApiService, MockGoogleMap]
-    });
+    itShouldCreateWrapper(GoogleMapsFeatureFactoryProvider, GoogleMapsFeature,
+        {
+            provide   : GoogleMapsDataDirective,
+            useFactory: (api, map, element) => new GoogleMapsDataDirective(api, () => new MockGoogleMapsData(map), element),
+            deps      : [GoogleMapsComponentApiService, MockGoogleMapWithOverlays, ElementRef]
+        },
+        { provide: MockGoogleMapWithOverlays, useValue: new MockGoogleMapWithOverlays() }
+    );
 });

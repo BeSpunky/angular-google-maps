@@ -1,8 +1,9 @@
 import { InjectionToken } from '@angular/core';
+
+import { IGoogleMapsNativeObjectWrapper                     } from '../base/i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectEmittingWrapper             } from '../base/i-google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsNativeObject                            } from '../native/i-google-maps-native-object';
 import { NativeWrapperFactory, EmittingNativeWrapperFactory } from '../types/abstraction';
-import { IGoogleMapsNativeObjectWrapper } from '../base/i-google-maps-native-object-wrapper';
-import { IGoogleMapsNativeObjectEmittingWrapper } from '../base/i-google-maps-native-object-emitting-wrapper';
-import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
 /**
  * An injection token used by `GoogleMapsLifecycleBase` and its extending classes to specify the factory that will be used to

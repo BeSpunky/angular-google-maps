@@ -1,7 +1,8 @@
-import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
-import { IGoogleMapsNativeObjectWrapper } from '../base/i-google-maps-native-object-wrapper';
-import { IGoogleMapsNativeObjectEmittingWrapper } from '../base/i-google-maps-native-object-emitting-wrapper';
 import { ElementRef } from '@angular/core';
+
+import { IGoogleMapsNativeObjectWrapper         } from '../base/i-google-maps-native-object-wrapper';
+import { IGoogleMapsNativeObjectEmittingWrapper } from '../base/i-google-maps-native-object-emitting-wrapper';
+import { IGoogleMapsNativeObject                } from '../native/i-google-maps-native-object';
 
 export type Wrapper         = IGoogleMapsNativeObjectWrapper<IGoogleMapsNativeObject>
 export type EmittingWrapper = IGoogleMapsNativeObjectEmittingWrapper<IGoogleMapsNativeObject>;

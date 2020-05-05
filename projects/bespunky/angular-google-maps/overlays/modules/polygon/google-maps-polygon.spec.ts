@@ -1,10 +1,9 @@
 import { upperFirst } from 'lodash';
 
-import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
-import { GoogleMapsPolygon } from './google-maps-polygon';
-import { GoogleMapsApiService } from '../../core/api/google-maps-api.service';
-import { MockGoogleMap } from '../../google-map/testing/mock-google-map.spec';
-import { CoordPath, FlatCoord, NativeCoord } from '../../core/abstraction/types/geometry.type';
+import { configureGoogleMapsTestingModule                        } from '@bespunky/angular-google-maps/testing';
+import { MockGoogleMapWithOverlays                               } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsApiService, CoordPath, FlatCoord, NativeCoord } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsPolygon                                       } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsPolygon', () =>
 {
@@ -16,7 +15,7 @@ describe('GoogleMapsPolygon', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        polygon = new GoogleMapsPolygon(api, new MockGoogleMap());
+        polygon = new GoogleMapsPolygon(api, new MockGoogleMapWithOverlays());
 
         runOutsideAngular.calls.reset();
     });

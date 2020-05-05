@@ -1,9 +1,9 @@
+import { ComponentFixture      } from '@angular/core/testing';
 import { Component, ElementRef } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
 
-import { SafeDirective } from './safe.directive';
-import { GoogleMapsApiService } from './google-maps-api.service';
-import { configureGoogleMapsTestingModule } from '../../testing/setup.spec';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/async/testing';
+import { GoogleMapsApiService             } from '@bespunky/angular-google-maps/core';
+import { SafeDirective                    } from '@bespunky/angular-google-maps/async';
 
 describe('SafeDirective', () =>
 {
@@ -15,7 +15,7 @@ describe('SafeDirective', () =>
     {
         ({ fixture, api, component: testHost } = await configureGoogleMapsTestingModule({
             componentType: TestHost,
-            customize: def => def.declarations.push(SafeDirective)
+            customize    : def => def.declarations.push(SafeDirective)
         }));
     });
 

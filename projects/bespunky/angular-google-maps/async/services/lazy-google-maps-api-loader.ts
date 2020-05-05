@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable        } from '@angular/core';
 import { LazyLoaderService } from '@bespunky/angular-zen';
 
-import { GoogleMapsApiLoader } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiLoader                                                     } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsConfig, HttpProtocol, DefaultApiLocation, DefaultApiUrlFormat } from './google-maps-config';
 
 @Injectable({

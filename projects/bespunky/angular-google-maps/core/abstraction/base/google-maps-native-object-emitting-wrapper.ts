@@ -1,7 +1,7 @@
-import { GoogleMapsApiService } from '../../api/google-maps-api.service';
-import { GoogleMapsNativeObjectWrapper } from './google-maps-native-object-wrapper';
+import { GoogleMapsApiService                   } from '../../api/google-maps-api.service';
+import { IGoogleMapsNativeObject                } from '../native/i-google-maps-native-object';
 import { IGoogleMapsNativeObjectEmittingWrapper } from './i-google-maps-native-object-emitting-wrapper';
-import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
+import { GoogleMapsNativeObjectWrapper          } from './google-maps-native-object-wrapper';
 
 export abstract class GoogleMapsNativeObjectEmittingWrapper<TNative extends IGoogleMapsNativeObject>
               extends GoogleMapsNativeObjectWrapper<TNative>

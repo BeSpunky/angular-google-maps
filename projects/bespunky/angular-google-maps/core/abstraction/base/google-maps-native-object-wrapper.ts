@@ -1,6 +1,6 @@
+import { GoogleMapsApiService           } from '../../api/google-maps-api.service';
+import { IGoogleMapsNativeObject        } from '../native/i-google-maps-native-object';
 import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
-import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
-import { GoogleMapsApiService } from '../../api/google-maps-api.service';
 
 export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsNativeObject>
            implements IGoogleMapsNativeObjectWrapper<TNative>

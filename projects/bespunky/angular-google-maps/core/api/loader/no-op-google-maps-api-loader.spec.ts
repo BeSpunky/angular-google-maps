@@ -1,7 +1,7 @@
-import { async } from '@angular/core/testing';
+import { async     } from '@angular/core/testing';
 import { WindowRef } from '@bespunky/angular-zen';
 
-import { NoOpGoogleMapsApiLoader } from './no-op-google-maps-api-loader';
+import { NoOpGoogleMapsApiLoader } from '@bespunky/angular-google-maps/core';
 
 describe('NoOpGoogleMapsApiLoader', () =>
 {
@@ -12,7 +12,7 @@ describe('NoOpGoogleMapsApiLoader', () =>
     {
         windowRef = new WindowRef({});
 
-        loader = new NoOpGoogleMapsApiLoader(windowRef);
+        loader    = new NoOpGoogleMapsApiLoader(windowRef);
     });
 
     it('should create an instance', () => expect(loader).toBeTruthy());

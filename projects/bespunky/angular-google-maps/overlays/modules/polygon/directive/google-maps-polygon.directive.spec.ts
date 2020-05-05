@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
+import { Component        } from '@angular/core';
 
-import { configureGoogleMapsTestingModule } from '../../../testing/setup.spec';
-import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '../../../testing/lifecycle-components.spec';
-import { GoogleMapsPolygonDirective } from './google-maps-polygon.directive';
-import { Coord } from '../../../core/abstraction/types/geometry.type';
+import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
+import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '@bespunky/angular-google-maps/core/testing';
+import { Coord                                                                   } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsPolygonDirective                                              } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --

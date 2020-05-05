@@ -2,12 +2,14 @@ import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
 import { GoogleMapsEventData, Hook, Coord } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayLifecycleBase } from '../../../abstraction/base/google-maps-overlay-lifecycle-base';
-import { IGoogleMapsMarker              } from '../i-google-maps-marker';
+import { GoogleMapsOverlayLifecycleBase  } from '../../../abstraction/base/google-maps-overlay-lifecycle-base';
+import { IGoogleMapsMarker               } from '../i-google-maps-marker';
+import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
 
 @Directive({
-    selector: 'bs-google-maps-marker, [bsGoogleMapsMarker]',
-    exportAs: 'marker',
+    selector : 'bs-google-maps-marker, [bsGoogleMapsMarker]',
+    exportAs : 'marker',
+    providers: [GoogleMapsMarkerFactoryProvider]
 })
 export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsMarker>
 {

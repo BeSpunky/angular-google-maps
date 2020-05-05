@@ -1,5 +1,5 @@
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/i-google-maps-native-object-emitting-wrapper';
-import { ZoomLevel } from './types/zoom-level.enum';
+import { ZoomLevel                              } from './types/zoom-level.enum';
 
 export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Map>
 {
