@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { GoogleMapsApiService, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsPolygon, GoogleMapsMarker, GoogleMapsDataDirective } from '@bespunky/angular-google-maps/overlays';
+import { IGoogleMapsPolygon, GoogleMapsMarker, GoogleMapsDataDirective, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
 
 @Component({
     selector   : 'bs-map',
@@ -9,8 +9,7 @@ import { IGoogleMapsPolygon, GoogleMapsMarker, GoogleMapsDataDirective } from '@
 })
 export class MapComponent
 {
-    @ViewChild(GoogleMapsDataDirective)
-    public data: GoogleMapsDataDirective;
+    public overlays: OverlaysSuperpower
 
     constructor(private api: GoogleMapsApiService)
     {
@@ -24,9 +23,9 @@ export class MapComponent
         dataLayer.wrapper.createMarker(event.args[0].position)
     }
 
-    public onMarkerClick(marker: GoogleMapsMarker)
+    public onMarkerClick(event: GoogleMapsEventData)
     {
-        alert('marker clicked');
+        this.overlays.removeOverlay(event.emitter as GoogleMapsMarker);
     }
 
     public onPolygonClick(event: GoogleMapsEventData)

@@ -1,4 +1,4 @@
-<bs-google-map *bsSafe (click)="onClick(dataLayer, $event)" [center]="{ lat: 31.152775, lng: 34.818484 }" [zoom]="3">
+<bs-google-map *bsSafe [(overlays)]="overlays" (click)="onClick(dataLayer, $event)" [center]="{ lat: 31.152775, lng: 34.818484 }" [zoom]="3">
     <bs-google-maps-data #dataLayer="dataLayer">
         <bs-google-maps-feature [polygon]="[[0,0],[1,1],[20,2]]"></bs-google-maps-feature>
     </bs-google-maps-data>

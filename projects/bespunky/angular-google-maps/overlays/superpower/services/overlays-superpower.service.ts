@@ -15,7 +15,7 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
 {
     public readonly type = OverlaysSuperpower;
     
-    constructor(public overlays: OverlaysTracker, private api: GoogleMapsApiService)
+    constructor(public tracker: OverlaysTracker, private api: GoogleMapsApiService)
     {
         super();
     }
@@ -47,7 +47,7 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
         // Overlay creation will cause rendering. Run outside...
         const overlay = this.api.runOutsideAngular(createObject);
 
-        this.overlays.add(overlay);
+        this.tracker.add(overlay);
 
         return overlay;
     }
@@ -57,6 +57,6 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
         // Overlay removal will cause rendering. Run outside...
         this.api.runOutsideAngular(() => overlay.detach());
 
-        this.overlays.remove(overlay);
+        this.tracker.remove(overlay);
     }
 }

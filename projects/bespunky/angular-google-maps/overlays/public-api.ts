@@ -12,9 +12,11 @@ export * from './abstraction/native/i-google-maps-native-drawable-overlay';
 export * from './abstraction/types/abstraction';
 
 // Superpower
+export * from './superpower/overlays-superpower.module';
 export * from './superpower/i-overlays-superpower';
 export * from './superpower/services/overlays-superpower.service';
 export * from './superpower/services/overlays-tracker';
+export * from './superpower/directive/overlays.directive';
 
 // Marker
 export * from './modules/marker/google-maps-marker.module';
