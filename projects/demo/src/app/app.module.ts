@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { GoogleMapsModule, GoogleMapsLibrary } from '@bespunky/angular-google-maps';
 
+import { GoogleMapsModule } from '@bespunky/angular-google-maps/async';
 import { AppComponent } from './app.component';
 
 @NgModule({

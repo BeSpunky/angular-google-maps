@@ -24,7 +24,7 @@ import
 export function createGoogleMapsTestModuleMetadata(config?: GoogleMapsConfig): TestModuleMetadata
 {
     return {
-        imports: [GoogleMapsModule.forRootAsync(config || defaultTestApiConfig)],
+        imports: [GoogleMapsModule.forRoot(config || defaultTestApiConfig)],
         providers: [
             // Replace the script loader service so google api script will not be downloaded
             { provide: GoogleMapsApiLoader, useClass: NoOpGoogleMapsApiLoader }
