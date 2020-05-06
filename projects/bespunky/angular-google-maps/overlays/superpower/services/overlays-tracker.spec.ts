@@ -1,5 +1,6 @@
-import { MockGoogleMapWithOverlays, MockMarker } from '@bespunky/angular-google-maps/overlays/testing';
-import { DrawableOverlay, OverlaysTracker      } from '@bespunky/angular-google-maps/overlays';
+import { MockMarker                       } from '@bespunky/angular-google-maps/overlays/testing';
+import { MockGoogleMap                    } from '@bespunky/angular-google-maps/core/testing';
+import { DrawableOverlay, OverlaysTracker } from '@bespunky/angular-google-maps/overlays';
 
 describe('OverlayTracker', () =>
 {
@@ -11,7 +12,7 @@ describe('OverlayTracker', () =>
     {
         expect(overlays.markers.length).toBe(0);
         
-        const marker = new MockMarker(new MockGoogleMapWithOverlays());
+        const marker = new MockMarker(new MockGoogleMap());
         
         overlays.add(marker);
 
