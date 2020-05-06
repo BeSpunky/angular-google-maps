@@ -1,7 +1,7 @@
 import { Injectable, Inject, Type, Optional } from '@angular/core';
 
-import { IGoogleMap      } from '../i-google-map';
-import { Superpowers     } from './superpowers.token';
+import { IGoogleMap   } from '../i-google-map';
+import { Superpowers  } from './superpowers.token';
 import { ISuperpowers } from './i-superpowers';
 import { ISuperpower  } from './i-superpower';
 
