@@ -2,13 +2,15 @@ import { TestBed          } from '@angular/core/testing';
 import { ElementRef       } from '@angular/core';
 import { UniversalService } from '@bespunky/angular-zen';
 
-import { configureGoogleMapsTestingModule                    } from '@bespunky/angular-google-maps/testing';
-import { itShouldCreateWrapper                               } from '@bespunky/angular-google-maps/core/testing';
-import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
+import { itShouldCreateWrapper                                                   } from '@bespunky/angular-google-maps/core/testing';
+import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap, SuperpowersService } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapFactoryProvider', () =>
 {
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap);
+    const SuperpowersServiceProvider = { provide: SuperpowersService, useValue: new SuperpowersService() };
+
+    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, SuperpowersServiceProvider);
 
     it('should return null when used in non-browser platforms', async () =>
     {
@@ -18,6 +20,7 @@ describe('GoogleMapFactoryProvider', () =>
             customize: def => def.providers = [
                 { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
                 { provide: ElementRef, useValue: element },
+                SuperpowersServiceProvider,
                 GoogleMapFactoryProvider
             ]
         });
