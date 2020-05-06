@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~9.1.4",
     "@angular/platform-browser-dynamic": "~9.1.4",
     "@angular/router": "~9.1.4",
-    "@bespunky/angular-zen": "^2.1.0",
+    "@bespunky/angular-zen": "^2.1.2",
     "core-js": "^2.5.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.4",
