@@ -1,4 +1,4 @@
-import { Injectable, Inject, Type } from '@angular/core';
+import { Injectable, Inject, Type, Optional } from '@angular/core';
 
 import { IGoogleMap      } from '../i-google-map';
 import { Superpowers     } from './superpowers.token';
@@ -11,8 +11,10 @@ export class SuperpowersService implements ISuperpowers
 {
     private powersByName: { [type: string]: ISuperpower };
 
-    constructor(@Inject(Superpowers) private superpowers: ISuperpower[])
+    constructor(@Optional() @Inject(Superpowers) private superpowers?: ISuperpower[])
     {
+        this.superpowers = superpowers || []; // Default param value won't work as angular passes `null` instead of `undefined`
+
         this.createPowerDictionary();
     }
 
