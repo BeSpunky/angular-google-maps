@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 
-import { GoogleMapModule, Superpower, GoogleMapsApiService, Coord, CoordPath  } from '@bespunky/angular-google-maps/core';
+import { GoogleMapModule, Superpower, GoogleMapsApiService, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 import { DrawableOverlay     } from '../../abstraction/types/abstraction';
 import { GoogleMapsMarker    } from '../../modules/marker/google-maps-marker';
 import { GoogleMapsPolygon   } from '../../modules/polygon/google-maps-polygon';
 import { GoogleMapsData      } from '../../modules/data/google-maps-data';
-import { OverlaysTracker     } from './overlays-tracker';
 import { IOverlaysSuperpower } from '../i-overlays-superpower';
+import { OverlaysTracker     } from './overlays-tracker';
 
 @Injectable({
     providedIn: GoogleMapModule
 })
 export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpower
-{
-    public readonly type = OverlaysSuperpower;
-    
+{    
     constructor(public tracker: OverlaysTracker, private api: GoogleMapsApiService)
     {
         super();

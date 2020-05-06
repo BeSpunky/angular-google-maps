@@ -20,7 +20,7 @@ export class SuperpowersService implements ISuperpowers
 
     private createPowerDictionary()
     {
-        this.powersByName = this.superpowers.reduce((powers, power) => (powers[power.type.toString()] = power) && powers, {});
+        this.powersByName = this.superpowers.reduce((powers, power: Object) => (powers[power.constructor.name] = power) && powers, {});
     }
 
     public attachToMap(map: IGoogleMap)
@@ -30,6 +30,6 @@ export class SuperpowersService implements ISuperpowers
 
     public use<T extends ISuperpower>(type: Type<T>): T
     {
-        return this.powersByName[type.toString()] as T;
+        return this.powersByName[type.name] as T;
     }
 }
