@@ -33,7 +33,7 @@ export function createGoogleMapsTestModuleMetadata(): TestModuleMetadata
  */
 export function fakeTheRunXsideAngularMethod(api: GoogleMapsApiService, methodName: 'runInsideAngular' | 'runOutsideAngular'): jasmine.Spy
 {
-    return spyOn(api, methodName).and.callFake((fn: () => void) => fn());
+    return spyOn(api, methodName).and.callFake((fn: () => any) => fn());
 }
 
 /**

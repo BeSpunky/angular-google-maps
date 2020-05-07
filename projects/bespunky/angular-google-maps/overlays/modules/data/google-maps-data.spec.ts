@@ -98,7 +98,7 @@ describe('GoogleMapsData', () =>
             const options: google.maps.Data.GeoJsonOptions = { idPropertyName: 'id' };
             const native = data.native;
     
-            const loadSpy = spyOn(native, 'loadGeoJson').and.callFake((url, options, callback) => callback());
+            const loadSpy = spyOn(native, 'loadGeoJson').and.callFake((url, options, callback) => callback([]));
     
             runOutsideAngular.calls.reset();
     

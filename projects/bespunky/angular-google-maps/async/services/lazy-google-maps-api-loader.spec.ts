@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { LazyLoaderService } from '@bespunky/angular-zen';
+import { LazyLoaderService, LazyLoadedFile } from '@bespunky/angular-zen';
 
 import { LazyGoogleMapsApiLoader, GoogleMapsConfig, GoogleMapsLibrary, DefaultApiLocation, HttpProtocol, GoogleApiUrl } from '@bespunky/angular-google-maps/async';
 
@@ -28,9 +28,11 @@ describe('LazyGoogleMapsApiLoader', () =>
             }
         };
 
+        const loadedFile: LazyLoadedFile = { completed: true, type: 'script', url: 'maps-url', element: null };
+
         scriptLoaderSpy = jasmine.createSpyObj('lazyApiLoader', ['loadScript']);
 
-        scriptLoaderSpy.loadScript.and.returnValue(of(true));
+        scriptLoaderSpy.loadScript.and.returnValue(of(loadedFile));
 
         initLazyApiLoader();
     });
