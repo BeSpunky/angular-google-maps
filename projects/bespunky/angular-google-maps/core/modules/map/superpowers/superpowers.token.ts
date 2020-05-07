@@ -5,6 +5,8 @@ import { ISuperpower } from './i-superpower';
 /**
  * An injectable token which allows retrieving or extending the map component's superpowers.
  * Use `createSuperpowerProvider()` to create a multi class injector for any new superpower.
+ * 
+ * Superpower services should inherit `ISuperpower` and be decorated with `@Injectable({ providedIn: GoogleMapComponent })`.
  */
 export const Superpowers = new InjectionToken<ISuperpower[]>('GoogleMaps.Superpowers');
 
@@ -12,14 +14,14 @@ export const Superpowers = new InjectionToken<ISuperpower[]>('GoogleMaps.Superpo
  * Creates a multi-class provider for the given superpower which can be used to plug-in the superpower to the map component.
  *
  * @export
- * @param {Type<ISuperpower>} type The type of superpower.
- * @returns {ClassProvider} A provider 
+ * @param {Type<ISuperpower>} superpower The type of superpower.
+ * @returns {ClassProvider} A provider which will add the superpower to the superpowers collection used by the map wrapper.
  */
-export function createSuperpowerProvider(type: Type<ISuperpower>): ClassProvider
+export function createSuperpowerProvider(superpower: Type<ISuperpower>): ClassProvider
 {
     return {
         provide : Superpowers,
-        useClass: type,
+        useClass: superpower,
         multi   : true
     }
 }

@@ -5,9 +5,9 @@ import { ViewChild } from '@angular/core';
 
 import { GoogleMapsLifecycleBase, EmittingWrapper, GoogleMap, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
 
-export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string): string
+export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string, mapDirectives: string = ''): string
 {
-    return `<bs-google-map [center]="center">${testedComponentTemplate}</bs-google-map>`;
+    return `<bs-google-map ${mapDirectives} [center]="center">${testedComponentTemplate}</bs-google-map>`;
 }
 
 /**

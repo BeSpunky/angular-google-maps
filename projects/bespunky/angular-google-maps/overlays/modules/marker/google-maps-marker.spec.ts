@@ -1,5 +1,5 @@
 import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
-import { MockGoogleMapWithOverlays        } from '@bespunky/angular-google-maps/overlays/testing';
+import { MockGoogleMap                    } from '@bespunky/angular-google-maps/core/testing';
 import { GoogleMapsApiService, Coord      } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsMarker                 } from '@bespunky/angular-google-maps/overlays';
 
@@ -13,7 +13,7 @@ describe('GoogleMapsMarker', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        marker = new GoogleMapsMarker(api, new MockGoogleMapWithOverlays());
+        marker = new GoogleMapsMarker(api, new MockGoogleMap());
 
         runOutsideAngular.calls.reset();
     });

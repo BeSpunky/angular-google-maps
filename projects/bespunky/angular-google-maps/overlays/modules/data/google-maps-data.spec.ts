@@ -1,20 +1,21 @@
-import { configureGoogleMapsTestingModule                 } from '@bespunky/angular-google-maps/testing';
-import { MockGoogleMapsFeature, MockGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsApiService                             } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsData, IGoogleMapsFeature               } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule   } from '@bespunky/angular-google-maps/testing';
+import { MockGoogleMap                      } from '@bespunky/angular-google-maps/core/testing';
+import { MockGoogleMapsFeature              } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsApiService               } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsData, IGoogleMapsFeature } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsData', () =>
 {
     let api              : GoogleMapsApiService;
     let runOutsideAngular: jasmine.Spy;
-    let map              : MockGoogleMapWithOverlays;
+    let map              : MockGoogleMap;
     let data             : GoogleMapsData;
 
     beforeEach(async () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        map  = new MockGoogleMapWithOverlays();
+        map  = new MockGoogleMap();
         data = new GoogleMapsData(api, map);
 
         runOutsideAngular.calls.reset();
@@ -97,7 +98,7 @@ describe('GoogleMapsData', () =>
             const options: google.maps.Data.GeoJsonOptions = { idPropertyName: 'id' };
             const native = data.native;
     
-            const loadSpy = spyOn(native, 'loadGeoJson').and.callFake((url, options, callback) => callback());
+            const loadSpy = spyOn(native, 'loadGeoJson').and.callFake((url, options, callback) => callback([]));
     
             runOutsideAngular.calls.reset();
     

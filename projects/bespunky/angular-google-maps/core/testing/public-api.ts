@@ -8,3 +8,4 @@ export * from './mocks/mock-events-manager.spec';
 export * from './mocks/mock-component.spec';
 
 export * from './mocks/modules/mock-google-map.spec';
+export * from './mocks/modules/mock-superpower.spec';

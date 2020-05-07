@@ -1,14 +1,15 @@
 
-import { configureGoogleMapsTestingModule                     } from '@bespunky/angular-google-maps/testing';
-import { MockNativeDrawableOverlay, MockGoogleMapWithOverlays } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsApiService                                 } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay                            } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
+import { MockGoogleMap                    } from '@bespunky/angular-google-maps/core/testing';
+import { MockNativeDrawableOverlay        } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsApiService             } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay        } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsDrawableOverlay (abstract)', () =>
 {
     let api              : GoogleMapsApiService;
     let runOutsideAngular: jasmine.Spy;
-    let mockMap          : MockGoogleMapWithOverlays;
+    let mockMap          : MockGoogleMap;
     let mockNativeOverlay: MockNativeDrawableOverlay;
     let mockOverlay      : GoogleMapsDrawableOverlayTest;
 
@@ -16,7 +17,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        mockMap           = new MockGoogleMapWithOverlays({ id: 1, zoom: 1 });
+        mockMap           = new MockGoogleMap({ id: 1, zoom: 1 });
         mockNativeOverlay = new MockNativeDrawableOverlay();
         mockOverlay       = new GoogleMapsDrawableOverlayTest(api, mockMap, 0, mockNativeOverlay);
     });
@@ -30,7 +31,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
         runOutsideAngular.calls.reset();
 
         const secondNativeMap = { id: 2, zoom: 2 };
-        const secondMap = new MockGoogleMapWithOverlays(secondNativeMap); // First one was `mockMap`
+        const secondMap = new MockGoogleMap(secondNativeMap); // First one was `mockMap`
 
         mockOverlay.attach(secondMap);
 
