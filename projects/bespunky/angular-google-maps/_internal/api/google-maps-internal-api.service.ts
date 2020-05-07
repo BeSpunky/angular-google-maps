@@ -10,7 +10,7 @@ import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';
 })
 export class GoogleMapsInternalApiService
 {
-    private waitForApi: { promise: Promise<void>, resolve: () => void, reject: () => any };
+    private waitForApi: { promise: Promise<void>, resolve: () => void, reject: (error: any) => any };
 
     constructor(
         private zone  : NgZone,
@@ -32,6 +32,11 @@ export class GoogleMapsInternalApiService
     {
         return this.zone.runOutsideAngular(() => this.loader.load ()
                                                             .then (this.waitForApi.resolve)
-                                                            .catch(this.waitForApi.reject));
+                                                            .catch(error =>
+                                                            {
+                                                                this.waitForApi.reject(error);
+                                                                // Make sure the `load()` method rejects as well
+                                                                return Promise.reject(error);
+                                                            }));
     }
 }
