@@ -1,5 +1,3 @@
-import 'reflect-metadata'; // Imported once here. No need to import in other places.
-
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { _InternalModule              } from '../../_internal.module';
