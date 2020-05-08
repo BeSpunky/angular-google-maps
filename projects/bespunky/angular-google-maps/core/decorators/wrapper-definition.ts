@@ -33,29 +33,11 @@ export enum Delegation
 };
 
 /**
- * Defines delegation for a wrapper method which triggers a native method with a different signature.
- * Use in case the wrapper needs to "upgrade" the native function or do some preprocessing before calling the native function.
- */
-export type LinkedDelegation<TNative extends Object, TWrapper extends Wrapper> = {
-    /**
-     * The form of delegation to use when wrapping the native function.
-     * `Delegation.Exclude` cannot be used here. To exclude, specify `Delegation.Exclude` directly as the value, without object notation.
-     */
-    delegation: Exclude<Delegation, Delegation.Exclude>,
-    /**
-     * The name of the wrapper method which will trigger the native function.
-     *
-     * @type {WrapperFunctionsProperties<TNative, TWrapper>} The names of the functions defined by the wrapper.
-     */
-    triggeredBy: WrapperFunctionsProperties<TNative, TWrapper>
-};
-
-/**
  * The supported types for defining delegation for a single native function.
- * In case the signature of the native function is the same as the wrapper function's signature, specify one of `Delegation`'s values.
- * Otherwise, if the name of the native function is different to the wrapper function's signature, use the `LinkedDelegation` object notation.
+ * 
+ * Defined for scalability.
  */
-export type WrapperFunctionDefinition<TNative extends Object, TWrapper extends Wrapper> = LinkedDelegation<TNative, TWrapper> | Delegation;
+export type WrapperFunctionDefinition<TNative extends Object, TWrapper extends Wrapper> = Delegation;
 /**
  * The complete definition of function wrapping.
  * An object which keys are the names of native functions, and values are their delegation definition.
@@ -63,8 +45,8 @@ export type WrapperFunctionDefinition<TNative extends Object, TWrapper extends W
  * @example
  * const options: WrapperDefinition<google.maps.Map, GoogleMap> = {
  *     panTo      : Delegation.Direct,
- *     panToBounds: Delegation.Exclude,
- *     fitBounds  : { delegation: Delegation.OutsideAngular, triggeredBy: 'fit' }
+ *     getOptions : Delegation.Exclude,
+ *     fitBounds  : Delegation.OutsideAngular
  * }
  */
 export type WrapperDefinition<TNative extends Object, TWrapper extends Wrapper> = Partial<Record<FunctionProperties<TNative>, WrapperFunctionDefinition<TNative, TWrapper>>>;
