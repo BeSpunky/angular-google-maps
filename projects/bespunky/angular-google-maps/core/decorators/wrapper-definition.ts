@@ -16,7 +16,7 @@ export enum Delegation
     Direct,
     /**
      * Includes the native function for delegation. Attempts to run it through the wrapper will execute it outside of angular's zone while passing wrapper arguments and fetching the returned value.
-     * This implies `Delegation.Include`. If `Delegation.OutsideAngular` is specified, `Delegation.Include` is not needed.
+     * This implicitly means `Delegation.Include` behind the scenes.
      */
     OutsideAngular,
     /**
