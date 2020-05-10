@@ -2,8 +2,8 @@ import { ElementRef } from '@angular/core';
 
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
 import { WrappedNativeFunctions                } from '../../abstraction/types/abstraction';
-import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator copy';
-import { OutsideAngular                        } from '../../decorators/outside-angular.decorator copy';
+import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator';
+import { OutsideAngular                        } from '../../decorators/outside-angular.decorator';
 import { Delegation                            } from '../../decorators/wrapper-definition';
 import { GoogleMapsApiService                  } from '../../api/google-maps-api.service';
 import { ISuperpowers                          } from './superpowers/i-superpowers';
