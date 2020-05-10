@@ -1,7 +1,8 @@
-import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectEmittingWrapper } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
 import { MockWrapper      } from './mock-wrapper.spec';
 import { MockGoogleEvents } from './mock-events-manager.spec';
 
+@NativeObjectWrapper()
 export class MockEmittingWrapper<TNative extends IGoogleMapsNativeObject>
      extends MockWrapper<TNative>
   implements IGoogleMapsNativeObjectEmittingWrapper<TNative>

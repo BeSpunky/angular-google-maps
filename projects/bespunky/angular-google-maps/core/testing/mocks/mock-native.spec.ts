@@ -2,16 +2,16 @@ import { IGoogleMapsNativeObject } from '@bespunky/angular-google-maps/core';
 
 export class MockNative implements IGoogleMapsNativeObject
 {
-    public property: any;
+    public something: any;
     
-    public getProperty(): any
+    public getSomething(): any
     {
-        return this.property;
+        return this.something;
     }
 
-    public setProperty(value: any): void
+    public setSomething(value: any): void
     {
-        this.property = value;
+        this.something = value;
     }
 
     public findById(id: any)
