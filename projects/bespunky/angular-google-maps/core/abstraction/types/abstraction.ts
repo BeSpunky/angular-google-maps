@@ -22,4 +22,4 @@ export type EmittingNativeWrapperFactory<TWrapper extends IGoogleMapsNativeObjec
  * // Add all native map functions to map wrapper intellisense (notice how this is an interface with the same name of the wrapper class).
  * export interface GoogleMap extends WrappedNativeFunctions<google.maps.Map, 'getMapTypeId' | 'setMapTypeId'>;
  */
-export type WrappedNativeFunctions<TNative extends Object, TExcluded extends keyof FunctionsPartial<TNative>> = Omit<FunctionsPartial<TNative>, keyof Pick<TNative, TExcluded>>;
+export type WrappedNativeFunctions<TNative extends Object, TExcluded extends keyof FunctionsPartial<TNative> = any> = Omit<FunctionsPartial<TNative>, keyof Pick<TNative, TExcluded>>;
