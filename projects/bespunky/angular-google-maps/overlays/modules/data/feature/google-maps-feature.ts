@@ -1,4 +1,4 @@
-import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Coord, CoordPath, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Coord, CoordPath, WrappedNativeFunctions, OutsideAngular } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData } from '../i-google-maps-data';
 import { IGoogleMapsFeature } from './i-google-maps-feature';
 
@@ -20,14 +20,21 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
         return new google.maps.Data.Feature(options);
     }
 
-    public setMarker(position: Coord): void
+    public getId(): string | number
     {
-        this.setGeometry(this.api.geometry.createDataPoint(position));
+        return this.native.getId();
     }
 
+    @OutsideAngular
+    public setMarker(position: Coord): void
+    {
+        this.native.setGeometry(this.api.geometry.createDataPoint(position));
+    }
+
+    @OutsideAngular
     public setPolygon(path: CoordPath): void
     {
-        this.setGeometry(this.api.geometry.createDataPolygon(path));
+        this.native.setGeometry(this.api.geometry.createDataPolygon(path));
     }
 
     public toGeoJson(): Promise<any>
