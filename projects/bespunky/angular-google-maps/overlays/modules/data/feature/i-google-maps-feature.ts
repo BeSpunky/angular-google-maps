@@ -1,7 +1,7 @@
-import { IGoogleMapsNativeObjectEmittingWrapper, Coord, CoordPath, IGoogleMapsNativeObject } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsNativeObjectEmittingWrapper, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData } from '../i-google-maps-data';
 
-export interface IGoogleMapsFeature<TFeature extends IGoogleMapsNativeObject = google.maps.Data.Feature> extends IGoogleMapsNativeObjectEmittingWrapper<TFeature>
+export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>
 {
     /** The data object this feature was added to. */
     readonly data: IGoogleMapsData;

@@ -1,11 +1,11 @@
-import { IGoogleMapsNativeObjectEmittingWrapper, IGoogleMap, IGoogleMapsNativeObject } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
-import { OverlayType                      } from './overlay-type.enum';
+import { IGoogleMapsNativeObjectEmittingWrapper, IGoogleMap } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsNativeDrawableOverlay                   } from '../native/i-google-maps-native-drawable-overlay';
+import { OverlayType                                        } from './overlay-type.enum';
 
-export interface IGoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay, TNativeMap extends IGoogleMapsNativeObject = google.maps.Map>
+export interface IGoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay>
          extends IGoogleMapsNativeObjectEmittingWrapper<TNative>
 {
-    readonly map: IGoogleMap<TNativeMap>;
+    readonly map: IGoogleMap;
     /** Useful when reflection is complex or not possible. */
     readonly type: OverlayType;
 
