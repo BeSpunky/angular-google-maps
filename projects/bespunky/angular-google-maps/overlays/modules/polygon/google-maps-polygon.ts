@@ -1,9 +1,17 @@
-import { CoordPath, NativeObjectWrapper, Wrap, OutsideAngular, GoogleMapsApiService, IGoogleMap } from '@bespunky/angular-google-maps/core';
+import { CoordPath, NativeObjectWrapper, OutsideAngular, GoogleMapsApiService, IGoogleMap, WrappedNativeFunctions, Delegation } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay } from '../../abstraction/base/google-maps-drawable-overlay';
 import { OverlayType               } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsPolygon        } from './i-google-maps-polygon';
 
-@NativeObjectWrapper
+export type WrappedPolygonFunctions = WrappedNativeFunctions<google.maps.Polygon, 'getPath' | 'setPath' | 'getPaths' | 'setPaths' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+
+export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
+
+// @dynamic
+@NativeObjectWrapper<google.maps.Polygon, GoogleMapsPolygon>({
+    getMap     : Delegation.Exclude,
+    setMap     : Delegation.Exclude
+})
 export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Polygon> implements IGoogleMapsPolygon
 {
     constructor(api: GoogleMapsApiService, map: IGoogleMap, ...nativeArgs: any[])
@@ -36,18 +44,4 @@ export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Pol
     setStrokeWeight  (strokeWeight: number)                      : void { this.setOptions({ strokeWeight }); }
     setZIndex        (zIndex: number)                            : void { this.setOptions({ zIndex }); }
     setGeodesic      (geodesic: boolean)                         : void { this.setOptions({ geodesic }); }
-
-    @Wrap() getDraggable(): boolean { return void 0; }
-
-    @Wrap() @OutsideAngular setDraggable(draggable: boolean): void { }
-
-    @Wrap() getEditable(): boolean { return void 0; }
-
-    @Wrap() @OutsideAngular setEditable(editable: boolean): void { }
-
-    @Wrap() getVisible(): boolean { return void 0; }
-
-    @Wrap() @OutsideAngular setVisible(visible: boolean): void { }
-
-    @Wrap() @OutsideAngular setOptions(options: google.maps.PolygonOptions): void { }
 }

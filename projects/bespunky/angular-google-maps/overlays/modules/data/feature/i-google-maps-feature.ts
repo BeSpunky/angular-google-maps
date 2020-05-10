@@ -19,14 +19,6 @@ export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapp
      */
     setPolygon(path: CoordPath): void;
 
-    getId(): number | string;
-    
-    getGeometry(): google.maps.Data.Geometry;
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void;
-
-    getProperty(name: string): any;
-    setProperty(name: string, value: any): void;
-
     /**
      * Should create the GeoJson representation of the feature and provide it as an object when the promise resolves.
      * Will automatically take care of the callback required by Google Maps Api internally.
