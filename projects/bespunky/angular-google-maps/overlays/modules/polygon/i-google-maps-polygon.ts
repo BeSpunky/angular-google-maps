@@ -1,7 +1,8 @@
-import { CoordPath                  } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsDrawableOverlay } from '../../abstraction/base/i-google-maps-drawable-overlay';
+import { CoordPath                        } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsDrawableOverlay       } from '../../abstraction/base/i-google-maps-drawable-overlay';
+import { IGoogleMapsNativeDrawableOverlay } from '../../abstraction/native/i-google-maps-native-drawable-overlay';
 
-export interface IGoogleMapsPolygon extends IGoogleMapsDrawableOverlay<google.maps.Polygon>
+export interface IGoogleMapsPolygon<TPolygon extends IGoogleMapsNativeDrawableOverlay = google.maps.Polygon> extends IGoogleMapsDrawableOverlay<TPolygon>
 {
     getPath(): google.maps.LatLngLiteral[][];
     setPath(coords: CoordPath): void;

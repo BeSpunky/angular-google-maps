@@ -1,8 +1,9 @@
-import { Coord, CoordPath           } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsDrawableOverlay } from '../../abstraction/base/i-google-maps-drawable-overlay';
-import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
+import { Coord, CoordPath                 } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsDrawableOverlay       } from '../../abstraction/base/i-google-maps-drawable-overlay';
+import { IGoogleMapsNativeDrawableOverlay } from '../../abstraction/native/i-google-maps-native-drawable-overlay';
+import { IGoogleMapsFeature               } from './feature/i-google-maps-feature';
 
-export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.Data>
+export interface IGoogleMapsData<TData extends IGoogleMapsNativeDrawableOverlay = google.maps.Data> extends IGoogleMapsDrawableOverlay<TData>
 {
     createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
     createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
