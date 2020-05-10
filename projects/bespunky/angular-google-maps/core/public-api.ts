@@ -18,6 +18,7 @@ export * from './abstraction/tokens/wrapper-factory.token';
 
 export * from './abstraction/types/abstraction';
 export * from './abstraction/types/geometry.type';
+export * from './abstraction/types/utils';
 
 // Api
 export * from './api/google-maps-api.service';
@@ -32,9 +33,9 @@ export { GoogleMapsApiLoader } from '@bespunky/angular-google-maps/_internal';
 
 // Decorators
 export * from './decorators/native-object-wrapper.decorator';
-export { Wrap           } from './decorators/wrap.decorator';
 export { OutsideAngular } from './decorators/outside-angular.decorator';
-export { Hook           } from './decorators/hook.decorator';
+export { Hook } from './decorators/hook.decorator';
+export * from './decorators/wrapper-definition';
 
 // Map
 // --- Base
