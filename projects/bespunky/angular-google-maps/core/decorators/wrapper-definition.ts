@@ -1,5 +1,5 @@
-import { Wrapper                                        } from '../abstraction/types/abstraction';
-import { FunctionProperties, WrapperFunctionsProperties } from '../abstraction/types/utils';
+import { Wrapper            } from '../abstraction/types/abstraction';
+import { FunctionProperties } from '../abstraction/types/utils';
 
 /**
  * Defines if and how a native function should be delegated.
@@ -38,6 +38,7 @@ export enum Delegation
  * Defined for scalability.
  */
 export type WrapperFunctionDefinition<TNative extends Object, TWrapper extends Wrapper> = Delegation;
+
 /**
  * The complete definition of function wrapping.
  * An object which keys are the names of native functions, and values are their delegation definition.
