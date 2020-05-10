@@ -1,5 +1,5 @@
 import { Wrapper                                        } from '../abstraction/types/abstraction';
-import { FunctionProperties, WrapperFunctionsProperties } from '../abstraction/types/extraction';
+import { FunctionProperties, WrapperFunctionsProperties } from '../abstraction/types/utils';
 
 /**
  * Defines if and how a native function should be delegated.

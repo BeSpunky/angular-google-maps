@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
 
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
-import { FunctionsPartial, FunctionProperties                      } from '../../abstraction/types/extraction';
+import { WrappedNativeFunctions                } from '../../abstraction/types/abstraction';
 import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator copy';
 import { OutsideAngular                        } from '../../decorators/outside-angular.decorator copy';
 import { Delegation                            } from '../../decorators/wrapper-definition';
@@ -10,11 +10,9 @@ import { ISuperpowers                          } from './superpowers/i-superpowe
 import { Defaults                              } from './types/defaults';
 import { IGoogleMap                            } from './i-google-map';
 
-export type NativeGoogleMapFunctionNames      = FunctionProperties<google.maps.Map>;
-export type NativeGoogleMapFunctions          = FunctionsPartial<google.maps.Map>;
-export type ManuallyWrappedGoogleMapFunctions = Extract<NativeGoogleMapFunctionNames, 'getMapTypeId' | 'setMapTypeId'>;
+export type WrappedGoogleMapFunctions = WrappedNativeFunctions<google.maps.Map, 'getMapTypeId' | 'setMapTypeId'>;
 
-export interface GoogleMap extends Omit<NativeGoogleMapFunctions, ManuallyWrappedGoogleMapFunctions> { }
+export interface GoogleMap extends WrappedGoogleMapFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.Map, GoogleMap>({
