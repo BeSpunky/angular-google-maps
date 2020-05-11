@@ -1,11 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { GoogleMapsLifecycleBase, WrapperFactory, Hook, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
-import { WrappedNativeFunctions                                             } from '@bespunky/angular-google-maps/core';
-import { MockNative                                                         } from './mock-native.spec';
-import { MockEmittingWrapper                                                } from './mock-emitting-wrapper.spec';
+import { GoogleMapsLifecycleBase, WrapperFactory, Hook, GoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
+import { WrappedNativeFunctions                                                                  } from '@bespunky/angular-google-maps/core';
+import { MockNative                                                                              } from './mock-native.spec';
+import { MockEmittingWrapper                                                                     } from './mock-emitting-wrapper.spec';
 
+@NativeObjectWrapper({ nativeType: MockNative })
 class     TestWrapper extends MockEmittingWrapper<MockNative> { }
+
 interface TestWrapper extends WrappedNativeFunctions<MockNative> { }
 
 export function WrapperFactoryProvider()

@@ -8,9 +8,12 @@ export type WrappedPolygonFunctions = WrappedNativeFunctions<google.maps.Polygon
 export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<google.maps.Polygon, GoogleMapsPolygon>({
-    getMap     : Delegation.Exclude,
-    setMap     : Delegation.Exclude
+@NativeObjectWrapper<GoogleMapsPolygon>({
+    nativeType: google.maps.Polygon,
+    definition: {
+        getMap: Delegation.Exclude,
+        setMap: Delegation.Exclude
+    }
 })
 export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Polygon> implements IGoogleMapsPolygon
 {

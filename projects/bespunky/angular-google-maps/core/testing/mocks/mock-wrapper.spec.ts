@@ -1,10 +1,10 @@
-import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectWrapper, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectWrapper } from '@bespunky/angular-google-maps/core';
 import { MockNative } from './mock-native.spec';
 
 /**
  * As the native type is unknown until the moment of usage, an extending interface will not compile here.
  * When using the mock wrapper:
- * 1. Create a dummy class that inherits MockWrapper with the corresponding native generic type.
+ * 1. Create a dummy class that inherits MockWrapper with the corresponding native generic type and decorates it with @NativeObjectWrapper.
  * 2. Create an extension interface to allow intellisense and compilation with the mock native functions.
  * 
  * Do not skip step 1 as TypeScript will complain that there's already an there's a conflict between your type and
@@ -15,7 +15,6 @@ import { MockNative } from './mock-native.spec';
  * class     TheWrapper extends MockWrapper<NativeMockType> { }
  * interface TheWrapper extends WrappedNativeFunctions<NativeMockType> { }
  */
-@NativeObjectWrapper()
 export class MockWrapper<TNative extends IGoogleMapsNativeObject = MockNative> implements IGoogleMapsNativeObjectWrapper<TNative>
 {
     public api = jasmine.createSpyObj('MockWrapperApiService', ['runOutsideAngular']);
