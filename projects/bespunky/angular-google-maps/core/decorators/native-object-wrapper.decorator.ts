@@ -1,3 +1,25 @@
+/**
+ * The previous implementation of this decorator was done using a Proxy object.
+ * Wrapper classes would get extended on instantiation and their constructor would return a proxy.
+ * This was a cleaner solution code-wise, however it was very annoying for me to see a proxy object instead of
+ * my class types when debugging, and also it caused inconcistencies...
+ * 
+ * @example
+ * `const map = new GoogleMap(...)` would result in:
+ * // map is Proxy
+ * // map.superpowers.use(...).map is GoogleMap
+ * map === map.superpowers.use(...).map // false 😒
+ * 
+ * As it was uncomfortable working like that, I reverted to and improved the first implementation which plants new
+ * methods on the wrapper's prototype.
+ * At any rate, the prototype implementation has the advantage of running once at initialization time and that's it.
+ * The Proxy implementation had to analyze each read and redelegate.
+ * Disadvantages: Does it make for a slower initialization? 🤔 not sure...
+ * 
+ * @see commit d11f5b426636694499bcf382f8bde56938288f31 for Proxy implementation.
+ * https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps/commit/d11f5b426636694499bcf382f8bde56938288f31?refName=refs%2Fheads%2Frefactor%2Finvisible-method-delegation
+ */
+
 import { Type } from '@angular/core';
 
 import { Wrapper                                              } from '../abstraction/types/abstraction';
