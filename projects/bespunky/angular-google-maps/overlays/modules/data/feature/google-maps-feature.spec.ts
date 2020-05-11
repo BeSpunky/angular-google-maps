@@ -1,4 +1,3 @@
-
 import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
 import { MockGoogleMap                    } from '@bespunky/angular-google-maps/core/testing';
 import { MockGoogleMapsData               } from '@bespunky/angular-google-maps/overlays/testing';

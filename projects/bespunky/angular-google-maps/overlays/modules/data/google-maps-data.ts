@@ -56,6 +56,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
 
     public addFeature(feature: IGoogleMapsFeature): IGoogleMapsFeature;
     public addFeature(options: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
+    @OutsideAngular
     public addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature
     {
         if (isGoogleMapsFeatureOptions(feature))

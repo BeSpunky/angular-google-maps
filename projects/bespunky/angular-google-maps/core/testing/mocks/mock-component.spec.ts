@@ -5,7 +5,7 @@ import { WrappedNativeFunctions                                                 
 import { MockNative                                                                              } from './mock-native.spec';
 import { MockEmittingWrapper                                                                     } from './mock-emitting-wrapper.spec';
 
-@NativeObjectWrapper({ nativeType: MockNative })
+@NativeObjectWrapper<TestWrapper>({ nativeType: MockNative })
 class     TestWrapper extends MockEmittingWrapper<MockNative> { }
 
 interface TestWrapper extends WrappedNativeFunctions<MockNative> { }
@@ -20,7 +20,7 @@ export function WrapperFactoryProvider()
     template: '<div></div>',
     providers: [{ provide: WrapperFactory, useFactory: WrapperFactoryProvider }] // TODO: Move to module
 })
-export class MockComponentWithLifecycle extends GoogleMapsLifecycleBase<MockEmittingWrapper<MockNative>>
+export class MockComponentWithLifecycle extends GoogleMapsLifecycleBase<TestWrapper>
 {
     public readonly NativeClickEventName  = 'click';
     public readonly NativeChangeEventName = 'dummy_change';

@@ -57,16 +57,15 @@ describe('GoogleMapsPolygon', () =>
 
     describe('option delegation', () =>
     {
-        function testOption(setterName: string, value: any)
+        function testOption(option: string, value: any)
         {
-            spyOn(polygon.native, 'setOptions');
-
+            expect(polygon.native.get(option)).not.toBe(value);
+            
             // Set the option
-            polygon[`set${upperFirst(setterName)}`](value);
-
+            polygon[`set${upperFirst(option)}`](value);
+            
             expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-            expect(polygon.native.setOptions).toHaveBeenCalledTimes(1);
-            expect(polygon.native.setOptions).toHaveBeenCalledWith({ [setterName]: value });
+            expect(polygon.native.get(option)).toBe(value);
         }
 
         it('should set clickable',       () => testOption('clickable', true));
