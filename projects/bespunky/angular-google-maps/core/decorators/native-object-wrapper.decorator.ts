@@ -62,9 +62,9 @@ export function NativeObjectWrapper<TWrapper extends Wrapper = any, TNative exte
         const outsideAngular = Reflect.getMetadata(OutsideAngularSymbol, wrapper) as string[] || [];
         
         // First wrap all implemented methods marked with @OutsideAngular
-        outsideAngular.forEach(methodName => wrap(wrapper, methodName, delegateWrapperMethod(wrapper, methodName, true)));
+        outsideAngular.forEach(methodName => wrap(wrapper, methodName, delegateWrapperMethod(wrapper, methodName, true), true));
         // Then scan all native functions and wrap ones which are not already wrapped manually
-        extractFunctions(native).forEach(functionName => wrap(wrapper, functionName, delegateNativeFunction(wrapper, native, functionName, definition[functionName])));
+        extractFunctions(native).forEach(functionName => wrap(wrapper, functionName, delegateNativeFunction(wrapper, native, wrapperType.name, functionName, definition[functionName])));
     };
 }
 
@@ -73,22 +73,26 @@ export function NativeObjectWrapper<TWrapper extends Wrapper = any, TNative exte
  * 
  * @param {any} prototype The prototype for the type from which function names should be extracted.
  */
-function extractFunctions<T extends Object>(prototype: any): string[]
+function extractFunctions(prototype: any): string[]
 {
-    return Object.keys(prototype).filter(property => prototype[property] instanceof Function);
+    if (!prototype) return [];
+
+    return Object.getOwnPropertyNames(prototype)
+                 .filter(property => property !== 'constructor' &&  prototype[property] instanceof Function)
+                 .concat(extractFunctions(Object.getPrototypeOf(prototype)));
 }
 
 /**
- * Verifies that no implementation for the specified function exists on the wrapper and plants it on the wrapper's prototype.
- * No action will be taken for methods which already exist on the wrapper prototype. They will not be overwritten.
+ * Plants it on the wrapper's prototype.
  *
- * @param {Type<Wrapper>} wrapperPrototype The type of wrapping class.
+ * @param {any} wrapperPrototype The type of wrapping class.
  * @param {string} methodName The name of the wrapping method.
  * @param {Function} run The function that actually holds the work to be done. Should already be bound to the the proper `this` context.
+ * @param {boolean} overwrite (Optional) `true` to overwrite existing wrapper methods; otherwise `false`. Default is `false`.
  */
-function wrap(wrapperPrototype: any, methodName: string, run: Function): void
+function wrap(wrapperPrototype: any, methodName: string, run: Function, overwrite: boolean = false): void
 {
-    if (wrapperPrototype[methodName] instanceof Function) return;
+    if (wrapperPrototype[methodName] instanceof Function && !overwrite) return;
 
     wrapperPrototype[methodName] = run;
 }
@@ -119,11 +123,12 @@ function delegateWrapperMethod(wrapperPrototype: any, methodName: string, outsid
  * @template TNative The type of native object holding the function to execute.
  * @template TWrapper The type of wrapper pointing to the native object.
  * @param {any} wrapperPrototype The prototype of the wrapper type.
+ * @param {string} wrapperName The name of the wrapper class.
  * @param {string} functionName The name of the function to delegate.
  * @param {WrapperFunctionDefinition<TNative, TWrapper>} wrappingDef The wrapping definition for the function.
  * @returns {Function} A function that will execute the native function by its wrapping definition or by the defined default behaviour, bound to the native object instance.
  */
-function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapperPrototype: any, nativePrototype: any, functionName: string, wrappingDef: WrapperFunctionDefinition<TNative, TWrapper>): Function
+function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapperPrototype: any, nativePrototype: any, wrapperName: string, functionName: string, wrappingDef: WrapperFunctionDefinition<TNative, TWrapper>): Function
 {
     const nativeFunction = nativePrototype[functionName];
 
@@ -134,10 +139,10 @@ function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper
         if (isSetter(functionName)) return delegateOutside(nativeFunction, wrapper => wrapper.native);
 
         // The function is not a getter or a setter. It should neither be accessed nor specified as existant on the wrapper's intellisense list.
-        return delegateExcludedError(wrapperPrototype.name, functionName);
+        return delegateExcludedError(wrapperName, functionName);
     }
 
-    return wrappingDef === Delegation.Exclude ? delegateExcludedError(wrapperPrototype.name, functionName) :
+    return wrappingDef === Delegation.Exclude ? delegateExcludedError(wrapperName, functionName) :
              wrappingDef === Delegation.OutsideAngular ? delegateOutside(nativeFunction, wrapper => wrapper.native) :
                wrappingDef === Delegation.Direct ? delegateInside(nativeFunction, wrapper => wrapper.native) : void 0;
 }
@@ -153,7 +158,7 @@ function delegateInside(exec: Function, thisContext: (wrapperInstance: Wrapper) 
 {
     return function(...args: any[]): any
     {
-        return exec.apply(thisContext(this), args);
+        return exec.call(thisContext(this), ...args);
     };
 }
 
@@ -169,7 +174,7 @@ function delegateOutside(exec: Function, thisContext: (wrapperInstance: Wrapper)
 {
     return function(...args: any[]): any
     {
-        return this.api.runOutsideAngular(() => exec.apply(thisContext(this), args));
+        return this.api.runOutsideAngular(() => exec.call(thisContext(this), ...args));
     };
 }
 
