@@ -83,10 +83,10 @@ export class GoogleMapsComponentApiService
         for (const propertyName in changes)
         {
             const setterName = `set${upperFirst(propertyName)}`;
-            const set        = wrapper[setterName];
+
             // If the wrapper has a setter for the property name, this will set the new values of @Input() values to the native object's properties
-            if (set instanceof Function)
-                set(changes[propertyName].currentValue);
+            if (setterName in wrapper)
+                wrapper[setterName](changes[propertyName].currentValue);
         }
     }
 }
