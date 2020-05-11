@@ -1,5 +1,3 @@
-import { Delegation } from './wrapper-definition';
-
 export const OutsideAngularSymbol = Symbol('outsideAngular');
 
 /**
@@ -12,9 +10,9 @@ export const OutsideAngularSymbol = Symbol('outsideAngular');
  */
 export function OutsideAngular(target: any, methodName: string, descriptor: PropertyDescriptor)
 {
-    const decorated = Reflect.getMetadata(OutsideAngularSymbol, target) || { };
+    const decorated = Reflect.getMetadata(OutsideAngularSymbol, target) || [];
 
-    decorated[methodName] = Delegation.OutsideAngular;
+    decorated.push(methodName);
 
     Reflect.defineMetadata(OutsideAngularSymbol, decorated, target);
 }
