@@ -116,7 +116,7 @@ function wrapNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wr
 function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapperName: string, functionName: string, wrappingDef: WrapperFunctionDefinition<TNative, TWrapper>): Function
 {
     // If no special definitions were made, deduce delegation type
-    if (!wrappingDef)
+    if (wrappingDef === undefined)
     {
         if (isGetter(functionName)) return delegateInside(functionName);
         if (isSetter(functionName)) return delegateOutside(functionName);
