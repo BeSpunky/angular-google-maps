@@ -1,5 +1,5 @@
 import { IGoogleMap, ISuperpowers, NativeObjectWrapper, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
-import { MockEmittingWrapper                           } from '../mock-emitting-wrapper.spec';
+import { MockEmittingWrapper } from '../mock-emitting-wrapper';
 
 export interface MockGoogleMap extends WrappedNativeFunctions<google.maps.Map> { }
 

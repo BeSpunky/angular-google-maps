@@ -3,7 +3,7 @@ import { FactoryProvider, Type, Provider, ElementRef } from '@angular/core';
 
 import { configureGoogleMapsTestingModule                                                   } from '@bespunky/angular-google-maps/async/testing';
 import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperFactory, EmittingWrapper } from '@bespunky/angular-google-maps/core';
-import { MockGoogleMap                                                                      } from '../mocks/modules/mock-google-map.spec';
+import { MockGoogleMap                                                                      } from '../mocks/modules/mock-google-map';
 
 function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider, ...deps: Provider[])
 {
