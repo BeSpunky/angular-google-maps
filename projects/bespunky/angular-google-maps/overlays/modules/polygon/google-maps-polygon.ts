@@ -8,7 +8,7 @@ export type WrappedPolygonFunctions = WrappedNativeFunctions<google.maps.Polygon
 export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<GoogleMapsPolygon>({
+@NativeObjectWrapper<google.maps.Polygon, GoogleMapsPolygon>({
     nativeType: google.maps.Polygon,
     definition: {
         getMap: Delegation.Exclude,

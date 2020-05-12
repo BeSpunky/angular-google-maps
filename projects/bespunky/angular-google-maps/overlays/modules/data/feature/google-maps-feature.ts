@@ -7,7 +7,7 @@ export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Fe
 export interface GoogleMapsFeature extends WrappedFeatureFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<GoogleMapsFeature>({ nativeType: google.maps.Data.Feature })
+@NativeObjectWrapper<google.maps.Data.Feature, GoogleMapsFeature>({ nativeType: google.maps.Data.Feature })
 export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
     constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, options?: google.maps.Data.FeatureOptions)

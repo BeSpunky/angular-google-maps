@@ -12,7 +12,7 @@ export type WrappedDataFunctions = WrappedNativeFunctions<google.maps.Data, 'add
 export interface GoogleMapsData extends WrappedDataFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<GoogleMapsData>({
+@NativeObjectWrapper<google.maps.Data, GoogleMapsData>({
     nativeType: google.maps.Data,
     definition: {
         getMap: Delegation.Exclude,

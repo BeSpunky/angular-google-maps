@@ -5,7 +5,7 @@ import { WrappedNativeFunctions                                                 
 import { MockNative                                                                              } from './mock-native.spec';
 import { MockEmittingWrapper                                                                     } from './mock-emitting-wrapper.spec';
 
-@NativeObjectWrapper<TestWrapper>({ nativeType: MockNative })
+@NativeObjectWrapper<MockNative, TestWrapper>({ nativeType: MockNative })
 class     TestWrapper extends MockEmittingWrapper<MockNative> { }
 
 interface TestWrapper extends WrappedNativeFunctions<MockNative> { }

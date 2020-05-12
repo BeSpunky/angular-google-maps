@@ -9,7 +9,7 @@ export type WrappedMarkerFunctions = WrappedNativeFunctions<google.maps.Marker, 
 export interface GoogleMapsMarker extends WrappedMarkerFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<GoogleMapsMarker>({
+@NativeObjectWrapper<google.maps.Marker, GoogleMapsMarker>({
     nativeType: google.maps.Marker,
     definition: {
         getMap: Delegation.Exclude,
