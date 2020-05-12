@@ -1,17 +1,26 @@
 import { ElementRef } from '@angular/core';
 
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
+import { WrappedNativeFunctions                } from '../../abstraction/types/abstraction';
 import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator';
-import { Wrap                                  } from '../../decorators/wrap.decorator';
 import { OutsideAngular                        } from '../../decorators/outside-angular.decorator';
+import { Delegation                            } from '../../decorators/wrapper-definition';
 import { GoogleMapsApiService                  } from '../../api/google-maps-api.service';
-import { ISuperpowers                       } from './superpowers/i-superpowers';
+import { ISuperpowers                          } from './superpowers/i-superpowers';
 import { Defaults                              } from './types/defaults';
-import { ZoomLevel                             } from './types/zoom-level.enum';
 import { IGoogleMap                            } from './i-google-map';
 
+export type WrappedGoogleMapFunctions = WrappedNativeFunctions<google.maps.Map, 'getMapTypeId' | 'setMapTypeId'>;
+
+export interface GoogleMap extends WrappedGoogleMapFunctions { }
+
 // @dynamic
-@NativeObjectWrapper
+@NativeObjectWrapper<google.maps.Map, GoogleMap>({
+    nativeType: google.maps.Map,
+    definition: {
+        panBy: Delegation.OutsideAngular
+    }
+})
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
     constructor(public readonly superpowers: ISuperpowers, protected api: GoogleMapsApiService, mapElement: ElementRef, options?: google.maps.MapOptions)
@@ -27,72 +36,25 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
             center: Defaults.Center,
             zoom  : Defaults.ZoomLevel,
         }, options);
-
+        
         return new google.maps.Map(mapElement.nativeElement, options);
     }
 
-    // TODO: Implement facilitating transformations for fitBounts, panTo, panToBounds
-    @Wrap() @OutsideAngular
-    fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { }
+    // TODO:
+    // 1. Implement facilitating transformations for fitBounts, panTo, panToBounds
+    // 2. Add declarations for upgraded signatures to IGoogleMap
+
+    @OutsideAngular
+    fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { this.native.fitBounds(bounds, padding); }
     
-    @Wrap() @OutsideAngular
-    panTo(position: google.maps.LatLng | google.maps.LatLngLiteral): void { }
+    @OutsideAngular
+    panTo(position: google.maps.LatLng | google.maps.LatLngLiteral): void { this.native.panTo(position); }
     
-    @Wrap() @OutsideAngular
-    panToBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding):void { }
+    @OutsideAngular
+    panToBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { this.native.panToBounds(bounds, padding); }
     
+    getMapType(): string | google.maps.MapTypeId { return this.native.getMapTypeId(); }
 
-    @Wrap() @OutsideAngular
-    panBy(x: number, y: number): void { }
-
-    @Wrap() @OutsideAngular
-    setOptions(options: google.maps.MapOptions): void { }
-
-    @Wrap()
-    getBounds(): google.maps.LatLngBounds { return void 0; }
-
-    @Wrap()
-    getCenter(): google.maps.LatLng { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setCenter(latLng: google.maps.LatLng | google.maps.LatLngLiteral): void { }
-
-    @Wrap()
-    getClickableIcons(): boolean { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setClickableIcons(clickable: boolean): void { }
-
-    @Wrap()
-    getHeading(): number { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setHeading(heading: number): void { }
-
-    @Wrap('getMapTypeId')
-    getMapType(): string | google.maps.MapTypeId { return void 0; }
-
-    @Wrap('setMapTypeId') @OutsideAngular
-    setMapType(type: string | google.maps.MapTypeId): void { }
-
-    @Wrap()
-    getProjection(): google.maps.Projection { return void 0; }
-
-    @Wrap()
-    getStreetView(): google.maps.StreetViewPanorama { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setStreetView(panorama: google.maps.StreetViewPanorama): void { }
-
-    @Wrap()
-    getTilt(): number { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setTilt(tilt: number): void { }
-
-    @Wrap()
-    getZoom(): number { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setZoom(zoomLevel: ZoomLevel | number): void { }
+    @OutsideAngular
+    setMapType(type: string | google.maps.MapTypeId): void { this.native.setMapTypeId(type); }
 }

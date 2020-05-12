@@ -16,19 +16,4 @@ export interface IGoogleMapsPolygon extends IGoogleMapsDrawableOverlay<google.ma
     setStrokeWeight  (weight: number)                      : void;
     setZIndex        (zIndex: number)                      : void;
     setGeodesic      (geodesic: boolean)                   : void;
-
-    /* ---------------------------------------- Native wrappers -------------------------------------- *
-     * Documentation in: https://developers.google.com/maps/documentation/javascript/reference/polygon *
-     * ----------------------------------------------------------------------------------------------- */
-
-    getDraggable(): boolean;
-    setDraggable(draggable: boolean): void;
-
-    getEditable(): boolean;
-    setEditable(editable: boolean): void;
-
-    getVisible(): boolean;
-    setVisible(visible: boolean): void;
-
-    setOptions(options: google.maps.PolygonOptions): void;
 }

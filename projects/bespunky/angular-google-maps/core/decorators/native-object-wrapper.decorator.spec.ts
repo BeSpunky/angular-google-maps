@@ -1,52 +1,116 @@
-import { MockWrapper, MockNative      } from '@bespunky/angular-google-maps/core/testing';
-import { NativeObjectWrapper, Wrapper } from '@bespunky/angular-google-maps/core';
+import { MockWrapper, MockNative                                                 } from '@bespunky/angular-google-maps/core/testing';
+import { WrappedNativeFunctions, NativeObjectWrapper, OutsideAngular, Delegation } from '@bespunky/angular-google-maps/core';
 
 describe('@NativeObjectWrapper()', () =>
 {
-    let wrapper: MockWrapper;
+    let wrapper          : TestWrapper;
+    let runOutsideAngular: jasmine.Spy;
 
-    beforeEach(() => wrapper = new MockWrapper(new MockNative()));
-
-    it('should provide an implementation for methods marked with `@Wrap`', () => expect(() => wrapper.getProperty()).not.toThrow());
-
-    it('should call the native function when calling the wrapper method', () =>
+    beforeEach(() =>
     {
-        spyOn(wrapper.native, 'getProperty');
+        wrapper           = new TestWrapper(new Native());
+        runOutsideAngular = wrapper.api.runOutsideAngular;
 
-        wrapper.getProperty();
+        // Set starting values
+        wrapper.native.setSomething(1);
+        wrapper.native.setSomethingElse(2);
 
-        expect(wrapper.native.getProperty).toHaveBeenCalledTimes(1);
-    });
-    
-    // Also tests renaming wrapped functions
-    it('should pass args to the native function and provide its return value', () =>
-    {
-        const nativeGetter = spyOn(wrapper.native, 'findById');
-
-        const result       = wrapper.find(123);
-        const nativeResult = nativeGetter.calls.mostRecent().returnValue;
-
-        expect(wrapper.native.findById).toHaveBeenCalledTimes(1);
-        expect(nativeGetter.calls.mostRecent().args[0]).toBe(123);
-        expect(result).toBe(nativeResult);
+        runOutsideAngular.calls.reset();
     });
 
-    it('should wrap methods marked `@OutsideAngular` with function that executes outside angular', () =>
+    it('should wrap outside angular all manual wrapping implementations decorated with @OutsideAngular', () =>
     {
-        wrapper.setProperty(123);
+        wrapper.doOutside();
 
-        expect(wrapper.api.runOutsideAngular).toHaveBeenCalledTimes(1);
+        expect(runOutsideAngular).toHaveBeenCalledTimes(1);
     });
 
-    it('should warn if no method was marked for wrapping', () =>
+    it('should wrap inside angular all native getter functions', () =>
     {
-        const warn = spyOn(console, 'warn');
+        expect(wrapper.getSomething      ).toBeInstanceOf(Function);
+        expect(wrapper.getSomethingElse  ).toBeInstanceOf(Function);
+        expect(wrapper.getSomething()    ).toBe(wrapper.native.getSomething());
+        expect(wrapper.getSomethingElse()).toBe(wrapper.native.getSomethingElse());
 
-        class NoWrappers implements Wrapper { native: any; custom: any; }
+        expect(runOutsideAngular).not.toHaveBeenCalled();
+    });
 
-        NativeObjectWrapper(NoWrappers);
+    it('should wrap outside angular all native setter functions', () =>
+    {
+        expect(wrapper.setSomething      ).toBeInstanceOf(Function);
+        expect(wrapper.setSomethingElse).toBeInstanceOf(Function);
+        
+        const newValue1 = 'new something';
+        const newValue2 = 'new something else';
 
-        expect(warn).toHaveBeenCalledTimes(1);
-        expect(warn.calls.mostRecent().args[0]).toMatch(/No method marked/);
+        wrapper.setSomething(newValue1);
+        wrapper.setSomethingElse(newValue2);
+
+        expect(wrapper.native.getSomething()    ).toBe(newValue1);
+        expect(wrapper.native.getSomethingElse()).toBe(newValue2);
+
+        expect(runOutsideAngular).toHaveBeenCalledTimes(2);
+    });
+
+    it('should wrap with error all non-getter/setter functions', () => expect(wrapper.findById).toThrowError(/excluded/));
+
+    it('should not overwrite manual wrapping implementations', () => expect(wrapper.shouldNotOverwriteWrapper()).toBe('untouched'));
+
+    it('should wrap inside angular native functions marked with Delegation.Direct', () =>
+    {
+        expect(wrapper.doNativeInside).toBeInstanceOf(Function);
+        
+        wrapper.doNativeInside();
+
+        expect(runOutsideAngular).not.toHaveBeenCalled();
+    });
+
+    it('should wrap outside angular native functions marked with Delegation.OutsideAngular', () =>
+    {
+        expect(wrapper.doNativeOutside).toBeInstanceOf(Function);
+        
+        wrapper.doNativeOutside();
+
+        expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+    });
+
+    it('should wrap with error native functions marked with Delegation.Exclude', () =>
+    {
+        expect(wrapper.getExcluded).toBeInstanceOf(Function);
+        expect(wrapper.getExcluded).toThrowError(/excluded/);
     });
 });
+class Native extends MockNative
+{
+    private somethingElse: any;
+
+    public getSomethingElse(): any { return this.somethingElse; }
+
+    public setSomethingElse(value: any): void { this.somethingElse = value; }
+
+    public getExcluded(): any { return 'this should have been excluded. Not returned.'; }
+
+    public shouldNotOverwriteWrapper(): any { return 'overwritten'; }
+
+    public doNativeInside(): any { }
+
+    public doNativeOutside(): any { }
+}
+
+@NativeObjectWrapper<Native, TestWrapper>({
+    nativeType: Native,
+    definition: {
+        getExcluded    : Delegation.Exclude,
+        doNativeInside : Delegation.Direct,
+        doNativeOutside: Delegation.OutsideAngular
+    }
+})
+class TestWrapper extends MockWrapper<Native>
+{
+    @OutsideAngular
+    public doOutside() { }
+
+    public shouldNotOverwriteWrapper(): any { return 'untouched'; }
+}
+
+interface TestWrapper extends WrappedNativeFunctions<Native> { }

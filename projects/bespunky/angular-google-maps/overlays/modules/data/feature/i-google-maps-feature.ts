@@ -7,6 +7,17 @@ export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapp
     readonly data: IGoogleMapsData;
 
     /**
+     * Gets the id assigned to the feature.
+     *
+     * @returns {(string | number)} The id assigned to the feature.
+     * 
+     * Even though the @NativeObjectWrapper decorator can take care of delegating this method, the interface
+     * needs to declare it so it may be used throughout the library to identify features using interface abstraction access.
+     * @see FeatureTracker source code.
+     */
+    getId(): string | number;
+    
+    /**
      * Replaces the geometry of this feature with a marker geometry.
      *
      * @param {Coord} position The position of the marker on the map.
@@ -18,14 +29,6 @@ export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapp
      * @param {CoordPath} path The polygon's path.
      */
     setPolygon(path: CoordPath): void;
-
-    getId(): number | string;
-    
-    getGeometry(): google.maps.Data.Geometry;
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void;
-
-    getProperty(name: string): any;
-    setProperty(name: string, value: any): void;
 
     /**
      * Should create the GeoJson representation of the feature and provide it as an object when the promise resolves.

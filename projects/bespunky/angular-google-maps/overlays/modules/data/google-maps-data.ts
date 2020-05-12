@@ -1,4 +1,4 @@
-import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, Wrap, OutsideAngular, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, CoordPath, WrappedNativeFunctions, Delegation } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay  } from '../../abstraction/base/google-maps-drawable-overlay';
 import { OverlayType                } from '../../abstraction/base/overlay-type.enum';
 import { isGoogleMapsFeatureOptions } from '../../abstraction/type-guards/feature-options-type-guard';
@@ -7,8 +7,18 @@ import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
 import { GoogleMapsFeature          } from './feature/google-maps-feature';
 import { FeatureTracker             } from './services/feature-tracker';
 
+export type WrappedDataFunctions = WrappedNativeFunctions<google.maps.Data, 'add' | 'addGeoJson' | 'getFeatureById' | 'toGeoJson' | 'loadGeoJson' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+
+export interface GoogleMapsData extends WrappedDataFunctions { }
+
 // @dynamic
-@NativeObjectWrapper
+@NativeObjectWrapper<google.maps.Data, GoogleMapsData>({
+    nativeType: google.maps.Data,
+    definition: {
+        getMap: Delegation.Exclude,
+        setMap: Delegation.Exclude
+    }
+})
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
     public readonly features = new FeatureTracker();
@@ -46,12 +56,13 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
 
     public addFeature(feature: IGoogleMapsFeature): IGoogleMapsFeature;
     public addFeature(options: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
+    @OutsideAngular
     public addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature
     {
         if (isGoogleMapsFeatureOptions(feature))
             feature = new GoogleMapsFeature(this.api, this, feature);
 
-        this.add(feature.native);
+        this.native.add(feature.native);
         this.features.add(feature);
 
         return feature;
@@ -71,6 +82,8 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return removed;
     }
 
+    public findFeature(id: string | number): google.maps.Data.Feature { return this.native.getFeatureById(id); }
+
     public toGeoJson(): Promise<any>
     {
         return new Promise(resolve => this.native.toGeoJson(resolve));
@@ -81,36 +94,4 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     {
         return new Promise(resolve => this.native.loadGeoJson(url, options, resolve));
     }
-
-    
-    // Marked private so the addFeature() method will be the one exposed to the user, but this will be used in auto property delegation
-    @Wrap() @OutsideAngular
-    private add(feature: google.maps.Data.Feature): void { }
-
-    @Wrap('getFeatureById')
-    findFeature(id: string | number): google.maps.Data.Feature { return void 0; }
-
-    @Wrap()
-    getControlPosition(): google.maps.ControlPosition { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setControlPosition(position: google.maps.ControlPosition): void { }
-
-    @Wrap()
-    getControls(): string[] { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setControls(controls: string[]): void { }
-
-    @Wrap()
-    getDrawingMode(): string { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setDrawingMode(mode: string): void { }
-
-    @Wrap()
-    getStyle(): google.maps.Data.StylingFunction | google.maps.Data.StyleOptions { return void 0; }
-
-    @Wrap() @OutsideAngular
-    setStyle(style: google.maps.Data.StylingFunction | google.maps.Data.StyleOptions): void { }
 }

@@ -1,7 +1,7 @@
 import { MockFill                       } from '@bespunky/angular-google-maps/testing';
 import { IGoogleMap, Coord              } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsMarker, OverlayType } from '@bespunky/angular-google-maps/overlays';
-import { MockDrawableOverlay            } from '../mock-drawable-overlay.spec';
+import { MockDrawableOverlay            } from '../mock-drawable-overlay';
 
 @MockFill
 export class MockMarker extends MockDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker

@@ -125,15 +125,15 @@ describe('GoogleMapsComponentApiService', () =>
     {        
         it('should delegate input changes to their corresponding native setter', () =>
         {
-            spyOn(component.wrapper, 'setProperty').and.callThrough();
+            spyOn(component.wrapper, 'setSomething').and.callThrough();
 
             const newValue = 10;
-            const changes: SimpleChanges = { property: new SimpleChange(1, newValue, true) };
+            const changes: SimpleChanges = { something: new SimpleChange(1, newValue, true) };
 
             api.delegateInputChangesToNativeObject(changes, component.wrapper);
 
-            expect(component.wrapper.setProperty).toHaveBeenCalledTimes(1);
-            expect(component.wrapper.native.property).toBe(newValue);
+            expect(component.wrapper.setSomething).toHaveBeenCalledTimes(1);
+            expect(component.wrapper.native.something).toBe(newValue);
         });
 
         it('should ignore inputs with not setter implementation on the wrapper', () =>

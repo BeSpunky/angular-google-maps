@@ -1,1 +1,1 @@
-export * from './helpers/setup.spec';
+export * from './helpers/setup';

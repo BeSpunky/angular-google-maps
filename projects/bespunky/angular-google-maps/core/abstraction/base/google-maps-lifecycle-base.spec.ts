@@ -25,13 +25,13 @@ describe('GoogleMapsLifecycleBase (abstract)', () =>
     {
         const native = mockComponent.wrapper.native;
 
-        expect(native.property).toBeUndefined();
+        expect(native.something).toBeUndefined();
 
-        mockComponent.property = 'dummy';
+        mockComponent.something = 'dummy';
 
         // As changes are not made from a host template, ngOnChanges is called manually
-        mockComponent.ngOnChanges({ property: new SimpleChange(undefined, mockComponent.property, false) });
+        mockComponent.ngOnChanges({ something: new SimpleChange(undefined, mockComponent.something, false) });
         
-        expect(native.property).toBe('dummy');
+        expect(native.something).toBe('dummy');
     });
 });
