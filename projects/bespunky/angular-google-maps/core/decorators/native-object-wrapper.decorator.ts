@@ -54,17 +54,16 @@ import { OutsideAngularSymbol                                 } from './outside-
  */
 export function NativeObjectWrapper<TWrapper extends Wrapper = any, TNative extends Object = any>(config: WrapperConfig<TNative, TWrapper>)
 {        
-    return function NativeObjectWrapperFactory<TConstructor extends Type<Wrapper>>(wrapperType: TConstructor)
+    return function NativeObjectWrapperFactory<TConstructor extends Type<TWrapper>>(wrapperType: TConstructor)
     {
         const native         = config.nativeType.prototype;
         const definition     = config.definition || {};
-        const wrapper        = wrapperType.prototype;
-        const outsideAngular = Reflect.getMetadata(OutsideAngularSymbol, wrapper) as string[] || [];
+        const outsideAngular = Reflect.getMetadata(OutsideAngularSymbol, wrapperType.prototype) as string[] || [];
         
         // First wrap all implemented methods marked with @OutsideAngular
-        outsideAngular.forEach(methodName => wrap(wrapper, methodName, delegateWrapperMethod(wrapper, methodName, true), true));
+        outsideAngular.forEach(methodName => wrapWrapperMethodOutside(wrapperType, methodName));
         // Then scan all native functions and wrap ones which are not already wrapped manually
-        extractFunctions(native).forEach(functionName => wrap(wrapper, functionName, delegateNativeFunction(wrapper, native, wrapperType.name, functionName, definition[functionName])));
+        extractFunctions(native).forEach(functionName => wrapNativeFunction(wrapperType, functionName, definition[functionName]));
     };
 }
 
@@ -82,34 +81,23 @@ function extractFunctions(prototype: any): string[]
                  .concat(extractFunctions(Object.getPrototypeOf(prototype)));
 }
 
-/**
- * Plants it on the wrapper's prototype.
- *
- * @param {any} wrapperPrototype The type of wrapping class.
- * @param {string} methodName The name of the wrapping method.
- * @param {Function} run The function that actually holds the work to be done. Should already be bound to the the proper `this` context.
- * @param {boolean} overwrite (Optional) `true` to overwrite existing wrapper methods; otherwise `false`. Default is `false`.
- */
-function wrap(wrapperPrototype: any, methodName: string, run: Function, overwrite: boolean = false): void
+function wrapWrapperMethodOutside<TWrapper extends Wrapper>(wrapperType: Type<TWrapper>, methodName: string)
 {
-    if (wrapperPrototype[methodName] instanceof Function && !overwrite) return;
+    const work = wrapperType.prototype[methodName];
 
-    wrapperPrototype[methodName] = run;
+    wrapperType.prototype[methodName] = function(...args: any[]): any
+    {
+        return this.api.runOutsideAngular(() => work.apply(this, args));
+    };
 }
 
-/**
- * Determines how the wrapper method should be executed and returns a function that implements it accordingly, bound to the wrapper instance when executed.
- * 
- * @param {any} wrapperPrototype The prototype of the wrapper holding the method to execute.
- * @param {string} methodName The name of the method to delegate.
- * @param {boolean} outside `true` if the method should be executed outside angular; otherwise `false`.
- * @returns {Function} A function that will execute the wrapper method by its wrapping definition, bound to the wrapper instance.
- */
-function delegateWrapperMethod(wrapperPrototype: any, methodName: string, outside: boolean): Function
+function wrapNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapperType: Type<TWrapper>, functionName: string, definition: WrapperFunctionDefinition<TNative, TWrapper>)
 {
-    const wrapperMethod = wrapperPrototype[methodName];
+    if (wrapperType.prototype[functionName] instanceof Function) return;
 
-    return outside ? delegateOutside(wrapperMethod, wrapper => wrapper) : delegateInside(wrapperMethod, wrapper => wrapper);
+    const method = delegateNativeFunction(wrapperType.name, functionName, definition);
+    
+    wrapperType.prototype[functionName] = method;
 }
 
 /**
@@ -122,43 +110,39 @@ function delegateWrapperMethod(wrapperPrototype: any, methodName: string, outsid
  *
  * @template TNative The type of native object holding the function to execute.
  * @template TWrapper The type of wrapper pointing to the native object.
- * @param {any} wrapperPrototype The prototype of the wrapper type.
  * @param {string} wrapperName The name of the wrapper class.
  * @param {string} functionName The name of the function to delegate.
  * @param {WrapperFunctionDefinition<TNative, TWrapper>} wrappingDef The wrapping definition for the function.
  * @returns {Function} A function that will execute the native function by its wrapping definition or by the defined default behaviour, bound to the native object instance.
  */
-function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapperPrototype: any, nativePrototype: any, wrapperName: string, functionName: string, wrappingDef: WrapperFunctionDefinition<TNative, TWrapper>): Function
+function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapperName: string, functionName: string, wrappingDef: WrapperFunctionDefinition<TNative, TWrapper>): Function
 {
-    const nativeFunction = nativePrototype[functionName];
-
     // If no special definitions were made, deduce delegation type
     if (!wrappingDef)
     {
-        if (isGetter(functionName)) return delegateInside(nativeFunction, wrapper => wrapper.native);
-        if (isSetter(functionName)) return delegateOutside(nativeFunction, wrapper => wrapper.native);
+        if (isGetter(functionName)) return delegateInside(functionName);
+        if (isSetter(functionName)) return delegateOutside(functionName);
 
         // The function is not a getter or a setter. It should neither be accessed nor specified as existant on the wrapper's intellisense list.
         return delegateExcludedError(wrapperName, functionName);
     }
 
     return wrappingDef === Delegation.Exclude ? delegateExcludedError(wrapperName, functionName) :
-             wrappingDef === Delegation.OutsideAngular ? delegateOutside(nativeFunction, wrapper => wrapper.native) :
-               wrappingDef === Delegation.Direct ? delegateInside(nativeFunction, wrapper => wrapper.native) : void 0;
+             wrappingDef === Delegation.OutsideAngular ? delegateOutside(functionName) :
+               wrappingDef === Delegation.Direct ? delegateInside(functionName) : void 0;
 }
 
 /**
  * Wraps the specified function in a function that will execute it, bound to the context retrieved by `thisContext()`.
  * 
  * @param {Function} exec The function which actually implements the work to execute.
- * @param {(wrapperInstance: Wrapper) => any} thisContext A function that will return the object instance to bind execution to.
  * @returns {Function} A wrapping function that will execute the specified function, bound to the given context.
  */
-function delegateInside(exec: Function, thisContext: (wrapperInstance: Wrapper) => any): Function
+function delegateInside(functionName: string): Function
 {
     return function(...args: any[]): any
     {
-        return exec.call(thisContext(this), ...args);
+        return this.native[functionName](...args);
     };
 }
 
@@ -167,14 +151,13 @@ function delegateInside(exec: Function, thisContext: (wrapperInstance: Wrapper) 
  * This function assumes that the wrapper has an `api: GoogleMapsApiService` property.
  * 
  * @param {Function} exec The function which actually implements the work to execute.
- * @param {(wrapperInstance: Wrapper) => any} thisContext A function that will return the object instance to bind execution to.
  * @returns {Function} A wrapping function that will execute the specified function outside angular, bound to the given context.
  */
-function delegateOutside(exec: Function, thisContext: (wrapperInstance: Wrapper) => any): Function
+function delegateOutside(functionName: string): Function
 {
     return function(...args: any[]): any
     {
-        return this.api.runOutsideAngular(() => exec.call(thisContext(this), ...args));
+        return this.api.runOutsideAngular(() => this.native[functionName](...args));
     };
 }
 
