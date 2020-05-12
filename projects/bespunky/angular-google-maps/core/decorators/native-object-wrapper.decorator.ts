@@ -95,9 +95,7 @@ function wrapNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wr
 {
     if (wrapperType.prototype[functionName] instanceof Function) return;
 
-    const method = delegateNativeFunction(wrapperType.name, functionName, definition);
-    
-    wrapperType.prototype[functionName] = method;
+    wrapperType.prototype[functionName] = delegateNativeFunction(wrapperType.name, functionName, definition);
 }
 
 /**
