@@ -81,6 +81,14 @@ function extractFunctions(prototype: any): string[]
                  .concat(extractFunctions(Object.getPrototypeOf(prototype)));
 }
 
+
+/**
+ * Replaces the method on the prototype with a wrapper which runs the original method outside of angular.
+ *
+ * @template TWrapper The type of wrapper.
+ * @param {Type<TWrapper>} wrapperType The constructor for the wrapper type.
+ * @param {string} methodName The name of the method to wrap.
+ */
 function wrapWrapperMethodOutside<TWrapper extends Wrapper>(wrapperType: Type<TWrapper>, methodName: string)
 {
     const work = wrapperType.prototype[methodName];
@@ -91,6 +99,16 @@ function wrapWrapperMethodOutside<TWrapper extends Wrapper>(wrapperType: Type<TW
     };
 }
 
+
+/**
+ * Plants a function on the wrapper's prototype that calls the native function according to delegation rules.
+ *
+ * @template TNative The type of native object holding the function.
+ * @template TWrapper The type of wrapper on which to plant the wrapping function.
+ * @param {Type<TWrapper>} wrapperType The constructor for the type of wrapper.
+ * @param {string} functionName The name of the function to delegate and wrap.
+ * @param {WrapperFunctionDefinition<TNative, TWrapper>} definition (Optional) The wrapping definition. If non is provided, default behaviour is applied.
+ */
 function wrapNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapperType: Type<TWrapper>, functionName: string, definition: WrapperFunctionDefinition<TNative, TWrapper>)
 {
     if (wrapperType.prototype[functionName] instanceof Function) return;
@@ -131,10 +149,10 @@ function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper
 }
 
 /**
- * Wraps the specified function in a function that will execute it, bound to the context retrieved by `thisContext()`.
+ * Wraps the specified function in a function that will execute it, bound to the native object`.
  * 
- * @param {Function} exec The function which actually implements the work to execute.
- * @returns {Function} A wrapping function that will execute the specified function, bound to the given context.
+ * @param {string} functionName The name of the function which actually implements the work to execute.
+ * @returns {Function} A wrapping function that will execute the specified function, bound to the native object.
  */
 function delegateInside(functionName: string): Function
 {
@@ -145,11 +163,11 @@ function delegateInside(functionName: string): Function
 }
 
 /**
- * Wraps the specified function in a function that will execute it outside angular, bound to the context retrieved by `thisContext()`.
+ * Wraps the specified function in a function that will execute it outside angular, bound to the native object.
  * This function assumes that the wrapper has an `api: GoogleMapsApiService` property.
  * 
- * @param {Function} exec The function which actually implements the work to execute.
- * @returns {Function} A wrapping function that will execute the specified function outside angular, bound to the given context.
+ * @param {string} functionName The function which actually implements the work to execute.
+ * @returns {Function} A wrapping function that will execute the specified function outside angular, bound to the native object.
  */
 function delegateOutside(functionName: string): Function
 {
