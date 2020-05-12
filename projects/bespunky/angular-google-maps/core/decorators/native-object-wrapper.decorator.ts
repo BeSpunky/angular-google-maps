@@ -52,7 +52,7 @@ import { OutsideAngularSymbol                                 } from './outside-
  * @template TWrapper The type of wrapper.
  * @param {WrapperConfig<TNative, TWrapper>} [config] Details of how the native type should be wrapped.
  */
-export function NativeObjectWrapper<TWrapper extends Wrapper = any, TNative extends Object = any>(config: WrapperConfig<TNative, TWrapper>)
+export function NativeObjectWrapper<TNative extends Object, TWrapper extends Wrapper>(config: WrapperConfig<TNative, TWrapper>)
 {        
     return function NativeObjectWrapperFactory<TConstructor extends Type<TWrapper>>(wrapperType: TConstructor)
     {
