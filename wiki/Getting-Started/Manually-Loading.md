@@ -43,6 +43,7 @@ In case you prefer placing the `<script>` tag manually, or you have your own loa
 Bam! You have a map on your screen! 🤟😎
 
 # Next steps
-| | |
-|-|-|
-|[Map capabilities](../Map/Capabilities.md)| Read about controling the map, configuring it, handling events and more.
+| Topic | Description |
+| ----- | ----------- |
+|[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
+|[Map capabilities](../Map.md)|Controling the map, configuring it, handling events and more.|

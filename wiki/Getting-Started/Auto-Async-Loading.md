@@ -39,6 +39,7 @@ Bam! You have a map on your screen! 🤟😎
 > `*bsSafe` will make sure the component is only rendered after maps API is locked-and-loaded.
 
 # Next steps
-| | |
-|-|-|
-|[Map capabilities](../Map/Capabilities.md)|Controling the map, configuring it, handling events and more.
+| Topic | Description |
+| ----- | ----------- |
+|[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
+|[Map capabilities](../Map.md)|Controling the map, configuring it, handling events and more.|
