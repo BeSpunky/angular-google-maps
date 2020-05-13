@@ -7,6 +7,7 @@ export enum HttpProtocol
     Https = 'https'
 }
 
+/** https://developers.google.com/maps/documentation/javascript/libraries */
 export enum GoogleMapsLibrary
 {
     Drawing         = 'drawing',
@@ -23,7 +24,7 @@ export class GoogleApiUrl
 
     public key: string;
 
-    public libraries?: GoogleMapsLibrary[];
+    public libraries?: GoogleMapsLibrary[]; // TODO: Remove as option and read from a token { multi: true } provided by the different modules
     /**
      * By default, the Maps JavaScript API uses the user's preferred language setting
      * as specified in the browser, when displaying textual information such as the
