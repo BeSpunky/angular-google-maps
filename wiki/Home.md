@@ -9,8 +9,10 @@ You may use the library as use like, with any app, under the MIT license.
 
 ✨ [Getting Started](Getting-Started.md)
 
-# Why is this library awesome?
+# What's so cool about it
 ✔ Easy to use 🔌
+
+✔ No previous Google Maps knowledge needed 🤯
 
 ✔ Powerful & flexible tooling 💪
 
