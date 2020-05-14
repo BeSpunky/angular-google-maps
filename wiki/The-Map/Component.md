@@ -1,0 +1,1 @@
+TODO: Encapsulation and .google-map class
