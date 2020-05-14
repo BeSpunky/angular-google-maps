@@ -20,6 +20,8 @@ You may use the library as use like, with any app, under the MIT license.
 
 ✔ Angular Universal ready 🌎
 
+✔ Extendable 🧩
+
 ✔ Testable 🧪
 
 ✔ Scalable ↗
