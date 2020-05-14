@@ -1,4 +1,7 @@
-# Map Capabilities
+# Intro
+At the core of the library is the map. The map component will always be the top-level container for all other library components or directives.
+
+You may add as many maps to your views as you need. They will each create a new map instance and will 
 
 | Topic | Description |
 |-|-|
