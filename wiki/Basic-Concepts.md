@@ -11,7 +11,10 @@ The library refers to types presented by Google Maps JavaScript library as 'nati
 # Wrappers
 A native object is always represented by a corresponding wrapper object. However, the actual native object is always accessible through the wrapper's strongly-typed `native` property in case you need finer tuning:
 
-<p align="center"><img src="./.attachments/Wrapper.png" width="250"/></p>
+<center>
+
+![Wrapper](.attachments/Wrapper.png)
+</center>
 
 > **Note** Once you put your hands on the native object, the library has no way of knowing what you'll do with it. In certain cases the library expects you to use the wrappers for its magic to work. [Overlay tracking](Overlays/Tracking.md) for example, will become useless if you add overlays directly to the native object.
 >
@@ -24,7 +27,10 @@ Components and directives always rely on a wrapper object to do the work. A new 
 
 The wrapper is always accessible through the component's strongly-typed `wrapper` property:
 
-<p align="center"><img src="./.attachments/Component.png" width="250"/></p>
+<center>
+
+![Component](.attachments/Component.png)
+</center>
 
 # Functionality Wrapping
 
@@ -38,7 +44,10 @@ Bottom line:
 - You will find that some method signatures don't exactly match the native ones.
 <br/>
 <br/>
-<p align="center"><img src="./.attachments/WrappedFunction.png" width="250"/></p>
+<center>
+
+![Wrapped Function](.attachments/WrappedFunction.png)
+</center>
 
 ## Wrapping Rules
 * All getters get wrapped automatically (e.g. `GoogleMap.getCenter()`).
@@ -56,7 +65,10 @@ Component `@Input` properties always match by name and type to their correspondi
 
 The components in the library all listen to `ngOnChanged()` and delegate input changes to the wrapper.
 
-<p align="center"><img src="./.attachments/PropertyDelegation.png" width="300"/></p>
+<center>
+
+![Property Delegation](.attachments/PropertyDelegation.png)
+</center>
 
 # Event Hooking
 If a native object raises events, all events supported by the object are hooked by bindable observables.
