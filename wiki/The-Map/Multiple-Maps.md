@@ -35,6 +35,8 @@ Let's say you have a view with a list of your business's branches. Each branch o
 
 3. Define the component's template:
     ```html
+    <!-- branch-location-map.component.html -->
+
     <bs-google-map *bsSafe [center]="location"
                            [zoom]="8"
                            [options]="{ disableDefaultUI: true }">
@@ -44,6 +46,8 @@ Let's say you have a view with a list of your business's branches. Each branch o
 
 4. Use the new component in your list view component:
     ```html
+    <!-- your-branch-list.component.html -->
+
     <app-branch-location-map *ngFor="let branch of branches" [location]="branch.location"></app-branch-location-map>
     ```
 
