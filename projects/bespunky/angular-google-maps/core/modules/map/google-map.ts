@@ -2,6 +2,7 @@ import { ElementRef } from '@angular/core';
 
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
 import { WrappedNativeFunctions                } from '../../abstraction/types/abstraction';
+import { Coord                                 } from '../../abstraction/types/geometry.type';
 import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator';
 import { OutsideAngular                        } from '../../decorators/outside-angular.decorator';
 import { Delegation                            } from '../../decorators/wrapper-definition';
@@ -43,6 +44,12 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     // TODO:
     // 1. Implement facilitating transformations for fitBounts, panTo, panToBounds
     // 2. Add declarations for upgraded signatures to IGoogleMap
+
+    @OutsideAngular
+    public setCenter(center: Coord)
+    {
+        this.native.setCenter(this.api.geometry.toLiteralCoord(center));
+    }
 
     @OutsideAngular
     fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { this.native.fitBounds(bounds, padding); }

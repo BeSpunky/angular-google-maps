@@ -3,6 +3,7 @@ import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
 import { GoogleMapsLifecycleBase           } from '../../../abstraction/base/google-maps-lifecycle-base';
 import { GoogleMapsEventData               } from '../../../abstraction/events/google-maps-event-data'
+import { Coord                             } from '../../../abstraction/types/geometry.type';
 import { Hook                              } from '../../../decorators/hook.decorator';
 import { SuperpowersService                } from '../superpowers/superpowers.service';
 import { GoogleMapFactoryProvider          } from '../google-map-factory.provider';
@@ -18,7 +19,7 @@ import { IGoogleMap                        } from '../i-google-map';
 })
 export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
 {
-    @Input() public center?        : google.maps.LatLng | google.maps.LatLngBoundsLiteral;
+    @Input() public center?        : Coord;
     @Input() public clickableIcons?: boolean;
     @Input() public heading?       : number;
     @Input() public mapType?       : string | google.maps.MapTypeId;

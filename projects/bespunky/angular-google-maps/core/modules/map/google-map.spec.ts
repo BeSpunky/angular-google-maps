@@ -1,8 +1,8 @@
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, expectPositionEquals                      } from '@bespunky/angular-google-maps/testing';
-import { MockSuperpower1                                                             } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsApiService, Defaults, GoogleMap, ISuperpowers, SuperpowersService } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule, expectPositionEquals                                                       } from '@bespunky/angular-google-maps/testing';
+import { MockSuperpower1                                                                                              } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsApiService, Defaults, GoogleMap, ISuperpowers, SuperpowersService, Coord, GeometryTransformService } from '@bespunky/angular-google-maps/core';
 
 const elementStub: any = document.createElement('div');
 
@@ -45,5 +45,21 @@ describe('GoogleMap', () =>
         });
 
         it('should attach all superpowers to itself', () => expect(map.superpowers.use(MockSuperpower1).map).toBe(map));
+    });
+
+    describe('calling `setCenter()`', () =>
+    {
+        function testCoord(coord: Coord)
+        {
+            const geometry = new GeometryTransformService();
+
+            map.setCenter(coord);
+
+            expect(map.getCenter().toJSON()).toEqual(geometry.toLiteralCoord(coord));
+        }
+
+        it('should set a flat coord array as center',     () => testCoord([1, 1]));
+        it('should set a LatLng literal coord as center', () => testCoord({ lat: 2, lng: 2 }));
+        it('should set a LatLng coord array as center',   () => testCoord(new google.maps.LatLng(3, 3)));
     });
 });
