@@ -46,4 +46,4 @@ Bam! You have a map on your screen! 🤟😎
 | Topic | Description |
 | ----- | ----------- |
 |[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
-|[Map capabilities](../Map.md)|Controling the map, configuring it, handling events and more.|
+|[The Map](/The-Map)|Controlling the map, configuring it, handling events and more.|
