@@ -45,5 +45,6 @@ Bam! You have a map on your screen! 🤟😎
 # Next steps
 | Topic | Description |
 | ----- | ----------- |
+|[Auto Async Loading](/Getting-Started/Auto-Async-Loading)|Let the library load the native api for ya. 💪|
 |[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
 |[The Map](/The-Map)|Controlling the map, configuring it, handling events and more.|
