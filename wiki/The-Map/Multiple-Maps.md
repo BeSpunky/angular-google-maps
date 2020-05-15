@@ -3,6 +3,18 @@ Each time you add a map component to your view, a new map instance is created. E
 
 This allows you to safely place multiple map components in your app, even in the same view, each having its own configuration, event handling and child components.
 
+```html
+<bs-google-map *bsSafe [center]="[20.2, 12.321]">
+    <bs-google-maps-marker [position]="[20.2, 12.321]"></bs-google-maps-marker>
+</bs-google-map>
+
+<bs-google-map *bsSafe [center]="{ lat: 30, lng: 14 }" [zoom]="3"></bs-google-map>
+
+<bs-google-map *bsSafe>
+    <bs-google-maps-polygon [path]="[[1,1], [20,20], [40, 40]]"></bs-google-maps-marker>
+</bs-google-map>
+```
+
 # Best Practices
 Even if you're building a small scale app, it is best to wrap the map component in a new component of your own.
 That component will serve a specific use-case for the map and will allow order and scalability.
