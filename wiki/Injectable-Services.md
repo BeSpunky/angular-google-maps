@@ -3,15 +3,15 @@ I ❤ Google Maps. It's awesome! But if you've worked with Google Maps API befor
 
 Apart from components and directives, the library gives you access to powerful tools to do all the heavy-lifting 🏋️‍♂️ for you:
 
-# GoogleMapsApiService
+# [GoogleMapsApiService](/Injectable-Services/GoogleMapsApiService)
 Wrappers use this service internally, but you can use it too. Gives you access to underlying low-level operations, and saves you the need of injecting any of the other services into your components.
 
-# GeometryTransformService
+# [GeometryTransformService](/Injectable-Services/GeometryTransformService)
 Provides methods to construct, deconstruct and transform geometry data.
 
 Inject it directly or fetch it through the `geometry` property of `GoogleMapsApiService`.
 
-# EventDataTransformService
+# [EventDataTransformService](/Injectable-Services/EventDataTransformService)
 The event data constructed by the native api has always been confusing and annoying to me. This service knows the different types of event data objects raised by the native api and provides transformation methods for easy extraction of useful information.
 
 Inject it directly or fetch it through the `eventsData` property of `GoogleMapsApiService`.
