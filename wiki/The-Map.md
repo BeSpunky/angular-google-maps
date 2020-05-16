@@ -35,12 +35,10 @@ To handle events emitted by your map, simply bind handlers using angular's synta
 
 > [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) for a complete list of supported bindable `@Output` events and their `$event` type.
 
-# See also
-[Event data](../API/Event-Data.md)
-
 # Next Steps
 | Topic | Description |
 |-|-|
+|[Event Handling](/Event-Handling)|A deeper look on event handling.|
 |[Superpowers](../Map/Superpowers)| Load other modules to enable other features (e.g. overlays, drawing, etc.). |
 |[Programmatic Control](/Programmatic-Control)| Handle your map in your component using a map object. |
 |[Multiple Maps](/The-Map/Multiple-Maps)|Best practices for multiple map instances.|
