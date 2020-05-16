@@ -22,7 +22,7 @@ public async setCenter(center: ...): Promise<void>
 }
 ```
 
-Reduces to something like this:
+Reduces to this:
 ```typescript
 public native: google.maps.Map;
 
