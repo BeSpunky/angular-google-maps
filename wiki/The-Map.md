@@ -21,9 +21,22 @@ To configure your map, simply bind options using angular's syntax:
 ></bs-google-map>
 ```
 
-> [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) For a complete list of supported bindable `@Input` options and their types.
+> [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) for a complete list of supported bindable `@Input` options and their types.
 
 # Events
+To handle events emitted by your map, simply bind handlers using angular's syntax and pass in the `$event` variable:
+```html
+<bs-google-map *bsSafe 
+               (click)="onMapClick($event)"
+               (mouseMove)="onMapMouseMove($event)"
+               ...
+></bs-google-map>
+```
+
+> [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) for a complete list of supported bindable `@Output` events and their `$event` type.
+
+# See also
+[Event data](../API/Event-Data.md)
 
 # Next Steps
 | Topic | Description |
