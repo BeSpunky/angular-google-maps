@@ -10,6 +10,18 @@ Content and tools related to the map instance you're defining will always go as 
 [[_TOC_]]
 
 # Options
+To configure your map, simply bind options using angular's syntax:
+
+```html
+<bs-google-map *bsSafe 
+               [center]="center"
+               [zoom]="3"
+               [clickableIcons]="false"
+               ...
+></bs-google-map>
+```
+
+> [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) For a complete list of supported bindable `@Input` options and their types.
 
 # Events
 
