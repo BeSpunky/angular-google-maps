@@ -22,7 +22,7 @@ public async setCenter(center: ...): Promise<void>
 }
 ```
 
-Becomes cleaner and simpler:
+Reduces to something like this:
 ```typescript
 public native: google.maps.Map;
 
@@ -32,4 +32,4 @@ public setCenter(center: ...): void
 }
 ```
 
-Imagine the pain if every method in the library had to check for the ready promise... right? 😉
+Imagine the pain if every method in the library had to check for the api ready promise... right? 😉
