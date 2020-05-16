@@ -5,8 +5,10 @@ If you still haven't read [Basic Concepts](/Basic-Concepts), now is the time...
 
 [[_TOC_]]
 
-# Extracting Wrappers Through Events
-When an event is emitted, given that you passed in the `$event` argument, you will have direct access to the wrapper  which emitted the event.
+# Accessing Wrappers
+
+## Event Handlers
+When an event is emitted, given that you passed in the `$event` argument, you will have direct access to the wrapper  which emitted the event:
 
 ```html
 <!-- Your component template -->
@@ -19,29 +21,42 @@ When an event is emitted, given that you passed in the `$event` argument, you wi
 
 ```typescript
 // Your component class
-import { Component } from '@angular/core';
-import { GoogleMapsEventData, ZoomLevel } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsPolygon } from '@bespunky/angular-google-maps/overlays';
 
-@Component({
-    selector   : 'app-my-map',
-    templateUrl: './my-map.component.html',
-    styleUrls  : ['./my-map.component.css']
-})
+import { Component } from '@angular/core';
+import { GoogleMapsEventData, ZoomLevel, GoogleMap } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsPolygon } from '@bespunky/angular-google-maps/overlays';
+
+@Component({...})
 export class MyMapComponent
 {
     public onPolygonClick(event: GoogleMapsEventData)
     {
-        // Access the emitting polygon
-        const polygon = event.emitter as IGoogleMapsPolygon;
-
+        const polygon       = event.emitter as GoogleMapsPolygon; // Access emitting polygon
+        const map           = polygon.map as GoogleMap; // Access to the containing map instance
+        const nativePolygon = polygon.native; // Access to native google.maps.Polygon object
+        const nativeMap     = map.native; // Access to native google.maps.Map object
+       
         polygon.setFillColor('green');
         polygon.map.setZoom(ZoomLevel.Buildings);
+
+        // ... more manipulation
     }
 }
 ```
 
-> If you're thinking of storing the emitter instance in a global component member so you may use it in other places as well, you can. However, it is probably better if you fetch it on init instead. Keep reading... 😉
+> If you're thinking of storing the emitter instance as a component member so you may use it in other places as well, you can. However, it is probably better if you fetch it on init instead. Keep reading... 😉
+
+## Querying The View
+TODO: Add example with ViewChild
+
+## Template References
+TODO: Add example with template reference variables and passing in the wrapper to a method, both to another template element, and to a component method.
+
+```html
+<... #map></..>
+<something (click)="map.wrapper.addPolygon(....)"/>
+<somethingElse (click)="do(map.wrapper)"/>
+```
 
 # Custom Data
 Regardless of their type, every wrapper has a `custom` property which you can use for anything. This might serve you well for storing an entity, a configuration, or an id.
