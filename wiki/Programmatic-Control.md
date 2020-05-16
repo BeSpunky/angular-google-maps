@@ -19,6 +19,9 @@ When an event is emitted, given that you passed in the `$event` argument, you wi
 
 ```typescript
 // Your component class
+import { Component } from '@angular/core';
+import { GoogleMapsEventData, ZoomLevel } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsPolygon } from '@bespunky/angular-google-maps/overlays';
 
 @Component({
     selector   : 'app-my-map',
@@ -29,8 +32,20 @@ export class MyMapComponent
 {
     public onPolygonClick(event: GoogleMapsEventData)
     {
-        // Access the emitter and 
-        (event.emitter as IGoogleMapsPolygon).setFillColor('green');
+        // Access the emitting polygon
+        const polygon = event.emitter as IGoogleMapsPolygon;
+
+        polygon.setFillColor('green');
+        polygon.map.setZoom(ZoomLevel.Buildings);
     }
 }
 ```
+
+> If you're thinking of storing the emitter instance in a global component member so you may use it in other places as well, you can. However, it is probably better if you fetch it on init instead. Keep reading... 😉
+
+# Custom Data
+Regardless of their type, every wrapper has a `custom` property which you can use for anything. This might serve you well for storing an entity, a configuration, or an id.
+
+This is extremely useful when handling large amounts of overlays. Once you associated an entity with a wrapper instance, you simply extract it from the emitter when an event was triggered and work on entity. **No need for keeping track of your objects, or scanning your arrays to find the relevant object.**
+
+Here's an example:
