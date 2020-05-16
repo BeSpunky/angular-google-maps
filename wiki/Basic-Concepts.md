@@ -1,7 +1,7 @@
 # Intro
 The library wraps the native Google Maps API library, adds additional tooling around it, and provides documentation for concepts and tasks it presents. However, in some cases, it made no sense to repeat [Google Maps' documentation](https://developers.google.com/maps/documentation/javascript/tutorial), so you will be referred to the appropriate doc online.
 
-The following concepts will help you better understand how the library operates and what to expect from it, and when to refer to Google's documentation...
+The following concepts will help you better understand how the library operates, what to expect from it, and when to refer to Google's documentation...
 
 [[_TOC_]]
 
