@@ -20,7 +20,7 @@ A native object is always represented by a corresponding wrapper object. However
 >
 > **Conclusions**:
 > 1. Stick to wrapper objects as much as possible.
-> 2. If you really have to use the native object directly, simply be aware of the above and make sure you're not causing inconcistencies.
+> 2. If you really have to use the native object directly, simply be aware of the above and make sure you're not causing inconsistencies.
 
 # Components
 Components and directives always rely on a wrapper object to do the work. A new instance of the corresponding wrapper is injected to each component instance. This of course means a new native object instance as well.
@@ -39,7 +39,7 @@ Wrappers [use magic ✨](Internal%20Workings/Delegation-Magic.md) to delegate ac
 
 To provide you with greater flexibility and ease of use, some functionalities are manually wrapped to allow support for a wider range of types, 'shortcut' some task, or do some transparent delegation preprocessing or postprocessing.
 
-Bottom line:
+**Bottom line:**
 - You will have greater powers.
 - You will find that some method signatures don't exactly match the native ones.
 <br/>
@@ -58,7 +58,7 @@ Bottom line:
   
 * A function which uses a callback is wrapped with a promise instead (e.g. `GoogleMapsData.toGeoJson()`).
   
-* A function requiring parameters with a specific types, but those types can be constructed or deduced from other types, is wrapped with a more flexible signature and converts its arguments to match the native api. (e.g. `GoogleMapMarker.setPosition()`).
+* A function requiring parameters with specific types, but those types can be constructed or deduced from other types, is wrapped with a more flexible signature and converts its arguments to match the native api. (e.g. `GoogleMapMarker.setPosition()`).
 
 # Property Delegation
 Component `@Input` properties always match by name and type to their corresponding setter function on the wrapper. So `setCenter()` is delegated by `center`, `setClickableIcons()` is delegated by `clickableIcons`, and so forth...
