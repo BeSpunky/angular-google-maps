@@ -1,4 +1,1 @@
-TODO: API services
-TODO: -- Main service
-TODO: -- Event Transform service
-TODO: -- Geometry service
+If you've worked with Google Maps API before, you know... Everything is so damn difficult... 😪 Type conversions, geometry calculations, keeping track of your objects, 
