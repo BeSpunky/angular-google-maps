@@ -1,7 +1,10 @@
 # The name of the game: Flexibility
-One of the main goals of `@bespunky/angular-google-maps` is to provide flexibility. Each application has its own requirements and, moreover, each developer has his/her preferences. For that reason, the library defines new types, usually as a union of existing types.
+Each application has its own requirements and, more importantly, every developer has his/her preferences. For that reason, `@bespunky/angular-google-maps` defines new types, usually as a union of existing types.
 
 Your interaction with the library (e.g. passing arguments, binding, etc.) will always be through those new types. The library will take care of conversions for you when needed.
+
+**Bottom line:**  
+Forget about having to manually convert your objects to the specific type required by Google Maps API. 🤟😎
 
 [[_TOC_]]
 # Single Coordinates
