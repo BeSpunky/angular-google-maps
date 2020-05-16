@@ -13,9 +13,10 @@ Content and tools related to the map instance you're defining will always go as 
 
 # Events
 
+# Next Steps
 | Topic | Description |
 |-|-|
-|[*bsSafe](/The-Map/*bsSafe)|Ensuring maps api is loaded.|
-|[Multiple Maps](/The-Map/Multiple-Maps)|Best practices for multiple map instances.|
 |[Superpowers](../Map/Superpowers)| Load other modules to enable other features (e.g. overlays, drawing, etc.). |
 |[Programmatic Control](/Programmatic-Control)| Handle your map in your component using a map object. |
+|[Multiple Maps](/The-Map/Multiple-Maps)|Best practices for multiple map instances.|
+|[*bsSafe](/The-Map/*bsSafe)|Ensuring that maps api is loaded.|
