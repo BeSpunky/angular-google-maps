@@ -109,7 +109,6 @@ In other words:
 * You can now lazy load superpowers.
 
 # Next Steps
-
 | Topic                                        | Description                                              |
 |----------------------------------------------|----------------------------------------------------------|
 | [Programmatic Control](Programmatic-Control) | Extract wrapper objects and use them in your components. |
