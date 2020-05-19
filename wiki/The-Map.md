@@ -41,7 +41,7 @@ Inside of a `<bs-google-map/>` component, the top level container is always a `d
 # Next Steps
 | Topic                                         | Description                                                                 |
 |-----------------------------------------------|-----------------------------------------------------------------------------|
-| [Superpowers](../Map/Superpowers)             | Load other modules to enable other features (e.g. overlays, drawing, etc.). |
-| [Programmatic Control](/Programmatic-Control) | Handle your map in your component using a map object.                       |
+| [Superpowers](/The-Map/Superpowers)           | Enhance and extand map capabilities (overlays, drawing & more). |
 | [Multiple Maps](/The-Map/Multiple-Maps)       | Best practices for multiple map instances.                                  |
 | [*bsSafe](/The-Map/*bsSafe)                   | Ensuring that maps api is loaded.                                           |
+| [Programmatic Control](/Programmatic-Control) | Handle your map in your component using a map object.                       |
