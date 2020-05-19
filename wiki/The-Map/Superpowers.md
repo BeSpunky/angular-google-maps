@@ -18,7 +18,6 @@ The built-in components and directive internally use the superpowers, but you ca
 ```typescript
 const overlays = map.superpowers.use(OverlaysSuperpower);
 
-// Use overlays 
 overlays.createMarker([11, 22]);
 ```
 
