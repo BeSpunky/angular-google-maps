@@ -1,5 +1,5 @@
 # Here Comes The Fun
-Google Maps API provides different tools for doing more with your map, like placing overlays and allowing the user to draw shapes on it. The library refers to them as Superpowers ⚡💪.
+Google Maps API provides different tools for doing more with your map, like placing overlays and allowing the user to draw shapes on it. `@bespunky/angular-google-maps` refers to them as **Superpowers** ⚡💪.
 
 [[_TOC_]]
 
