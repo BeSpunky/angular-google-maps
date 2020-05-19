@@ -21,7 +21,6 @@ export function createGoogleMapsTestModuleMetadata(): TestModuleMetadata
     };
 }
 
-
 /**
  * Creates a jasmine spy on the `runOutsideAngular()` or `runInsideAngular()` method of the api which fakes its execution.
  * The fake implementation skips actually running the code outside/outside of angular and proceeds with executing
