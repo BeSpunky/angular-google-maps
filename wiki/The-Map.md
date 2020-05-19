@@ -1,4 +1,4 @@
-# The Core
+# Core Component
 At the heart of the library is the map. The map component will always be the top-level container for all other library components or directives. 
 
 To place a map in your template, use the `<bs-google-map/>` element.
