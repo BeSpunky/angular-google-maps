@@ -8,9 +8,7 @@ import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap, SuperpowersService
 
 describe('GoogleMapFactoryProvider', () =>
 {
-    const SuperpowersServiceProvider = { provide: SuperpowersService, useValue: new SuperpowersService() };
-
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, SuperpowersServiceProvider);
+    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, SuperpowersService);
 
     it('should return null when used in non-browser platforms', async () =>
     {
@@ -20,7 +18,7 @@ describe('GoogleMapFactoryProvider', () =>
             customize: def => def.providers = [
                 { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
                 { provide: ElementRef, useValue: element },
-                SuperpowersServiceProvider,
+                SuperpowersService,
                 GoogleMapFactoryProvider
             ]
         });
