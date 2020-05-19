@@ -43,11 +43,11 @@ NOT YET IMPLEMENTED
 Custom superpowers can empower your maps with new tools. You can easily create your own superpowers and have them accompany every map instance in your app.
 
 ## Implementation
-Creating superpowers involved 2 steps:
+Creating superpowers involves 2 steps:
 
 1. Create a service for your superpower:
 
-    > The service must extend the `Superpower` class and be injected at map level.
+    > The service **must extend** the `Superpower` class and be **injected at the `GoogleMapModule` level** (that's `Map` - signular).
 
     ```typescript
     import { Injectable } from '@angular/core';
@@ -90,6 +90,8 @@ Creating superpowers involved 2 steps:
     ```
 
 ## Usage
+Using your custom superpower is the same as using a built-in one. Import and fetch...
+
 1. Import the superpower module once in your app:
     ```typescript
     @NgModule({
