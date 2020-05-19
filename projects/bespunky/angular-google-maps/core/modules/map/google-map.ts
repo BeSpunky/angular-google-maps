@@ -24,7 +24,13 @@ export interface GoogleMap extends WrappedGoogleMapFunctions { }
 })
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
-    constructor(public readonly superpowers: ISuperpowers, protected api: GoogleMapsApiService, mapElement: ElementRef, options?: google.maps.MapOptions)
+    constructor(
+        /** The superpowers loaded for this map instance. Any lazy loaded superpowers will automatically load here as well. */
+        public readonly superpowers: ISuperpowers,
+        protected api: GoogleMapsApiService,
+        mapElement: ElementRef,
+        options?: google.maps.MapOptions
+    )
     {
         super(api, mapElement, options);
 
