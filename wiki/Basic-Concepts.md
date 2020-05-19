@@ -74,8 +74,32 @@ The components in the library all use `ngOnChanged()` to delegate input changes 
 If a native object raises events, all events supported by the object are hooked by bindable observables.
 Component `@Output` properties names are always a camelCase representation of the native event name. So `bounds_changed` is hooked to `boundsChanged`, `rightclick` is hooked to `rightClick`, and so forth...
 
-All events are emitted with a [`GoogleMapsEventData`](API/GoogleMapsEventsData.md) object (or an extending type) which contains the native event data in addition to other useful information, like the emitting wrapper, the native object, and a simplified transformed version of the native event args. All at hand, so you don't have to transform anything yourself.
+Events raised by the library always provide an events data object, even if the native event doesn't. The data object will always be a [`GoogleMapsEventData`](API/GoogleMapsEventsData.md) object (or an extending type) which, in addition to the native event data, contains other useful information like:
+* The emitting wrapper
+* The native object
+* A simplified transformed version of the native event args.
 
+ All at hand, so you don't have to transform anything yourself.
+
+## Example
+```html
+<!-- Component template -->
+<bs-google-map *bsSafe (mouseMove)="onMapMouseMove($event)"></bs-google-map>
+```
+
+```typescript
+// Component class
+import { GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+
+@Component({...})
+export YourComponent
+{
+    public onMapMouseMove(event: GoogleMapsEventData)
+    {
+        // Act on event data
+    }
+}
+```
 # Superpowers
 The different capabilities offered by the native library, such as drawing on the map, placing overlays and others, are represented by superpowers.
 
