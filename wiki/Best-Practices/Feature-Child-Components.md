@@ -55,7 +55,8 @@ export class RouteOverlayComponent
 ```
 
 ## Feature Child Directive
-We'll create a directive, fetch the overlays superpower and use it to add the overlays:
+We'll create a directive and inject it with its parent map component, then fetch the overlays superpower and use it to add the overlays:
+
 ```typescript
 // route-overlay.directive.ts
 
