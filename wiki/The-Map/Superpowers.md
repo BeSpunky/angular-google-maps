@@ -29,11 +29,10 @@ The following are superpowers provided by the library out of the box. To use the
 ## Overlays
 Provides quick overlay creation methods and keeps track of overlays added and removed from the map.
 
-Service 💉: [`OverlaysSuperpower`](TODO)
 
-Module 🧩:  `GoogleMapsOverlaysModule`
-
-Package 📦: `@bespunky/angular-google-maps/overlays`
+| Service                          | Module                         | Package                                      |
+|:--------------------------------:|:------------------------------:|:--------------------------------------------:|
+| ⚡ [`OverlaysSuperpower`](TODO) | 🧩 `GoogleMapsOverlaysModule` | 📦 `@bespunky/angular-google-maps/overlays` |
 
 
 ## Drawing Manager
