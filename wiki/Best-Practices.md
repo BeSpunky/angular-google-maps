@@ -52,4 +52,3 @@ Let's say you have a view with a list of your business's branches. Each branch o
 Imagine you have a new view with a single branch's details. Now you can simply add an `<app-branch-location-map>` component to your view.
 
 And let's say you want the user to see a toast message each time the pin is clicked. All you have to do implement it in your `BranchLocationMapComponent`. All of your maps will have the new toast feature. 😎
-
