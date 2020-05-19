@@ -13,8 +13,28 @@ Superpowers are dynamically loaded when their parent module is imported. This me
 
 > Lazy loaded superpowers will automatically be loaded and attached for existing map instances as well.
 
+## Usage
+The built-in components and directive internally use the superpowers, but you can manually use them too. To use the overlays superpower to create a marker for example, simply [get a hold of the map wrapper instance](/Programmatic-Control), then extract the required superpower like so:
+```typescript
+const overlays = map.superpowers.use(OverlaysSuperpower);
+
+// Use overlays 
+overlays.createMarker([11, 22]);
+```
+
+> The corresponding module should be imported before using the superpower.
+
 # Supported Superpowers
+The following are superpowers provided by the library out of the box. To use them, simply import the corresponding module.
+
 ## Overlays
+Provides quick overlay creation methods and keeps track of overlays added and removed from the map.
+
+Service 💉: [`OverlaysSuperpower`](TODO)
+
+Module 🧩:  `GoogleMapsOverlaysModule`
+
+Package 📦: `@bespunky/angular-google-maps/overlays`
 
 
 ## Drawing Manager
@@ -22,7 +42,6 @@ NOT YET IMPLEMENTED
 
 # Extending Superpowers
 Custom superpowers can empower your maps with new tools. You can easily create your own superpowers and have them accompany every map instance in your app.
-
 
 ## Implementation
 Creating superpowers involved 2 steps:
@@ -101,5 +120,6 @@ Creating superpowers involved 2 steps:
 Good candidates for superpowers are:
 * Map or geometry related tasks you implement or use repeatedly (e.g. transformations, helpers, etc.).
 * Extending map capabilities (e.g. tracking objects, data extraction, etc.).
+* Functionalities you can say "should be/have been built-into the map" about.
 
-You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better be implemented as components or directives. [See blabla for an example](TODO)
+You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better implemented as components or directives. See [Feature Components](/Best-Practices/Feature-Components) for an example.
