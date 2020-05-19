@@ -21,7 +21,7 @@ Superpowers are dynamically loaded when their parent module is imported. This me
 NOT YET IMPLEMENTED
 
 # Extending Superpowers
-Custom superpowers can simplify and encapsulate your business logic work with the map. You can easily create your own superpowers and have them accompany every map instance in your app.
+Custom superpowers can encapsulate and simplify your business logic work with the map. You can easily create your own superpowers and have them accompany every map instance in your app.
 
 ## Example
 Say you have an app like Uber, and after each ride you want to place the recorded route on the map. You could then create a `RouteRenderSuperpower` which will:
