@@ -114,4 +114,4 @@ In other words:
 | [Programmatic Control](Programmatic-Control) | Extract wrapper objects and use them in your components. |
 | [The Map](/The-Map)                          | The map component and its friends.                       |
 | [Injectable Services](/Injectable-Services)  | Injectable tools and providers.                          |
-| [Geometry Types](/Geometry-Types)            | flexibility for geometries.                              |
+| [Geometry Types](/Geometry-Types)            | Flexibility for geometries.                              |
