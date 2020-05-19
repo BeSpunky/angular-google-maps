@@ -1,8 +1,9 @@
+import { TestBed    } from '@angular/core/testing';
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, expectPositionEquals                                                       } from '@bespunky/angular-google-maps/testing';
-import { MockSuperpower1                                                                                              } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsApiService, Defaults, GoogleMap, ISuperpowers, SuperpowersService, Coord, GeometryTransformService } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule, expectPositionEquals } from '@bespunky/angular-google-maps/testing';
+import { MockSuperpower1                                        } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsApiService, Defaults, GoogleMap, ISuperpowers, SuperpowersChargerService, SuperpowersService, SuperpowersProvider, Coord, GeometryTransformService } from '@bespunky/angular-google-maps/core';
 
 const elementStub: any = document.createElement('div');
 
@@ -15,9 +16,13 @@ describe('GoogleMap', () =>
 
     beforeEach(async () =>
     {
-        ({ api } = await configureGoogleMapsTestingModule());
+        ({ api } = await configureGoogleMapsTestingModule({
+            customize: def => def.providers = [SuperpowersProvider, SuperpowersService]
+        }));
 
-        superpowers = new SuperpowersService([new MockSuperpower1()]);
+        TestBed.inject(SuperpowersChargerService).charge(MockSuperpower1);
+        
+        superpowers = TestBed.inject(SuperpowersService);
         mapElement  = new ElementRef(elementStub);
         map         = new GoogleMap(superpowers, api, mapElement);
     });
@@ -59,7 +64,7 @@ describe('GoogleMap', () =>
         }
 
         it('should set a flat coord array as center',     () => testCoord([1, 1]));
-        it('should set a LatLng literal coord as center', () => testCoord({ lat: 2, lng: 2 }));
-        it('should set a LatLng coord array as center',   () => testCoord(new google.maps.LatLng(3, 3)));
+        it('should set a LatLngLiteral coord as center', () => testCoord({ lat: 2, lng: 2 }));
+        it('should set a LatLng coord as center',   () => testCoord(new google.maps.LatLng(3, 3)));
     });
 });
