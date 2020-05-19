@@ -36,7 +36,7 @@
 
 Bam! You have a map on your screen! 🤟😎
 
-> `*bsSafe` will make sure the component is only rendered after maps API is locked-and-loaded.
+> [`*bsSafe`](/The-Map/*bsSafe) will make sure the component is only rendered after maps API is locked-and-loaded.
 
 # Next steps
 | Topic | Description |
