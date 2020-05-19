@@ -113,6 +113,5 @@ In other words:
 | Topic | Description |
 | ----- | ----------- |
 |[Programmatic Control](Programmatic-Control)|Extract wrapper objects and use them in your components.|
-|[Event Handling](Event-Handling)|Component events and event data.|
 |[The Map](/The-Map)|The map component and its friends.|
-|[API](/Injectable-Services)|Injectable API services and providers.|
+|[Injectable Services](/Injectable-Services)|Injectable tools and providers.|
