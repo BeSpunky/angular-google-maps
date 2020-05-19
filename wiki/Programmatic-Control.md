@@ -64,3 +64,5 @@ Regardless of their type, every wrapper has a `custom` property which you can us
 This is extremely useful when handling large amounts of overlays. Once you associated an entity with a wrapper instance, you simply extract it from the emitter when an event was triggered and work on entity. **No need for keeping track of your objects, or scanning your arrays to find the relevant object.**
 
 Here's an example:
+
+TODO: EXAMPLEEEEEE
