@@ -23,12 +23,86 @@ NOT YET IMPLEMENTED
 # Extending Superpowers
 Custom superpowers can empower your maps with new tools. You can easily create your own superpowers and have them accompany every map instance in your app.
 
+
+## Implementation
+Creating superpowers involved 2 steps:
+
+1. Create a service for your superpower:
+
+    > The service must extend the `Superpower` class and be injected at map level.
+
+    ```typescript
+    import { Injectable } from '@angular/core';
+    import { Superpower, GoogleMapModule } from '@bespunky/angular-google-maps/core';
+    
+    @Injectable({ providedIn: GoogleMapModule }) // <-- 🟢 Must be injected at map level
+    export class MagicSuperpower extends Superpower
+    {
+        constructor(/* Use DI as needed */) { }
+
+        public abracadabra(): void
+        {
+            // Get a hold of the map and extract the other superpowers as needed
+            const overlays = this.map.superpowers.use(OverlaysSuperpower);
+    
+            // Do the magic...
+        }
+    }
+    ```
+
+2. Charge the superpower into the system:
+
+    Find the proper place to inject `SuperpowersChargerService` and charge the new superpower.
+    The best way would be to create a module for the superpower, register the new superpower on construction and import the module in your app:
+    ```typescript
+    import { NgModule } from '@angular/core';
+
+    import { SuperpowersChargerService } from '@bespunky/angular-google-maps/core';
+    import { MagicSuperpower           } from 'path/to/superpower/magic-superpower.service';
+
+    @NgModule(/* any other module config */)
+    export class MagicSuperpowerModule
+    {
+        constructor(charger: SuperpowersChargerService)
+        {
+            // Use the charger service to register the superpower
+            charger.charge(MagicSuperpower);
+        }
+    }
+    ```
+
+## Usage
+1. Import the superpower module once in your app:
+    ```typescript
+    @NgModule({
+        ...
+        imports: [ ..., MagicSuperpowerModule ]
+    })
+    export class AppModule { } // Or maybe some lazy loaded module?
+    ```
+
+2.  Get a [hold of the map](/Programmatic-Control) and extract the superpower when you need to use it:
+    ```typescript
+    @Component(...)
+    export class MagicalMapComponent implements OnInit
+    {    
+        @ViewChild('map') private map: GoogleMap;
+    
+        ngOnInit()
+        {
+            this.map.superpowers.use(MagicSuperpower).abracadabra();
+        }
+    }
+    ```
+
+    That's it! Pretty neat, right?? 🤟😎
+
 ## When should I create my own superpower?
 Good candidates for superpowers are:
-* Map or geometry related tasks you implement or used over and over (e.g. transformations, helpers, etc.).
+* Map or geometry related tasks you implement or use repeatedly (e.g. transformations, helpers, etc.).
 * Extending map capabilities (e.g. tracking objects, data extraction, etc.).
-* 
 
+You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better be implemented as components or directives. [See blabla for an example](TODO)
 
 TODO: PLACE THIS EXAMPLE IN A DIFFERENT DOC. CREATE A RoutePathDirective:
 ```HTML
