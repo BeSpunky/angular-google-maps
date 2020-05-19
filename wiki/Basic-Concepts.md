@@ -111,7 +111,7 @@ In other words:
 # Next Steps
 | Topic                                        | Description                                              |
 |----------------------------------------------|----------------------------------------------------------|
-| [Programmatic Control](Programmatic-Control) | Extract wrapper objects and use them in your components. |
 | [The Map](/The-Map)                          | The map component and its friends.                       |
-| [Injectable Services](/Injectable-Services)  | Injectable tools and providers.                          |
+| [Programmatic Control](Programmatic-Control) | Extract wrapper objects and use them in your components. |
 | [Geometry Types](/Geometry-Types)            | Flexibility for geometries.                              |
+| [Injectable Services](/Injectable-Services)  | Injectable tools and providers.                          |
