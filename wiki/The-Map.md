@@ -42,8 +42,9 @@ Inside of a `<bs-google-map/>` component, the top level container is always a `d
 | Topic                                         | Description                                                     |
 |-----------------------------------------------|-----------------------------------------------------------------|
 | [Superpowers](/The-Map/Superpowers)           | Enhance and extand map capabilities (overlays, drawing & more). |
-| [Multiple Maps](/The-Map/Multiple-Maps)       | Best practices for multiple map instances.                      |
+| [Multiple Maps](/The-Map/Multiple-Maps)       | Adding multiple map instances.                                  |
 | [*bsSafe](/The-Map/*bsSafe)                   | Ensuring that maps api is loaded.                               |
 | [Programmatic Control](/Programmatic-Control) | Handle your map in your component using a map object.           |
 | [Injectable Services](/Injectable-Services)   | Injectable tools and providers.                                 |
-| [Geometry Types](/Geometry-Types)             | flexibility for geometries.                                     |
+| [Geometry Types](/Geometry-Types)             | Flexibility for geometries.                                     |
+| [Best Practices](/Best-Practices)             | Create scalable maps and features.                              |
