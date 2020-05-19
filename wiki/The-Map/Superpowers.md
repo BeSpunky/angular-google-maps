@@ -21,7 +21,7 @@ const overlays = map.superpowers.use(OverlaysSuperpower);
 overlays.createMarker([11, 22]);
 ```
 
-> The corresponding module should be imported before using the superpower.
+> The corresponding module must be imported before using the superpower.
 
 # Supported Superpowers
 The following are superpowers provided by the library out of the box. To use them, simply import the corresponding module.
