@@ -1,27 +1,21 @@
-import { InjectionToken, ClassProvider, Type } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import { InjectionToken, Type, ValueProvider } from '@angular/core';
 
 import { ISuperpower } from './i-superpower';
 
-/**
- * An injectable token which allows retrieving or extending the map component's superpowers.
- * Use `createSuperpowerProvider()` to create a multi class injector for any new superpower.
- * 
- * Superpower services should inherit `ISuperpower` and be decorated with `@Injectable({ providedIn: GoogleMapComponent })`.
- */
-export const Superpowers = new InjectionToken<ISuperpower[]>('GoogleMaps.Superpowers');
+/** The type of observable used for storing and sharing superpower types in the system. */
+export type ChargedSuperpowers = ReplaySubject<Type<ISuperpower>>;
 
 /**
- * Creates a multi-class provider for the given superpower which can be used to plug-in the superpower to the map component.
- *
- * @export
- * @param {Type<ISuperpower>} superpower The type of superpower.
- * @returns {ClassProvider} A provider which will add the superpower to the superpowers collection used by the map wrapper.
+ * An injectable token to set and retrieve the subject for superpowers charged in the system.
+ * 
+ * Superpower services should inherit `ISuperpower` and be decorated with `@Injectable({ providedIn: GoogleMapModule })`.
  */
-export function createSuperpowerProvider(superpower: Type<ISuperpower>): ClassProvider
-{
-    return {
-        provide : Superpowers,
-        useClass: superpower,
-        multi   : true
-    }
-}
+export const Superpowers = new InjectionToken<ChargedSuperpowers>('GoogleMaps.Superpowers');
+
+/**
+ * Injected at root level and only holds the types of superpowers already loaded.
+ * `SuperpowersChargerService` will feed the token with types of superpowers.
+ * `SuperpowersService` will be instantiated for each map and consume the token to allow lazy loading of powers.
+ */
+export const SuperpowersProvider: ValueProvider = { provide: Superpowers, useValue: new ReplaySubject() };

@@ -16,7 +16,6 @@ export * from './superpower/overlays-superpower.module';
 export * from './superpower/i-overlays-superpower';
 export * from './superpower/services/overlays-superpower.service';
 export * from './superpower/services/overlays-tracker';
-export * from './superpower/overlays-superpower.provider';
 export * from './superpower/directive/overlays.directive';
 
 // Marker
