@@ -39,9 +39,11 @@ To handle events emitted by your map, simply bind handlers using angular's synta
 Inside of a `<bs-google-map/>` component, the top level container is always a `div.google-map` element. The map component is defined with no view encapsulation, meaning you can use the `.google-map` class to identify map elements and apply styles if necessary.
 
 # Next Steps
-| Topic                                         | Description                                                                 |
-|-----------------------------------------------|-----------------------------------------------------------------------------|
+| Topic                                         | Description                                                     |
+|-----------------------------------------------|-----------------------------------------------------------------|
 | [Superpowers](/The-Map/Superpowers)           | Enhance and extand map capabilities (overlays, drawing & more). |
-| [Multiple Maps](/The-Map/Multiple-Maps)       | Best practices for multiple map instances.                                  |
-| [*bsSafe](/The-Map/*bsSafe)                   | Ensuring that maps api is loaded.                                           |
-| [Programmatic Control](/Programmatic-Control) | Handle your map in your component using a map object.                       |
+| [Multiple Maps](/The-Map/Multiple-Maps)       | Best practices for multiple map instances.                      |
+| [*bsSafe](/The-Map/*bsSafe)                   | Ensuring that maps api is loaded.                               |
+| [Programmatic Control](/Programmatic-Control) | Handle your map in your component using a map object.           |
+| [Injectable Services](/Injectable-Services)   | Injectable tools and providers.                                 |
+| [Geometry Types](/Geometry-Types)             | flexibility for geometries.                                     |
