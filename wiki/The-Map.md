@@ -40,11 +40,11 @@ Inside of a `<bs-google-map/>` component, the top level container is always a `d
 
 # Next Steps
 ## The Map
-| Topic                                   | Description                                                     |
-|-----------------------------------------|-----------------------------------------------------------------|
-| [Superpowers](/The-Map/Superpowers)     | Enhance and extand map capabilities (overlays, drawing & more). |
-| [Multiple Maps](/The-Map/Multiple-Maps) | Adding multiple map instances.                                  |
-| [*bsSafe](/The-Map/*bsSafe)             | Ensuring that maps api is loaded.                               |
+| Topic                                   | Description                                              |
+|-----------------------------------------|----------------------------------------------------------|
+| [Superpowers](/The-Map/Superpowers)     | Enhance map capabilities with built-in and custom tools. |
+| [Multiple Maps](/The-Map/Multiple-Maps) | Adding multiple map instances.                           |
+| [*bsSafe](/The-Map/*bsSafe)             | Ensuring that maps api is loaded.                        |
 
 ## Other topics
 | Topic                                         | Description                                           |
