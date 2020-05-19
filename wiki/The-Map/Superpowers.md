@@ -42,7 +42,7 @@ NOT YET IMPLEMENTED
 Custom superpowers can empower your maps with new tools. You can easily create your own superpowers and have them accompany every map instance in your app.
 
 ## Implementation
-Creating superpowers involves 2 steps:
+Creating superpowers involves 2 simple steps...
 
 1. Create a service for your superpower:
 
@@ -87,6 +87,10 @@ Creating superpowers involves 2 steps:
         }
     }
     ```
+
+    > 🤔 **Why inside a module?**  
+    >
+    > Modularity and specificity. With a superpower module you can easily implement lazy-loading, and, when you use it in your code, it will be very clear where and when the superpower is imported. See usage below.
 
 ## Usage
 Using your custom superpower is the same as using a built-in one. Import and fetch...
