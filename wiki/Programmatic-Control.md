@@ -68,7 +68,8 @@ Here's an example:
 TODO: EXAMPLEEEEEE
 
 # Next Steps
-| Topic                                        | Description                                              |
-|----------------------------------------------|----------------------------------------------------------|
-| [Injectable Services](/Injectable-Services)  | Injectable tools and providers.                          |
-| [Geometry Types](/Geometry-Types)            | flexibility for geometries.                              |
+| Topic                                       | Description                        |
+|---------------------------------------------|------------------------------------|
+| [Injectable Services](/Injectable-Services) | Injectable tools and providers.    |
+| [Geometry Types](/Geometry-Types)           | Flexibility for geometries.        |
+| [Best Practices](/Best-Practices)           | Create scalable maps and features. |
