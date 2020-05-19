@@ -21,10 +21,30 @@ Superpowers are dynamically loaded when their parent module is imported. This me
 NOT YET IMPLEMENTED
 
 # Extending Superpowers
-Custom superpowers can encapsulate and simplify your business logic work with the map. You can easily create your own superpowers and have them accompany every map instance in your app.
+Custom superpowers can empower your maps with new tools. You can easily create your own superpowers and have them accompany every map instance in your app.
 
+## When should I create my own superpower?
+Good candidates for superpowers are:
+* Map or geometry related tasks you implement or used over and over (e.g. transformations, helpers, etc.).
+* Extending map capabilities (e.g. tracking objects, data extraction, etc.).
+* 
+
+
+TODO: PLACE THIS EXAMPLE IN A DIFFERENT DOC. CREATE A RoutePathDirective:
+```HTML
+<bs-google-map>
+    <app-route-path-overlay [ride]="ride"></app-route-path-overlay>
+<bs-google-map>
+
+// directive template
+<bs-google-maps-marker start....
+<bs-google-maps-marker end....
+<bs-google-maps-polyline route....
+<bs-google-maps-info start....
+<bs-google-maps-info end....
+```
 ## Example
-Say you have an app like Uber, and after each ride you want to place the recorded route on the map. You could then create a `RouteRenderSuperpower` which will:
+ Say you have an app like Uber, and after each ride you want to place the recorded route on the map. You could then create a `RouteRenderSuperpower` which will:
 1. Receive your ride model.
 2. Extract the route and additional info from it.
 3. Add a polyline with the route to the map.
