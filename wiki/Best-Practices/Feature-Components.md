@@ -1,4 +1,4 @@
-# Scalability
+# The Concept
 Say you have an app like Uber, and you want to place the recorded route on the map. You have 3 different types of [feature map components](/Best-Practices/Feature-Maps) that display a route.
 
 Will you add the same map children over and over in each feature map component? What happens if you need to change the way you render the route? Will you change it in all components? 🤔
@@ -20,7 +20,7 @@ It would be great if we could centralize and encapsulate route rendering somehow
 ```
 
 # Implementation
-## What are you more interested in?
+***What are you more interested in?***
 
 [Template driven solution](#Feature-Child-Component) | [Programmatic solution](#Feature-Child-Directive)
 
@@ -97,77 +97,7 @@ export class RouteOverlayDirective
 }
 ```
 
-1. Create a service for your superpower:
-
-    > The service must extend the `Superpower` class and be injected at map level.
-
-    ```typescript
-    import { Injectable } from '@angular/core';
-    import { Superpower, GoogleMapModule } from '@bespunky/angular-google-maps/core';
-    
-    @Injectable({ providedIn: GoogleMapModule }) // <-- 🟢 Must be injected at map level
-    export class RouteRenderSuperpower extends Superpower
-    {
-        public render(ride: Ride): void
-        {
-            // Get a hold of the map and extract the overlays superpower
-            const overlays = this.map.superpowers.use(OverlaysSuperpower);
-    
-            const start = overlays.createMarker(ride.start.position, { icon: YOUR_START_ICON_CONFIG });
-            const end   = overlays.createMarker(ride.end.position,   { icon: YOUR_END_ICON_CONFIG });
-
-            overlays.createPolyline(ride.path);
-            overlays.createInfoWindow(start, ride.start.time);
-            overlays.createInfoWindow(end,   ride.end.time);
-        }
-    }
-    ```
-
-2. Charge the superpower into the system:
-
-    Find the proper place to inject `SuperpowersChargerService` and charge the new superpower.
-    The best way would be to create a module for the superpower, register the new superpower on construction and import the module in your app:
-    ```typescript
-    import { NgModule } from '@angular/core';
-
-    import { SuperpowersChargerService } from '@bespunky/angular-google-maps/core';
-    import { RouteRenderSuperpower     } from 'path/to/superpower/route-render-superpower.service';
-
-    @NgModule(/* any other module config */)
-    export class RouteRenderSuperpowerModule
-    {
-        constructor(charger: SuperpowersChargerService)
-        {
-            // Use the charger service to register the superpower
-            charger.charge(RouteRenderSuperpower);
-        }
-    }
-    ```
-
-## Usage
-1. Import the superpower module once in your app:
-    ```typescript
-    @NgModule({
-        ...
-        imports: [ ..., RideRenderSuperpowerModule ]
-    })
-    export class AppModule { } // Or another relevant module
-    ```
-
-2.  Get a [hold of the map](/Programmatic-Control) and extract the superpower when you need to use it:
-    ```typescript
-    @Component(...)
-    export class RouteSummaryComponent implements OnInit
-    {
-        @Input public ride: Ride;
-    
-        @ViewChild('map') private map: GoogleMap;
-    
-        ngOnInit()
-        {
-            this.map.superpowers.use(RouteRenderSuperpower).render(this.ride);
-        }
-    }
-    ```
-
-That's it! Pretty neat, right?? 🤟😎
+# Next Steps
+| Topic | Description |
+| ----- | ----------- |
+| [Feature Maps](/Best-Practices/Feature-Maps) | Best practices for maps scalability. |
