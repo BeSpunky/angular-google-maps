@@ -66,3 +66,10 @@ This is extremely useful when handling large amounts of overlays. Once you assoc
 Here's an example:
 
 TODO: EXAMPLEEEEEE
+
+# Next Steps
+| Topic                                        | Description                                              |
+|----------------------------------------------|----------------------------------------------------------|
+| [The Map](/The-Map)                          | The map component and its friends.                       |
+| [Injectable Services](/Injectable-Services)  | Injectable tools and providers.                          |
+| [Geometry Types](/Geometry-Types)            | flexibility for geometries.                              |
