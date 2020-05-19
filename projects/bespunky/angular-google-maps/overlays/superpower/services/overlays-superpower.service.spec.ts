@@ -1,9 +1,9 @@
 import { TestBed    } from '@angular/core/testing';
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, expectPositionEquals                                              } from '@bespunky/angular-google-maps/testing';
-import { GoogleMapsApiService, GoogleMap, Defaults, FlatCoord, SuperpowersService                            } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsData, OverlaysSuperpowerProvider, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule, expectPositionEquals                                            } from '@bespunky/angular-google-maps/testing';
+import { GoogleMapsApiService, GoogleMap, Defaults, FlatCoord, SuperpowersService                          } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlaysModule, GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsData, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
 
 const elementStub: any = document.createElement('div');
 
@@ -19,10 +19,10 @@ describe('OverlaysSuperpower', () =>
     beforeEach(async () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule({
-            customize: def => def.providers = [
-                SuperpowersService,
-                OverlaysSuperpowerProvider
-            ]
+            customize: def => {
+                def.providers = [SuperpowersService];
+                def.imports.push(GoogleMapsOverlaysModule);
+            }
         }));
 
         superpowers = TestBed.inject(SuperpowersService);
@@ -30,6 +30,8 @@ describe('OverlaysSuperpower', () =>
         map         = new GoogleMap(superpowers, api, mapElement);
         power       = map.superpowers.use(OverlaysSuperpower);
     });
+
+    it('should be created', () => expect(power).toBeTruthy());
 
     it('should create a marker outside angular when calling `createMarker()`', () => 
     {            

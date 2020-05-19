@@ -50,6 +50,7 @@ export * from './modules/map/superpowers/i-superpowers';
 export * from './modules/map/superpowers/i-superpower';
 export * from './modules/map/superpowers/superpower';
 export * from './modules/map/superpowers/superpowers.token';
+export * from './modules/map/superpowers/superpowers-charger.service';
 export * from './modules/map/superpowers/superpowers.service';
 // --- Types
 export * from './modules/map/types/zoom-level.enum';
