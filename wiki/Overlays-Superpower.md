@@ -1,4 +1,4 @@
-# The Module
+# Main Module
 Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).
 
 `GoogleMapsOverlaysModule` will charge your app with the `OverlaysSuperpower` and provide you with overlay directives.
