@@ -4,7 +4,7 @@ I ❤ Google Maps. It's awesome! But if you've worked with Google Maps API befor
 I mean, come on... Do I really need to extract all coords from my polygons and markers, then calculate and create a bounds object myself?? Why can't I just pass my overlay objects to `fitBounds()` and let it do the work for me?? 🤦‍♂️ 
 
 Well, with `@bespunky/angular-google-maps`... you can!  
-Apart from components and directives, the library gives you access to powerful tools to do all the heavy-lifting for you 🏋️‍♂️:
+Apart from components and directives, the library gives you access to powerful tools to do all the heavy-lifting for you. 🏋️‍♂️
 
 # [GoogleMapsApiService](/Injectable-Services/GoogleMapsApiService)
 Wrappers use this service internally, but you can use it too. Gives you access to underlying low-level operations, and saves you the need of injecting any of the other services into your components.
