@@ -64,7 +64,8 @@ Data layers are a special kind of overlay defined by Google. You can attach mult
 ## When should I use data layers?
 Consider using the data layer instead of normal overlays when:
 * Dealing with large collections of objects to display on the map.
-* Your data contains standardized GeoJson geometries.
+* You already retrieve your data in GeoJson format.
+* You are using WKT geometries.
 
 # See Also
 | Topic                                                    | Description                                   |
