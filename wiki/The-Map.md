@@ -36,7 +36,7 @@ To handle events emitted by your map, simply bind handlers using angular's synta
 > [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) for a complete list of supported bindable `@Output` events and their `$event` type.
 
 # Styles
-Inside of a `<bs-google-map/>` component, the top level container is always a `div.google-map` element. The map component is defined with no view encapsulation, meaning you can use the `.google-map` class to identify map elements and apply styles if necessary.
+Inside of a `<bs-google-map/>` component, the top level container is always a `div.google-map` element. The map component is defined with no view encapsulation, meaning you can use the `.google-map` class to identify map elements and apply styles from your host component if necessary.
 
 # Next Steps
 ## More About The Map
