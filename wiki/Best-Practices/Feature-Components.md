@@ -20,9 +20,8 @@ It would be great if we could centralize and encapsulate route rendering somehow
 ```
 
 # Implementation
-***What are you more interested in?***
 
-[Template driven solution](#Feature-Child-Component) | [Programmatic solution](#Feature-Child-Directive)
+I'm interested in a [Template driven solution](#Feature-Child-Component) | [Programmatic solution](#Feature-Child-Directive).
 
 ## Feature Child Component
 TODO: VERIFY THAT THIS WORKS. PROABLY AN `ng-container` IS REQUIRED IN THE TEMPLATE.
