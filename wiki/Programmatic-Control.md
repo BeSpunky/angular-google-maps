@@ -61,7 +61,7 @@ TODO: Add example with template reference variables and passing in the wrapper t
 # Custom Data
 Regardless of their type, every wrapper has a `custom` property which you can use for anything. This might serve you well for storing an entity, a configuration, or an id.
 
-This is extremely useful when handling large amounts of overlays. Once you associated an entity with a wrapper instance, you simply extract it from the emitter when an event was triggered and work on entity. **No need for keeping track of your objects, or scanning your arrays to find the relevant object.**
+This is extremely useful when handling large amounts of overlays. Once you associated an entity with a wrapper instance, you simply extract it from the emitter when an event was triggered and work on that entity. **No need for keeping track of your objects, or scanning your arrays to find the relevant object.**
 
 Here's an example:
 
