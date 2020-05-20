@@ -1,5 +1,7 @@
-# Concept
-Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays) for more info). The library represents them as directives which can be placed inside a [map component](/The-Map).
+# The Module
+Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).
+
+`GoogleMapsOverlaysModule` will provide you overlay directives you can place inside your [map component](/The-Map), and will additionally charge your app with the `OverlaysSuperpower`.
 
 [[_TOC_]]
 
@@ -7,7 +9,7 @@ Overlays are layers of information displayed on the map (see [original docs](htt
 Overlay directives operate within the boundaries of the map they are placed in. That map instance is the only one they recognize and interact with.
 
 ## Superpower
-The overlays superpower will allow you quick creation of overlay objects. It will additionally track your created objects and save you the need to do so yourself.
+The overlays superpower will allow you quick creation of overlay objects. It will additionally track your created objects for you. 🏋️‍♂️
 
 # Using Overlays
 For overlays to work, you need to import `GoogleMapsOverlaysModule` from the `overlays` package:
@@ -24,12 +26,19 @@ export class AppModule { } // Or another lazy-loaded module
 
 This enables 2 things:
 
-1. Overlay directives
+1. Directives
+2. The Superpower
+
+
+## Directives
+This is how you would add a simple marker to the map.
 ```html
 <bs-google-map *bsSafe>
     <bs-google-maps-marker [position]="[2, 31]"></bs-google-maps-marker>
 </bs-google-map>
 ```
+
+## Superpower
 
 # data vs others
 TODO
