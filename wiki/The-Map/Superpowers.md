@@ -26,13 +26,13 @@ overlays.createMarker([11, 22]);
 # Supported Superpowers
 The following are superpowers provided by the library out of the box. To use them, simply import the corresponding module.
 
-## [Overlays](/Overlays)
+## [Overlays](/Overlays-Superpower)
 Provides quick overlay creation methods and keeps track of overlays added and removed from the map.
 
 
 | Service                          | Module                         | Package                                      |
 |:--------------------------------:|:------------------------------:|:--------------------------------------------:|
-| ⚡ [`OverlaysSuperpower`](TODO) | 🧩 `GoogleMapsOverlaysModule` | 📦 `@bespunky/angular-google-maps/overlays` |
+| ⚡ [`OverlaysSuperpower`](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fsuperpower%2Fservices%2Foverlays-superpower.service.ts&version=GBmaster) | 🧩 `GoogleMapsOverlaysModule` | 📦 `@bespunky/angular-google-maps/overlays` |
 
 
 ## Drawing Manager
