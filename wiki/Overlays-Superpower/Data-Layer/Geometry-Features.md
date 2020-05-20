@@ -35,9 +35,7 @@ Features are meant to be used in conjunction with the data layer. To create a fe
 ## Quick Geometry
 Each overlay type (marker, polygon, etc.) has a quick geometry property. Those are named after the overlays they will render.
 
-You can either use a native `google.maps.Data.Geometry` object if you have it at hand, like in the example above, or use one of the following to let the directive create one for ya:
+You can either use a native `google.maps.Data.Geometry` object if you have it at hand, like in the example above, or use corresponding quick geometry properties to let the directive create one for ya:
 ```html
 <bs-google-maps-feature [polygon]="[[1, 1], [2, 2], [3, 3]]"></bs-google-maps-feature>
 ```
-
-Have you seen [how geometries are generated natively](https://developers.google.com/maps/documentation/javascript/datalayer#polygon)? Quite the effort, right...?
