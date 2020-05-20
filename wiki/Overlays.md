@@ -1,7 +1,7 @@
 # The Module
 Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).
 
-`GoogleMapsOverlaysModule` will provide you with overlay directives, and charge your app with the `OverlaysSuperpower`.
+`GoogleMapsOverlaysModule` will charge your app with the `OverlaysSuperpower` and provide you with overlay directives.
 
 If you're gonna use overlays, remember to import the module from the `overlays` package:
 ```typescript
@@ -28,20 +28,18 @@ This is how you would add a simple marker to the map for each branch of your bus
 </bs-google-map>
 ```
 
-# Superpower (<small>[about superpowers](/The-Map/Superpowers)</small>)
+# Superpower
+<small>[About Superpowers](/The-Map/Superpowers)</small>
+
 The `OverlaysSuperpower` provides quick overlay creation methods. It will additionally track your created objects for you. 🏋️‍♂️
 
-<details>
-    <summary class="span">Let's keep it simple</summary>
+## Programmatic Control
+When fits, you can use the `OverlaysSuperpower` instead of overlay directives.
 
-    Overlay directives automatically use the superpower and track your overlays.
-    If your app needs access to the tracker, access it through the superpower.
-</details>
-<br/>
-<details>
-    <summary class="span">I'll need more control</summary>
+## Tracking Overlays
+Using the directives or the `OverlaysSuperpower` directly both take care of tracking for you.
 
-</details>
+To retrieve all overlays attached to the map, use the `tracker` property of `OverlaysSuperpower`.
 
 # data vs others
 TODO
