@@ -6,7 +6,7 @@
 
 [Wrapper API]() | [Directive API]
 
-# Concept
+# Concepts
 Data layer features are the parallels for normal overlays. Markers, polygons, and other friends, can be created as features as well. The type of object rendered on the map is defined by the type of geometry assigned to the feature.
 
 ## 
