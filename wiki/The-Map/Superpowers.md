@@ -126,7 +126,7 @@ Good candidates for superpowers are:
 * Extending map capabilities (e.g. tracking objects, data extraction, etc.).
 * Functionalities you can say "should be/have been built-into the map" about.
 
-You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better implemented as [components or directives](#See-Also).
+You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better implemented as [feature components or directives](#See-Also).
 
 # See Also
 | Topic                                                    | Description                                   |
