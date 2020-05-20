@@ -13,8 +13,10 @@ The native data layer object raises events for features it holds, which in turn 
 
 See [source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Fgoogle-maps-data.ts&version=GBmaster) for API.
 
-## Feature Tracking
-
+The wrapper implements feature tracking automatically. Access tracked features using the `features` property:
+```
+const 
+```
 
 # See Also
 
