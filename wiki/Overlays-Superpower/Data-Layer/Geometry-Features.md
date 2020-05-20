@@ -9,12 +9,35 @@
 # Concepts
 Data layer features are the parallels for normal overlays. Markers, polygons, and other friends, can be created as features as well. The type of object rendered on the map is defined by the type of geometry assigned to the feature.
 
-## 
-If you already have a native `google.maps.Data.Geometry` object in your hand and you simply want it to render, use the `geometry` property:
-```html
-<bs-google-maps-feature [geometry]="yourGeometryObject"></bs-google-maps-feature>
-```
+Features are meant to be used in conjunction with the data layer. To create a feature, either:
+* Place a feature directive inside of a data directive:
+    ```html
+    <bs-google-map *bsSafe>
+        <bs-google-maps-data>
+            <bs-google-maps-feature [geometry]="YOUR_GEOMETRY_OBJECT"></bs-google-maps-feature>
+        </bs-google-maps-data>
+    </bs-google-map>
+    ```
+* Use the data wrapper to add the feature.  
+<small>[How do I access the wrapper?](/Programmatic-Control)</small>
 
-If you don't, and you know the 
+    ```typescript
+    const data = ... // Fetch the data layer wrapper
+
+    // Quick creation methods
+    data.createMarker(...);
+    data.createPolygon(...);
+    ...
+    // Manual creation method
+    data.addFeature(...);
+    ```
+
+## Quick Geometry
+Each overlay type (marker, polygon, etc.) has a quick geometry property. Those are named after the overlays they will render.
+
+You can either use a native `google.maps.Data.Geometry` object if you have it at hand, like in the example above, or use one of the following to let the directive create one for ya:
+```html
+<bs-google-maps-feature [polygon]="[[1, 1], [2, 2], [3, 3]]"></bs-google-maps-feature>
+```
 
 Have you seen [how geometries are generated natively](https://developers.google.com/maps/documentation/javascript/datalayer#polygon)? Quite the effort, right...?
