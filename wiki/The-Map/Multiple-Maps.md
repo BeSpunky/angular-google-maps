@@ -18,3 +18,8 @@ This allows you to safely place multiple map components in your app, even in the
     <bs-google-maps-polygon [path]="[[1,1], [20,20], [40, 40]]"></bs-google-maps-marker>
 </bs-google-map>
 ```
+
+# See Also
+| Topic                                        | Description                         |
+|----------------------------------------------|-------------------------------------|
+| [Feature Maps](/Best-Practices/Feature-Maps) | Best practices for map scalability. |
