@@ -79,7 +79,7 @@ Events raised by the library always provide an events data object, even if the n
 * The native object
 * A simplified transformed version of the native event args.
 
- All at hand, so you don't have to transform anything yourself.
+ All at hand, so you don't have to transform, produce or fetch anything yourself.
 
 ## Example
 ```html
