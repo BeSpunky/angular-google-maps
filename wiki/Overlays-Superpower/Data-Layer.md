@@ -8,7 +8,6 @@ See [source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-m
 
 The native data layer object raises events for features it holds, which in turn mean you'd have to find out which feature raised the event. `<bs-google-maps-data/>` and `<bs-google-maps-feature>` play nicely together to bridge this. See [feature directive](/Overlays-Superpower/Data-Layer/Geometry-Features).
 
-
 ## Wrapper 🧬 `GoogleMapsData`
 
 See [source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Fgoogle-maps-data.ts&version=GBmaster) for API.
