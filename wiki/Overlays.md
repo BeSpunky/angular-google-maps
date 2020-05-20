@@ -15,35 +15,33 @@ import { GoogleMapsOverlaysModule } from '@bespunky/angular-google-maps/overlays
 export class AppModule { } // Or another lazy-loaded module
 ```
 
-s[[_TOC_]]
+[[_TOC_]]
 
 # Directives
-Overlay directives are placed inside a [map component](/The-Map). A directive represents a single instance of the overlay. See [supported overlays](#Supported-Overlays).
+Overlay directives are placed inside a [map component](/The-Map). A directive represents a single instance of the overlay (see [supported overlays](#Supported-Overlays)) and operates within the boundaries of the map it was placed in. That map instance is the only one it recognizes and interacts with.
 
-> **Scope** - Overlay directives operate within the boundaries of the map they are placed in. That map instance is the only one they recognize and interact with.
-
-> **Iteration** - You can use `*ngFor` to create multiple instances freely.
-
-# Superpower
-The overlays superpower will allow you quick creation of overlay objects. It will additionally track your created objects for you. 🏋️‍♂️
-
-# Using Overlays
-
-This enables 2 things:
-
-1. Directives
-2. The Superpower
-
-
-## Directives
-This is how you would add a simple marker to the map.
+## Example
+This is how you would add a simple marker to the map for each branch of your business:
 ```html
 <bs-google-map *bsSafe>
-    <bs-google-maps-marker [position]="[2, 31]"></bs-google-maps-marker>
+    <bs-google-maps-marker *ngFor="let branch of branches" [position]="branch.location"></bs-google-maps-marker>
 </bs-google-map>
 ```
 
-## Superpower
+# Superpower (<small>[about superpowers](/The-Map/Superpowers)</small>)
+The `OverlaysSuperpower` provides quick overlay creation methods. It will additionally track your created objects for you. 🏋️‍♂️
+
+<details>
+    <summary class="span">Let's keep it simple</summary>
+
+    Overlay directives automatically use the superpower and track your overlays.
+    If your app needs access to the tracker, access it through the superpower.
+</details>
+<br/>
+<details>
+    <summary class="span">I'll need more control</summary>
+
+</details>
 
 # data vs others
 TODO
@@ -61,3 +59,6 @@ TODO
 | 🚧 | Ground Overlays                    |                             |
 | 🚧 | Custom Overlays                    |                             |
 | ✔  | [Data Layer](/Overlays/Data-Layer) | `<bs-google-maps-data/>`    |
+
+# See Also
+TODO BEST PRACTICES LINKS
