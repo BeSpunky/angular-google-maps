@@ -12,7 +12,7 @@ You must either place geometry feature directives inside of the data directive o
 [Wrapper API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Fgoogle-maps-data.ts&version=GBmaster) | [Directive API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Fdirective%2Fgoogle-maps-data.directive.ts&version=GBmaster)
 
 ## Feature Events
-The native data layer object raises events for features it holds, which in turn mean you'd have to find out which feature raised the event. `<bs-google-maps-data/>` and `<bs-google-maps-feature>` play nicely together to bridge this. See [Geometry Features](/Overlays-Superpower/Data-Layer/Geometry-Features).
+The native data layer object raises events for features it holds, which in turn means you'd have to find out which feature raised the event. `<bs-google-maps-data/>` and `<bs-google-maps-feature>` play nicely together to bridge this. See [Geometry Features](/Overlays-Superpower/Data-Layer/Geometry-Features).
 
 ## Feature Tracking
 <small>[How do I access the wrapper?](/Programmatic-Control)</small>
