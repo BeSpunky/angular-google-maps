@@ -21,6 +21,27 @@ const yourPolygons = overlays.tracker.polygons; // GoogleMapsPolygon[]
 ...
 ```
 
+Another way to quickly extract the superpower is using the `overlay` 2-way-binding property:
+```typescript
+// Your component class
+
+@Component(...)
+export class YourComponent implements OnInit
+{
+    public overlays: OverlaysSuperpower; // You can name this however you want
+
+    ngOnInit()
+    {
+        // `this.overlays` will hold the superpower without having to fetch it through the map.
+    }
+}
+```
+```html
+<!-- Your component template -->
+
+<bs-google-map *bsSafe [(overlays)]="overlays"></bs-google-map>
+```
+
 # Directives
 Overlay directives are placed inside a [map component](/The-Map). A directive represents a single instance of the overlay and operates within the boundaries of the map it was placed in. That map instance is the only one it recognizes and interacts with.
 
