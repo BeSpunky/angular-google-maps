@@ -1,18 +1,9 @@
 # The Module
 Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).
 
-`GoogleMapsOverlaysModule` will provide you overlay directives you can place inside your [map component](/The-Map), and will additionally charge your app with the `OverlaysSuperpower`.
+`GoogleMapsOverlaysModule` will provide you with overlay directives, and charge your app with the `OverlaysSuperpower`.
 
-[[_TOC_]]
-
-## Directive Scope
-Overlay directives operate within the boundaries of the map they are placed in. That map instance is the only one they recognize and interact with.
-
-## Superpower
-The overlays superpower will allow you quick creation of overlay objects. It will additionally track your created objects for you. 🏋️‍♂️
-
-# Using Overlays
-For overlays to work, you need to import `GoogleMapsOverlaysModule` from the `overlays` package:
+If you're gonna use overlays, remember to import the module from the `overlays` package:
 ```typescript
 import { NgModule } from '@angular/core';
 import { GoogleMapsOverlaysModule } from '@bespunky/angular-google-maps/overlays';
@@ -23,6 +14,20 @@ import { GoogleMapsOverlaysModule } from '@bespunky/angular-google-maps/overlays
 })
 export class AppModule { } // Or another lazy-loaded module
 ```
+
+s[[_TOC_]]
+
+# Directives
+Overlay directives are placed inside a [map component](/The-Map). A directive represents a single instance of the overlay. See [supported overlays](#Supported-Overlays).
+
+> **Scope** - Overlay directives operate within the boundaries of the map they are placed in. That map instance is the only one they recognize and interact with.
+
+> **Iteration** - You can use `*ngFor` to create multiple instances freely.
+
+# Superpower
+The overlays superpower will allow you quick creation of overlay objects. It will additionally track your created objects for you. 🏋️‍♂️
+
+# Using Overlays
 
 This enables 2 things:
 
