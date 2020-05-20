@@ -79,7 +79,9 @@ Events raised by the library always provide an events data object, even if the n
 * The native object
 * A simplified transformed version of the native event args.
 
- All at hand, so you don't have to transform, produce or fetch anything yourself.
+All at hand, so you don't have to transform, produce or fetch anything yourself.
+
+> To use the event data object, pass the `$event` object to your event handlers.
 
 ## Example
 ```html
@@ -100,13 +102,14 @@ export YourComponent
     }
 }
 ```
-# Superpowers
+# [Superpowers](/The-Map/Superpowers)
 The different capabilities offered by the native library, such as drawing on the map, placing overlays and others, are represented by superpowers.
 
 These superpowers are dynamically added to the map object, depending on the modules you choose to import.
 In other words:
 * When you build your app, unused superpowers will be excluded from the final bundle.
 * You can now lazy load superpowers.
+* You can create your own superpowers and extend map capabilities!
 
 # Next Steps
 | Topic                                        | Description                                              |
