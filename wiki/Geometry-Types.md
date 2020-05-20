@@ -104,4 +104,4 @@ const path: CoordPath = new google.maps.MVCArray([
 # See Also
 | Topic | Description |
 | ----- | ----------- |
-|[GeometryTransformService](/Injectable-Services/GeometryTransformService)|Easily construct and convert geometry types.|
+|[GeometryTransformService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Ftransform%2Fgeometry-transform.service.ts&version=GBmaster)|Easily construct and convert geometry types.|
