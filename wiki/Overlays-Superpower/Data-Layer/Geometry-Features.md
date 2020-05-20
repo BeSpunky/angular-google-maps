@@ -47,3 +47,8 @@ Using the `<bs-google-maps-feature/>` directive, events will automatically be fi
 
 If you don't care about the specific feature which raised the event, bind your handlers to the data directive instead, and they will trigger regardless of the raising feature.
 
+# See Also
+
+| Topic                             | Description                 |
+|-----------------------------------|-----------------------------|
+| [Geometry Types](/Geometry-Types) | Flexibility for geometries. |
