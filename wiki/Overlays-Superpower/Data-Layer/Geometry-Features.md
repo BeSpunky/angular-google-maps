@@ -39,3 +39,11 @@ You can either use a native `google.maps.Data.Geometry` object if you have it at
 ```html
 <bs-google-maps-feature [polygon]="[[1, 1], [2, 2], [3, 3]]"></bs-google-maps-feature>
 ```
+
+# Feature Events
+The native feature object raises only a few events. The more interesting events are raised by the native data parent. This can sometimes be uncomfortable, as you'll have to check which feature raised the event.
+
+Using the `<bs-google-maps-feature/>` directive, events will automatically be filtered, so binding an event handler to a feature element, will trigger only for _that_ specific feature.
+
+If you don't care about the specific feature which raised the event, bind your handlers to the data directive instead, and they will trigger regardless of the raising feature.
+
