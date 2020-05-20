@@ -26,7 +26,7 @@ overlays.createMarker([11, 22]);
 # Supported Superpowers
 The following are superpowers provided by the library out of the box. To use them, simply import the corresponding module.
 
-## Overlays
+## [Overlays](/Overlays)
 Provides quick overlay creation methods and keeps track of overlays added and removed from the map.
 
 
