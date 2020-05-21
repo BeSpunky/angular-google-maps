@@ -59,24 +59,9 @@ The following items are the ones the library user interacts with. Other items ca
 |-------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Mocks             | Facilitating mocking of library classes.           | 💉`MockNative`<br/>💉`MockWrapper`<br/>💉`MockEmittingWrapper`<br/>💉`MockComponentWithLifecycle`<br/>💉`MockGoogleMap`<br/>💉`MockSuperpower1`<br/>💉`MockSuperpower2`<br/> |
 | Wrapper Testing   | Facilitating testing of wrapper factories.         | ∱`itShouldCreateWrapper`                                                                                                                                                        |
-| Lifecycle Testing | Facilitating testing of components with lifecycle. | 💉`LifecycleComponentTestHost`<br/>∱`createLifecycleTestingHostComponentTemplate`                                                                                             |   |
-|                   |                                                    |                                                                                                                                                                                  |
-|                   |                                                    |                                                                                                                                                                                  |
+| Lifecycle Testing | Facilitating testing of components with lifecycle. | 💉`LifecycleComponentTestHost`<br/>∱`createLifecycleTestingHostComponentTemplate`                                                                                               |
 
 # 🧪 `@bespunky/angular-google-maps/async/testing`
-| Item | Purpose | Tools |
-|------|---------|-------|
-|      |         |       |
-|      |         |       |
-|      |         |       |
-|      |         |       |
-|      |         |       |
-
-# 🧪 `@bespunky/angular-google-maps/overlays/testing`
-| Item | Purpose | Tools |
-|------|---------|-------|
-|      |         |       |
-|      |         |       |
-|      |         |       |
-|      |         |       |
-|      |         |       |
+| Item  | Purpose                                                      | Tools                                |
+|-------|--------------------------------------------------------------|--------------------------------------|
+| Setup | Facilitating setup for map related tests with async loading. | ∱`configureGoogleMapsTestingModule` |
