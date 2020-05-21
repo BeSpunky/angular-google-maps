@@ -1,6 +1,12 @@
+
+
+
+
+
+
 <div align="right">
 
------------- Legend  -------------
+# --------- Legend ---------
 
 Modules 🧩
 
@@ -12,6 +18,8 @@ Services or helper classes 💉
 
 Superpower services ⚡
 </div>
+
+# Packages
 
 # 📦`@bespunky/angular-google-maps/core`
 | Item                                                           | Description                                    | Tools                                                                                                              |
