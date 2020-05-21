@@ -49,22 +49,19 @@ The following items are the ones the library user interacts with. Other items ca
 | [Data Layer Overlay](/Overlays-Superpower/Data-Layer) | Rendering geometries and GeoJsons on the map.              | [⚙`<bs-google-maps-data>`<br/>🧬`GoogleMapsData`<br/>⚙`<bs-google-maps-feature>`<br/>🧬`GoogleMapsFeature`<br/>💉`FeatureTracker`](/Overlays-Superpower/Data-Layer) |
 
 # 🧪 `@bespunky/angular-google-maps/testing`
-| Item              | Purpose                                        | Tools                  |
-|-------------------|------------------------------------------------|------------------------|
-| Expectation Utils | Facilitating expectations with geometry types. | ∱`expectPositionEquals` |
-|                   |                                                |                        |
-|                   |                                                |                        |
-|                   |                                                |                        |
-|                   |                                                |                        |
+| Item              | Purpose                                        | Tools                                |
+|-------------------|------------------------------------------------|--------------------------------------|
+| Expectation Utils | Facilitating expectations with geometry types. | ∱`expectPositionEquals`             |
+| Setup             | Facilitating setup for map related tests.      | ∱`configureGoogleMapsTestingModule` |
 
 # 🧪 `@bespunky/angular-google-maps/core/testing`
-| Item | Purpose | Tools |
-|------|---------|-------|
-|      |         |       |
-|      |         |       |
-|      |         |       |
-|      |         |       |
-|      |         |       |
+| Item              | Purpose                                            | Tools                                                                                                                                                                            |
+|-------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Mocks             | Facilitating mocking of library classes.           | 💉`MockNative`<br/>💉`MockWrapper`<br/>💉`MockEmittingWrapper`<br/>💉`MockComponentWithLifecycle`<br/>💉`MockGoogleMap`<br/>💉`MockSuperpower1`<br/>💉`MockSuperpower2`<br/> |
+| Wrapper Testing   | Facilitating testing of wrapper factories.         | ∱`itShouldCreateWrapper`                                                                                                                                                        |
+| Lifecycle Testing | Facilitating testing of components with lifecycle. | 💉`LifecycleComponentTestHost`<br/>∱`createLifecycleTestingHostComponentTemplate`                                                                                             |   |
+|                   |                                                    |                                                                                                                                                                                  |
+|                   |                                                    |                                                                                                                                                                                  |
 
 # 🧪 `@bespunky/angular-google-maps/async/testing`
 | Item | Purpose | Tools |
