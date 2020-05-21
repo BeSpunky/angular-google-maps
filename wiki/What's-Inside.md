@@ -36,22 +36,22 @@ The following items are the ones the library user interacts with. Other items ca
 | [Safe Render](/The-Map/*bsSafe)                     | Rendering maps only when api is ready.                     | [⚙`*bsSafe`](/The-Map/*bsSafe)                                     |
 
 # 📦 `@bespunky/angular-google-maps/overlays`
-| Item                                    | Purpose                                                    | Tools                                                        |
-|-----------------------------------------|------------------------------------------------------------|--------------------------------------------------------------|
-| [Overlays Module](/Overlays-Superpower) | Automating maps api loading and bootstrapping the library. | [🧩`GoogleMapsModule`](/Overlays-Superpower) |
-| Superpower|Facilitating work with overlays and geometry. | ⚡`OverlaysSuperpower`<br/>💉`OvelraysTracker`<br/>⚙`OverlaysDirective`|
-| Marker Overlay|Rendering markers on the map.|⚙`<bs-google-maps-marker>`<br/>🧬`GoogleMapsMarker`<br/>` |
-| Polygon Overlay|Rendering polygons on the map.| |
-| Data Layer Overlay|Rendering geometries and GeoJsons on the map.| |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
+| Item                                    | Purpose                                                    | Tools                                                                                                                               |
+|-----------------------------------------|------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| [Overlays Module](/Overlays-Superpower) | Automating maps api loading and bootstrapping the library. | [🧩`GoogleMapsModule`](/Overlays-Superpower)                                                                                       |
+| Superpower                              | Facilitating work with overlays and geometry.              | ⚡`OverlaysSuperpower`<br/>⚡`OvelraysTracker`<br/>⚙`OverlaysDirective`                                                           |
+| Marker Overlay                          | Rendering markers on the map.                              | ⚙`<bs-google-maps-marker>`<br/>🧬`GoogleMapsMarker`<br/>                                                                          |
+| Polygon Overlay                         | Rendering polygons on the map.                             | ⚙`<bs-google-maps-polygon>`<br/>🧬`GoogleMapsPolygon`<br/>                                                                        |
+| Data Layer Overlay                      | Rendering geometries and GeoJsons on the map.              | ⚙`<bs-google-maps-data>`<br/>🧬`GoogleMapsData`<br/>⚙`<bs-google-maps-feature>`<br/>🧬`GoogleMapsFeature`<br/>💉`FeatureTracker` |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
+|                                         |                                                            |                                                                                                                                     |
