@@ -22,6 +22,11 @@ const yourPolygons = overlays.tracker.polygons; // GoogleMapsPolygon[]
 ```
 
 Another way to quickly extract the superpower is using the 2-way-binding `overlay` property:
+```html
+<!-- Your component template -->
+
+<bs-google-map *bsSafe [(overlays)]="overlays"></bs-google-map>
+```
 ```typescript
 // Your component class
 
@@ -35,11 +40,6 @@ export class YourComponent implements OnInit
         // `this.overlays` will hold the superpower without having to fetch it through the map.
     }
 }
-```
-```html
-<!-- Your component template -->
-
-<bs-google-map *bsSafe [(overlays)]="overlays"></bs-google-map>
 ```
 
 # Directives
