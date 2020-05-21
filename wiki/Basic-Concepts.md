@@ -16,7 +16,7 @@ A native object is always represented by a corresponding wrapper object. However
 ![Wrapper](.attachments/Wrapper.png)
 </center>
 
-> **Note** Once you put your hands on the native object, the library has no way of knowing what you'll do with it. In certain cases the library expects you to use the wrapper for its magic to work. [Overlay tracking](Overlays/Tracking.md) for example, will become useless if you add overlays directly to the native object.
+> **Note** Once you put your hands on the native object, the library has no way of knowing what you'll do with it. In certain cases the library expects you to use the wrapper for its magic to work. [Overlay tracking](/Overlays-Superpower#The-Superpower) for example, will become useless if you add overlays directly to the native object.
 >
 > **Conclusions**:
 > 1. Stick to wrapper objects as much as possible.
