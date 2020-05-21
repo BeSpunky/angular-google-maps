@@ -56,18 +56,18 @@ This is how you would add a simple marker to the map for each branch of your bus
 > It doesn't matter if you use directives or the superpower directly, `OverlaysSuperpower` will take care of tracking for you. 🏋️‍♂️
 
 # Supported Overlays
-|     | Type                                          | Directive                   |
-|:---:|-----------------------------------------------|-----------------------------|
-| ✔  | [Markers](/Overlays-Superpower/Markers)       | `<bs-google-maps-marker/>`  |
-| ✔  | [Polygons](/Overlays-Superpower/Polygons)     | `<bs-google-maps-polygon/>` |
-| 🚧 | Polylines                                     |                             |
-| 🚧 | Circles                                       |                             |
-| 🚧 | Rectangles                                    |                             |
-| 🚧 | Info Windows                                  |                             |
-| 🚧 | Symbols                                       |                             |
-| 🚧 | Ground Overlays                               |                             |
-| 🚧 | Custom Overlays                               |                             |
-| ✔  | [Data Layer](/Overlays-Superpower/Data-Layer) | `<bs-google-maps-data/>`    |
+|     | Type                                          | Directive                   | Wrapper             |
+|:---:|-----------------------------------------------|-----------------------------|---------------------|
+| ✔  | [Markers](/Overlays-Superpower/Markers)       | `<bs-google-maps-marker/>`  | `GoogleMapsMarker`  |
+| ✔  | [Polygons](/Overlays-Superpower/Polygons)     | `<bs-google-maps-polygon/>` | `GoogleMapsPolygon` |
+| 🚧 | Polylines                                     |                             |                     |
+| 🚧 | Circles                                       |                             |                     |
+| 🚧 | Rectangles                                    |                             |                     |
+| 🚧 | Info Windows                                  |                             |                     |
+| 🚧 | Symbols                                       |                             |                     |
+| 🚧 | Ground Overlays                               |                             |                     |
+| 🚧 | Custom Overlays                               |                             |                     |
+| ✔  | [Data Layer](/Overlays-Superpower/Data-Layer) | `<bs-google-maps-data/>`    | `GoogleMapsData`    |
 
 # Data Layer vs. Normal Overlays
 Data layers are a special kind of overlay defined by Google. You can attach multiple data layers to a single map, each having multiple features (marker, polygons, etc.).
