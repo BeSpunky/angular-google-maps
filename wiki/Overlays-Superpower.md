@@ -56,7 +56,7 @@ This is how you would add a simple marker to the map for each branch of your bus
 > It doesn't matter if you use directives or the superpower directly, `OverlaysSuperpower` will take care of tracking for you. 🏋️‍♂️
 
 # Supported Overlays
-|     | Type                                          | Directive                   | Wrapper             |
+|     | Type                                          | Directive ⚙                | Wrapper 🧬         |
 |:---:|-----------------------------------------------|-----------------------------|---------------------|
 | ✔  | [Markers](/Overlays-Superpower/Markers)       | `<bs-google-maps-marker/>`  | `GoogleMapsMarker`  |
 | ✔  | [Polygons](/Overlays-Superpower/Polygons)     | `<bs-google-maps-polygon/>` | `GoogleMapsPolygon` |
