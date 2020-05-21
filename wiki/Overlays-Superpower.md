@@ -21,7 +21,7 @@ const yourPolygons = overlays.tracker.polygons; // GoogleMapsPolygon[]
 ...
 ```
 
-Another way to quickly extract the superpower is using the `overlay` 2-way-binding property:
+Another way to quickly extract the superpower is using the 2-way-binding `overlay` property:
 ```typescript
 // Your component class
 
