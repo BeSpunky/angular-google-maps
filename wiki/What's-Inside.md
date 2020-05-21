@@ -11,6 +11,8 @@
     ⚡ Superpower services
 
     🎫 Tokens and providers
+
+    ∱  Helper functions
 </div>
 
 [[_TOC_]]
@@ -47,9 +49,37 @@ The following items are the ones the library user interacts with. Other items ca
 | [Data Layer Overlay](/Overlays-Superpower/Data-Layer) | Rendering geometries and GeoJsons on the map.              | [⚙`<bs-google-maps-data>`<br/>🧬`GoogleMapsData`<br/>⚙`<bs-google-maps-feature>`<br/>🧬`GoogleMapsFeature`<br/>💉`FeatureTracker`](/Overlays-Superpower/Data-Layer) |
 
 # 🧪 `@bespunky/angular-google-maps/testing`
+| Item              | Purpose                                        | Tools                  |
+|-------------------|------------------------------------------------|------------------------|
+| Expectation Utils | Facilitating expectations with geometry types. | ∱`expectPositionEquals` |
+|                   |                                                |                        |
+|                   |                                                |                        |
+|                   |                                                |                        |
+|                   |                                                |                        |
 
 # 🧪 `@bespunky/angular-google-maps/core/testing`
+| Item | Purpose | Tools |
+|------|---------|-------|
+|      |         |       |
+|      |         |       |
+|      |         |       |
+|      |         |       |
+|      |         |       |
 
 # 🧪 `@bespunky/angular-google-maps/async/testing`
+| Item | Purpose | Tools |
+|------|---------|-------|
+|      |         |       |
+|      |         |       |
+|      |         |       |
+|      |         |       |
+|      |         |       |
 
 # 🧪 `@bespunky/angular-google-maps/overlays/testing`
+| Item | Purpose | Tools |
+|------|---------|-------|
+|      |         |       |
+|      |         |       |
+|      |         |       |
+|      |         |       |
+|      |         |       |
