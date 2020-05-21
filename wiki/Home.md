@@ -3,11 +3,11 @@ This library brings Google Maps API to angular and provides a set of components,
 
 You may use the library as you like, with any app, under the MIT license.
 
-🎁 [What's in the library?](Modules.md)
+🎁 [What's in the library?](/What's-Inside)
 
 🙌 [Live demo](TODO add demo)
 
-✨ [Getting Started](Getting-Started.md)
+✨ [Getting Started](Getting-Started)
 
 # What's so cool about it
 ✔ Easy to use 🔌
