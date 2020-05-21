@@ -5,7 +5,11 @@
 
 Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).
 The overlays module will charge your app with the `OverlaysSuperpower` and provide you with overlay directives.
-It is possible to lazy load the module in case you'll only need them later.
+
+# Bootstrap
+Import `GoogleMapsOverlaysModule` in your app and you're good to go. 👍
+
+> You can also lazy load the module in case you'll only need them later.
 
 [[_TOC_]]
 
