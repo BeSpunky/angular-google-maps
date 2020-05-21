@@ -1,7 +1,7 @@
 # @bespunky/angular-google-maps
 This library brings Google Maps API to angular and provides a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
 
-You may use the library as use like, with any app, under the MIT license.
+You may use the library as you like, with any app, under the MIT license.
 
 🎁 [What's in the library?](Modules.md)
 
