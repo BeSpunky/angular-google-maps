@@ -1,16 +1,14 @@
-<div align="right">
+# Legend
 
-# --------- Legend ---------
+* 🧩 Modules
 
-Modules 🧩
+* ⚙ Components or directive
 
-Components or directive ⚙
+* 🧬 Native object wrappers
 
-Native object wrappers 🧬
+* 💉 Services or helper classes
 
-Services or helper classes 💉
-
-Superpower services ⚡
+* ⚡ Superpower services
 </div>
 
 # Packages
