@@ -9,9 +9,9 @@
 
 ⚡ Superpower services
 
-# Content
+# 📦`@bespunky/angular-google-maps/core`
 
-| 📦`@bespunky/angular-google-maps/core`                         | Description                                    | Tools                                                                                                              |
+| Item                                                           | Description                                    | Tools                                                                                                              |
 |-----------------------------------------------------------------|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
 | [Core Module](/Getting-Started/Manually-Loading)                | The main module used to bootstrap the library. | [🧩`GoogleMapsModule`](/Getting-Started/Manually-Loading)                                                         |
 | [Map Component](/The-Map)                                       | The core component of the library.             | [⚙`<bs-google-map/>`](/The-Map)<br/>[🧬`GoogleMap`](/The-Map)<br/>[⚡`SuperpowersService`](/The-Map/Superpowers) |
