@@ -65,3 +65,9 @@ The following items are the ones the library user interacts with. Other items ca
 | Item  | Purpose                                                      | Tools                                |
 |-------|--------------------------------------------------------------|--------------------------------------|
 | Setup | Facilitating setup for map related tests with async loading. | ∱`configureGoogleMapsTestingModule` |
+
+# 🧪 `@bespunky/angular-google-maps/overlays/testing`
+| Item  | Purpose                                                      | Tools                                                                                                                |
+|-------|--------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| Setup | Facilitating setup for map related tests with async loading. | ∱`configureGoogleMapsTestingModule`                                                                                 |
+| Mocks | Facilitating mocking of library overlay classes.             | 💉`MockNativeDrawableOverlay`<br/>💉`MockDrawableOverlay`<br/>💉`MockMarker`<br/>💉`MockData`<br/>💉`MockFeature` |
