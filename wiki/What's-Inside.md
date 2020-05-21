@@ -45,3 +45,11 @@ The following items are the ones the library user interacts with. Other items ca
 | [Marker Overlay](/Overlays-Superpower/Markers)        | Rendering markers on the map.                              | [⚙`<bs-google-maps-marker>`<br/>🧬`GoogleMapsMarker`<br/>](/Overlays-Superpower/Markers)                                                                             |
 | [Polygon Overlay](/Overlays-Superpower/Polygons)      | Rendering polygons on the map.                             | [⚙`<bs-google-maps-polygon>`<br/>🧬`GoogleMapsPolygon`<br/>](/Overlays-Superpower/Polygons)                                                                          |
 | [Data Layer Overlay](/Overlays-Superpower/Data-Layer) | Rendering geometries and GeoJsons on the map.              | [⚙`<bs-google-maps-data>`<br/>🧬`GoogleMapsData`<br/>⚙`<bs-google-maps-feature>`<br/>🧬`GoogleMapsFeature`<br/>💉`FeatureTracker`](/Overlays-Superpower/Data-Layer) |
+
+# 🧪 `@bespunky/angular-google-maps/testing`
+
+# 🧪 `@bespunky/angular-google-maps/core/testing`
+
+# 🧪 `@bespunky/angular-google-maps/async/testing`
+
+# 🧪 `@bespunky/angular-google-maps/overlays/testing`
