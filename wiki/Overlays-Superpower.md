@@ -33,7 +33,7 @@ Another way to quickly extract the superpower is using the 2-way-binding `overla
 @Component(...)
 export class YourComponent implements OnInit
 {
-    public overlays: OverlaysSuperpower; // You can name this however you want
+    public overlays: OverlaysSuperpower; // You can name this however you want of course
 
     ngOnInit()
     {
