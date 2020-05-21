@@ -34,3 +34,7 @@
 | [Lazy Loader](/Getting-Started/Auto-Async-Loading)  | Lazy loading google maps api.                              | [💉`LazyGoogleMapsApiLoader`](/Getting-Started/Auto-Async-Loading) |
 | [Safe Render](/The-Map/*bsSafe)                     | Rendering maps only when api is ready.                     | [⚙`*bsSafe`](/The-Map/*bsSafe)                                     |
 
+# 📦 `@bespunky/angular-google-maps/overlays`
+| Item                                    | Purpose                                                    | Tools                                                        |
+|-----------------------------------------|------------------------------------------------------------|--------------------------------------------------------------|
+| [Overlays Module](/Overlays-Superpower) | Automating maps api loading and bootstrapping the library. | [🧩`GoogleMapsModule`](/Overlays-Superpower) |
