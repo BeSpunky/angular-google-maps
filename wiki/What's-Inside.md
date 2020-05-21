@@ -1,16 +1,19 @@
-# Legend
-🧩 Modules
+<div align="right">
 
-⚙ Components or directive
+------------ Legend  -------------
 
-🧬 Native object wrappers
+Modules 🧩
 
-💉 Services or helper classes
+Components or directive ⚙
 
-⚡ Superpower services
+Native object wrappers 🧬
+
+Services or helper classes 💉
+
+Superpower services ⚡
+</div>
 
 # 📦`@bespunky/angular-google-maps/core`
-
 | Item                                                           | Description                                    | Tools                                                                                                              |
 |-----------------------------------------------------------------|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
 | [Core Module](/Getting-Started/Manually-Loading)                | The main module used to bootstrap the library. | [🧩`GoogleMapsModule`](/Getting-Started/Manually-Loading)                                                         |
