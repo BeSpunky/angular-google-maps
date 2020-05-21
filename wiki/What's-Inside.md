@@ -39,10 +39,10 @@ The following items are the ones the library user interacts with. Other items ca
 | Item                                    | Purpose                                                    | Tools                                                        |
 |-----------------------------------------|------------------------------------------------------------|--------------------------------------------------------------|
 | [Overlays Module](/Overlays-Superpower) | Automating maps api loading and bootstrapping the library. | [🧩`GoogleMapsModule`](/Overlays-Superpower) |
-| Superpower|Facilitating work with overlays and geometry. | ⚡`OverlaysSuperpower`<br/>⚙`OverlaysDirective`|
-| Marker Overlay| | |
-| Polygon Overlay| | |
-| Data Layer Overlay| | |
+| Superpower|Facilitating work with overlays and geometry. | ⚡`OverlaysSuperpower`<br/>💉`OvelraysTracker`<br/>⚙`OverlaysDirective`|
+| Marker Overlay|Rendering markers on the map.|⚙`<bs-google-maps-marker>`<br/>🧬`GoogleMapsMarker`<br/>` |
+| Polygon Overlay|Rendering polygons on the map.| |
+| Data Layer Overlay|Rendering geometries and GeoJsons on the map.| |
 | | | |
 | | | |
 | | | |
