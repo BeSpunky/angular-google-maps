@@ -28,9 +28,9 @@
 
 # 📦 `@bespunky/angular-google-maps/async`
 
-| Item         | Purpose                                                    | Tools                        |
-|--------------|------------------------------------------------------------|------------------------------|
-| Async Module | Automating maps api loading and bootstrapping the library. | 🧩`GoogleMapsModule`        |
-| Lazy Loader  | Lazy loading google maps api.                              | 💉`LazyGoogleMapsApiLoader` |
-| Safe         | Rendering maps only when api is ready.                     | ⚙`*bsSafe`                  |
+| Item                                                | Purpose                                                    | Tools                                                               |
+|-----------------------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------|
+| [Async Module](/Getting-Started/Auto-Async-Loading) | Automating maps api loading and bootstrapping the library. | [🧩`GoogleMapsModule`](/Getting-Started/Auto-Async-Loading)        |
+| [Lazy Loader](/Getting-Started/Auto-Async-Loading)  | Lazy loading google maps api.                              | [💉`LazyGoogleMapsApiLoader`](/Getting-Started/Auto-Async-Loading) |
+| [Safe Render](/The-Map/*bsSafe)                     | Rendering maps only when api is ready.                     | [⚙`*bsSafe`](/The-Map/*bsSafe)                                     |
 
