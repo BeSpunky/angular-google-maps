@@ -1,5 +1,5 @@
 import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectWrapper, NativeObjectWrapper, createNativeProxy } from '@bespunky/angular-google-maps/core';
-import { MockNative } from './mock-native.spec';
+import { MockNative } from './mock-native';
 
 /**
  * As the native type is unknown until the moment of usage, an extending interface will not compile here.

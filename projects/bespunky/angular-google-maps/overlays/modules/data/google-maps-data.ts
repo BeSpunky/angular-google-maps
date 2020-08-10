@@ -13,11 +13,8 @@ export interface GoogleMapsData extends WrappedDataFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.Data, GoogleMapsData>({
-    nativeType: google.maps.Data,
-    definition: {
-        getMap: Delegation.Exclude,
-        setMap: Delegation.Exclude
-    }
+    getMap: Delegation.Exclude,
+    setMap: Delegation.Exclude
 })
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {

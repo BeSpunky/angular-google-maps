@@ -17,10 +17,7 @@ export interface GoogleMap extends WrappedGoogleMapFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.Map, GoogleMap>({
-    nativeType: google.maps.Map,
-    definition: {
-        panBy: Delegation.OutsideAngular
-    }
+    panBy: Delegation.OutsideAngular
 })
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
