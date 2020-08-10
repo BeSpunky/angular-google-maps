@@ -44,7 +44,9 @@ export function createNativeProxy<TWrapper extends IGoogleMapsNativeObjectWrappe
 
             // No method or function with the name exists on the wrapper nor the native object. This is a property.
             return wrapper[property];
-        }
+        },
+        // Enable usage of the `in` keyword with the wrapper. Only consider direct methods and properties of wrapper, or functions of the native object
+        has: (wrapper, property) => wrapper[property] || wrapper.native[property] instanceof Function
     });
 }
 
