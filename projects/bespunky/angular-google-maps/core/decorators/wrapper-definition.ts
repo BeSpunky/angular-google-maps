@@ -1,5 +1,3 @@
-import { Type } from '@angular/core';
-
 import { Wrapper            } from '../abstraction/types/abstraction';
 import { FunctionProperties } from '../abstraction/types/utils';
 
@@ -53,14 +51,3 @@ export type WrapperFunctionDefinition<TNative extends Object, TWrapper extends W
  * }
  */
 export type WrapperDefinition<TNative extends Object, TWrapper extends Wrapper> = Partial<Record<FunctionProperties<TNative>, WrapperFunctionDefinition<TNative, TWrapper>>>;
-
-/**
- * The configuration for wrapping a native object.
- */
-export interface WrapperConfig<TNative extends Object, TWrapper extends Wrapper>
-{
-    /** The type of the native object being wrapped. */
-    nativeType: Type<TNative>;
-    /** (Optional) The details of how to wrap the native object. See @NativeObjectWrapper for default behaviour. */
-    definition?: WrapperDefinition<TNative, TWrapper>;
-};
