@@ -108,8 +108,8 @@ export function delegateNativeFunction<TNative extends Object, TWrapper extends 
     const native = wrapper.native;
     const nativeFunction = native[functionName].bind(native);
 
-    // If no special definitions were made, deduce delegation type
-    if (!wrappingDef)
+    // If no special definitions were made, deduce delegation type. Comparing to `undefined` as 0 is a value in the enum.
+    if (wrappingDef === undefined)
     {
         if (isGetter(functionName)) return nativeFunction;
         if (isSetter(functionName)) return delegateOutside(nativeFunction, wrapper);
