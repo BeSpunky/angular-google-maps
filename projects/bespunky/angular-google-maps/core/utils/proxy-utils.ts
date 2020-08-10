@@ -118,9 +118,9 @@ export function delegateNativeFunction<TNative extends Object, TWrapper extends 
         throwExcludedError(wrapperName, functionName);
     }
 
-    return wrappingDef === Delegation.Exclude ? throwExcludedError(wrapperName, functionName) :
-                wrappingDef === Delegation.Direct ? nativeFunction :
-                    wrappingDef === Delegation.OutsideAngular ? delegateOutside(nativeFunction, wrapper) : void 0;
+    if (wrappingDef === Delegation.Exclude       ) throwExcludedError(wrapperName, functionName);
+    if (wrappingDef === Delegation.Direct        ) return nativeFunction;
+    if (wrappingDef === Delegation.OutsideAngular) return delegateOutside(nativeFunction, wrapper);
 }
 
 /**
