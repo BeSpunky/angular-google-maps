@@ -1,5 +1,6 @@
 import { GoogleMapsApiService           } from '../../api/google-maps-api.service';
 import { IGoogleMapsNativeObject        } from '../native/i-google-maps-native-object';
+import { createNativeProxy              } from '../../utils/proxy-utils';
 import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
 
 export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsNativeObject>
@@ -15,6 +16,8 @@ export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsN
         {
             this.nativeObject = this.createNativeObject(...nativeArgs);
         });
+        
+        return createNativeProxy(this);
     }
 
     public get native(): TNative

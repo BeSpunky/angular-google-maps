@@ -37,6 +37,9 @@ export { OutsideAngular } from './decorators/outside-angular.decorator';
 export { Hook } from './decorators/hook.decorator';
 export * from './decorators/wrapper-definition';
 
+// Utils
+export * from './utils/proxy-utils';
+
 // Map
 // --- Base
 export * from './modules/map/google-map.module';
