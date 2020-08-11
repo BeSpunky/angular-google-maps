@@ -3,7 +3,10 @@ import { Type } from '@angular/core';
 import { IGoogleMap  } from '../i-google-map';
 import { ISuperpower } from './i-superpower';
 
-/** Defines the structure of a superpowers services that should be instantiated for each map instance. */
+/**
+ * Defines the structure of a superpowers service that should be instantiated for each map instance.
+ * The service should hold all registered superpowers of a map.
+ */
 export interface ISuperpowers
 {
     /**

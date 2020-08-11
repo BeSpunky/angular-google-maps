@@ -8,7 +8,7 @@ import { ISuperpowers                    } from './i-superpowers';
 import { ISuperpower                     } from './i-superpower';
 
 /**
- * Manages all superpowers for a map instance. Provided in the map component's injector to allow a clean state for each initialized map component.
+ * Manages all superpowers for a single map instance. Provided in the map component's injector to allow a clean state for each initialized map component.
  * 
  * This service communicates with `SuperpowersChargerService` through the `Superpowers` token.
  * `SuperpowersChargerService` registeres power types globally, and `SuperpowersService` instantiates them for the map it
@@ -82,7 +82,7 @@ export class SuperpowersService implements ISuperpowers, OnDestroy
         if (!power)
             throw new Error(`
                 Attempted to use superpower ${type.name}, which hasn't been registered yet.\n
-                If ${type.name} is a custom superpower, make sure you call '<SuperpowersChargerService>.charge(${type.name})'?\n
+                If ${type.name} is a custom superpower, make sure you call '<SuperpowersChargerService>.charge(${type.name})'.\n
                 Otherwise, make sure you imported the relevant module (does ${type.name} belong to a lazy loaded module?).
             `);
         
