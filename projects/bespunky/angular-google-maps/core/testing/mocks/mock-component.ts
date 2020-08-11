@@ -20,7 +20,7 @@ export function WrapperFactoryProvider()
     template: '<div></div>',
     providers: [{ provide: WrapperFactory, useFactory: WrapperFactoryProvider }] // TODO: Move to module
 })
-export class MockComponentWithLifecycle extends GoogleMapsComponentBase<TestWrapper>
+export class MockComponent extends GoogleMapsComponentBase<TestWrapper>
 {
     public readonly NativeClickEventName  = 'click';
     public readonly NativeChangeEventName = 'dummy_change';

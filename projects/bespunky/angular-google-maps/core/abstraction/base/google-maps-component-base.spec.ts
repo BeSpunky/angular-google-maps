@@ -2,17 +2,17 @@ import { Observable   } from 'rxjs';
 import { SimpleChange } from '@angular/core';
 
 import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
-import { MockComponentWithLifecycle       } from '@bespunky/angular-google-maps/core/testing';
+import { MockComponent                    } from '@bespunky/angular-google-maps/core/testing';
 import { GoogleMapsComponentApiService    } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsComponentBase (abstract)', () =>
 {
     let api          : GoogleMapsComponentApiService;
-    let mockComponent: MockComponentWithLifecycle;
+    let mockComponent: MockComponent;
 
     beforeEach(async () =>
     {
-        ({ componentApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: MockComponentWithLifecycle }));
+        ({ componentApi: api, component: mockComponent } = await configureGoogleMapsTestingModule({ componentType: MockComponent }));
     });
 
     it('should create an instance', () => expect(mockComponent).toBeTruthy());
