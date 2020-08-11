@@ -63,7 +63,7 @@ To provide you with greater flexibility and ease of use, some functionalities ar
 # Property Delegation
 Component `@Input` properties always match by name and type to their corresponding setter function on the wrapper. So `setCenter()` is delegated by `center`, `setClickableIcons()` is delegated by `clickableIcons`, and so forth...
 
-The components in the library all use `ngOnChanged()` to delegate input changes to the wrapper.
+The components in the library all use `ngOnChanges()` to delegate input changes to the wrapper.
 
 <center>
 
