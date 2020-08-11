@@ -18,7 +18,7 @@ Features are meant to be used in conjunction with the data layer. To create a fe
         </bs-google-maps-data>
     </bs-google-map>
     ```
-* Use the data wrapper to add the feature.  
+* Or use the data wrapper to add the feature.  
 <small>[How do I access the wrapper?](/Programmatic-Control)</small>
 
     ```typescript
