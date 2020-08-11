@@ -7,14 +7,14 @@ export const NativeObjectWrapperSymbol = Symbol('nativeObjectWrapper');
 
 /**
  * Takes care of delegating method calls to the native object.
- * Should be placed over classes implementing `IGoogleMapsNativeObjectWrapper` (directly or indirectly).
+ * All classes implementing `IGoogleMapsNativeObjectWrapper` (directly or indirectly) should be decorated with `@NativeObjectWrapper`.
  *
  * There are 3 pieces to the puzzle:
  * 1. Intercepting access to methods that don't exist on the wrapper and redirecting them to the native object.
  * 2. Providing Intellisense for for wrapping methods without providing their implementation (as it will be automated by #1).
  * 3. Delegating component input changes to the wrapper's methods.
  * 
- * @see `FunctionsPartial`              for implementing #2.
+ * @see `WrappedNativeFunctions`        for implementing #2.
  * @see `GoogleMapsComponentApiService` for implementing #3.
  * 
  * Default behaviour:
@@ -26,7 +26,6 @@ export const NativeObjectWrapperSymbol = Symbol('nativeObjectWrapper');
  * - Use the `definition` param to override and control what gets delegated and how it will be wrapped.
  * - Decorate manually implemented wrapper methods which should run outside angular with @OutsideAngular.
  * 
- * @export
  * @template TNative The type of native object being wrapped.
  * @template TWrapper The type of wrapper.
  * @param {WrapperDefinition<TNative, TWrapper>} [definition] (Optional) Additional wrapping definitions for native functions.
