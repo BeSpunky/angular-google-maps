@@ -23,8 +23,8 @@ export enum Delegation
      * The native function will not be delegated. Attempts to run it through the wrapper will throw an error.
      * Only necessary with native `getXXX()` and `setXXX()` functions, as the @NativeObjectWrapper decorator includes them automatically.
      * 
-     * When specifying excluded functions, make sure to remove them from intellisense by creating a new `Partial<FunctionPartial<TNative>, ...>` or an
-     * `Omit<FunctionPartial<TNative>, ...>` type for the wrapper extention interface.
+     * When specifying excluded functions, make sure to remove them from intellisense by creating a new `WrappedNativeFunctions` type for the wrapper extention interface.
+     * If you need more flexability, replace `WrappedNativeFunctions` with your own implementation, like `Partial<FunctionPartial<TNative>, ...>` or `Omit<FunctionPartial<TNative>, ...>`.
      * 
      * @see https://www.typescriptlang.org/docs/handbook/interfaces.html#interfaces-extending-classes
      * @see https://www.typescriptlang.org/docs/handbook/utility-types.html

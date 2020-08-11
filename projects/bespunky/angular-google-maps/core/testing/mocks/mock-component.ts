@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { GoogleMapsLifecycleBase, WrapperFactory, Hook, GoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsComponentBase, WrapperFactory, Hook, GoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
 import { WrappedNativeFunctions                                                                  } from '@bespunky/angular-google-maps/core';
 import { MockNative                                                                              } from './mock-native';
 import { MockEmittingWrapper                                                                     } from './mock-emitting-wrapper';
@@ -20,7 +20,7 @@ export function WrapperFactoryProvider()
     template: '<div></div>',
     providers: [{ provide: WrapperFactory, useFactory: WrapperFactoryProvider }] // TODO: Move to module
 })
-export class MockComponentWithLifecycle extends GoogleMapsLifecycleBase<TestWrapper>
+export class MockComponent extends GoogleMapsComponentBase<TestWrapper>
 {
     public readonly NativeClickEventName  = 'click';
     public readonly NativeChangeEventName = 'dummy_change';

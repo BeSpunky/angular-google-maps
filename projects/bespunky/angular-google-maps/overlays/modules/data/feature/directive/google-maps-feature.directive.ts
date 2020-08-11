@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Directive, Output, Input } from '@angular/core';
 
-import { GoogleMapsLifecycleBase, GoogleMapsEventData, Hook, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsComponentBase, GoogleMapsEventData, Hook, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsFeature               } from '../i-google-maps-feature';
 import { GoogleMapsFeatureFactoryProvider } from '../google-maps-feature-factory.provider';
 
@@ -10,7 +10,7 @@ import { GoogleMapsFeatureFactoryProvider } from '../google-maps-feature-factory
     exportAs : 'feature',
     providers: [GoogleMapsFeatureFactoryProvider]
 })
-export class GoogleMapsFeatureDirective extends GoogleMapsLifecycleBase<IGoogleMapsFeature>
+export class GoogleMapsFeatureDirective extends GoogleMapsComponentBase<IGoogleMapsFeature>
 {
     // The `geometry` property will delegate to the feature's geometry, but requires the user to create have an instantiated
     // `Data.Geometry` object. The quick geometry properties on the other hand, will create and set the inner feature geometry

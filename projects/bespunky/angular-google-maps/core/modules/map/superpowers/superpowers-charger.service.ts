@@ -3,7 +3,6 @@ import { Injectable, Inject, Type } from '@angular/core';
 import { Superpowers, ChargedSuperpowers } from './superpowers.token';
 import { ISuperpower                     } from './i-superpower';
 
-
 /**
  * Globally registers superpowers in the system. Communicates with `SuperpowersService` through the `Superpowers` token.
  * Any registered superpower will be fed to `SuperpowersService` instances throughout the system to have them load

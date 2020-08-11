@@ -2,23 +2,23 @@ import { Observable } from 'rxjs';
 import { fakeAsync, tick, ComponentFixture                 } from '@angular/core/testing';
 import { Component, ViewChild, SimpleChanges, SimpleChange } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                            } from '@bespunky/angular-google-maps/testing';
-import { MockComponentWithLifecycle, MockEmittingWrapper, MockNative } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsComponentApiService, GoogleMapsEventData          } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule                   } from '@bespunky/angular-google-maps/testing';
+import { MockComponent, MockEmittingWrapper, MockNative     } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsComponentApiService, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsComponentApiService', () =>
 {
     let api        : GoogleMapsComponentApiService;
     let fixture    : ComponentFixture<TestHost>;
     let testHost   : TestHost;
-    let component  : MockComponentWithLifecycle;
+    let component  : MockComponent;
     let handleClick: jasmine.Spy;
 
     beforeEach(async () =>
     {
         ({ componentApi: api, fixture, component: testHost } = await configureGoogleMapsTestingModule({
             componentType: TestHost,
-            customize: (def) => def.declarations.push(MockComponentWithLifecycle)
+            customize: (def) => def.declarations.push(MockComponent)
         }));
 
         // Allow angular to create the inner component and fetch it with ViewChild
@@ -151,8 +151,8 @@ describe('GoogleMapsComponentApiService', () =>
 })
 class TestHost
 {
-    @ViewChild(MockComponentWithLifecycle)
-    public component: MockComponentWithLifecycle;
+    @ViewChild(MockComponent)
+    public component: MockComponent;
 
     public handleClick(e: GoogleMapsEventData)
     {
