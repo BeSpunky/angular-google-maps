@@ -13,24 +13,30 @@ import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstract
  * 
  * Requirements for the magic to happen:
  * --- Must ---
- * 1. Create a component or a directive.
- * 2. extend `GoogleMapsLifecycleBase`.
- * 3. Define factory providers for the `WrapperFactory` tokens.
+ * 1. Create a component or a directive and extend `GoogleMapsLifecycleBase`.
+ * 2. Define a factory provider for the `WrapperFactory` token on the new component / directive.
  * 
  * --- To expose native events as bindable template events ---
- * 4. Add `@Hook('native_name') @Output()` marked event emitters to the component / directive.
+ * 3. Add `@Hook('native_name') @Output()` marked event emitters to the component / directive.
  * 
  * --- To expose native setters as bindable template attributes ---
- * 5. Add `@Input()` members for getters/setters you would like to expose. Use the native setter function name and omit the 'set' part to name your inputs.
+ * 4. Add `@Input()` members for getters/setters you would like to expose. Use the native setter function name and omit the 'set' part to name your inputs.
  * 
- * @see GoogleMapsComponent source code for an example.
+ * @see GoogleMapComponent source code for an example.
  */
 @Directive()
 export abstract class GoogleMapsLifecycleBase<TWrapper extends EmittingWrapper>
-                implements OnChanges
+           implements OnChanges
 {
     private nativeWrapper: TWrapper;
 
+    /**
+     * Creates an instance of GoogleMapsLifecycleBase.
+     * 
+     * @param {GoogleMapsComponentApiService} api The instance of the component api service.
+     * @param {EmittingNativeWrapperFactory<TWrapper>} createNativeWrapper The factory for creating the wrapper this component should work with. Must be provided by the component's providers.
+     * @param {ElementRef} element The element created for the component.
+     */
     constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory<TWrapper>, protected element: ElementRef)
     {
         this.initNativeWrapper();
@@ -42,6 +48,12 @@ export abstract class GoogleMapsLifecycleBase<TWrapper extends EmittingWrapper>
         this.api.delegateInputChangesToNativeObject(changes, this.wrapper);
     }
 
+    /**
+     * The instance of the wrapper used by the component to delegate functionality to the native object.
+     *
+     * @readonly
+     * @type {TWrapper} The type of wrapper this component works with.
+     */
     public get wrapper(): TWrapper
     {
         return this.nativeWrapper;
