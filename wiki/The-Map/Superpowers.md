@@ -46,7 +46,7 @@ Creating superpowers involves 2 simple steps...
 
 1. Create a service for your superpower:
 
-    > The service **must extend** the `Superpower` class and be **injected at the `GoogleMapModule` level** (that's `Map` - signular).
+    > The service **must extend** the `Superpower` class and be **injected at the `GoogleMapModule` level** (that's `Map` - singular).
 
     ```typescript
     import { Injectable } from '@angular/core';
