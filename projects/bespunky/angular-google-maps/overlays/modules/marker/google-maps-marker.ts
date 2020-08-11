@@ -10,11 +10,8 @@ export interface GoogleMapsMarker extends WrappedMarkerFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.Marker, GoogleMapsMarker>({
-    nativeType: google.maps.Marker,
-    definition: {
-        getMap: Delegation.Exclude,
-        setMap: Delegation.Exclude
-    }
+    getMap: Delegation.Exclude,
+    setMap: Delegation.Exclude
 })
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {

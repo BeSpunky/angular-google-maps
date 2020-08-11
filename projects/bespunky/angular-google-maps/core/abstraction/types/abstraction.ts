@@ -15,7 +15,7 @@ export type EmittingNativeWrapperFactory<TWrapper extends IGoogleMapsNativeObjec
 
 /**
  * Extracts a type containing only the functions properties of the native type, omitting the functions specified for exclusion.
- * Use this to declare an intellisense extension to a wrapper class. Remember to decorate the wrapper with @NativeObjectWrapper to actually add
+ * Use this to declare an intellisense extension to a wrapper class. Remember to decorate the wrapper with @NativeObjectWrapper and inherit `GoogleMapsNativeObjectWrapper` or `GoogleMapsNativeObjectEmittingWrapper` to actually add
  * implementations to the delegated functions.
  * 
  * @example

@@ -12,12 +12,14 @@ export interface IGoogleMapsNativeObjectEmittingWrapper<TNative extends IGoogleM
      * @returns {() => void} A function which can be used to unregister that specific handler.
      */
     listenTo(eventName: string, handler: (...args: any[]) => void): () => void;
+  
     /**
      * Unregisters all handlers for the specified event from the native object.
      *
      * @param {string} eventName The name of the event for which handlers should be cleared.
      */
     stopListeningTo(eventName: string): void;
+   
     /** Unregisters all handlers for all events from the native object. */
     clearListeners(): void;
 }

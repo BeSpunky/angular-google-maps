@@ -2,13 +2,14 @@ import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectEmittingWrapper, Native
 import { MockWrapper      } from './mock-wrapper';
 import { MockGoogleEvents } from './mock-events-manager';
 
+@NativeObjectWrapper()
 export class MockEmittingWrapper<TNative extends IGoogleMapsNativeObject>
      extends MockWrapper<TNative>
   implements IGoogleMapsNativeObjectEmittingWrapper<TNative>
 {
     public events = new MockGoogleEvents();
 
-    constructor(public native: TNative)
+    constructor(native: TNative)
     {
         super(native);
     }

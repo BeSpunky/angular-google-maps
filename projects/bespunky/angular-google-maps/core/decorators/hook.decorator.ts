@@ -4,7 +4,7 @@ export const HookOutputSymbol = Symbol('LifecycleComponent.HookOutput');
 
 /**
  * Marks a component @Output() member that will serve as an emitter of a native event.
- * Use in components/directive which inherit from `GoogleMapsLifecycleBase` to allow users of the component to handle native events in angular.
+ * Use in components/directive which inherit from `GoogleMapsComponentBase` to allow users of the component to handle native events in angular.
  * 
  * @param {string} nativeName (Optional) The name of the native event. If not provided, the name of the component member will be used.
  * 

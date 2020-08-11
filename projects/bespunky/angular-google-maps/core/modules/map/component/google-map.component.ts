@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
-import { GoogleMapsLifecycleBase           } from '../../../abstraction/base/google-maps-lifecycle-base';
+import { GoogleMapsComponentBase           } from '../../../abstraction/base/google-maps-component-base';
 import { GoogleMapsEventData               } from '../../../abstraction/events/google-maps-event-data'
 import { Coord                             } from '../../../abstraction/types/geometry.type';
 import { Hook                              } from '../../../decorators/hook.decorator';
@@ -17,7 +17,7 @@ import { IGoogleMap                        } from '../i-google-map';
     providers    : [GoogleMapFactoryProvider, SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
     encapsulation: ViewEncapsulation.None
 })
-export class GoogleMapComponent extends GoogleMapsLifecycleBase<IGoogleMap>
+export class GoogleMapComponent extends GoogleMapsComponentBase<IGoogleMap>
 {
     @Input() public center?        : Coord;
     @Input() public clickableIcons?: boolean;

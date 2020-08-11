@@ -6,9 +6,9 @@ import { IGoogleMapsNativeObject                            } from '../native/i-
 import { NativeWrapperFactory, EmittingNativeWrapperFactory } from '../types/abstraction';
 
 /**
- * An injection token used by `GoogleMapsLifecycleBase` and its extending classes to specify the factory that will be used to
+ * An injection token used by `GoogleMapsComponentBase` and its extending classes to specify the factory that will be used to
  * create a new wrapper object of the type corresponding to the extending class.
  * 
- * Components and directives extending `GoogleMapsLifecycleBase` should define a `FactoryProvider` for this token.
+ * Components and directives extending `GoogleMapsComponentBase` should define a `FactoryProvider` for this token.
  */
 export const WrapperFactory = new InjectionToken<NativeWrapperFactory<IGoogleMapsNativeObjectWrapper<IGoogleMapsNativeObject>> | EmittingNativeWrapperFactory<IGoogleMapsNativeObjectEmittingWrapper<IGoogleMapsNativeObject>>>('GoogleMaps.WrapperFactory');

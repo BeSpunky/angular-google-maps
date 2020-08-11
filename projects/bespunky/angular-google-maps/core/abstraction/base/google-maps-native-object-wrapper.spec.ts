@@ -20,7 +20,7 @@ describe('GoogleMapsNativeObjectWrapper (abstract)', () =>
 
     it('should instantiate a new native object outside angular', () => expect(runOutsideAngular).toHaveBeenCalledTimes(1));
 
-    it('should instantiate and assign a new native object to the accessible through the `native` property', () => expect(mockWrapper.native instanceof MockNative).toBeTruthy());
+    it('should instantiate and assign a new native object accessible through the `native` property', () => expect(mockWrapper.native instanceof MockNative).toBeTruthy());
 });
 
 class GoogleMapsNativeObjectWrapperTest extends GoogleMapsNativeObjectWrapper<MockNative>

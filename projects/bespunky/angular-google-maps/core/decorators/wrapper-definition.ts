@@ -1,5 +1,3 @@
-import { Type } from '@angular/core';
-
 import { Wrapper            } from '../abstraction/types/abstraction';
 import { FunctionProperties } from '../abstraction/types/utils';
 
@@ -25,8 +23,8 @@ export enum Delegation
      * The native function will not be delegated. Attempts to run it through the wrapper will throw an error.
      * Only necessary with native `getXXX()` and `setXXX()` functions, as the @NativeObjectWrapper decorator includes them automatically.
      * 
-     * When specifying excluded functions, make sure to remove them from intellisense by creating a new `Partial<FunctionPartial<TNative>, ...>` or an
-     * `Omit<FunctionPartial<TNative>, ...>` type for the wrapper extention interface.
+     * When specifying excluded functions, make sure to remove them from intellisense by creating a new `WrappedNativeFunctions` type for the wrapper extention interface.
+     * If you need more flexability, replace `WrappedNativeFunctions` with your own implementation, like `Partial<FunctionPartial<TNative>, ...>` or `Omit<FunctionPartial<TNative>, ...>`.
      * 
      * @see https://www.typescriptlang.org/docs/handbook/interfaces.html#interfaces-extending-classes
      * @see https://www.typescriptlang.org/docs/handbook/utility-types.html
@@ -53,14 +51,3 @@ export type WrapperFunctionDefinition<TNative extends Object, TWrapper extends W
  * }
  */
 export type WrapperDefinition<TNative extends Object, TWrapper extends Wrapper> = Partial<Record<FunctionProperties<TNative>, WrapperFunctionDefinition<TNative, TWrapper>>>;
-
-/**
- * The configuration for wrapping a native object.
- */
-export interface WrapperConfig<TNative extends Object, TWrapper extends Wrapper>
-{
-    /** The type of the native object being wrapped. */
-    nativeType: Type<TNative>;
-    /** (Optional) The details of how to wrap the native object. See @NativeObjectWrapper for default behaviour. */
-    definition?: WrapperDefinition<TNative, TWrapper>;
-};

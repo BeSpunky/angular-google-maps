@@ -5,36 +5,42 @@ import { Injectable, SimpleChanges } from '@angular/core';
 
 import { GoogleMapsEventsMap      } from '../abstraction/types/events-map.type';
 import { GoogleMapsEventData      } from '../abstraction/events/google-maps-event-data';
-import { GoogleMapsLifecycleBase  } from '../abstraction/base/google-maps-lifecycle-base';
+import { GoogleMapsComponentBase  } from '../abstraction/base/google-maps-component-base';
 import { EmittingWrapper, Wrapper } from '../abstraction/types/abstraction';
 import { HookOutputSymbol         } from '../decorators/hook.decorator';
 import { GoogleMapsApiService     } from './google-maps-api.service';
     
+/**
+ * Provides tools for automating the component <-> wrapper relationship.
+ */
 @Injectable({
     providedIn: 'root'
 })
 export class GoogleMapsComponentApiService
 {
+    /**
+     * Creates an instance of GoogleMapsComponentApiService.
+     * @param {GoogleMapsApiService} api The low-level tools of the framework.
+     */
     constructor(public api: GoogleMapsApiService) { }
 
     /**
-     * Creates and assignes observables for component outputs decorated with the `@Hook()`. Any existing values will be overwritten.
+     * Creates and assigns observables for component outputs decorated with the `@Hook()`. Any existing values will be overwritten.
      * The generated observables are automatically hooked to events of the native object represented by the given wrapper.
      * This method should be called in the component's constructor. This way, when angular attempts to bind template events it
      * will pick up the generated observables.
      *
      * Event arguments are automatically transformed using the `EventDataTransformService`.
-     * In case a component needs to hook to events of a native wrapped by an object external to the emitting component,
-     * you can pass the it in using the `wrapper` argument.
+     * In case a component's events should be hooked to a wrapper different to the one it holds, you can pass the it in using the `wrapper` argument.
      * 
      * Note: [02-04-2020 Shy Agam] The whole idea of this method is to generate the observables itself and assign it to the `@Output()` members
-     * so angular could subscribe and unsubscribe automatically without the need for handling `OnInit` and `OnDestroy`.
+     * so angular could subscribe and unsubscribe automatically without the need for manually handling `OnInit` and `OnDestroy`.
      * Currently, angular uses `EventEmitter` objects as standard. However, going the angular way requires a mechamism that will trigger the
      * `emit()` method of the emitter. Wrapping it in a class that manages an observable and hooks the `emit()` method? Merging somehow the observable with
      * with the emitter stream? Too complex and seems unnecessary as events can work perfectly with (and rely on) RxJs observables.
      * In case angular's implementation changes, or a better solution comes up, this should be reevaluated.
      * 
-     * @param {GoogleMapsLifecycleBase<EmittingWrapper>} emittingComponent The component/directive emitting the events. Should decorate `@Output()` members with `@Hook()`.
+     * @param {GoogleMapsComponentBase<EmittingWrapper>} emittingComponent The component/directive emitting the events. Should decorate `@Output()` members with `@Hook()`.
      * Hooked members will be assigned with a new observable, overwriting any existing value.
      * 
      * @param {EmittingWrapper} [wrapper=emittingComponent.wrapper] (Optional) The wrapper of the native object which defines the events. By default, events will be hooked to
@@ -42,9 +48,9 @@ export class GoogleMapsComponentApiService
      * Example: Google Maps's data layer native object raises events that should be emitted by the individual feature directives.
      * @see `google-maps-feature.directive.ts` for more info.
      * 
-     * @param {((event: GoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A function that will determine if the a specific event should be emitted or not.
+     * @param {((event: GoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A filter function that will determine if the a specific event should be emitted or not.
      */
-    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase<EmittingWrapper>, wrapper: EmittingWrapper = null, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookAndSetEmitters(emittingComponent: GoogleMapsComponentBase<EmittingWrapper>, wrapper: EmittingWrapper = null, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.api.eventsData;
         const eventsMap = (Reflect.getMetadata(HookOutputSymbol, emittingComponent) || []) as GoogleMapsEventsMap;
@@ -77,7 +83,13 @@ export class GoogleMapsComponentApiService
         }
     }
 
-    // Expects `wrapper` to have setters for the properties which, in turn, call the approperiate native function in the native object
+    /**
+     * Goes through all changes presented by an `ngOnChanges()` call and, if wrapper has a matching setter method, delegates them to the setter on the wrapper.
+     * Expects wrapper setter methods name to conform to the format of `setProperty` (`set` prefix, followed by a CamelCase component property name).
+     * 
+     * @param {SimpleChanges} changes The changes object as received from the call to `ngOnChanges()`
+     * @param {Wrapper} wrapper The wrapper to delegate changes to.
+     */
     public delegateInputChangesToNativeObject(changes: SimpleChanges, wrapper: Wrapper)
     {
         for (const propertyName in changes)

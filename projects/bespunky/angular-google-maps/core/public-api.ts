@@ -6,7 +6,7 @@ export * from './abstraction/base/i-google-maps-native-object-wrapper';
 export * from './abstraction/base/i-google-maps-native-object-emitting-wrapper';
 export * from './abstraction/base/google-maps-native-object-wrapper';
 export * from './abstraction/base/google-maps-native-object-emitting-wrapper';
-export * from './abstraction/base/google-maps-lifecycle-base';
+export * from './abstraction/base/google-maps-component-base';
 
 export * from './abstraction/events/i-google-maps-event-data';
 export * from './abstraction/events/i-google-maps-mouse-event';
@@ -36,6 +36,9 @@ export * from './decorators/native-object-wrapper.decorator';
 export { OutsideAngular } from './decorators/outside-angular.decorator';
 export { Hook } from './decorators/hook.decorator';
 export * from './decorators/wrapper-definition';
+
+// Utils
+export * from './utils/proxy-utils';
 
 // Map
 // --- Base

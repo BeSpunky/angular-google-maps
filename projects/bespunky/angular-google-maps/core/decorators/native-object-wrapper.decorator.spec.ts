@@ -1,6 +1,10 @@
 import { MockWrapper, MockNative                                                 } from '@bespunky/angular-google-maps/core/testing';
 import { WrappedNativeFunctions, NativeObjectWrapper, OutsideAngular, Delegation } from '@bespunky/angular-google-maps/core';
 
+/**
+ * Most of the tests in this file are more relatable to the proxy-utils.ts file, but I chose to associate them with the decorator as
+ * conceptualy the decorator is the one defining delegation override configurations which should be tested.
+ */
 describe('@NativeObjectWrapper()', () =>
 {
     let wrapper          : TestWrapper;
@@ -37,7 +41,7 @@ describe('@NativeObjectWrapper()', () =>
 
     it('should wrap outside angular all native setter functions', () =>
     {
-        expect(wrapper.setSomething      ).toBeInstanceOf(Function);
+        expect(wrapper.setSomething    ).toBeInstanceOf(Function);
         expect(wrapper.setSomethingElse).toBeInstanceOf(Function);
         
         const newValue1 = 'new something';
@@ -52,7 +56,7 @@ describe('@NativeObjectWrapper()', () =>
         expect(runOutsideAngular).toHaveBeenCalledTimes(2);
     });
 
-    it('should wrap with error all non-getter/setter functions', () => expect(wrapper.findById).toThrowError(/excluded/));
+    it('should wrap with error all non-getter/setter functions', () => expect(() => wrapper.findById(1)).toThrowError(/excluded/));
 
     it('should not overwrite manual wrapping implementations', () => expect(wrapper.shouldNotOverwriteWrapper()).toBe('untouched'));
 
@@ -76,8 +80,7 @@ describe('@NativeObjectWrapper()', () =>
 
     it('should wrap with error native functions marked with Delegation.Exclude', () =>
     {
-        expect(wrapper.getExcluded).toBeInstanceOf(Function);
-        expect(wrapper.getExcluded).toThrowError(/excluded/);
+        expect(() => wrapper.getExcluded()).toThrowError(/excluded/);
     });
 });
 class Native extends MockNative
@@ -98,12 +101,9 @@ class Native extends MockNative
 }
 
 @NativeObjectWrapper<Native, TestWrapper>({
-    nativeType: Native,
-    definition: {
-        getExcluded    : Delegation.Exclude,
-        doNativeInside : Delegation.Direct,
-        doNativeOutside: Delegation.OutsideAngular
-    }
+    getExcluded    : Delegation.Exclude,
+    doNativeInside : Delegation.Direct,
+    doNativeOutside: Delegation.OutsideAngular
 })
 class TestWrapper extends MockWrapper<Native>
 {
