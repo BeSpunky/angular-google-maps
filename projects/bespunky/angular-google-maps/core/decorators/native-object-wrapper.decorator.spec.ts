@@ -1,6 +1,10 @@
 import { MockWrapper, MockNative                                                 } from '@bespunky/angular-google-maps/core/testing';
 import { WrappedNativeFunctions, NativeObjectWrapper, OutsideAngular, Delegation } from '@bespunky/angular-google-maps/core';
 
+/**
+ * Most of the tests in this file are more relatable to the proxy-utils.ts file, but I chose to associate them with the decorator as
+ * conceptualy the decorator is the one defining delegation override configurations which should be tested.
+ */
 describe('@NativeObjectWrapper()', () =>
 {
     let wrapper          : TestWrapper;
