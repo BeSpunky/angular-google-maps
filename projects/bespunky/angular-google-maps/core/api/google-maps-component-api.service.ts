@@ -5,7 +5,7 @@ import { Injectable, SimpleChanges } from '@angular/core';
 
 import { GoogleMapsEventsMap      } from '../abstraction/types/events-map.type';
 import { GoogleMapsEventData      } from '../abstraction/events/google-maps-event-data';
-import { GoogleMapsLifecycleBase  } from '../abstraction/base/google-maps-lifecycle-base';
+import { GoogleMapsComponentBase  } from '../abstraction/base/google-maps-component-base';
 import { EmittingWrapper, Wrapper } from '../abstraction/types/abstraction';
 import { HookOutputSymbol         } from '../decorators/hook.decorator';
 import { GoogleMapsApiService     } from './google-maps-api.service';
@@ -34,7 +34,7 @@ export class GoogleMapsComponentApiService
      * with the emitter stream? Too complex and seems unnecessary as events can work perfectly with (and rely on) RxJs observables.
      * In case angular's implementation changes, or a better solution comes up, this should be reevaluated.
      * 
-     * @param {GoogleMapsLifecycleBase<EmittingWrapper>} emittingComponent The component/directive emitting the events. Should decorate `@Output()` members with `@Hook()`.
+     * @param {GoogleMapsComponentBase<EmittingWrapper>} emittingComponent The component/directive emitting the events. Should decorate `@Output()` members with `@Hook()`.
      * Hooked members will be assigned with a new observable, overwriting any existing value.
      * 
      * @param {EmittingWrapper} [wrapper=emittingComponent.wrapper] (Optional) The wrapper of the native object which defines the events. By default, events will be hooked to
@@ -44,7 +44,7 @@ export class GoogleMapsComponentApiService
      * 
      * @param {((event: GoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A function that will determine if the a specific event should be emitted or not.
      */
-    public hookAndSetEmitters(emittingComponent: GoogleMapsLifecycleBase<EmittingWrapper>, wrapper: EmittingWrapper = null, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookAndSetEmitters(emittingComponent: GoogleMapsComponentBase<EmittingWrapper>, wrapper: EmittingWrapper = null, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const transfrom = this.api.eventsData;
         const eventsMap = (Reflect.getMetadata(HookOutputSymbol, emittingComponent) || []) as GoogleMapsEventsMap;

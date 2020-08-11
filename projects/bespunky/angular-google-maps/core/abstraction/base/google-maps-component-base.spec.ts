@@ -5,7 +5,7 @@ import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/
 import { MockComponentWithLifecycle       } from '@bespunky/angular-google-maps/core/testing';
 import { GoogleMapsComponentApiService    } from '@bespunky/angular-google-maps/core';
 
-describe('GoogleMapsLifecycleBase (abstract)', () =>
+describe('GoogleMapsComponentBase (abstract)', () =>
 {
     let api          : GoogleMapsComponentApiService;
     let mockComponent: MockComponentWithLifecycle;

@@ -13,7 +13,7 @@ import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstract
  * 
  * Requirements for the magic to happen:
  * --- Must ---
- * 1. Create a component or a directive and extend `GoogleMapsLifecycleBase`.
+ * 1. Create a component or a directive and extend `GoogleMapsComponentBase`.
  * 2. Define a factory provider for the `WrapperFactory` token on the new component / directive.
  * 
  * --- To expose native events as bindable template events ---
@@ -25,13 +25,13 @@ import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstract
  * @see GoogleMapComponent source code for an example.
  */
 @Directive()
-export abstract class GoogleMapsLifecycleBase<TWrapper extends EmittingWrapper>
+export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
            implements OnChanges
 {
     private nativeWrapper: TWrapper;
 
     /**
-     * Creates an instance of GoogleMapsLifecycleBase.
+     * Creates an instance of GoogleMapsComponentBase.
      * 
      * @param {GoogleMapsComponentApiService} api The instance of the component api service.
      * @param {EmittingNativeWrapperFactory<TWrapper>} createNativeWrapper The factory for creating the wrapper this component should work with. Must be provided by the component's providers.
