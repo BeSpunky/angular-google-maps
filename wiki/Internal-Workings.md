@@ -20,19 +20,6 @@ So the big questions are:
 * Am I willing to repeat myself and duplicate code?  
 **Hell no.**
 
-## Events
-So you created 20 `EventEmitter` objects in your component. How do you connect them to the native event? Maybe you go through the events one by one, call the native `addListener` function, then in the handler you call the `emit()` method on the appropriate emitter...
-
-Do you blindly register handlers for every event, even if the component's user didn't 
-require it?
-
-## Functions
-Theoretically, our map component could simply instantiate and expose a native map object. But what's the fun in that? 😉
-More importantly, once the user got his hands on the native object, what control do we have over execution? Non.
-
-🥁 Here comes the wrapper... We create a class to wrap the native map, and for each function we need from the native object we create a wrapper method to delegate the call. Now we are in control.
-
-T
 # Solution
 `@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation:
 
