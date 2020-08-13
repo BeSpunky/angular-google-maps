@@ -1,0 +1,19 @@
+{
+    "extends": "../../../tsconfig.json",
+    "compilerOptions": {
+        "target": "ES5",
+        "outDir": "../../../out-tsc/spec",
+        "types": [
+            "jasmine",
+            "node",
+            "google-maps"
+        ]
+    },
+    "files": [
+        "test.ts"
+    ],
+    "include": [
+        "**/*.spec.ts",
+        "**/*.d.ts"
+    ]
+}

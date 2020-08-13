@@ -1,20 +1,23 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Angular-Google-Maps Workspace
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+[![Build status](https://dev.azure.com/BeSpunky/Libraries/_apis/build/status/angular-google-maps/Build%20angular-google-maps)](https://dev.azure.com/BeSpunky/Libraries/_build/latest?definitionId=29)
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+This angular **workspace** provides:
+- The `@bespunky/angular-google-maps` library containing a set of **🌳 tree-shakable** tools to work with Google Maps API.
+- A `demo` app with examples.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+> When published to npm, only the library itself is published.
+  
+> The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
+> 
+> Compatibility with older versions is possible but not garantied.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+# 🙌 Examples
+The demo app is **live** at [angular-google-maps demo](https://bs-angular-google-maps-demo.firebaseapp.com).  
+For implementation, [visit the code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fdemo&version=GBmaster&_a=contents) for the demo app.
+
+# 📖 Documentation
+
+All modules / components / services are documented within the code. Some might have their own `Readme.md` file accessible at their folder.
+
+The complete documentation is found in the [wiki folder](/wiki/Wiki-Home.md), and is also accessible online at [angular-google-maps wiki](https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps?wikiVersion=GBmaster&pagePath=Home).
