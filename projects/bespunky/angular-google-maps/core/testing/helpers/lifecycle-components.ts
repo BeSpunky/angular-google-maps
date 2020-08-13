@@ -1,7 +1,7 @@
 /**
  * Provides utils for testing components and directives deriving from `GoogleMapsComponentBase`, for example `GoogleMapComponent`, `GoogleMapsMarkerDirective`, etc.
  */
-import { ViewChild } from '@angular/core';
+import { ViewChild, Directive } from '@angular/core';
 
 import { GoogleMapsComponentBase, EmittingWrapper, GoogleMap, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
 
@@ -26,6 +26,7 @@ export function createLifecycleTestingHostComponentTemplate(testedComponentTempl
  * 
  * @class LifecycleComponentTestHost
  */
+@Directive()
 export class LifecycleComponentTestHost
 {
     @ViewChild(GoogleMapComponent)

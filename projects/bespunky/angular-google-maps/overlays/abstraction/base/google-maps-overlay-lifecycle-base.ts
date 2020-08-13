@@ -7,6 +7,7 @@ import { OverlaysSuperpower } from '../../superpower/services/overlays-superpowe
  * Provides everything `GoogleMapsComponentBase` provides and also takes care of removing the overlay wrapper from the map.
  * Extend this instead of `GoogleMapsComponentBase` for components/directives representing drawable overlays.
  */
+// TODO: Add Angular decorator.
 export abstract class GoogleMapsOverlayLifecycleBase<TWrapper extends DrawableOverlay>
                 extends GoogleMapsComponentBase<TWrapper>
 {
