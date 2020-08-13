@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, FactoryProvider } from '@angular/core';
 
 import { GoogleMapsComponentBase, WrapperFactory, Hook, GoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
 import { WrappedNativeFunctions                                                                  } from '@bespunky/angular-google-maps/core';
@@ -12,13 +12,22 @@ interface TestWrapper extends WrappedNativeFunctions<MockNative> { }
 
 export function WrapperFactoryProvider()
 {
-    return () => new TestWrapper(new MockNative());
+    return function TestWrapperFactory()
+    {
+        return new TestWrapper(new MockNative());
+    };
 }
 
+export const TestWrapperFactoryProvider: FactoryProvider = {
+    provide   : WrapperFactory,
+    useFactory: WrapperFactoryProvider
+};
+
+// @dynamic
 @Component({
     selector: 'test-lifecycle',
     template: '<div></div>',
-    providers: [{ provide: WrapperFactory, useFactory: WrapperFactoryProvider }] // TODO: Move to module
+    providers: [TestWrapperFactoryProvider] // TODO: Move to module
 })
 export class MockComponent extends GoogleMapsComponentBase<TestWrapper>
 {

@@ -1,6 +1,6 @@
 {
   "name": "angular-google-maps-workspace",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,7 +18,7 @@
     "vminor": "npm run lib-vminor && npm run app-vminor",
     "vpatch": "npm run lib-vpatch && npm run app-vpatch",
     "publish-demo": "firebase deploy --only hosting:bs-angular-google-maps-demo"
- },
+  },
   "private": false,
   "dependencies": {
     "@angular/animations": "~9.1.6",

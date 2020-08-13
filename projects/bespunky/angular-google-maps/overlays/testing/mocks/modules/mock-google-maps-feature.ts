@@ -3,6 +3,7 @@ import { MockEmittingWrapper                 } from '@bespunky/angular-google-ma
 import { Coord, CoordPath                    } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsFeature, IGoogleMapsData } from '@bespunky/angular-google-maps/overlays';
 
+// @dynamic
 @MockFill
 export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {

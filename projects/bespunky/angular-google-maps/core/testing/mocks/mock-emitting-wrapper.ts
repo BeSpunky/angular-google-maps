@@ -2,6 +2,7 @@ import { IGoogleMapsNativeObject, IGoogleMapsNativeObjectEmittingWrapper, Native
 import { MockWrapper      } from './mock-wrapper';
 import { MockGoogleEvents } from './mock-events-manager';
 
+// @dynamic
 @NativeObjectWrapper()
 export class MockEmittingWrapper<TNative extends IGoogleMapsNativeObject>
      extends MockWrapper<TNative>
