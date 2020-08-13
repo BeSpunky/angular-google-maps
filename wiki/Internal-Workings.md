@@ -35,7 +35,7 @@ Wait, if the method doesn't exist on the wrapper, I won't have intellisense for 
 TypeScript to the rescue... 🙌
 
 ### [Extension Interfaces](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fgoogle-map.ts&version=GBdevelopment&line=16&lineEnd=17&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
-In a nutshell, TypeScript allows creating an interface with the same name of a class. The result is every method signature in the interface appearing in the class' intellisense.
+In a nutshell, TypeScript allows creating an interface with the same name of a class. The result is every method signature in the interface appearing in the class's intellisense.
 
 Oh bollocks... Do I now have to type all the signatures for the native functions manually?? 😨  
 TypeScript to the rescue! Again... 🙌
