@@ -1,6 +1,6 @@
 {
   "name": "@bespunky/angular-google-maps",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "A brilliant solution for using Google Maps in Angular.",
   "private": false,
   "author": {
@@ -21,6 +21,7 @@
     "@angular/core": "^7.2.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "@bespunky/angular-zen": "^2.2.1"
   }
 }
