@@ -1,3 +1,5 @@
+# The library is still under development. It is suggested not to use in production yet.
+
 # @bespunky/angular-google-maps
 This library brings Google Maps API to angular and provides a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
 
