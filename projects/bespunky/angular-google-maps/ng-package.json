@@ -7,5 +7,9 @@
             "@bespunky/angular-zen": "angularZen",
             "lodash": "_"
         }
-    }
+    },
+    "whitelistedNonPeerDependencies": [
+        "@bespunky/angular-zen",
+        "@types/google-maps"
+    ]
 }
