@@ -43,4 +43,36 @@ With TypeScript's utility types it is possible to extract a sub type with only f
 
 Combine those three pieces together, and we have magic! ✨
 
-# Components
+## Components
+Two things are at the base of most Angular components: `@Input` properties and `@Output` event emitters.
+The library takes care of connecting properties and events to the wrapper object.
+
+### [Component API](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Fgoogle-maps-component-api.service.ts&version=GBdevelopment&line=19&lineEnd=20&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+Implemented as an injectable service, the component api is the core bridge between components and wrappers. It has two functions:
+1. Create observables that, upon subscription, hook to wrapper events. Then assign them to the component's output properties.
+2. Delegate changes from `ngOnChanges()` to the wrapper's setter functions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
