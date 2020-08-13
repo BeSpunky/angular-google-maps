@@ -23,7 +23,7 @@ So the big questions are:
 <br/>
 
 # Solution
-`@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation. I'll explain in a nutshell how they play together, but will leave links to parts from the source code just in case you're curious.
+`@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation. I'll explain in a briefly how they play together and leave links to parts from the source code just in case you're curious.
 
 ## Wrappers
 The main purpose of these is **transparently** delegating function calls to the native object, **without implementing anything on the wrapper itself**. In turn, this also allows for preprocessing and postprocessing.
