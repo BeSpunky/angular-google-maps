@@ -12,7 +12,7 @@ import { GoogleMapsFeatureFactoryProvider } from '../google-maps-feature-factory
 })
 export class GoogleMapsFeatureDirective extends GoogleMapsComponentBase<IGoogleMapsFeature>
 {
-    // The `geometry` property will delegate to the feature's geometry, but requires the user to create have an instantiated
+    // The `geometry` property will delegate to the feature's geometry, but requires the user to have an instantiated
     // `Data.Geometry` object. The quick geometry properties on the other hand, will create and set the inner feature geometry
     // automatically. Only one property should be set at a time. Either `geometry` or one of the quick setters.
     // Using both, or more than one quick geometry setter at a time, could lead to inconsistancies.
