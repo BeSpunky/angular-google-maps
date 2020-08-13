@@ -21,6 +21,7 @@
     "@angular/core": "^7.2.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "@bespunky/angular-zen": "^2.2.1"
   }
 }
