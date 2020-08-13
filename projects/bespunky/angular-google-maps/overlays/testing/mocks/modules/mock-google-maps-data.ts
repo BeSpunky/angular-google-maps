@@ -3,6 +3,7 @@ import { IGoogleMap, Coord, CoordPath        } from '@bespunky/angular-google-ma
 import { IGoogleMapsData, IGoogleMapsFeature } from '@bespunky/angular-google-maps/overlays';
 import { MockDrawableOverlay                 } from '../mock-drawable-overlay';
 
+// @dynamic
 @MockFill
 export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {

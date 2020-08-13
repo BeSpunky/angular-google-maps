@@ -13,9 +13,12 @@ export type ChargedSuperpowers = ReplaySubject<Type<ISuperpower>>;
  */
 export const Superpowers = new InjectionToken<ChargedSuperpowers>('GoogleMaps.Superpowers');
 
+/** The default subject used to notify of loaded superpowers. */
+export const DefaultSuperpowersProvider = new ReplaySubject();
+
 /**
  * Injected at root level and only holds the types of superpowers already loaded.
  * `SuperpowersChargerService` will feed the token with types of superpowers.
  * `SuperpowersService` will be instantiated for each map and consume the token to allow lazy loading of powers.
  */
-export const SuperpowersProvider: ValueProvider = { provide: Superpowers, useValue: new ReplaySubject() };
+export const SuperpowersProvider: ValueProvider = { provide: Superpowers, useValue: DefaultSuperpowersProvider };

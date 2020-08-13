@@ -15,6 +15,7 @@ import { MockNative } from './mock-native';
  * class     TheWrapper extends MockWrapper<NativeMockType> { }
  * interface TheWrapper extends WrappedNativeFunctions<NativeMockType> { }
  */
+// @dynamic
 @NativeObjectWrapper()
 export class MockWrapper<TNative extends IGoogleMapsNativeObject = MockNative>
   implements IGoogleMapsNativeObjectWrapper<TNative>
