@@ -20,6 +20,8 @@ So the big questions are:
 * Am I willing to repeat myself and duplicate code?  
 **Hell no.**
 
+<br/>
+
 # Solution
 `@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation. I'll explain in a nutshell how they play together, but will leave links to parts from the source code just in case you're curious.
 
@@ -52,15 +54,22 @@ Implemented as an injectable service, the component api is the core bridge betwe
 1. Create observables that, upon subscription, hook to wrapper events. Then assign them to the component's output properties.
 2. Delegate changes from `ngOnChanges()` to the wrapper's setter functions.
 
+### [Base Component](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Fbase%2Fgoogle-maps-component-base.ts&version=GBdevelopment&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+The base component is an abstract class which takes care of interaction with the component API.
+You'll find that every component or directive in the library extends the base component.
 
+# The Result
+Clean code, easy to implement and support new types, scalability and zero-to-minimal effort required when the native library changes their implementation.
 
+Creating a new component?
+Extend the base component, then simply declare properties and events.
 
+![image.png](/.attachments/image-bcd5dd1a-15b7-4e2b-8c84-13933b2b5350.png)
 
+Creating a new wrapper?
+Extend the wrapper class, add a decorator and an extension interface... You're good to go!
 
-
-
-
-
+![image.png](/.attachments/image-46d14fb6-692c-4775-8718-db4878bae4b1.png)
 
 
 
