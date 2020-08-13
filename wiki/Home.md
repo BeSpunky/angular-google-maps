@@ -11,6 +11,13 @@ You may use the library as you like, with any app, under the MIT license.
 
 ✨ [Getting Started](Getting-Started)
 
+# Motivation
+There are a few Angular libraries out there for Google Maps. So why develop a new one?
+1. I'm working on a project where the map is the heart of the app. I need full flexibility and quick response time. I can't afford an "oh shut... their library doesn't support this. Now what do I do??" moment. Fork it? Make a pull request? File an issue and hope for the best?...
+
+2. 
+
+
 # What's so cool about it
 ✔ Easy to use 🔌
 
