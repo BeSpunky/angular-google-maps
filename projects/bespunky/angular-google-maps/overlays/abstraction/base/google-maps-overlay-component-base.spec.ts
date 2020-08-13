@@ -5,19 +5,19 @@ import { configureGoogleMapsTestingModule                                       
 import { MockGoogleMap                                                                                                                   } from '@bespunky/angular-google-maps/core/testing';
 import { MockDrawableOverlay, MockNativeDrawableOverlay                                                                                  } from '@bespunky/angular-google-maps/overlays/testing';
 import { WrapperFactory, SuperpowersService                                                                                              } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayLifecycleBase, OverlayType, DrawableOverlay, GoogleMapsOverlaysModule, IOverlaysSuperpower, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
+import { GoogleMapsOverlayComponentBase, OverlayType, DrawableOverlay, GoogleMapsOverlaysModule, IOverlaysSuperpower, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
 
-describe('GoogleMapsOverlayLifecycleBase (abstract)', () =>
+describe('GoogleMapsOverlayComponentBase (abstract)', () =>
 {
-    let component         : GoogleMapsOverlayLifecycleBaseTest;
-    let fixture           : ComponentFixture<GoogleMapsOverlayLifecycleBaseTest>
+    let component         : GoogleMapsOverlayComponentBaseTest;
+    let fixture           : ComponentFixture<GoogleMapsOverlayComponentBaseTest>
     let mockMap           : MockGoogleMap;
     let overlaysSuperpower: IOverlaysSuperpower
 
     beforeEach(async () =>
     {
         ({ component, fixture } = await configureGoogleMapsTestingModule({
-            componentType: GoogleMapsOverlayLifecycleBaseTest,
+            componentType: GoogleMapsOverlayComponentBaseTest,
             customize    : def => def.imports.push(GoogleMapsOverlaysModule)
         }));
         
@@ -55,4 +55,4 @@ function OverlayFactoryProvider(superpowers)
         SuperpowersService
     ]
 })
-class GoogleMapsOverlayLifecycleBaseTest extends GoogleMapsOverlayLifecycleBase<DrawableOverlay> { }
+class GoogleMapsOverlayComponentBaseTest extends GoogleMapsOverlayComponentBase<DrawableOverlay> { }

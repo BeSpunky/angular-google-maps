@@ -1,12 +1,13 @@
-import { MockFill                            } from '@bespunky/angular-google-maps/testing';
-import { MockEmittingWrapper                 } from '@bespunky/angular-google-maps/core/testing';
-import { Coord, CoordPath                    } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsFeature, IGoogleMapsData } from '@bespunky/angular-google-maps/overlays';
+import { MockEmittingWrapper                   } from '@bespunky/angular-google-maps/core/testing';
+import { Coord, CoordPath, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsFeature, IGoogleMapsData   } from '@bespunky/angular-google-maps/overlays';
 
 // @dynamic
-@MockFill
+@NativeObjectWrapper<google.maps.Data.Feature, MockGoogleMapsFeature>()
 export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
+    private id = Math.random();
+
     constructor(public data: IGoogleMapsData, nativeFeature?: google.maps.Data.Feature)
     {
         super(nativeFeature || new google.maps.Data.Feature());
@@ -22,7 +23,7 @@ export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.
     }    
     getId(): string | number
     {
-        throw new Error("Method not implemented.");
+        return this.id;
     }
     getGeometry(): google.maps.Data.Geometry
     {

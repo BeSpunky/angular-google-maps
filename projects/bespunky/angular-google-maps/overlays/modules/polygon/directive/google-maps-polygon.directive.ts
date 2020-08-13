@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
 import { Coord, Hook, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayLifecycleBase   } from '../../../abstraction/base/google-maps-overlay-lifecycle-base';
+import { GoogleMapsOverlayComponentBase   } from '../../../abstraction/base/google-maps-overlay-component-base';
 import { IGoogleMapsPolygon               } from '../i-google-maps-polygon';
 import { GoogleMapsPolygonFactoryProvider } from '../google-maps-polygon-factory.provider';
 
@@ -11,7 +11,7 @@ import { GoogleMapsPolygonFactoryProvider } from '../google-maps-polygon-factory
     exportAs : 'polygon',
     providers: [GoogleMapsPolygonFactoryProvider]
 })
-export class GoogleMapsPolygonDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsPolygon>
+export class GoogleMapsPolygonDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsPolygon>
 {
     @Input() public path?          : Coord[] | Coord[][];
     @Input() public draggable?     : boolean;

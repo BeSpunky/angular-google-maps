@@ -5,7 +5,7 @@ export * from './google-maps-overlays.module';
 export * from './abstraction/base/overlay-type.enum';
 export * from './abstraction/base/i-google-maps-drawable-overlay';
 export * from './abstraction/base/google-maps-drawable-overlay';
-export * from './abstraction/base/google-maps-overlay-lifecycle-base';
+export * from './abstraction/base/google-maps-overlay-component-base';
 
 export * from './abstraction/native/i-google-maps-native-drawable-overlay';
 
