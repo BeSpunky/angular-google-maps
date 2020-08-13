@@ -24,8 +24,8 @@ So the big questions are:
 `@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation. I'll explain in a nutshell how they play together, but will leave links to parts from the source code just in case you're curious.
 
 ## Wrappers
-The main purpose of these is delegating function calls to the native object, thus allowing preprocessing and postprocessing. It basically means 2 things:
-1. I want to 
+The main purpose of these is **transparently** delegating function calls to the native object, **without implementing anything on the wrapper itself**. In turn, this also allows for preprocessing and postprocessing.
+
 
 ### [Proxy](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Futils%2Fproxy-utils.ts&version=GBdevelopment&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
 Every wrapper is by definition a [Javascript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object. It traps calls to functions on the wrapper, then if the wrapper doesn't have the function, delegates the call to the native object.
