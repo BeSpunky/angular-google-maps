@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
 import { GoogleMapsEventData, Hook, Coord } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayLifecycleBase  } from '../../../abstraction/base/google-maps-overlay-lifecycle-base';
+import { GoogleMapsOverlayComponentBase  } from '../../../abstraction/base/google-maps-overlay-component-base';
 import { IGoogleMapsMarker               } from '../i-google-maps-marker';
 import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
 
@@ -11,7 +11,7 @@ import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.p
     exportAs : 'marker',
     providers: [GoogleMapsMarkerFactoryProvider]
 })
-export class GoogleMapsMarkerDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsMarker>
+export class GoogleMapsMarkerDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsMarker>
 {
     @Input() public animation?: google.maps.Animation;
     @Input() public clickable?: boolean;

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Directive, Output, Input } from '@angular/core';
 
 import { Hook, GoogleMapsEventData      } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayLifecycleBase } from '../../../abstraction/base/google-maps-overlay-lifecycle-base';
+import { GoogleMapsOverlayComponentBase } from '../../../abstraction/base/google-maps-overlay-component-base';
 import { IGoogleMapsData                } from '../i-google-maps-data';
 import { GoogleMapsDataFactoryProvider  } from '../google-maps-data-factory.provider';
 
@@ -11,7 +11,7 @@ import { GoogleMapsDataFactoryProvider  } from '../google-maps-data-factory.prov
     exportAs : 'dataLayer',
     providers: [GoogleMapsDataFactoryProvider]
 })
-export class GoogleMapsDataDirective extends GoogleMapsOverlayLifecycleBase<IGoogleMapsData>
+export class GoogleMapsDataDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsData>
 {
     @Input() public controlPosition?: google.maps.ControlPosition;
     @Input() public controls?       : string[];
