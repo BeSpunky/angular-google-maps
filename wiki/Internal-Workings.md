@@ -21,19 +21,14 @@ So the big questions are:
 **Hell no.**
 
 # Solution
-`@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation. I'll explain in a nutshell how they play together, but will leave links to parts from the source code just in case you're curious... 😉
+`@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation. I'll explain in a nutshell how they play together, but will leave links to parts from the source code just in case you're curious.
 
 ## Wrappers
-These will:
-1. Delegate function calls to the native object, allowing preprocessing and postprocessing.
-2. Take care of 
-### [Proxy](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Futils%2Fproxy-utils.ts&version=GBdevelopment&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
-Every wrapper is by definition a [Javascript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object. It traps attempts to access properties on the wrapper and acts as follows:
+The main purpose of these is delegating function calls to the native object, thus allowing preprocessing and postprocessing. It basically means 2 things:
+1. I want to 
 
-```
-Wrapper has the property? return it.
-It doesn't? does the native object have it? return it.
-```
+### [Proxy](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Futils%2Fproxy-utils.ts&version=GBdevelopment&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+Every wrapper is by definition a [Javascript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object. It traps calls to functions on the wrapper, then if the wrapper doesn't have the function, delegates the call to the native object.
 
 Wait, if the method doesn't exist on the wrapper, I won't have intellisense for it... 🤔  
 TypeScript to the rescue... 🙌
@@ -45,3 +40,4 @@ Oh bollocks... Do I now have to type all the signatures for the native functions
 TypeScript to the rescue! Again... 🙌
 
 ### [Utility Types](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Futils.ts&version=GBdevelopment&line=1&lineEnd=2&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+With TypeScript's utility types it is possible to extract a sub type with only function names. It took some juggling... but the end result is pretty cool.
