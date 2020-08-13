@@ -8,7 +8,7 @@ It was inevitable, once I realized wrapping the Google Maps Javascript library m
 # The Problem
 There's more than one way to bring Angular functionality (i.e. two-way bindings, event handling, template interpolation, change detection...) to a native library. However you do it, most likely you will implement your own functions/routines to use native functionalities you would like to provide in your library.
 
-> You can read about it more in details in [my blog post](https://ThoughtsOfARandomPerson.com/posts/how-i-wrapped-google-maps-api)
+> You can read about it more in details in [my blog post](https://ThoughtsOfARandomPerson.com/posts/how-i-wrapped-google-maps-api).
 
 So the big questions are:
 * What happens when the native library adds/removes/modifies a feature?  
@@ -21,7 +21,27 @@ So the big questions are:
 **Hell no.**
 
 # Solution
-`@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation:
+`@bespunky/angular-google-maps` implements different tools which play together nicely to automate the process of wrapping and delegation. I'll explain in a nutshell how they play together, but will leave links to parts from the source code just in case you're curious... 😉
 
-## Proxy
-Every wrapper is by definition a [Javascript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object. The proxy detects calls to functions which don't exist on the wrapper and delegates them to the corresponding
+## Wrappers
+These will:
+1. Delegate function calls to the native object, allowing preprocessing and postprocessing.
+2. Take care of 
+### [Proxy](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Futils%2Fproxy-utils.ts&version=GBdevelopment&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+Every wrapper is by definition a [Javascript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object. It traps attempts to access properties on the wrapper and acts as follows:
+
+```
+Wrapper has the property? return it.
+It doesn't? does the native object have it? return it.
+```
+
+Wait, if the method doesn't exist on the wrapper, I won't have intellisense for it... 🤔  
+TypeScript to the rescue... 🙌
+
+### [Extension Interfaces]()
+In a nutshell, TypeScript allows creating an interface with the same name of a class. The result is every method signature in the interface appearing in the class' intellisense.
+
+Oh bollocks... Do I now have to type all the signatures for the native functions manually?? 😨  
+TypeScript to the rescue! Again... 🙌
+
+### 
