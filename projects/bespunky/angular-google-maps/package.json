@@ -1,6 +1,6 @@
 {
   "name": "@bespunky/angular-google-maps",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "A brilliant solution for using Google Maps in Angular.",
   "private": false,
   "author": {
