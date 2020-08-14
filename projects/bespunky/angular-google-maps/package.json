@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "tslib": "^2.0.0",
-    "@bespunky/angular-zen": "^2.2.1",
+    "@bespunky/angular-zen": "^2.2.2",
     "@types/google-maps": "^3.2.1",
     "reflect-metadata": "^0.1.13"
   }
