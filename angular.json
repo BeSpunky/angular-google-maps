@@ -7,7 +7,7 @@
       "projectType": "library",
       "root": "projects/bespunky/angular-google-maps",
       "sourceRoot": "projects/bespunky/angular-google-maps",
-      "prefix": "lib",
+      "prefix": "bs",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
