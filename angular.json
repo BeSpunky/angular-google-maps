@@ -6,7 +6,7 @@
     "@bespunky/angular-google-maps": {
       "projectType": "library",
       "root": "projects/bespunky/angular-google-maps",
-      "sourceRoot": "projects/bespunky/angular-google-maps/src",
+      "sourceRoot": "projects/bespunky/angular-google-maps",
       "prefix": "lib",
       "architect": {
         "build": {
@@ -24,7 +24,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/bespunky/angular-google-maps/src/test.ts",
+            "main": "projects/bespunky/angular-google-maps/test.ts",
             "tsConfig": "projects/bespunky/angular-google-maps/tsconfig.spec.json",
             "karmaConfig": "projects/bespunky/angular-google-maps/karma.conf.js"
           }

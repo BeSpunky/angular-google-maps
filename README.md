@@ -1,27 +1,23 @@
-# AngularGoogleMaps
+# Angular-Google-Maps Workspace
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
+[![Build status](https://dev.azure.com/BeSpunky/Libraries/_apis/build/status/angular-google-maps/Build%20angular-google-maps)](https://dev.azure.com/BeSpunky/Libraries/_build/latest?definitionId=29)
 
-## Development server
+This angular **workspace** provides:
+- The `@bespunky/angular-google-maps` library containing a set of **🌳 tree-shakable** tools to work with Google Maps API.
+- A `demo` app with examples.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+> When published to npm, only the library itself is published.
+  
+> The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
+> 
+> Compatibility with older versions is possible but not garantied.
 
-## Code scaffolding
+# 🙌 Examples
+The demo app is **live** at [angular-google-maps demo](https://bs-angular-google-maps-demo.firebaseapp.com).  
+For implementation, [visit the code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fdemo&version=GBmaster&_a=contents) for the demo app.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# 📖 Documentation
 
-## Build
+All modules / components / services are documented within the code. Some might have their own `Readme.md` file accessible at their folder.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+The complete documentation is found in the [wiki folder](/wiki/Wiki-Home.md), and is also accessible online at [angular-google-maps wiki](https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps?wikiVersion=GBmaster&pagePath=Home).
