@@ -4,8 +4,10 @@
     "lib": {
         "entryFile": "public-api.ts",
         "umdModuleIds": {
-            "@bespunky/angular-zen": "angularZen",
+            "@bespunky/angular-zen": "zen",
             "@bespunky/angular-zen/core": "zenCore",
+            "@bespunky/angular-zen/async": "zenAsync",
+            "@bespunky/angular-zen/universal": "zenUniversal"
         }
     },
     "whitelistedNonPeerDependencies": [
