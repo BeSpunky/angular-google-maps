@@ -10,8 +10,5 @@
             "@bespunky/angular-zen/universal": "zenUniversal"
         }
     },
-    "whitelistedNonPeerDependencies": [
-        "@bespunky/angular-zen",
-        "@types/google-maps"
-    ]
+    "whitelistedNonPeerDependencies": ["."]
 }
