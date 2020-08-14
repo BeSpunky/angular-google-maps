@@ -1,24 +1,59 @@
-# AngularGoogleMaps
+# The library is still under development. It is suggested not to use it for production yet.
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.9.
+# @bespunky/angular-google-maps
+This library brings Google Maps API to angular and provides a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
 
-## Code scaffolding
+You may use the library as you like, with any app, under the MIT license.
 
-Run `ng generate component component-name --project angular-google-maps` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project angular-google-maps`.
-> Note: Don't forget to add `--project angular-google-maps` or else it will be added to the default project in your `angular.json` file. 
+🎁 [What's in the library?](/What's-Inside)
 
-## Build
+🙌 [Live demo](TODO add demo)
 
-Run `ng build angular-google-maps` to build the project. The build artifacts will be stored in the `dist/` directory.
+✨ [Getting Started](Getting-Started)
 
-## Publishing
+> The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
+> 
+> Compatibility with older versions is possible but not garantied.
 
-After building your library with `ng build angular-google-maps`, go to the dist folder `cd dist/angular-google-maps` and run `npm publish`.
+# What's so cool about it
+✔ Easy to use 🔌
 
-## Running unit tests
+✔ No previous Google Maps knowledge needed 🤯
 
-Run `ng test angular-google-maps` to execute the unit tests via [Karma](https://karma-runner.github.io).
+✔ Powerful & flexible tooling 💪
 
-## Further help
+✔ Tree-shakable 🌳
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+✔ Angular Universal ready 🌎
+
+✔ Extendable 🧩
+
+✔ Testable 🧪
+
+✔ Scalable ↗
+
+✔ Magical automated native wrapping ✨
+
+✔ Open-source! 🤩
+
+# Motivation
+There are a few Angular libraries out there for Google Maps. So why develop a new one?
+
+## Flexibility and quick response time
+I'm working on a project where the map is the heart of the app. I can't afford an "oh shut... their library doesn't support this. Now what do I do??" moment. Fork it? Make a pull request? File an issue and hope for the best?...
+
+## Facilitating map functionality
+Maybe they wanted to reduce package size, or maybe it was simply a lack of initiative, but having used Google Maps API in different contexts in the last few years, I've always found that it lacks some basic functionality. I would like my library to take care of stuff for me. No manual map related labour in the app itself.
+
+## Usage and code style
+We all have preferences as developers. I want my library to work a certain way and provide me with a certain API. I've always had some nice ideas regarding how it should be used. It was time to implement.
+
+## The challenge
+Of course 😁
+
+
+# References
+
+[angular-google-maps repository](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps)
+
+[npm package](https://www.npmjs.com/package/%40bespunky/angular-google-maps)
