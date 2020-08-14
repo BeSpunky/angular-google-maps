@@ -6,21 +6,5 @@
 */
 {
   "files": [],
-  "references": [
-    {
-      "path": "./projects/bespunky/angular-google-maps/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/bespunky/angular-google-maps/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/demo/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/demo/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/demo-e2e/tsconfig.e2e.json"
-    }
-  ]
+  "references": []
 }
