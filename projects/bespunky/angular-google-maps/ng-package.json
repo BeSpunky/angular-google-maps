@@ -5,7 +5,7 @@
         "entryFile": "public-api.ts",
         "umdModuleIds": {
             "@bespunky/angular-zen": "angularZen",
-            "lodash": "_"
+            "@bespunky/angular-zen/core": "zenCore",
         }
     },
     "whitelistedNonPeerDependencies": [
