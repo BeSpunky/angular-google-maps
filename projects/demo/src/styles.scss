@@ -3,3 +3,29 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.fill-screen-v {
+    height: calc(100vh - 70px);
+}
+
+.box {
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.76);
+    color: rgb(41, 41, 41);
+
+    padding: 30px;
+}
+
+.absolute {
+    position: absolute;
+
+    &.centered {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.text-center {
+    text-align: center;
+}
