@@ -19,5 +19,6 @@ export const GettingStartedExamples: Example[] = [
 export const GettingStartedTopic: Topic = {
     title      : 'Getting Started',
     description: 'See how simple maps are integrated into an Angular app.',
+    icon       : 'explore',
     examples   : GettingStartedExamples
 };

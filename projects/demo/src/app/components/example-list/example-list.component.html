@@ -1,1 +1,20 @@
-<p>example-list works!</p>
+<div class="summary padding-30">
+    <h1>{{topic.title}} <small><a routerLink="../" matTooltip="Back home"><mat-icon>keyboard_arrow_up</mat-icon></a></small></h1>
+    <h3>{{topic.description}}</h3>
+</div>
+
+<div class="examples padding-30" gdColumns="repeat(auto-fit, minmax(240px, 1fr))" gdAlignColumns="center center" gdGap.gt-xs="15px">
+    <a [routerLink]="['./', example.title]" *ngFor="let example of topic.examples" class="non-link-style">
+        <mat-card>
+            <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon>{{topic.icon}}</mat-icon>
+                </div>
+                <mat-card-title>{{example.title}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{example.description}}</p>
+            </mat-card-content>
+        </mat-card>
+    </a>
+</div>

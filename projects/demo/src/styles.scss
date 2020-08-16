@@ -12,8 +12,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 3px;
     background: rgba(255, 255, 255, 0.76);
     color: rgb(41, 41, 41);
+}
 
+.padding-30 {
     padding: 30px;
+}
+
+.relative {
+    position: relative;
 }
 
 .absolute {
@@ -28,4 +34,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .text-center {
     text-align: center;
+}
+
+.non-link-style {
+    text-decoration: none;
 }

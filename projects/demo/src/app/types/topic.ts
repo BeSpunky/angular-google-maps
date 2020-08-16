@@ -4,5 +4,6 @@ export interface Topic
 {
     title      : string;
     description: string;
-    examples   : Example[]
+    icon       : string;
+    examples   : Example[];
 }

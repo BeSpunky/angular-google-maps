@@ -1,17 +1,23 @@
-<div class="cover fill-screen-v">
-    <div class="box absolute centered">
+<!-- <div class="cover fill-screen-v relative">
+    <div class="box absolute centered padding-30">
         <div class="logo text-center">
-            <img src="https://iconarchive.com/download/i99368/dtafalonso/android-lollipop/Maps.ico"/>
+            <img src="https://iconarchive.com/download/i99368/dtafalonso/android-lollipop/Maps.ico" />
         </div>
         <h1 class="title">@bespunky/angular-google-maps</h1>
         <h3 class="subtitle">A brilliant solution for using Google Maps in Angular.</h3>
     </div>
-</div>
-<div class="topics">
-    <div class="topic" *ngFor="let topic of topics">
-        {{topic.title}}
-        <div class="example" *ngFor="let example of topic.examples">
-            --- {{example.title}}
-        </div>
-    </div>
+</div> -->
+<div class="topics" gdColumns="repeat(auto-fit, minmax(240px, 1fr))" gdAlignColumns="center center" gdGap.gt-xs="15px">
+    <a [routerLink]="['/', topic.title]" *ngFor="let topic of topics" class="non-link-style">
+        <mat-card>
+            <mat-card-header>
+                <div mat-card-avatar><mat-icon>{{topic.icon}}</mat-icon></div>
+                <mat-card-title>{{topic.title}}</mat-card-title>
+                <mat-card-subtitle>{{topic.examples.length}} examples</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{topic.description}}</p>
+            </mat-card-content>
+        </mat-card>
+    </a>
 </div>

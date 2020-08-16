@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component                     } from '@angular/core';
+import { ActivatedRoute                } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
+import { Example } from '../../types/example';
 
 @Component({
-  selector   : 'demo-example',
-  templateUrl: './example.component.html',
-  styleUrls  : ['./example.component.scss']
+    selector   : 'demo-example',
+    templateUrl: './example.component.html',
+    styleUrls  : ['./example.component.scss']
 })
-export class ExampleComponent implements OnInit {
+export class ExampleComponent
+{
+    public example: Example;
+    public loaded : boolean = false;
+    
+    constructor(private sanitizer: DomSanitizer, route: ActivatedRoute)
+    {
+        this.example = route.snapshot.data as Example;
+    }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    public safe(url: string): SafeResourceUrl
+    {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
 }
