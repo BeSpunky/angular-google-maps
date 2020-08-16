@@ -1,5 +1,4 @@
-import { upperFirst } from 'lodash';
-
+import { camelCase                                               } from '@bespunky/angular-google-maps/_internal';
 import { configureGoogleMapsTestingModule                        } from '@bespunky/angular-google-maps/testing';
 import { MockGoogleMap                                           } from '@bespunky/angular-google-maps/core/testing';
 import { GoogleMapsApiService, CoordPath, FlatCoord, NativeCoord } from '@bespunky/angular-google-maps/core';
@@ -62,7 +61,7 @@ describe('GoogleMapsPolygon', () =>
             expect(polygon.native.get(option)).not.toBe(value);
             
             // Set the option
-            polygon[`set${upperFirst(option)}`](value);
+            polygon[`set${camelCase(option, true)}`](value);
             
             expect(runOutsideAngular).toHaveBeenCalledTimes(1);
             expect(polygon.native.get(option)).toBe(value);

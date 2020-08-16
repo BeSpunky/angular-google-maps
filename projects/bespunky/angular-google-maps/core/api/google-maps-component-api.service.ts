@@ -1,8 +1,8 @@
-import { upperFirst, camelCase     } from 'lodash';
 import { fromEventPattern          } from 'rxjs';
 import { filter, switchMap, pluck  } from 'rxjs/operators';
 import { Injectable, SimpleChanges } from '@angular/core';
 
+import { camelCase                } from '@bespunky/angular-google-maps/_internal';
 import { GoogleMapsEventsMap      } from '../abstraction/types/events-map.type';
 import { GoogleMapsEventData      } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsComponentBase  } from '../abstraction/base/google-maps-component-base';
@@ -94,7 +94,7 @@ export class GoogleMapsComponentApiService
     {
         for (const propertyName in changes)
         {
-            const setterName = `set${upperFirst(propertyName)}`;
+            const setterName = `set${camelCase(propertyName, true)}`;
 
             // If the wrapper has a setter for the property name, this will set the new values of @Input() values to the native object's properties
             if (setterName in wrapper)

@@ -1,11 +1,14 @@
 {
-    "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-    "dest": "../../../dist/bespunky/angular-google-maps",
-    "lib": {
-        "entryFile": "public-api.ts",
-        "umdModuleIds": {
-            "@bespunky/angular-zen": "angularZen",
-            "lodash": "_"
-        }
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/bespunky/angular-google-maps",
+  "lib": {
+    "entryFile": "public-api.ts",
+    "umdModuleIds": {
+      "@bespunky/angular-zen": "zen",
+      "@bespunky/angular-zen/core": "zenCore",
+      "@bespunky/angular-zen/async": "zenAsync",
+      "@bespunky/angular-zen/universal": "zenUniversal"
     }
+  },
+  "whitelistedNonPeerDependencies": ["."]
 }

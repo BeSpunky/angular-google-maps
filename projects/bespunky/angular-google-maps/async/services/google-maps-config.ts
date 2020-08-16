@@ -48,10 +48,8 @@ export class GoogleApiUrl
     public region?: string;
 }
 
+/** The configuration for the async module. Defined for scalability. */
 export class GoogleMapsConfig
 {
     public apiUrl: string | GoogleApiUrl;
-
-    // NOT IMPLEMENTED YET
-    public recycleMapObject?: boolean;
 }
