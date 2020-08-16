@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 
 import { Topic  } from '../../types/topic';
 import { Topics } from '../../topics/all';
@@ -8,13 +8,12 @@ import { Topics } from '../../topics/all';
     templateUrl: './home.component.html',
     styleUrls  : ['./home.component.scss']
 })
-export class HomeComponent implements OnInit
+export class HomeComponent
 {
     public topics: Topic[] = Topics;
 
-    constructor() { }
-
-    ngOnInit(): void
+    public slideTo(element: HTMLElement): void
     {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }

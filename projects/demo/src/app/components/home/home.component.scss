@@ -1,6 +1,7 @@
 .cover {
-   // background: url(/assets/cover.jpg);
+    background: url(/assets/cover.jpg);
     background-size: cover;
+    filter: brightness(.5) grayscale(1);
 }
 
 .topics {

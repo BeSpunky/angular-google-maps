@@ -1,13 +1,16 @@
-<!-- <div class="cover fill-screen-v relative">
-    <div class="box absolute centered padding-30">
-        <div class="logo text-center">
-            <img src="https://iconarchive.com/download/i99368/dtafalonso/android-lollipop/Maps.ico" />
-        </div>
-        <h1 class="title">@bespunky/angular-google-maps</h1>
-        <h3 class="subtitle">A brilliant solution for using Google Maps in Angular.</h3>
+<div class="cover fill-screen-v relative"></div>
+
+<div class="box absolute centered padding-30 text-center">
+    <div class="logo text-center">
+        <img src="assets/logo@1.25x.png" />
     </div>
-</div> -->
-<div class="topics" gdColumns="repeat(auto-fit, minmax(240px, 1fr))" gdAlignColumns="center center" gdGap.gt-xs="15px">
+    <h1 class="title">@bespunky/angular-google-maps</h1>
+    <h3 class="subtitle">A brilliant solution for using Google Maps in Angular.</h3>
+    <button mat-raised-button color="primary" (click)="slideTo(demos)">Start Experimenting</button>
+</div>
+
+<h1 class="text-center margin-top-30">Demos</h1>
+<div class="topics" gdColumns="repeat(auto-fit, minmax(240px, 1fr))" gdAlignColumns="center center" gdGap.gt-xs="15px" #demos>
     <a [routerLink]="['/', topic.title]" *ngFor="let topic of topics" class="non-link-style">
         <mat-card>
             <mat-card-header>

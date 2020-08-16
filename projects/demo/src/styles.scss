@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/purple-green.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -17,6 +17,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .padding-30 {
     padding: 30px;
 }
+
+.margin-top-10 { margin-top: 10px !important; }
+.margin-top-20 { margin-top: 20px !important; }
+.margin-top-30 { margin-top: 30px !important; }
 
 .relative {
     position: relative;
@@ -38,4 +42,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .non-link-style {
     text-decoration: none;
+    color: inherit;
 }
