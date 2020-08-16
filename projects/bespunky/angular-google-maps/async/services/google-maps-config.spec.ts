@@ -20,10 +20,8 @@ describe('GoogleMapsConfig', () =>
             region   : 'dummy region'
         };
 
-        config.recycleMapObject = true;
-        config.apiUrl           = apiUrl;
+        config.apiUrl = apiUrl;
 
-        expect(config.recycleMapObject).toBeTruthy();
         expect(config.apiUrl).toEqual(apiUrl);
     });
 });
