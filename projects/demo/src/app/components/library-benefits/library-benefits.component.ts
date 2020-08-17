@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class LibraryBenefitsComponent
 {
     public readonly benefits = [
-        { title: 'Easy to use',                        emoji: '🔌', description: 'The intuitive library structure and its API provide for maximum power with minimum effort and learning curve.' },
+        { title: 'Plug & Play',                        emoji: '🔌', description: 'Easy to use. The intuitive library structure and its API provide for maximum power with minimum effort and learning curve.' },
         { title: 'Zero Google Maps knowledge needed',  emoji: '🤯', description: 'Simply use intellisense or the library\'s documentation to explore new functionalities.' },
         { title: 'Powerful & flexible tooling',        emoji: '💪', description: 'Do more with less! Services, automation, flexible types and more! Do things your way!' },
         { title: 'Tree-shakable',                      emoji: '🌳', description: 'Any library module you don\'t use in your app will be excluded from your final bundle.' },
