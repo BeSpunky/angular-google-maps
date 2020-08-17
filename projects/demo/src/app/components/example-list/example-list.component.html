@@ -3,8 +3,8 @@
     <h3>{{topic.description}}</h3>
 </div>
 
-<div class="examples padding-30" gdColumns="repeat(auto-fit, minmax(240px, 1fr))" gdAlignColumns="center center" gdGap.gt-xs="15px">
-    <a [routerLink]="['./', example.title]" *ngFor="let example of topic.examples" class="non-link-style">
+<div class="examples padding-30" gdColumns="repeat(auto-fit, minmax(300px, 1fr))" gdAlignColumns="space-between stretch" gdGap="15px">
+    <a [routerLink]="['./', example.title]" *ngFor="let example of topic.examples" class="non-link-style" >
         <mat-card>
             <mat-card-header>
                 <div mat-card-avatar>
