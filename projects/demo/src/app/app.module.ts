@@ -7,7 +7,7 @@ import { FlexLayoutModule        } from '@angular/flex-layout';
 import { AppRoutingModule         } from './app-routing.module';
 import { AppMaterialModule        } from './app-material.module';
 import { AppComponent             } from './app.component';
-import { HomeComponent        } from './components/home/home.component';
+import { LibraryBenefitsComponent } from './components/library-benefits/library-benefits.component';
 import { HomeComponent            } from './components/home/home.component';
 import { TopicComponent           } from './components/topic/topic.component';
 import { ExampleListComponent     } from './components/example-list/example-list.component';
@@ -17,6 +17,7 @@ import { ExampleComponent         } from './components/example/example.component
     declarations: [
         AppComponent,
         HomeComponent,
+        LibraryBenefitsComponent,
         TopicComponent,
         ExampleListComponent,
         ExampleComponent,
