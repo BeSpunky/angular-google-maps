@@ -6,6 +6,6 @@
     </div>
 </div>
 
-<div [ngClass.gt-xs]="'padding-30'">
+<div [ngClass.gt-xs]="'padding-30'" [ngStyle.gt-xs]="{ paddingTop: 0 }">
     <iframe [src]="safe(example.embedUrl)"></iframe>
 </div>
