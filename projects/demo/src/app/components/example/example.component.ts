@@ -11,16 +11,13 @@ import { Example } from '../../types/example';
 })
 export class ExampleComponent
 {
-    public example: Example;
-    public loaded : boolean = false;
+    public example     : Example;
+    public loaded      : boolean = false;
+    public safeEmbedUrl: SafeResourceUrl;
     
     constructor(private sanitizer: DomSanitizer, route: ActivatedRoute)
     {
-        this.example = route.snapshot.data as Example;
-    }
-
-    public safe(url: string): SafeResourceUrl
-    {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        this.example      = route.snapshot.data as Example;
+        this.safeEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.example.embedUrl);
     }
 }
