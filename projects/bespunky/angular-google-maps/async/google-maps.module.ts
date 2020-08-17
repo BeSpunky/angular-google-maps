@@ -15,14 +15,26 @@ import { SafeDirective           } from './directives/safe.directive';
 })
 export class GoogleMapsModule extends _GoogleMapsModule
 {
-    static forRoot(config: GoogleMapsConfig): ModuleWithProviders<GoogleMapsModule>
+    /**
+     * Creates providers and configures the module before import.
+     * 
+     * When implementing your own api loader:
+     * 1. Do not pass in the `config` param.
+     * 2. Declare a provider for `GoogleMapsApiLoader` in your app.
+     * 
+     * @static
+     * @param {GoogleMapsConfig} [config] Configure automatic loading of Google Maps API. When not provided, it is assumed that you will provide your 
+     * own implementation for `GoogleMapsApiLoader`.
+     */
+    static forRoot(config?: GoogleMapsConfig): ModuleWithProviders<GoogleMapsModule>
     {
-        return {
+        // If no config was provided, it is assumed that the user will provide his own loader.
+        return config ? {
             ngModule: GoogleMapsModule,
             providers: [
                 { provide: GoogleMapsApiLoader, useClass: LazyGoogleMapsApiLoader },
                 { provide: GoogleMapsConfig, useValue: config }
             ]
-        };
+        } : { ngModule: GoogleMapsModule };
     }
 }
