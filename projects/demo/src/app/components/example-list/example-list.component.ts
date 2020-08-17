@@ -1,7 +1,12 @@
-import { Component      } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
-import { Topic } from '../../types/topic';
+export interface CardInfo
+{
+    title    : string;
+    subtitle?: string;
+    icon     : string;
+    content  : string;
+}
 
 @Component({
     selector   : 'demo-example-list',
@@ -10,10 +15,5 @@ import { Topic } from '../../types/topic';
 })
 export class ExampleListComponent
 {
-    public topic: Topic;
-
-    constructor(route: ActivatedRoute)
-    {
-        this.topic = route.snapshot.data as Topic;
-    }
+    @Input() public cards: CardInfo[];
 }

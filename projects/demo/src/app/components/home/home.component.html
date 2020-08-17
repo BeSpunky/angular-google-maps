@@ -9,19 +9,9 @@
     <button mat-raised-button color="primary" (click)="slideTo(demos)">Start Experimenting</button>
 </div>
 
-<h1 class="text-center margin-top-30">Demos</h1>
-<h3 class="text-center margin-top-30">⚡ All of the examples are served using StackBlitz. For tips and insights, look for the README.md file of each.</h3>
-<div class="topics" gdColumns="repeat(auto-fill, minmax(300px, 1fr))" gdAlignColumns="stretch stretch" gdGap="15px" #demos>
-    <a [routerLink]="['/', topic.title]" *ngFor="let topic of topics" class="non-link-style" fxFlex fxLayout="row" fxLayoutAlign="stretch stretch">
-        <mat-card>
-            <mat-card-header>
-                <div mat-card-avatar><mat-icon>{{topic.icon}}</mat-icon></div>
-                <mat-card-title>{{topic.title}}</mat-card-title>
-                <mat-card-subtitle>{{topic.examples.length}} examples</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <p>{{topic.description}}</p>
-            </mat-card-content>
-        </mat-card>
-    </a>
+<div class="demos" #demos>
+    <h1 class="text-center margin-top-30">Demos</h1>
+    <h3 class="text-center margin-top-30">⚡ All of the examples are served using StackBlitz. For tips and insights, look for the README.md file of each.</h3>
+    
+    <demo-example-list [cards]="cards"></demo-example-list>
 </div>

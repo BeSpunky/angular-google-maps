@@ -1,7 +1,8 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Topic  } from '../../types/topic';
 import { Topics } from '../../topics/all';
+import { CardInfo } from '../example-list/example-list.component';
 
 @Component({
     selector   : 'demo-home',
@@ -10,7 +11,13 @@ import { Topics } from '../../topics/all';
 })
 export class HomeComponent
 {
-    public topics: Topic[] = Topics;
+    public readonly topics: Topic[]    = Topics;
+    public readonly cards : CardInfo[] = Topics.map(topic => ({
+        title   : topic.title,
+        subtitle: `${topic.examples.length} examples`,
+        icon    : topic.icon,
+        content : topic.description
+    }));
 
     public slideTo(element: HTMLElement): void
     {

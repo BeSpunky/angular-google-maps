@@ -1,19 +1,15 @@
-<div class="summary padding-30">
-    <h1>{{topic.title}} <small><a routerLink="../" class="non-link-style" matTooltip="Back home"><mat-icon>keyboard_arrow_up</mat-icon></a></small></h1>
-    <h3>{{topic.description}}</h3>
-</div>
-
 <div class="examples padding-30" gdColumns="repeat(auto-fit, minmax(300px, 1fr))" gdAlignColumns="space-between stretch" gdGap="15px">
-    <a [routerLink]="['./', example.title]" *ngFor="let example of topic.examples" class="non-link-style" >
+    <a [routerLink]="['./', card.title]" *ngFor="let card of cards" class="non-link-style" >
         <mat-card>
             <mat-card-header>
                 <div mat-card-avatar>
-                    <mat-icon>{{topic.icon}}</mat-icon>
+                    <mat-icon>{{card.icon}}</mat-icon>
                 </div>
-                <mat-card-title>{{example.title}}</mat-card-title>
+                <mat-card-title>{{card.title}}</mat-card-title>
+                <mat-card-subtitle *ngIf="card.subtitle">{{card.subtitle}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <p>{{example.description}}</p>
+                <p>{{card.content}}</p>
             </mat-card-content>
         </mat-card>
     </a>
