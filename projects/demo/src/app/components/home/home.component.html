@@ -9,13 +9,20 @@
     <button mat-raised-button color="primary" (click)="slideTo(demos)">Start Experimenting</button>
 </div>
 
-<div class="benefits">
-    <demo-library-benefits></demo-library-benefits>
+<div class="benefits padding-30" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="15px">
+    <h1 class="text-center">The Cool Benefits</h1>
+    <h3 class="text-center">The true potential of Google Maps at your fingertips.</h3>
+
+    <demo-library-benefits class="padding-30"></demo-library-benefits>
+
+    <div class="text-center">
+        <a mat-raised-button color="primary" [href]="wikiUrl" target="_blank">See The Docs</a>
+    </div>
 </div>
 
-<div class="demos" #demos>
-    <h1 class="text-center margin-top-30">Demos</h1>
-    <h3 class="text-center margin-top-30">⚡ All of the examples are served using StackBlitz. For tips and insights, look for the README.md file of each.</h3>
+<div class="demos padding-30" #demos>
+    <h1 class="text-center">Demos</h1>
+    <h3 class="text-center">⚡ All of the examples are served using StackBlitz. For tips and insights, look for the README.md file of each.</h3>
     
-    <demo-example-list [cards]="cards"></demo-example-list>
+    <demo-example-list [cards]="cards" class="padding-30"></demo-example-list>
 </div>
