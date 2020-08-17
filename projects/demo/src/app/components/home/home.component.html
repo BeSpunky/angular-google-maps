@@ -1,5 +1,5 @@
 <div class="cover fill-screen-v relative" fxLayout="column" fxLayoutAlign="center center">
-    <div class="box padding-30 text-center">
+    <div class="box padding-30 text-center" [ngStyle.xs]="{ width: 'initial' }" [ngStyle.gt-xs]="{ width: '500px' }">
         <div class="logo text-center">
             <img src="assets/logo@1.25x.png" />
         </div>
@@ -13,10 +13,10 @@
     <h1 class="text-center">The Cool Benefits</h1>
     <h3 class="text-center">The true potential of Google Maps at your fingertips.</h3>
 
-    <demo-library-benefits class="padding-30"></demo-library-benefits>
+    <demo-library-benefits class=""></demo-library-benefits>
 
     <div class="text-center">
-        <a mat-raised-button color="primary" [href]="wikiUrl" target="_blank">See The Docs</a>
+        <a mat-raised-button color="primary" [href]="wikiUrl" target="_blank" class="margin-top-30">See The Docs</a>
     </div>
 </div>
 

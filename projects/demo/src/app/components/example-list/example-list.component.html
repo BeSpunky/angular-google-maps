@@ -1,6 +1,5 @@
 <div class="examples" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="15px">
-<!-- <div class="examples" gdColumns="repeat(auto-fit, minmax(300px, 1fr))" gdAlignColumns="space-between stretch" gdGap="15px"> -->
-    <a [routerLink]="['./', card.title]" *ngFor="let card of cards" class="non-link-style" >
+    <a [routerLink]="['./', card.title]" *ngFor="let card of cards" class="non-link-style transition hover-zoom">
         <mat-card>
             <mat-card-header>
                 <div mat-card-avatar>

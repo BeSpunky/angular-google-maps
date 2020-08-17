@@ -44,3 +44,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-decoration: none;
     color: inherit;
 }
+
+.transition {
+    transition: all .4s ease !important;
+}
+
+.hover-zoom:hover {
+    transform: scale(1.01);
+}
