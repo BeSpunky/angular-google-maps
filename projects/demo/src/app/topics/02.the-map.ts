@@ -16,21 +16,21 @@ export const TheMapExamples: Example[] = [
     },
     {
         title      : 'Superpowers (Built-in)',
-        description: 'Import superpower modules and enhance your map capabilities with overlays, drawing, object tracking and more.).',
+        description: 'Import superpower modules and enhance your map capabilities with overlays, drawing, object tracking and more).',
         icon       : 'battery_charging_full',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-wrapper?embed=1&file=src/app/map/map.component.ts'
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-superpowers?embed=1&file=src/app/map/map.component.html'
     },
     {
         title      : 'Extending Superpowers',
         description: 'Implement your own superpower and extend map capabilities.',
         icon       : 'extension',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-wrapper?embed=1&file=src/app/map/map.component.ts'
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-extending-superpowers?embed=1&file=src/app/map-analytics-superpower/map-analytics-superpower.ts'
     },
     {
         title      : 'Multiple Maps',
         description: 'Incorporate multiple maps into your app.',
         icon       : 'view_compact',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-wrapper?embed=1&file=src/app/map/map.component.ts'
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-multiple?embed=1&file=src/app/app.component.html'
     }
 ];
 

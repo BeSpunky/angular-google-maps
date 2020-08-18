@@ -55,7 +55,10 @@ Creating superpowers involves 2 simple steps...
     @Injectable({ providedIn: GoogleMapModule }) // <-- 🟢 Must be injected at map level
     export class MagicSuperpower extends Superpower
     {
-        constructor(/* Use DI as needed */) { }
+        constructor(/* Use DI as needed */)
+        {
+            super();
+        }
 
         public abracadabra(): void
         {
