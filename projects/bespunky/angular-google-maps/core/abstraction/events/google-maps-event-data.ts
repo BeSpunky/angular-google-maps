@@ -4,6 +4,9 @@ import { IGoogleMapsEventData    } from './i-google-maps-event-data';
 
 export class GoogleMapsEventData implements IGoogleMapsEventData
 {
+    /** The native object which actually emitted the event. */
+    public nativeEmitter: IGoogleMapsNativeObject;
+
     constructor(
         /** The name of the triggered event. */
         public eventName: string,
@@ -13,13 +16,14 @@ export class GoogleMapsEventData implements IGoogleMapsEventData
          * use `associatedEmitter` instead.
          */
         public emitter: EmittingWrapper,
-        /** The native object which actually emitted the event. */
-        public nativeEmitter: IGoogleMapsNativeObject,
         /** A transformed version of the native arguments provided in the native event. Cleaner, easier to use. */
         public args: any,
         /** The native arguments provided in the native event. */
         public nativeArgs: any,
         /** The wrapper this event is related to. This is always the inner wrapper of the hooked component. */
         public associatedEmitter: EmittingWrapper
-    ) { }
+    )
+    {
+        this.nativeEmitter = this.emitter.native;
+    }
 }
