@@ -1,6 +1,6 @@
 {
   "name": "@bespunky/angular-google-maps",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "A brilliant solution for using Google Maps in Angular.",
   "private": false,
   "author": {
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps"
   },
-  "homepage": "https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps",
+  "homepage": "https://bs-angular-ggl-maps-demo.web.app",
   "bugs": {
     "email": "us@bespunky.io"
   },

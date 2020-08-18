@@ -1,6 +1,6 @@
 {
   "name": "angular-google-maps",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -19,16 +19,19 @@
     "vminor": "npm run lib-vminor && npm run app-vminor",
     "vpatch": "npm run lib-vpatch && npm run app-vpatch",
     "publish": "cd dist/bespunky/angular-google-maps && npm publish --access public",
-    "publish-demo": "firebase deploy --only hosting:bs-angular-google-maps-demo",
+    "publish-demo": "firebase deploy --only hosting:bs-angular-ggl-maps-demo",
     "postinstall": "ngcc --tsconfig \"./projects/bespunky/angular-google-maps/tsconfig.lib.json\""
   },
   "private": false,
   "dependencies": {
     "@angular/animations": "~10.0.2",
+    "@angular/cdk": "^10.1.3",
     "@angular/common": "~10.0.2",
     "@angular/compiler": "~10.0.2",
     "@angular/core": "~10.0.2",
+    "@angular/flex-layout": "^10.0.0-beta.32",
     "@angular/forms": "~10.0.2",
+    "@angular/material": "^10.1.3",
     "@angular/platform-browser": "~10.0.2",
     "@angular/platform-browser-dynamic": "~10.0.2",
     "@angular/router": "~10.0.2",

@@ -5,7 +5,7 @@ In case you prefer placing the `<script>` tag manually, or you have your own loa
 
 > Note you will have to ensure:
 > 1. Loading Maps API completely before your map component gets loaded.
-> 2. Loading of all native libraries you're gonna use ([see docs](https://developers.google.com/maps/documentation/javascript/libraries))
+> 2. Loading of all native libraries you're gonna use ([see docs](https://developers.google.com/maps/documentation/javascript/libraries)).
 
 # Example
 1. Import `GoogleMapsModule` from the `core` package:
@@ -45,6 +45,7 @@ Bam! You have a map on your screen! 🤟😎
 # Next steps
 | Topic | Description |
 | ----- | ----------- |
-|[Auto Async Loading](/Getting-Started/Auto-Async-Loading)|Let the library load the native api for ya. 💪|
+|[Plug & Play Async Loading](/Getting-Started/Plug-n-Play-Async-Loading)|Let the library load the native api for ya. 💪
+|[Custom Loader](/Getting-Started/Custom-Loader)|Define your own custom loader for maps api.|
 |[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
 |[The Map](/The-Map)|Controlling the map, configuring it, handling events and more.|

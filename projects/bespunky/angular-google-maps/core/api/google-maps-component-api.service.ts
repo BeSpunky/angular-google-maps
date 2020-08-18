@@ -1,6 +1,6 @@
-import { fromEventPattern          } from 'rxjs';
-import { filter, switchMap, pluck  } from 'rxjs/operators';
-import { Injectable, SimpleChanges } from '@angular/core';
+import { fromEventPattern, Observable } from 'rxjs';
+import { filter, switchMap, pluck     } from 'rxjs/operators';
+import { Injectable, SimpleChanges    } from '@angular/core';
 
 import { camelCase                } from '@bespunky/angular-google-maps/_internal';
 import { GoogleMapsEventsMap      } from '../abstraction/types/events-map.type';
@@ -52,35 +52,53 @@ export class GoogleMapsComponentApiService
      */
     public hookAndSetEmitters(emittingComponent: GoogleMapsComponentBase<EmittingWrapper>, wrapper: EmittingWrapper = null, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
     {
-        const transfrom = this.api.eventsData;
         const eventsMap = (Reflect.getMetadata(HookOutputSymbol, emittingComponent) || []) as GoogleMapsEventsMap;
 
         wrapper = wrapper || emittingComponent.wrapper;
 
         for (const event of eventsMap)
         {
-            let emitter = fromEventPattern(
-                // Hook native event to observable subscribe
-                (handler)                      => wrapper.listenTo(event.reference, handler),
-                // Hook unregister function to observable unsubscribe
-                (_, stopListening: () => void) => stopListening(),
-                // Map, simplify and storng-type event args
-                (...nativeArgs: any)           => new GoogleMapsEventData(event.name, wrapper, wrapper.native, transfrom.auto(nativeArgs), nativeArgs, emittingComponent.wrapper)
-            );
-            
-            // If a filtering function was provided, pipe it in
-            if (shouldEmit) emitter = emitter.pipe(
-                // Determine if the event should be emitted. Wrapped in a Promise.resolve() call to avoid detecting the return type of the filter function
-                switchMap(event => Promise.resolve(shouldEmit(event)), (event, emit) => ({ event, emit })),
-                // Filter by the boolean result of the shouldEmit function
-                filter(data => data.emit),
-                // Get and pass along only the event object
-                pluck('event')
-            );
-
             // Set the observable to the event emitter property
-            emittingComponent[camelCase(event.name)] = emitter;
+            emittingComponent[camelCase(event.name)] = this.createEventEmitter(wrapper, event.name, event.reference, emittingComponent.wrapper, shouldEmit);;
         }
+    }
+
+    /**
+     * Creates an observable hooked to a native event of a wrapper object and automatically transforms its event data.
+     * Subscribe and unsubscribe are both hooked.
+     * 
+     * @param {EmittingWrapper} wrapper The wrapper for which the event should be hooked.
+     * @param {string} eventName The library's (camelCase) name for the event.
+     * @param {string} eventReference The native name of the event.
+     * @param {EmittingWrapper} associatedWrapper (Optional) The wrapper of the native object which defines the events. By default, events will be hooked to
+     * the native object contained by `wrapper`. Pass a value to this argument only if the emitting wrapper is not the one containing the native object.
+     * Example: Google Maps's data layer native object raises events that should be emitted by the individual feature directives.
+     * @see `google-maps-feature.directive.ts` for more info.
+     * @param {((event: GoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A filter function that will determine if the a specific event should be emitted or not.
+     * @returns {Observable<GoogleMapsEventData>} An observable hooked to the native event of the wrapper.
+     */
+    public createEventEmitter(wrapper: EmittingWrapper, eventName: string, eventReference: string, associatedWrapper: EmittingWrapper = wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>): Observable<GoogleMapsEventData>
+    {
+        let emitter = fromEventPattern(
+            // Hook native event to observable subscribe
+            (handler)                      => wrapper.listenTo(eventReference, handler),
+            // Hook unregister function to observable unsubscribe
+            (_, stopListening: () => void) => stopListening(),
+            // Map, simplify and storng-type event args
+            (...nativeArgs: any)           => new GoogleMapsEventData(eventName, wrapper, this.api.eventsData.auto(nativeArgs), nativeArgs, associatedWrapper)
+        );
+        
+        // If a filtering function was provided, pipe it in
+        if (shouldEmit) emitter = emitter.pipe(
+            // Determine if the event should be emitted. Wrapped in a Promise.resolve() call to avoid detecting the return type of the filter function
+            switchMap(event => Promise.resolve(shouldEmit(event)), (event, emit) => ({ event, emit })),
+            // Filter by the boolean result of the shouldEmit function
+            filter(data => data.emit),
+            // Get and pass along only the event object
+            pluck('event')
+        );
+
+        return emitter;
     }
 
     /**
