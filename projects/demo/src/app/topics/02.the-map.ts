@@ -16,9 +16,9 @@ export const TheMapExamples: Example[] = [
     },
     {
         title      : 'Map Wrapper',
-        description: 'Get to know the map object and unlock the full potential of your map.',
+        description: 'Fetch the map object and unlock the full potential of your map.',
         icon       : 'widgets',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-simple?embed=1&file=src/app/app.module.ts&theme=dark'
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-wrapper?embed=1&file=src/app/map/map.component.ts'
     }
 ];
 
