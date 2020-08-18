@@ -13,7 +13,7 @@ This angular **workspace** provides:
 > Compatibility with older versions is possible but not garantied.
 
 # 🙌 Examples
-The demo app is **live** at [angular-google-maps demo](https://bs-angular-google-maps-demo.firebaseapp.com).  
+The demo app is **live** at [angular-google-maps demo](https://bs-angular-ggl-maps-demo.web.app).  
 For implementation, [visit the code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fdemo&version=GBmaster&_a=contents) for the demo app.
 
 # 📖 Documentation

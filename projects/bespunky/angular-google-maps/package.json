@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps"
   },
-  "homepage": "https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps",
+  "homepage": "https://bs-angular-ggl-maps-demo.web.app",
   "bugs": {
     "email": "us@bespunky.io"
   },
