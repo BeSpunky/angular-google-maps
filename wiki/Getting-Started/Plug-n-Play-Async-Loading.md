@@ -42,5 +42,6 @@ Bam! You have a map on your screen! 🤟😎
 | Topic | Description |
 | ----- | ----------- |
 |[Manual Loading](/Getting-Started/Manually-Loading)|Manually loading the native api.
+|[Custom Loader](/Getting-Started/Custom-Loader)|Define your own custom loader for maps api.|
 |[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
 |[The Map](/The-Map)|Controlling the map, configuring it, handling events and more.|

@@ -52,3 +52,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .hover-zoom:hover {
     transform: scale(1.01);
 }
+
+.notes {
+    padding: 15px;
+    background: rgb(184, 183, 181);
+    border: 1px solid rgb(77, 74, 74);
+    border-left-width: 4px;
+    color: rgb(78, 78, 78);
+    border-radius: 3px;  
+}
