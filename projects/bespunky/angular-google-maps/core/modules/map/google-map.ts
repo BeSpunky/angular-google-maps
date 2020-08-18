@@ -45,7 +45,7 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     }
 
     // TODO:
-    // 1. Implement facilitating transformations for fitBounts, panTo, panToBounds
+    // 1. Implement facilitating transformations for fitBounts, panToBounds
     // 2. Add declarations for upgraded signatures to IGoogleMap
 
     @OutsideAngular
@@ -58,7 +58,10 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { this.native.fitBounds(bounds, padding); }
     
     @OutsideAngular
-    panTo(position: google.maps.LatLng | google.maps.LatLngLiteral): void { this.native.panTo(position); }
+    panTo(position: Coord): void
+    {
+        this.native.panTo(this.api.geometry.toLiteralCoord(position));
+    }
     
     @OutsideAngular
     panToBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { this.native.panToBounds(bounds, padding); }
