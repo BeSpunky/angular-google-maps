@@ -6,7 +6,7 @@ export const ProgrammaticControlExamples: Example[] = [
         title      : 'Wrappers From Events',
         description: 'Relying on events to work with wrappers.',
         icon       : 'flash_on',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-simple?embed=1&file=src/app/app.module.ts&theme=dark'
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-wrappers-from-events?embed=1&file=src/app/map/map.component.ts'
     },
     {
         title      : 'Wrappers From `ViewChild`',
@@ -21,6 +21,12 @@ export const ProgrammaticControlExamples: Example[] = [
         embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-simple?embed=1&file=src/app/app.module.ts&theme=dark'
     },
     {
+        title      : 'Superpowers',
+        description: 'Programmatically fetch superpowers and use them in your components.',
+        icon       : 'battery_charging_full',
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-simple?embed=1&file=src/app/app.module.ts&theme=dark'
+    },
+    {
         title      : 'Custom Data',
         description: 'Store custom data along with your different wrapper instances for your needs.',
         icon       : 'move_to_inbox',
@@ -30,7 +36,7 @@ export const ProgrammaticControlExamples: Example[] = [
 
 export const ProgrammaticControlTopic: Topic = {
     title      : 'Programmatic Control',
-    description: 'Different ways of accessing wrappers and storing custom data.',
+    description: 'Different ways of accessing wrappers, controlling the map and its components and storing custom data.',
     icon       : 'code',
     examples   : ProgrammaticControlExamples
 };

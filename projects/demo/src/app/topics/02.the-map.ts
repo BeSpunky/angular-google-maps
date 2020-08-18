@@ -1,5 +1,5 @@
 import { Example } from '../types/example';
-import { Topic   } from '../types/topic';
+import { Topic } from '../types/topic';
 
 export const TheMapExamples: Example[] = [
     {
@@ -15,16 +15,28 @@ export const TheMapExamples: Example[] = [
         embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-events?embed=1&file=src/app/map/map.component.html'
     },
     {
-        title      : 'Map Wrapper',
-        description: 'Fetch the map object and unlock the full potential of your map.',
-        icon       : 'widgets',
+        title      : 'Superpowers (Built-in)',
+        description: 'Import superpower modules and enhance your map capabilities with overlays, drawing, object tracking and more.).',
+        icon       : 'battery_charging_full',
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-wrapper?embed=1&file=src/app/map/map.component.ts'
+    },
+    {
+        title      : 'Extending Superpowers',
+        description: 'Implement your own superpower and extend map capabilities.',
+        icon       : 'extension',
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-wrapper?embed=1&file=src/app/map/map.component.ts'
+    },
+    {
+        title      : 'Multiple Maps',
+        description: 'Incorporate multiple maps into your app.',
+        icon       : 'view_compact',
         embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-map-wrapper?embed=1&file=src/app/map/map.component.ts'
     }
 ];
 
 export const TheMapTopic: Topic = {
-    title      : 'The Map',
+    title: 'The Map',
     description: 'Map configuration, event handling and advanced control.',
-    icon       : 'map',
-    examples   : TheMapExamples
+    icon: 'map',
+    examples: TheMapExamples
 };
