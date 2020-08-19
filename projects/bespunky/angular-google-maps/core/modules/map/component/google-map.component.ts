@@ -15,6 +15,7 @@ import { IGoogleMap                        } from '../i-google-map';
     templateUrl  : './google-map.component.html',
     styleUrls    : ['./google-map.component.css'],
     providers    : [GoogleMapFactoryProvider, SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
+    exportAs     : 'map',
     encapsulation: ViewEncapsulation.None
 })
 export class GoogleMapComponent extends GoogleMapsComponentBase<IGoogleMap>
