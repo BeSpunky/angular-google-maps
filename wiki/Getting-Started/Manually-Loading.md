@@ -1,4 +1,6 @@
 # Manually loading Google Maps API
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Getting%20Started/Manual%20Loading)
+
 In case you prefer placing the `<script>` tag manually, or you have your own loading mechanism for fetching Google's Maps API, you can simply import the main module with no configuration.
 
 🌳 This will tree-shake the entire `async` module and its dependencies.

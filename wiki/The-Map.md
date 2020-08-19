@@ -10,6 +10,8 @@ Content and tools related to the map instance you're defining will always go as 
 [[_TOC_]]
 
 # Options
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Map%20Options)
+
 To configure your map, simply bind options using angular's syntax:
 
 ```html
@@ -24,6 +26,8 @@ To configure your map, simply bind options using angular's syntax:
 > [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) for a complete list of supported bindable `@Input` options and their types.
 
 # Events
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Map%20Events)
+
 To handle events emitted by your map, simply bind handlers using angular's syntax and pass in the `$event` variable:
 ```html
 <bs-google-map *bsSafe 
@@ -37,6 +41,9 @@ To handle events emitted by your map, simply bind handlers using angular's synta
 
 # Styles
 Inside of a `<bs-google-map/>` component, the top level container is always a `div.google-map` element. The map component is defined with no view encapsulation, meaning you can use the `.google-map` css selector to identify map elements and apply styles from your host component if necessary.
+
+> Another way would be using a `::ng-deep .google-map` css selector to identify map elements and apply styles from your host component if necessary. [See `::ng-deep` deprecation discussion](https://github.com/angular/angular/issues/25160).
+
 
 # Next Steps
 ## More About The Map

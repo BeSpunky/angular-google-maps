@@ -1,5 +1,7 @@
 # Automated async loading of Google Maps API
 
+[Live Demo](https://bs-angular-ggl-maps-demo.web.app/Getting%20Started/Plug%20&%20Play)
+
 1. Import `GoogleMapsModule` from the `async` package.
 
     ```typescript

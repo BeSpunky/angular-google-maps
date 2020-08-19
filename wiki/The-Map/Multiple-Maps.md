@@ -3,6 +3,8 @@ Each time you add a map component to your view, a new map instance is created. E
 
 This allows you to safely place multiple map components in your app, even in the same view, each having its own configuration, event handling and child components.
 
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Multiple%20Maps)
+
 # Example
 ```html
 <!-- 1st Map -->

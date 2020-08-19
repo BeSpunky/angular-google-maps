@@ -1,5 +1,7 @@
 # Defining a Custom Loader For Maps API
 
+[Live Demo](https://bs-angular-ggl-maps-demo.web.app/Getting%20Started/Custom%20Loader)
+
 1. Extend and implement the abstract `GoogleMapsApiLoader` class:
    
     ```typescript
@@ -34,8 +36,8 @@
         ],
         imports: [
             BrowserModule,
-            // 2. Include module in your app (no params)
-            GoogleMapsModule.forRoot()
+            // 2. Include module in your app
+            GoogleMapsModule.forRoot(/* Nothing here */)
         ],
         // 3. Provide the custom loader
         providers: [{ provide: GoogleMapsApiLoader, useClass: SimpleMapsApiLoader }],
