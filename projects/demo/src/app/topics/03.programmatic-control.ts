@@ -12,14 +12,13 @@ export const ProgrammaticControlExamples: Example[] = [
         title      : 'Wrappers From `ViewChild`',
         description: 'Querying the view inside of your component to fetch the wrapper instance.',
         icon       : 'picture_in_picture',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-wrappers-from-viewchild?embed=1&file=src/app/map/map.component.ts',
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-wrappers-from-viewchild?embed=1&file=src/app/map/map.component.ts'
     },
     {
         title      : 'Wrappers Directly In Template',
         description: 'Creating reference variables and using your wrappers directly in your template.',
         icon       : 'article',
-        embedUrl   : '',
-        soon       : true
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-wrappers-in-template?embed=1&file=src/app/map/map.component.html'
     },
     {
         title      : 'Superpowers',
