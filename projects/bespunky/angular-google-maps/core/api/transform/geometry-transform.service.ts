@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { Coord, NativeMultiPath, CoordPath, MultiPath } from '../../abstraction/types/geometry.type';
+import { Coord, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike } from '../../abstraction/types/geometry.type';
+import { isBoundsLiteral, hasBounds                                               } from '../../abstraction/type-guards/geometry-type-guards';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GeometryTransformService
 {
-    constructor() { }
-
     /**
      * Converts a coord object of a known type to a native `LatLngLiteral` object.
      *
@@ -86,6 +85,28 @@ export class GeometryTransformService
             && coord[1] >= -180 && coord[1] <= 180;
     }
 
+    /**
+     * Checks whether an object is a native bounds object (i.e. `google.maps.LatLngBounds`, `google.maps.LatLngBoundsLiteral`).
+     *
+     * @param {*} object The object to test.
+     * @returns {boolean} `true` if the object is a native bounds object; otherwise `false`.
+     */
+    public isBounds(object: any): boolean
+    {
+        return object instanceof google.maps.LatLngBounds || isBoundsLiteral(object);
+    }
+
+    /**
+     * Checks whether an object is a native data layer geometry object.
+     *
+     * @param {*} object The object to test.
+     * @returns {boolean} `true` if the object is a native data layer geometry object; otherwise `false`.
+     */
+    public isDataLayerGeometry(object: any): boolean
+    {
+        return object instanceof google.maps.Data.Geometry;
+    }
+
     public createDataPoint(position: Coord): google.maps.Data.Point
     {
         return new google.maps.Data.Point(this.toLiteralCoord(position));
@@ -94,5 +115,77 @@ export class GeometryTransformService
     public createDataPolygon(path: CoordPath): google.maps.Data.Polygon
     {
         return new google.maps.Data.Polygon(this.toLiteralMultiPath(path));
+    }
+
+    /**
+     * Defines the bounds of the given coordinate.
+     *
+     * @param {Coord} coord The coordinate for which bounds should be defined.
+     * @returns {google.maps.LatLngBounds} The bounds of the specified coordinate.
+     */
+    public defineCoordBounds(coord: Coord): google.maps.LatLngBounds
+    {
+        coord = this.toLiteralCoord(coord);
+
+        return new google.maps.LatLngBounds(coord, coord);
+    }
+
+    /**
+     * Defines the bounds of a given path (or multipath).
+     *
+     * @param {CoordPath} path The path for which bounds should be defined.
+     * @returns {google.maps.LatLngBounds} The bounds of the specified path.
+     */
+    public definePathBounds(path: CoordPath): google.maps.LatLngBounds
+    {
+        const multiPath = this.toLiteralMultiPath(path);
+
+        const bounds = new google.maps.LatLngBounds();
+
+        multiPath.forEach(path => path.forEach(coord => bounds.extend(coord)));
+
+        return bounds;
+    }
+
+    /**
+     * Defines the bound of the given data layer geometry.
+     *
+     * @param {NativeGeometry} geometry The geometry for which bounds should be defined.
+     * @returns {google.maps.LatLngBounds} The bounds of the specified data layer geometry.
+     */
+    public defineGeometryBounds(geometry: NativeGeometry): google.maps.LatLngBounds
+    {
+        const bounds = new google.maps.LatLngBounds();
+        
+        geometry.forEachLatLng(coord => bounds.extend(coord));
+
+        return bounds;
+    }
+
+    /**
+     * Defines the containing bounds of all specified elements combined.
+     *
+     * @param {(...BoundsLike[])} elements The elements for which bounds should be defined.
+     * @returns {google.maps.LatLngBounds} The containing bounds of all specified elements combined.
+     */
+    public defineBounds(...elements: BoundsLike[]): google.maps.LatLngBounds
+    {
+        return elements.reduce<google.maps.LatLngBounds>((bounds, element) =>
+        {
+            let elementBounds: google.maps.LatLngBounds;
+
+            // Check for paths
+            if (Array.isArray(element)) elementBounds = this.definePathBounds(element as CoordPath);
+            // Check for IBound implementation (e.g. GoogleMapsMarker, GoogleMapsPolygon...)
+            else if (hasBounds(element)) elementBounds = element.getBounds();
+            // Check for bounds object
+            else if (this.isBounds(element)) elementBounds = element as google.maps.LatLngBounds;
+            // Check for data layer geometry object
+            else if (this.isDataLayerGeometry(element)) elementBounds = this.defineGeometryBounds(element as NativeGeometry);
+            // Nothing matched. This is a coordinate.
+            else elementBounds = this.defineCoordBounds(element as Coord);
+
+            return bounds.union(elementBounds);
+        }, new google.maps.LatLngBounds());
     }
 }

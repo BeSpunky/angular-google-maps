@@ -1,3 +1,5 @@
+import { IBounds } from '../base/i-bounds';
+
 /* Represents the supported coord forms of Google Maps API. */
 export type NativeCoord = google.maps.LatLng | google.maps.LatLngLiteral;
 /* Represents a coordinate as an array. First item is latitude, second is longitude. */
@@ -15,3 +17,12 @@ export type Path = Coord[] | NativePath;
 export type MultiPath = Coord[][] | NativeMultiPath;
 /* Represents a flexible path that can either be single or multi-path. */
 export type CoordPath = Path | MultiPath;
+
+/** Represents data layer geometries. */
+export type NativeGeometry = google.maps.Data.Geometry;
+
+/** Represents a bounds object. */
+export type NativeBounds = google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral;
+
+/** Represents types for which bounds can be inferred. Used in geometry transformation and bounds calculations. */
+export type BoundsLike = IBounds | NativeBounds | Coord | CoordPath | NativeGeometry; // TODO: Add rect, circle, etc.

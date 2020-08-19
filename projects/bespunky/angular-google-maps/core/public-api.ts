@@ -4,6 +4,7 @@ export * from './google-maps.module';
 // Abstraction
 export * from './abstraction/base/i-google-maps-native-object-wrapper';
 export * from './abstraction/base/i-google-maps-native-object-emitting-wrapper';
+export * from './abstraction/base/i-bounds';
 export * from './abstraction/base/google-maps-native-object-wrapper';
 export * from './abstraction/base/google-maps-native-object-emitting-wrapper';
 export * from './abstraction/base/google-maps-component-base';
