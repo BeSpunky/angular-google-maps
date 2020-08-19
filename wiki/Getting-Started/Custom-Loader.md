@@ -36,8 +36,8 @@
         ],
         imports: [
             BrowserModule,
-            // 2. Include module in your app (no params)
-            GoogleMapsModule.forRoot()
+            // 2. Include module in your app
+            GoogleMapsModule.forRoot(/* Nothing here */)
         ],
         // 3. Provide the custom loader
         providers: [{ provide: GoogleMapsApiLoader, useClass: SimpleMapsApiLoader }],
