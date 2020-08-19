@@ -1,5 +1,7 @@
 # Defining a Custom Loader For Maps API
 
+[Live Demo](https://bs-angular-ggl-maps-demo.web.app/Getting%20Started/Plug%20&%20Play)
+
 1. Extend and implement the abstract `GoogleMapsApiLoader` class:
    
     ```typescript
