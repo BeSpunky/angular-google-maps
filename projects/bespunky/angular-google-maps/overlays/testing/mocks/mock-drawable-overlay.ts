@@ -28,4 +28,9 @@ export class MockDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverla
 
         this.native.setMap(null);
     }
+
+    getBounds(): google.maps.LatLngBounds
+    {
+        return new google.maps.LatLngBounds();
+    }
 }

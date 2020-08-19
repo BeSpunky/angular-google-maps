@@ -44,4 +44,6 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
     {
         this.api.runOutsideAngular(() => this.native.setMap(map));
     }
+
+    public abstract getBounds(): google.maps.LatLngBounds;
 }

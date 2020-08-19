@@ -20,6 +20,11 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
         return new google.maps.Data.Feature(options);
     }
 
+    public getBounds(): google.maps.LatLngBounds
+    {
+        return this.api.geometry.defineGeometryBounds(this.getGeometry());
+    }
+
     public getId(): string | number
     {
         return this.native.getId();

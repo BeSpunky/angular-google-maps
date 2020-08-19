@@ -11,6 +11,10 @@ export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> im
         super(map, new google.maps.Data());
     }
     
+    getBounds(): google.maps.LatLngBounds
+    {
+        throw new Error("Method not implemented.");
+    }
     createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
         throw new Error("Method not implemented.");

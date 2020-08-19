@@ -12,7 +12,10 @@ export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.
     {
         super(nativeFeature || new google.maps.Data.Feature());
     }
-    
+    getBounds(): google.maps.LatLngBounds
+    {
+        throw new Error("Method not implemented.");
+    }
     setMarker(position: Coord): void
     {
         throw new Error("Method not implemented.");

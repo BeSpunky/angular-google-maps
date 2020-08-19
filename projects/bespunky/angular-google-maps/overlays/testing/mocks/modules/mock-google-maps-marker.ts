@@ -13,6 +13,10 @@ export class MockMarker extends MockDrawableOverlay<google.maps.Marker> implemen
         this.type = OverlayType.Marker;
     }
 
+    getBounds(): google.maps.LatLngBounds
+    {
+        throw new Error("Method not implemented.");
+    }
     setOptions(options: google.maps.MarkerOptions): void
     {
         throw new Error("Method not implemented.");
