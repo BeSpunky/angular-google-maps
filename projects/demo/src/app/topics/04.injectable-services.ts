@@ -11,7 +11,6 @@ export const InjectableServicesExamples: Example[] = [
     {
         title      : 'GoogleMapsComponentApiService',
         description: 'Easily connect Angular functionality with native objects.',
-        notes      : 'This is mostly intended for extension of the library. See README.md for details.',
         embedUrl   : '',
         soon       : true
     },
