@@ -1,6 +1,8 @@
 # Here Comes The Fun
 Google Maps API provides different tools for doing more with your map, like placing overlays and allowing the user to draw shapes on it. `@bespunky/angular-google-maps` refers to them as **Superpowers** ⚡💪.
 
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Superpowers%20%28Built-in%29)
+
 [[_TOC_]]
 
 ## Injection
@@ -40,6 +42,8 @@ NOT YET IMPLEMENTED
 
 # Extending Superpowers
 Custom superpowers can empower your maps with new tools. You can easily create your own superpowers and have them accompany every map instance in your app.
+
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Extending%20Superpowers)
 
 ## Implementation
 Creating superpowers involves 2 simple steps...
