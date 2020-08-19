@@ -1,7 +1,7 @@
 # Context
 You've probably seen the mysterious `*bsSafe` directive throughout the documentation. The directive simply prevents angular from rendering the map component until maps api has been loaded by the library.
 
-`*bsSafe` is only needed if the native maps api is loaded async, either by using the [plug-n-play setup](/Getting-Started/Plug-n-Play-Async-Loading), or the [custom loader setup](/wiki/Getting-Started/Custom-Loader).
+`*bsSafe` is only needed if the native maps api is loaded async, either by using the [plug-n-play setup](/Getting-Started/Plug-n-Play-Async-Loading), or the [custom loader setup](/Getting-Started/Custom-Loader).
 
 [Manual loading setup] doesn't require, and will fail with, `*bsSafe` as the `async` module isn't even imported.
 
