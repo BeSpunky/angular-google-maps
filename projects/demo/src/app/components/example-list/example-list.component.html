@@ -1,6 +1,9 @@
-<div class="examples" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="15px">
-    <a [routerLink]="['./', card.title]" *ngFor="let card of cards" class="non-link-style transition hover-zoom">
-        <mat-card>
+<div class="examples relative" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="15px">
+    <a *ngFor="let card of cards"
+       [routerLink]="card.soon ? ['./'] : ['./', card.title]"
+       class="non-link-style transition hover-zoom relative"
+    >
+        <mat-card [ngClass]="{ soon: card.soon }">
             <mat-card-header>
                 <div mat-card-avatar>
                     <mat-icon>{{card.icon}}</mat-icon>

@@ -6,6 +6,7 @@ export interface CardInfo
     subtitle?: string;
     icon     : string;
     content  : string;
+    soon?    : boolean;
 }
 
 @Component({
