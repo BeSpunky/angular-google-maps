@@ -120,7 +120,7 @@ describe('GeometryTransformService', () =>
     
     describe('isFlatCoord', () =>
     {
-        it('should determine whether object is a flat coord', () =>
+        it('should determine whether an object is a flat coord', () =>
         {
             expect(geometry.isFlatCoord(null)).toBeFalsy();
             expect(geometry.isFlatCoord(undefined)).toBeFalsy();
