@@ -10,7 +10,7 @@ export type Coord = NativeCoord | FlatCoord;
 /* Represents the supported single-path form of Google Maps API. */
 export type NativePath = google.maps.MVCArray<NativeCoord> | google.maps.Data.LinearRing;
 /* Represents the supported multi-path form of Google Maps API. */
-export type NativeMultiPath = google.maps.MVCArray<NativePath> | google.maps.Data.LinearRing[]; // TODO: Does google work with LinearRing[]? Kept for conceptual compatibility for now.
+export type NativeMultiPath = google.maps.MVCArray<NativePath> | google.maps.Data.LinearRing[];
 /* Represents the single-path forms supported by the library. */
 export type Path = Coord[] | NativePath;
 /* Represents the multi-path forms supported by the library. */
