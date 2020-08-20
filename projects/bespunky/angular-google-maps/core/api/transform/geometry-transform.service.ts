@@ -72,7 +72,13 @@ export class GeometryTransformService
      */
     public isMultiPath(path: CoordPath): boolean
     {
-        return (path instanceof Array && path[0] instanceof Array && !this.isFlatCoord(path[0]))
+        // This is an array of...
+        return (path instanceof Array &&
+                 // 1. Arrays which are not flat coords (This is actually a multi-path and not a flat path like [[0, 0], [1, 1]])
+                    (path[0] instanceof Array && !this.isFlatCoord(path[0]))
+                 // 2. Native LinearRing objects
+                 || (path[0] instanceof google.maps.Data.LinearRing))
+        // This is an MVCArray of either MVCArrays or LinearRings                 
             || (path instanceof google.maps.MVCArray && (path.getAt(0) instanceof google.maps.MVCArray || path.getAt(0) instanceof google.maps.Data.LinearRing));
     }
 
