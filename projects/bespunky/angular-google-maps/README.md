@@ -7,7 +7,7 @@ You may use the library as you like, with any app, under the MIT license.
 
 🎁 [What's in the library?](/What's-Inside)
 
-🙌 [Live demo]([TODO add demo](https://bs-angular-ggl-maps-demo.web.app)
+🙌 [Live demo](https://bs-angular-ggl-maps-demo.web.app)
 
 ✨ [Getting Started](Getting-Started)
 
