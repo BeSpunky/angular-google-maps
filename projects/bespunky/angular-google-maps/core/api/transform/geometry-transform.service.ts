@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Coord, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike } from '../../abstraction/types/geometry.type';
-import { isBoundsLiteral, hasBounds                                               } from '../../abstraction/type-guards/geometry-type-guards';
+import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike } from '../../abstraction/types/geometry.type';
+import { isBoundsLiteral, hasBounds                                                           } from '../../abstraction/type-guards/geometry-type-guards';
 
 @Injectable({
     providedIn: 'root'
@@ -33,9 +33,14 @@ export class GeometryTransformService
         if (!this.isMultiPath(path)) path = this.castMultiPath(path);
 
         // Check for multipath represented as a google.maps.MVCArray object.
+        // An MVCArray of LinearRings will also be handled here.
         if (path instanceof google.maps.MVCArray)
-            return (path as unknown as NativeMultiPath).getArray().map(shape => shape.getArray().map(this.toLiteralCoord.bind(this)));
+            return (path as unknown as google.maps.MVCArray<NativePath>).getArray().map(shape => shape.getArray().map(this.toLiteralCoord.bind(this)));
 
+        // Check for LinearRing[].
+        if (path[0] instanceof google.maps.Data.LinearRing)
+            return (path as google.maps.Data.LinearRing[]).map(shape => shape.getArray().map(this.toLiteralCoord.bind(this)));
+        
         // This is either a multipath represented as a 2d array of flat coords or
         // a multipath represented as LatLng or LatLngLiteral objects
         return (path as Coord[][]).map(shape => shape.map(this.toLiteralCoord.bind(this)));
@@ -54,6 +59,8 @@ export class GeometryTransformService
         
         if (path instanceof google.maps.MVCArray) return new google.maps.MVCArray([path]) as NativeMultiPath;
         
+        if (path instanceof google.maps.Data.LinearRing) return [path];
+
         return [path] as Coord[][];
     }
 
@@ -66,7 +73,7 @@ export class GeometryTransformService
     public isMultiPath(path: CoordPath): boolean
     {
         return (path instanceof Array && path[0] instanceof Array && !this.isFlatCoord(path[0]))
-            || (path instanceof google.maps.MVCArray && path.getAt(0) instanceof google.maps.MVCArray);
+            || (path instanceof google.maps.MVCArray && (path.getAt(0) instanceof google.maps.MVCArray || path.getAt(0) instanceof google.maps.Data.LinearRing));
     }
 
     /**
