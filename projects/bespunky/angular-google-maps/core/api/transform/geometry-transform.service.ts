@@ -114,11 +114,23 @@ export class GeometryTransformService
         return object instanceof google.maps.Data.Geometry;
     }
 
+    /**
+     * Creates a native data layer geometry for a point (google.maps.Data.Point).
+     *
+     * @param {Coord} position The point coordinates.
+     * @returns {google.maps.Data.Point} The point geometry.
+     */
     public createDataPoint(position: Coord): google.maps.Data.Point
     {
         return new google.maps.Data.Point(this.toLiteralCoord(position));
     }
 
+    /**
+     * Creates a native data layer geometry for a polygon (google.maps.Data.Polygon).
+     *
+     * @param {CoordPath} path The path of the polygon.
+     * @returns {google.maps.Data.Polygon} The polygon geometry.
+     */
     public createDataPolygon(path: CoordPath): google.maps.Data.Polygon
     {
         return new google.maps.Data.Polygon(this.toLiteralMultiPath(path));
