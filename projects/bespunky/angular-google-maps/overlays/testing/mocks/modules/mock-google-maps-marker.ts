@@ -1,116 +1,36 @@
-import { IGoogleMap, Coord, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsMarker, OverlayType         } from '@bespunky/angular-google-maps/overlays';
-import { MockDrawableOverlay                    } from '../mock-drawable-overlay';
+import { IGoogleMap, Coord, NativeObjectWrapper, WrappedNativeFunctions, GeometryTransformService } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsMarker, OverlayType                                                           } from '@bespunky/angular-google-maps/overlays';
+import { MockDrawableOverlay                                                                      } from '../mock-drawable-overlay';
+
+export type WrappedMarkerFunctions = WrappedNativeFunctions<google.maps.Marker, 'getPosition' | 'setPosition' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+
+export interface MockMarker extends WrappedMarkerFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.Marker, MockMarker>()
 export class MockMarker extends MockDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
+    private geometry = new GeometryTransformService();
+
     constructor(map: IGoogleMap, native?: google.maps.Marker)
     {
         super(map, native || new google.maps.Marker());
 
         this.type = OverlayType.Marker;
     }
+    
+    getBounds(): google.maps.LatLngBounds
+    {
+        return this.geometry.defineCoordBounds(this.native.getPosition());
+    }
 
-    setOptions(options: google.maps.MarkerOptions): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getAnimation(): google.maps.Animation
-    {
-        throw new Error("Method not implemented.");
-    }
-    setAnimation(animation?: google.maps.Animation): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getClickable(): boolean
-    {
-        throw new Error("Method not implemented.");
-    }
-    setClickable(clickable: boolean): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getCursor(): string
-    {
-        throw new Error("Method not implemented.");
-    }
-    setCursor(cursor: string): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getDraggable(): boolean
-    {
-        throw new Error("Method not implemented.");
-    }
-    setDraggable(draggable: boolean): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getIcon(): string | google.maps.Icon | google.maps.Symbol
-    {
-        throw new Error("Method not implemented.");
-    }
-    setIcon(icon: string | google.maps.Icon | google.maps.Symbol): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getLabel(): google.maps.MarkerLabel
-    {
-        throw new Error("Method not implemented.");
-    }
-    setLabel(label: string | google.maps.MarkerLabel): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getOpacity(): number
-    {
-        throw new Error("Method not implemented.");
-    }
-    setOpacity(opacity: number): void
-    {
-        throw new Error("Method not implemented.");
-    }
     getPosition(): google.maps.LatLngLiteral
     {
-        throw new Error("Method not implemented.");
+        return this.native.getPosition().toJSON();
     }
-    setPosition(position: Coord): void
+
+    setPosition(coord: Coord): void
     {
-        throw new Error("Method not implemented.");
-    }
-    getShape(): google.maps.MarkerShape
-    {
-        throw new Error("Method not implemented.");
-    }
-    setShape(shape: google.maps.MarkerShape): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getTitle(): string
-    {
-        throw new Error("Method not implemented.");
-    }
-    setTitle(title: string): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getVisible(): boolean
-    {
-        throw new Error("Method not implemented.");
-    }
-    setVisible(visible: boolean): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getZIndex(): number
-    {
-        throw new Error("Method not implemented.");
-    }
-    setZIndex(zIndex: number): void
-    {
-        throw new Error("Method not implemented.");
+        return this.native.setPosition(this.geometry.toLiteralCoord(coord));
     }
 }

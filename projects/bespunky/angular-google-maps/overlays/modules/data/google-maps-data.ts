@@ -30,6 +30,11 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return new google.maps.Data(options);
     }
 
+    public getBounds(): google.maps.LatLngBounds
+    {
+        return this.api.geometry.defineBounds(...this.features.list.map(feature => feature.getBounds()));
+    }
+
     @OutsideAngular
     public createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
