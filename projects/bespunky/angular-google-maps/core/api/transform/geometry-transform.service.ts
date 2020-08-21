@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike } from '../../abstraction/types/geometry.type';
-import { isBoundsLiteral, hasBounds                                                           } from '../../abstraction/type-guards/geometry-type-guards';
+import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike, FlatCoord } from '../../abstraction/types/geometry.type';
+import { IBounds                                                                                         } from '../../abstraction/base/i-bounds';
 
 @Injectable({
     providedIn: 'root'
@@ -65,12 +65,12 @@ export class GeometryTransformService
     }
 
     /**
-     * Determines if the given path is a multi-path.
+     * (Type Guard) Determines if the given path is a multi-path.
      *
      * @param {CoordPath} path The path to test.
-     * @returns {boolean} `true` if the given path is a multi-path; otherwise `false`.
+     * @returns {path is MultiPath} `true` if the given path is a multi-path; otherwise `false`.
      */
-    public isMultiPath(path: CoordPath): boolean
+    public isMultiPath(path: CoordPath): path is MultiPath
     {
         // This is an array of...
         return (path instanceof Array &&
@@ -83,12 +83,12 @@ export class GeometryTransformService
     }
 
     /**
-     * Determines if the given object is a flat coord array.
+     * (Type Guard) Checks whetherthe given object is a flat coord array.
      *
      * @param {*} coord The object to test.
-     * @returns {boolean} `true` if the object is a flat coord array; otherwise `false`.
+     * @returns {coord is FlatCoord} `true` if the object is a flat coord array; otherwise `false`.
      */
-    public isFlatCoord(coord: any): boolean
+    public isFlatCoord(coord: any): coord is FlatCoord
     {
         return coord instanceof Array 
             && coord.length === 2
@@ -99,23 +99,45 @@ export class GeometryTransformService
     }
 
     /**
-     * Checks whether an object is a native bounds object (i.e. `google.maps.LatLngBounds`, `google.maps.LatLngBoundsLiteral`).
+     * (Type Guard) Checks whether an object is a native bounds object (i.e. `google.maps.LatLngBounds`, `google.maps.LatLngBoundsLiteral`).
      *
      * @param {*} object The object to test.
-     * @returns {boolean} `true` if the object is a native bounds object; otherwise `false`.
+     * @returns {object is google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral} `true` if the object is a native bounds object; otherwise `false`.
      */
-    public isBounds(object: any): boolean
+    public isBounds(object: any): object is google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral
     {
-        return object instanceof google.maps.LatLngBounds || isBoundsLiteral(object);
+        return object instanceof google.maps.LatLngBounds || this.isBoundsLiteral(object);
     }
 
     /**
-     * Checks whether an object is a native data layer geometry object.
+     * (Type Guard) Checks whether the object implements the `google.maps.LatLngBoundsLiteral` interface..
      *
      * @param {*} object The object to test.
-     * @returns {boolean} `true` if the object is a native data layer geometry object; otherwise `false`.
+     * @returns {object is google.maps.LatLngBoundsLiteral} `true` if the object implements `google.maps.LatLngBoundsLiteral`; otherwise `false`.
      */
-    public isDataLayerGeometry(object: any): boolean
+    public isBoundsLiteral(object: any): object is google.maps.LatLngBoundsLiteral
+    {
+        return !!(object && object.north && object.south && object.east && object.west);
+    }
+
+    /**
+     * (Type Guard) Checks whether the object implements the IBounds interface (i.e. The object is an overlay object).
+     *
+     * @param {*} object The object to test.
+     * @returns {object is IBounds} `true` if the object implements IBounds; otherwise `false`.
+     */
+    public isIBounds(object: any): object is IBounds
+    {
+        return object?.getBounds instanceof Function;
+    }
+
+    /**
+     * (Type Guard) Checks whether an object is a native data layer geometry object.
+     *
+     * @param {*} object The object to test.
+     * @returns {object is google.maps.Data.Geometry} `true` if the object is a native data layer geometry object; otherwise `false`.
+     */
+    public isDataLayerGeometry(object: any): object is google.maps.Data.Geometry
     {
         return object instanceof google.maps.Data.Geometry;
     }
