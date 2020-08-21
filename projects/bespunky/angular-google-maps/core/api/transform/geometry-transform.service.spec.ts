@@ -1,8 +1,10 @@
+import { MockGoogleMap                                                          } from '@bespunky/angular-google-maps/core/testing';
+import { MockMarker                                                             } from '@bespunky/angular-google-maps/overlays/testing';
 import { GeometryTransformService, Coord, CoordPath, FlatCoord, Path, MultiPath } from '@bespunky/angular-google-maps/core';
 
 describe('GeometryTransformService', () =>
 {
-    let geometry = new GeometryTransformService();
+    const geometry = new GeometryTransformService();
 
     // These are the different coord and path shapes supported by the service. The following are dummy paths for testing.
     const flatCoord    = [10, 11] as FlatCoord;
@@ -22,18 +24,14 @@ describe('GeometryTransformService', () =>
     const mvcMultiPath           = new google.maps.MVCArray([mvcPath, mvcPath]);
     const mvcMultiLinearRingPath = new google.maps.MVCArray(linearRingMultiPath);
 
-    function testPath(getPath: () => CoordPath)
+    // For IBounds testing
+    const mockMarker = new MockMarker(new MockGoogleMap());
+    mockMarker.setPosition(flatCoord);
+
+    describe('Basically', () =>
     {
-        const path = geometry.toLiteralMultiPath(getPath());
-
-        path.forEach(shape => shape.forEach((coord, index) =>
-        {
-            expect(coord.lat).toBe(flatPath[index][0]);
-            expect(coord.lng).toBe(flatPath[index][1]);
-        }));
-    }
-
-    it('should be created', () => expect(geometry).toBeTruthy());
+        it('should be created', () => expect(geometry).toBeTruthy());
+    });    
 
     describe('toLiteralCoord', () =>
     {
@@ -54,6 +52,17 @@ describe('GeometryTransformService', () =>
         
         it('should return the same object if a literal was passed', () => testCoord((lat, lng) => ({ lat, lng })));
     });
+
+    function testPath(getPath: () => CoordPath)
+    {
+        const path = geometry.toLiteralMultiPath(getPath());
+
+        path.forEach(shape => shape.forEach((coord, index) =>
+        {
+            expect(coord.lat).toBe(flatPath[index][0]);
+            expect(coord.lng).toBe(flatPath[index][1]);
+        }));
+    }
 
     describe('toLiteralMultiPath', () =>
     {
@@ -99,6 +108,17 @@ describe('GeometryTransformService', () =>
         it('should return the specified flat coords path if it is already a multi-path',         () => testMultiCast(() => flatMultiPath));
     });
 
+    function testTypeGuardFalseAgainstStandardValues(guard: (value: any) => boolean)
+    {
+        expect(guard(null)).toBeFalsy();
+        expect(guard(undefined)).toBeFalsy();
+        expect(guard({})).toBeFalsy();
+        expect(guard([])).toBeFalsy();
+        expect(guard([[]])).toBeFalsy();
+        expect(guard(10)).toBeFalsy();
+        expect(guard('hello')).toBeFalsy();
+    }
+
     describe('isMultiPath', () =>
     {
         it('should determine whether the path is a multi-paths', () =>
@@ -122,13 +142,7 @@ describe('GeometryTransformService', () =>
     {
         it('should determine whether an object is a flat coord', () =>
         {
-            expect(geometry.isFlatCoord(null)).toBeFalsy();
-            expect(geometry.isFlatCoord(undefined)).toBeFalsy();
-            expect(geometry.isFlatCoord({})).toBeFalsy();
-            expect(geometry.isFlatCoord([])).toBeFalsy();
-            expect(geometry.isFlatCoord([[]])).toBeFalsy();
-            expect(geometry.isFlatCoord(10)).toBeFalsy();
-            expect(geometry.isFlatCoord('hello')).toBeFalsy();
+            testTypeGuardFalseAgainstStandardValues((value) => geometry.isFlatCoord(value));
             
             expect(geometry.isFlatCoord([-91, 0])).toBeFalsy();
             expect(geometry.isFlatCoord([0, -181])).toBeFalsy();
@@ -146,12 +160,8 @@ describe('GeometryTransformService', () =>
     {
         it('should determine whether an object is a native bounds object', () =>
         {
-            expect(geometry.isBounds(null)).toBeFalse();
-            expect(geometry.isBounds(undefined)).toBeFalse();
-            expect(geometry.isBounds({})).toBeFalse();
-            expect(geometry.isBounds('hello')).toBeFalse();
-            expect(geometry.isBounds(10)).toBeFalse();
-            expect(geometry.isBounds([])).toBeFalse();
+            testTypeGuardFalseAgainstStandardValues((value) => geometry.isBounds(value));
+            
             expect(geometry.isBounds({ north: 1, south: 1, east: 1 })).toBeFalse();
 
             expect(geometry.isBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeTrue();
@@ -159,16 +169,38 @@ describe('GeometryTransformService', () =>
         });
     });
 
+    describe('isBoundsLiteral', () =>
+    {
+        it('should determine whether an object is a native bounds literal object', () =>
+        {
+            testTypeGuardFalseAgainstStandardValues((value) => geometry.isBoundsLiteral(value));
+            
+            expect(geometry.isBoundsLiteral({ north: 1, south: 1, east: 1 })).toBeFalse();
+
+            expect(geometry.isBoundsLiteral({ north: 1, south: 1, east: 1, west: 1 })).toBeTrue();
+        });
+    });
+
+    describe('isIBounds', () =>
+    {
+        it('should determine whether an object implements the IBounds interface', () =>
+        {
+            testTypeGuardFalseAgainstStandardValues((value) => geometry.isIBounds(value));
+            
+            expect(geometry.isIBounds({ north: 1, south: 1, east: 1 })).toBeFalse();
+            expect(geometry.isIBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeFalse();
+            expect(geometry.isIBounds(new google.maps.LatLngBounds())).toBeFalse();
+
+            expect(geometry.isIBounds(mockMarker)).toBeTrue;
+        });
+    });
+
     describe('isDataLayerGeometry', () =>
     {
         it('should determine whether an object is a native data layer geometry object', () =>
         {
-            expect(geometry.isDataLayerGeometry(null)).toBeFalse();
-            expect(geometry.isDataLayerGeometry(undefined)).toBeFalse();
-            expect(geometry.isDataLayerGeometry({})).toBeFalse();
-            expect(geometry.isDataLayerGeometry('hello')).toBeFalse();
-            expect(geometry.isDataLayerGeometry(10)).toBeFalse();
-            expect(geometry.isDataLayerGeometry([])).toBeFalse();
+            testTypeGuardFalseAgainstStandardValues((value) => geometry.isDataLayerGeometry(value));
+
             expect(geometry.isDataLayerGeometry(new google.maps.Circle())).toBeFalse();
 
             expect(geometry.isDataLayerGeometry(new google.maps.Data.Geometry())).toBeTrue();
@@ -206,15 +238,19 @@ describe('GeometryTransformService', () =>
         it('should create a native geometry for a polygon from a flat multi-path',                   () => testPath(() => geometry.createDataPolygon(flatMultiPath).getArray()));
     });
 
-    function testBounds(makeBounds: () => google.maps.LatLngBounds, northEast: FlatCoord, southWest: FlatCoord)
+    function testBounds(makeBounds: () => google.maps.LatLngBounds, [north, east]: FlatCoord, [south, west]: FlatCoord)
     {
         const bounds = makeBounds().toJSON();
 
-        expect(bounds.north).toEqual(northEast[0]);
-        expect(bounds.east).toEqual(northEast[1]);
-        expect(bounds.south).toEqual(southWest[0]);
-        expect(bounds.west).toEqual(southWest[1]);
+        expect(bounds.north).toEqual(north);
+        expect(bounds.east).toEqual(east);
+        expect(bounds.south).toEqual(south);
+        expect(bounds.west).toEqual(west);
     }
+
+    // The first and last coords in the dummy flatPath are the south-west and north-east points respectively
+    const southWest = flatPath[0];
+    const northEast = flatPath[3];
 
     describe('defineCoordBounds', () =>
     {
@@ -225,25 +261,70 @@ describe('GeometryTransformService', () =>
 
     describe('definePathBounds', () =>
     {
-        // The first and last coords in the dummy flatPath are the north-east and south-west points
-        it('should define the bounds for a MVCArray single-path',              () => testBounds(() => geometry.definePathBounds(mvcPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a native LinearRing single-path',     () => testBounds(() => geometry.definePathBounds(linearRingPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a native LatLng single-path',         () => testBounds(() => geometry.definePathBounds(latLngPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a native LatLngLiteral single-path',  () => testBounds(() => geometry.definePathBounds(literalPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a flat coords',                       () => testBounds(() => geometry.definePathBounds(flatPath), flatPath[3], flatPath[0]));
+        it('should define the bounds for a MVCArray single-path',              () => testBounds(() => geometry.definePathBounds(mvcPath), northEast, southWest));
+        it('should define the bounds for a native LinearRing single-path',     () => testBounds(() => geometry.definePathBounds(linearRingPath), northEast, southWest));
+        it('should define the bounds for a native LatLng single-path',         () => testBounds(() => geometry.definePathBounds(latLngPath), northEast, southWest));
+        it('should define the bounds for a native LatLngLiteral single-path',  () => testBounds(() => geometry.definePathBounds(literalPath), northEast, southWest));
+        it('should define the bounds for a flat coords',                       () => testBounds(() => geometry.definePathBounds(flatPath), northEast, southWest));
 
-        it('should define the bounds for a MVCArray multi-path',               () => testBounds(() => geometry.definePathBounds(mvcMultiPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a LinearRing MVCArray multi-path',    () => testBounds(() => geometry.definePathBounds(mvcMultiLinearRingPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a LinearRing multi-path',             () => testBounds(() => geometry.definePathBounds(linearRingMultiPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a LatLng multi-path',                 () => testBounds(() => geometry.definePathBounds(latLngMultiPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a LatLngLiteral multi-path',          () => testBounds(() => geometry.definePathBounds(literalMultiPath), flatPath[3], flatPath[0]));
-        it('should define the bounds for a flat multi-path',                   () => testBounds(() => geometry.definePathBounds(flatMultiPath), flatPath[3], flatPath[0]));
+        it('should define the bounds for a MVCArray multi-path',               () => testBounds(() => geometry.definePathBounds(mvcMultiPath), northEast, southWest));
+        it('should define the bounds for a LinearRing MVCArray multi-path',    () => testBounds(() => geometry.definePathBounds(mvcMultiLinearRingPath), northEast, southWest));
+        it('should define the bounds for a LinearRing multi-path',             () => testBounds(() => geometry.definePathBounds(linearRingMultiPath), northEast, southWest));
+        it('should define the bounds for a LatLng multi-path',                 () => testBounds(() => geometry.definePathBounds(latLngMultiPath), northEast, southWest));
+        it('should define the bounds for a LatLngLiteral multi-path',          () => testBounds(() => geometry.definePathBounds(literalMultiPath), northEast, southWest));
+        it('should define the bounds for a flat multi-path',                   () => testBounds(() => geometry.definePathBounds(flatMultiPath), northEast, southWest));
     });
 
     describe('defineGeometryBounds', () =>
     {
         // The first and last coords in the dummy flatPath are the north-east and south-west points
         it('should define the bounds for a MVCArray single-path',              () => testBounds(() => geometry.defineGeometryBounds(geometry.createDataPoint(flatCoord)), flatCoord, flatCoord));
-        it('should define the bounds for a native LinearRing single-path',     () => testBounds(() => geometry.defineGeometryBounds(geometry.createDataPolygon(flatPath)), flatPath[3], flatPath[0]));
+        it('should define the bounds for a native LinearRing single-path',     () => testBounds(() => geometry.defineGeometryBounds(geometry.createDataPolygon(flatPath)), northEast, southWest));
+    });
+    
+    describe('defineBounds', () =>
+    {      
+        it('should define the bounds for a flat coord',                       () => testBounds(() => geometry.defineBounds(flatCoord), flatCoord, flatCoord));
+        it('should define the bounds for a native LatLngLiteral coord',       () => testBounds(() => geometry.defineBounds(literalCoord), flatCoord, flatCoord));
+        it('should define the bounds for a native LatLng coord',              () => testBounds(() => geometry.defineBounds(latLngCoord), flatCoord, flatCoord));
+
+        it('should define the bounds for a MVCArray single-path',             () => testBounds(() => geometry.defineBounds(mvcPath), northEast, southWest));
+        it('should define the bounds for a native LinearRing single-path',    () => testBounds(() => geometry.defineBounds(linearRingPath), northEast, southWest));
+        it('should define the bounds for a native LatLng single-path',        () => testBounds(() => geometry.defineBounds(latLngPath), northEast, southWest));
+        it('should define the bounds for a native LatLngLiteral single-path', () => testBounds(() => geometry.defineBounds(literalPath), northEast, southWest));
+        it('should define the bounds for a flat coords',                      () => testBounds(() => geometry.defineBounds(flatPath), northEast, southWest));
+
+        it('should define the bounds for a MVCArray multi-path',              () => testBounds(() => geometry.defineBounds(mvcMultiPath), northEast, southWest));
+        it('should define the bounds for a LinearRing MVCArray multi-path',   () => testBounds(() => geometry.defineBounds(mvcMultiLinearRingPath), northEast, southWest));
+        it('should define the bounds for a LinearRing multi-path',            () => testBounds(() => geometry.defineBounds(linearRingMultiPath), northEast, southWest));
+        it('should define the bounds for a LatLng multi-path',                () => testBounds(() => geometry.defineBounds(latLngMultiPath), northEast, southWest));
+        it('should define the bounds for a LatLngLiteral multi-path',         () => testBounds(() => geometry.defineBounds(literalMultiPath), northEast, southWest));
+        it('should define the bounds for a flat multi-path',                  () => testBounds(() => geometry.defineBounds(flatMultiPath), northEast, southWest));
+        
+        it('should define the bounds for IBounds implementors',               () => testBounds(() => geometry.defineBounds(mockMarker), flatCoord, flatCoord));
+        
+        it('should define the containing bounds of all specified elements combined', () =>
+        {
+            testBounds(() => geometry.defineBounds(
+                flatCoord,
+                literalCoord,
+                latLngCoord,
+            
+                flatPath,
+                literalPath,
+                latLngPath,
+                mvcPath,
+                linearRingPath,
+            
+                flatMultiPath,
+                literalMultiPath,
+                latLngMultiPath,
+                linearRingMultiPath,
+                mvcMultiPath,
+                mvcMultiLinearRingPath,
+            
+                mockMarker
+            ), northEast, southWest);
+        });
     });
 });
