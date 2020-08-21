@@ -235,10 +235,12 @@ export class GeometryTransformService
         {
             let elementBounds: google.maps.LatLngBounds;
 
+            // Check for a flat coord (special array case, treated separately)
+            if (this.isFlatCoord(element)) elementBounds = this.defineCoordBounds(element);
             // Check for paths
-            if (Array.isArray(element)) elementBounds = this.definePathBounds(element as CoordPath);
+            else if (Array.isArray(element) || element instanceof google.maps.MVCArray || element instanceof google.maps.Data.LinearRing) elementBounds = this.definePathBounds(element);
             // Check for IBound implementation (e.g. GoogleMapsMarker, GoogleMapsPolygon...)
-            else if (hasBounds(element)) elementBounds = element.getBounds();
+            else if (this.isIBounds(element)) elementBounds = element.getBounds();
             // Check for bounds object
             else if (this.isBounds(element)) elementBounds = element as google.maps.LatLngBounds;
             // Check for data layer geometry object
