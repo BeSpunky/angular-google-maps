@@ -1,6 +1,10 @@
-import { IGoogleMap, Coord, CoordPath, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsData, IGoogleMapsFeature               } from '@bespunky/angular-google-maps/overlays';
-import { MockDrawableOverlay                               } from '../mock-drawable-overlay';
+import { IGoogleMap, Coord, CoordPath, NativeObjectWrapper, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsData, IGoogleMapsFeature                                       } from '@bespunky/angular-google-maps/overlays';
+import { MockDrawableOverlay                                                       } from '../mock-drawable-overlay';
+
+export type WrappedDataFunctions = WrappedNativeFunctions<google.maps.Data, 'add' | 'addGeoJson' | 'getFeatureById' | 'toGeoJson' | 'loadGeoJson' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+
+export interface MockGoogleMapsData extends WrappedDataFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.Data, MockGoogleMapsData>()
@@ -10,11 +14,7 @@ export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> im
     {
         super(map, new google.maps.Data());
     }
-    
-    getBounds(): google.maps.LatLngBounds
-    {
-        throw new Error("Method not implemented.");
-    }
+
     createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
         throw new Error("Method not implemented.");
@@ -23,7 +23,7 @@ export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> im
     {
         throw new Error("Method not implemented.");
     }
-    addFeature(feature: IGoogleMapsFeature | google.maps.Data.FeatureOptions): IGoogleMapsFeature
+    addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature
     {
         throw new Error("Method not implemented.");
     }
@@ -43,36 +43,5 @@ export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> im
     {
         throw new Error("Method not implemented.");
     }
-    getControlPosition(): google.maps.ControlPosition
-    {
-        throw new Error("Method not implemented.");
-    }
-    setControlPosition(position: google.maps.ControlPosition): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getControls(): string[]
-    {
-        throw new Error("Method not implemented.");
-    }
-    setControls(controls: string[]): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getDrawingMode(): string
-    {
-        throw new Error("Method not implemented.");
-    }
-    setDrawingMode(mode: string): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    getStyle(): google.maps.Data.StylingFunction | google.maps.Data.StyleOptions
-    {
-        throw new Error("Method not implemented.");
-    }
-    setStyle(style: google.maps.Data.StylingFunction | google.maps.Data.StyleOptions): void
-    {
-        throw new Error("Method not implemented.");
-    }
+    
 }

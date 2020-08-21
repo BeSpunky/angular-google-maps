@@ -1,6 +1,10 @@
-import { MockEmittingWrapper                   } from '@bespunky/angular-google-maps/core/testing';
-import { Coord, CoordPath, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsFeature, IGoogleMapsData   } from '@bespunky/angular-google-maps/overlays';
+import { MockEmittingWrapper                                           } from '@bespunky/angular-google-maps/core/testing';
+import { Coord, CoordPath, NativeObjectWrapper, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsFeature, IGoogleMapsData                           } from '@bespunky/angular-google-maps/overlays';
+
+export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Feature>;
+
+export interface MockGoogleMapsFeature extends WrappedFeatureFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.Data.Feature, MockGoogleMapsFeature>()
@@ -12,9 +16,9 @@ export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.
     {
         super(nativeFeature || new google.maps.Data.Feature());
     }
-    getBounds(): google.maps.LatLngBounds
+    getId(): string | number
     {
-        throw new Error("Method not implemented.");
+        return this.id;
     }
     setMarker(position: Coord): void
     {
@@ -23,20 +27,12 @@ export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.
     setPolygon(path: CoordPath): void
     {
         throw new Error("Method not implemented.");
-    }    
-    getId(): string | number
-    {
-        return this.id;
-    }
-    getGeometry(): google.maps.Data.Geometry
-    {
-        throw new Error("Method not implemented.");
-    }
-    setGeometry(geometry: google.maps.Data.Geometry | google.maps.LatLng | google.maps.LatLngLiteral): void
-    {
-        throw new Error("Method not implemented.");
     }
     toGeoJson(): Promise<any>
+    {
+        throw new Error("Method not implemented.");
+    }
+    getBounds(): google.maps.LatLngBounds
     {
         throw new Error("Method not implemented.");
     }
