@@ -9,6 +9,20 @@ import { IBounds                                                                
 export class GeometryTransformService
 {
     /**
+     * Converts a coord object of a known type to a flat coord array.
+     *
+     * @param {Coord} coord The coord to convert.
+     * @returns {[number, number]} The flat coord representation of the coord.
+     */
+    public toFlatCoord(coord: Coord): FlatCoord
+    {
+        if (this.isFlatCoord(coord)) return coord;
+
+        return coord instanceof google.maps.LatLng ? [coord.lat(), coord.lng()] : [coord.lat, coord.lng];
+    }
+
+
+    /**
      * Converts a coord object of a known type to a native `LatLngLiteral` object.
      *
      * @param {Coord} coord The coord to convert.
