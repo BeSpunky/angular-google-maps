@@ -97,7 +97,18 @@ export class GeometryTransformService
     }
 
     /**
-     * (Type Guard) Checks whetherthe given object is a flat coord array.
+     * (Type Guard) Checks whether the given object is a native literal coord object (i.e. `google.maps.LatLngLiteral`).
+     *
+     * @param {*} object The object to test.
+     * @returns {object is google.maps.LatLngLiteral} `true` if the object is a native literal coord object; otherwise `false`.
+     */
+    public isLiteralCoord(object: any): object is google.maps.LatLngLiteral
+    {
+        return !!(object && object.lat && object.lng);
+    }
+
+    /**
+     * (Type Guard) Checks whether the given object is a flat coord array.
      *
      * @param {*} coord The object to test.
      * @returns {coord is FlatCoord} `true` if the object is a flat coord array; otherwise `false`.
