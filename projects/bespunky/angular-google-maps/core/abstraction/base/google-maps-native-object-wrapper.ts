@@ -37,6 +37,11 @@ export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsN
         return this.nativeObject;
     }
 
+    public setCustom(custom: any): void
+    {
+        this.custom = custom;
+    }
+    
     /**
      * When overriden in a derived class, should creates an instance of the actual native object being wrapped.
      *

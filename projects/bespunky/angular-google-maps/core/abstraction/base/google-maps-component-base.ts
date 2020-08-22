@@ -1,4 +1,4 @@
-import { OnChanges, SimpleChanges, Inject, Directive, ElementRef } from '@angular/core';
+import { OnChanges, SimpleChanges, Inject, Directive, ElementRef, Input } from '@angular/core';
 
 import { GoogleMapsComponentApiService                 } from '../../api/google-maps-component-api.service';
 import { WrapperFactory                                } from '../tokens/wrapper-factory.token';
@@ -29,6 +29,8 @@ export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
            implements OnChanges
 {
     private nativeWrapper: TWrapper;
+
+    @Input() public custom: any;
 
     /**
      * Creates an instance of GoogleMapsComponentBase.
