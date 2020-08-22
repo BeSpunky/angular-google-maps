@@ -21,7 +21,8 @@ export class TopicComponent
             title   : example.title,
             subtitle: '',
             icon    : example.icon,
-            content : example.description
+            content : example.description,
+            soon    : example.soon
         }));
     }
 }

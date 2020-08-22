@@ -5,4 +5,5 @@ export interface Example
     icon?      : string;
     notes?     : string;
     embedUrl   : string;
+    soon?      : boolean;
 }

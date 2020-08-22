@@ -25,6 +25,11 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
         return new google.maps.Marker(options);
     }
     
+    public getBounds(): google.maps.LatLngBounds
+    {
+        return this.api.geometry.defineCoordBounds(this.getPosition());
+    }
+
     public getPosition(): google.maps.LatLngLiteral
     {
         return this.api.geometry.toLiteralCoord(this.native.getPosition());

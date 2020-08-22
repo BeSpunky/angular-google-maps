@@ -47,3 +47,5 @@ Thumbs.db
 
 /tests
 .firebase/
+/chrome-debugging-profile
+projects/bespunky/angular-google-maps/debug.log

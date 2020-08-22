@@ -24,6 +24,11 @@ export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Pol
         return new google.maps.Polygon(options);
     }
 
+    public getBounds(): google.maps.LatLngBounds
+    {
+        return this.api.geometry.definePathBounds(this.getPath());
+    }
+
     public getPath(): google.maps.LatLngLiteral[][]
     {
         return this.api.geometry.toLiteralMultiPath(this.native.getPaths());

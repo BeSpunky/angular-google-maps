@@ -64,4 +64,8 @@ class GoogleMapsDrawableOverlayTest extends GoogleMapsDrawableOverlay<MockNative
     {
         return mockNative;
     }
+    getBounds(): google.maps.LatLngBounds
+    {
+        throw new Error("Method not implemented.");
+    }
 }

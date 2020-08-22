@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core';
 
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
 import { WrappedNativeFunctions                } from '../../abstraction/types/abstraction';
-import { Coord                                 } from '../../abstraction/types/geometry.type';
+import { Coord, BoundsLike                     } from '../../abstraction/types/geometry.type';
 import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator';
 import { OutsideAngular                        } from '../../decorators/outside-angular.decorator';
 import { Delegation                            } from '../../decorators/wrapper-definition';
@@ -11,7 +11,7 @@ import { ISuperpowers                          } from './superpowers/i-superpowe
 import { Defaults                              } from './types/defaults';
 import { IGoogleMap                            } from './i-google-map';
 
-export type WrappedGoogleMapFunctions = WrappedNativeFunctions<google.maps.Map, 'getMapTypeId' | 'setMapTypeId'>;
+export type WrappedGoogleMapFunctions = WrappedNativeFunctions<google.maps.Map, 'getMapTypeId' | 'setMapTypeId' | 'fitBounds' | 'panToBounds'>;
 
 export interface GoogleMap extends WrappedGoogleMapFunctions { }
 
@@ -44,10 +44,6 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
         return new google.maps.Map(mapElement.nativeElement, options);
     }
 
-    // TODO:
-    // 1. Implement facilitating transformations for fitBounts, panToBounds
-    // 2. Add declarations for upgraded signatures to IGoogleMap
-
     @OutsideAngular
     public setCenter(center: Coord)
     {
@@ -55,19 +51,25 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     }
 
     @OutsideAngular
-    fitBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { this.native.fitBounds(bounds, padding); }
+    public fitBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void
+    {
+        this.native.fitBounds(this.api.geometry.defineBounds(...elements), padding);
+    }
     
     @OutsideAngular
-    panTo(position: Coord): void
+    public panToBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void
+    {
+        this.native.panToBounds(this.api.geometry.defineBounds(...elements), padding);
+    }
+    
+    @OutsideAngular
+    public panTo(position: Coord): void
     {
         this.native.panTo(this.api.geometry.toLiteralCoord(position));
     }
     
-    @OutsideAngular
-    panToBounds(bounds: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral, padding?: number | google.maps.Padding): void { this.native.panToBounds(bounds, padding); }
-    
-    getMapType(): string | google.maps.MapTypeId { return this.native.getMapTypeId(); }
+    public getMapType(): string | google.maps.MapTypeId { return this.native.getMapTypeId(); }
 
     @OutsideAngular
-    setMapType(type: string | google.maps.MapTypeId): void { this.native.setMapTypeId(type); }
+    public setMapType(type: string | google.maps.MapTypeId): void { this.native.setMapTypeId(type); }
 }
