@@ -8,16 +8,12 @@ export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper<googl
 
     setCenter(center: Coord): void;
 
-    fitBounds(...elements: BoundsLike[]): void;
-    
-    fitBoundsWithPadding(padding: number | google.maps.Padding, ...elements: BoundsLike[]): void;
+    fitBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void;
+        
+    panToBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void;
     
     panTo(position: Coord): void;
-    
-    panToBounds(...elements: BoundsLike[]): void;
-    
-    panToBoundsWithPadding(padding: number | google.maps.Padding, ...elements: BoundsLike[]): void;
-    
+        
     getMapType(): string | google.maps.MapTypeId;
     
     setMapType(type: string | google.maps.MapTypeId): void;

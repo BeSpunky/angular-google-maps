@@ -10,27 +10,20 @@ export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implemen
     {
         super(native);
     }
+
     setCenter(center: Coord): void
     {
         throw new Error("Method not implemented.");
     }
-    fitBounds(...elements: BoundsLike[]): void
+    fitBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void
     {
         throw new Error("Method not implemented.");
     }
-    fitBoundsWithPadding(padding: number | google.maps.Padding, ...elements: BoundsLike[]): void
+    panToBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void
     {
         throw new Error("Method not implemented.");
     }
     panTo(position: Coord): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    panToBounds(...elements: BoundsLike[]): void
-    {
-        throw new Error("Method not implemented.");
-    }
-    panToBoundsWithPadding(padding: number | google.maps.Padding, ...elements: BoundsLike[]): void
     {
         throw new Error("Method not implemented.");
     }

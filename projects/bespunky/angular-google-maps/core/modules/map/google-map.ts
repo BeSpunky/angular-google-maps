@@ -51,33 +51,21 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     }
 
     @OutsideAngular
-    public fitBounds(...elements: BoundsLike[]): void
-    {
-        this.fitBoundsWithPadding(0, ...elements);
-    }
-
-    @OutsideAngular
-    public fitBoundsWithPadding(padding: number | google.maps.Padding, ...elements: BoundsLike[]): void
+    public fitBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void
     {
         this.native.fitBounds(this.api.geometry.defineBounds(...elements), padding);
+    }
+    
+    @OutsideAngular
+    public panToBounds(elements: BoundsLike[], padding?: number | google.maps.Padding): void
+    {
+        this.native.panToBounds(this.api.geometry.defineBounds(...elements), padding);
     }
     
     @OutsideAngular
     public panTo(position: Coord): void
     {
         this.native.panTo(this.api.geometry.toLiteralCoord(position));
-    }
-    
-    @OutsideAngular
-    public panToBounds(...elements: BoundsLike[]): void
-    {
-        this.panToBoundsWithPadding(0, ...elements);
-    }
-  
-    @OutsideAngular
-    public panToBoundsWithPadding(padding: number | google.maps.Padding, ...elements: BoundsLike[]): void
-    {
-        this.native.panToBounds(this.api.geometry.defineBounds(...elements), padding);
     }
     
     public getMapType(): string | google.maps.MapTypeId { return this.native.getMapTypeId(); }
