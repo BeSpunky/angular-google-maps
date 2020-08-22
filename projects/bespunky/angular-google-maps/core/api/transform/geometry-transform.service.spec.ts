@@ -36,7 +36,7 @@ describe('GeometryTransformService', () =>
     describe('castMultiPath', () =>
     {
         produceSinglePathSpecs('convert a single-path to multi-path', (path) => expect(geometry.isMultiPath(geometry.castMultiPath(path))).toBeTruthy());
-        produceMultiPathSpecs('return the multi-path as is',         (path) => expect(geometry.castMultiPath(path)).toBe(path));
+        produceMultiPathSpecs('return the multi-path as is',          (path) => expect(geometry.castMultiPath(path)).toBe(path));
     });
 
     function testTypeGuardFalseAgainstStandardValues(guard: (value: any) => boolean)
@@ -52,8 +52,8 @@ describe('GeometryTransformService', () =>
 
     describe('isMultiPath', () =>
     {
-        produceSinglePathSpecs('determine weather the path is a multi-path', (path) => expect(geometry.isMultiPath(path)).toBeFalse());
-        produceMultiPathSpecs ('determine weather the path is a multi-path', (path) => expect(geometry.isMultiPath(path)).toBeTrue());
+        produceSinglePathSpecs('determine whether the path is a multi-path', (path) => expect(geometry.isMultiPath(path)).toBeFalse());
+        produceMultiPathSpecs ('determine whether the path is a multi-path', (path) => expect(geometry.isMultiPath(path)).toBeTrue());
     });
     
     describe('isLiteralCoord', () =>
@@ -143,7 +143,8 @@ describe('GeometryTransformService', () =>
     describe('createDataPolygon', () => producePathSpecs ('create a native geometry for a polygon', (path)  => expectPath (() => geometry.createDataPolygon(path).getArray(), path)));
 
     describe('defineCoordBounds', () => produceCoordSpecs('define the bounds', (coord) => expectBounds(() => geometry.defineCoordBounds(coord), coord, coord)));
-    describe('definePathBounds',  () => producePathSpecs ('define the bounds', (path)  => expectBounds(() => geometry.definePathBounds(path), northEast, southWest)));
+ 
+    describe('definePathBounds',  () => producePathSpecs('define the bounds',  (path)  => expectBounds(() => geometry.definePathBounds(path), northEast, southWest)));
     
     describe('defineGeometryBounds', () =>
     {
