@@ -5,24 +5,26 @@ export const InjectableServicesExamples: Example[] = [
     {
         title      : 'GoogleMapsApiService',
         description: 'Access to low-level functionality and shortcut to the other services.',
-        embedUrl   : '',
-        soon       : true
+        icon       : 'construction',
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-api?embed=1&file=src/app/app.component.ts',
     },
     {
         title      : 'GoogleMapsComponentApiService',
         description: 'Easily connect Angular functionality with native objects.',
+        icon       : 'widgets',
         embedUrl   : '',
         soon       : true
     },
     {
         title      : 'GeometryTransformService',
         description: 'Transform geometry objects between types, calculate bounds and prepare your objects for interaction with the native API.',
-        embedUrl   : '',
-        soon       : true
+        icon       : 'architecture',
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-geometry?devtoolsheight=33&embed=1&file=src/app/demo/demo.component.ts&hideExplorer=1'
     },
     {
         title      : 'EventDataTransformService',
         description: 'Extract the gist out of native event data objects in a more comfortable format.',
+        icon       : 'flash_on',
         embedUrl   : '',
         soon       : true
     }
