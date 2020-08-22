@@ -27,7 +27,7 @@ describe('GeometryTransformService', () =>
     {
         const flat = geometry.toFlatCoord(coord);
 
-        expect(geometry.isFlatCoord(coord)).toBeTrue();
+        expect(geometry.isFlatCoord(flat)).toBeTrue();
         expectCoord(() => flat, coord);
     }));
     
