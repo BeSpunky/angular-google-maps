@@ -1,4 +1,6 @@
-import { IGoogleMapsMarker, IGoogleMapsPolygon, IGoogleMapsData } from '@bespunky/angular-google-maps/overlays';
+import { IGoogleMapsMarker  } from '../../modules/marker/i-google-maps-marker';
+import { IGoogleMapsPolygon } from '../../modules/polygon/i-google-maps-polygon';
+import { IGoogleMapsData    } from '../../modules/data/i-google-maps-data';
 
 /**
  * Represents a snapshot of the map's overlays after changes happened.
