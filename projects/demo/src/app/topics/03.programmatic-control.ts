@@ -24,15 +24,13 @@ export const ProgrammaticControlExamples: Example[] = [
         title      : 'Superpowers',
         description: 'Programmatically fetch superpowers and use them in your components.',
         icon       : 'battery_charging_full',
-        embedUrl   : '',
-        soon       : true
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-programmatic-superpowers?embed=1&file=src/app/map/map.component.ts'
     },
     {
         title      : 'Custom Data',
         description: 'Store custom data along with your different wrapper instances for your needs.',
         icon       : 'move_to_inbox',
-        embedUrl   : '',
-        soon       : true
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-programmatic-custom-data?embed=1&file=src/app/map/map.component.html'
     }
 ];
 

@@ -9,4 +9,11 @@ export interface IGoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsNativ
      * Might be usefull for identifying the object within collections and events.
      */
     custom: any;
+
+    /**
+     * Sets custom data on the wrapper. Defined for compatability with delegation mechanism.
+     *
+     * @param {*} custom Any data related to the object (e.g. id, business model data, etc.).
+     */
+    setCustom(custom: any): void;
 }

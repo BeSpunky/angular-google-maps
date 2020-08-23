@@ -30,4 +30,9 @@ export class MockWrapper<TNative extends IGoogleMapsNativeObject = MockNative>
 
         return createNativeProxy(this);
     }
+
+    public setCustom(custom: any): void
+    {
+        this.custom = custom;
+    }
 }
