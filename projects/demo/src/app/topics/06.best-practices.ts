@@ -12,7 +12,7 @@ export const BestPracticesExamples: Example[] = [
         title      : 'Feature Components',
         description: 'Compose shared map features as a component or directive for as a child to the map.',
         icon       : 'widgets',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-practices-feature-components?embed=1&file=src/app/map-components/branch-marker/branch-marker.component.html'
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-practices-feature-components?embed=1&file=src/app/branch-maps/branch-marker/branch-marker.component.html'
     }
 ];
 
