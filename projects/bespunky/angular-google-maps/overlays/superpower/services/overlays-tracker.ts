@@ -1,5 +1,5 @@
-import { Subject    } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Injectable      } from '@angular/core';
 
 import { GoogleMapModule    } from '@bespunky/angular-google-maps/core';
 import { OverlayType        } from '../../abstraction/base/overlay-type.enum';
@@ -24,7 +24,7 @@ export class OverlaysTracker
     /**
      * Emits an `OverlaysState` object every time an overlay is added or removed from the map.
      */
-    public changes: Subject<OverlaysState> = new Subject();
+    public changes: BehaviorSubject<OverlaysState> = new BehaviorSubject(this.state());
 
     private map = {
         [OverlayType.Marker ]: this.markers,
