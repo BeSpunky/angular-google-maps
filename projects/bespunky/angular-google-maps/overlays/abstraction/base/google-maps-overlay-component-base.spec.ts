@@ -12,7 +12,7 @@ describe('GoogleMapsOverlayComponentBase (abstract)', () =>
     let component         : GoogleMapsOverlayComponentBaseTest;
     let fixture           : ComponentFixture<GoogleMapsOverlayComponentBaseTest>
     let mockMap           : MockGoogleMap;
-    let overlaysSuperpower: IOverlaysSuperpower
+    let overlaysSuperpower: OverlaysSuperpower;
 
     beforeEach(async () =>
     {
@@ -25,11 +25,16 @@ describe('GoogleMapsOverlayComponentBase (abstract)', () =>
         overlaysSuperpower = mockMap.superpowers.use(OverlaysSuperpower);
 
         spyOn(overlaysSuperpower, 'removeOverlay').and.stub();
+
+        // Run ngOnInit() to allow the overlay component to add the wrapper to the overlays tracker
+        component.ngOnInit();
     });
 
     it('should create an instance', () => expect(component).toBeTruthy());
 
-    it('should remove remove the overlay from the map on destroy', () =>
+    it('should add the overlay to the tracker on constuction', () => expect(overlaysSuperpower.tracker.markers.length).toBe(1))
+
+    it('should remove the overlay from the map on destroy', () =>
     {
         fixture.destroy();
 
