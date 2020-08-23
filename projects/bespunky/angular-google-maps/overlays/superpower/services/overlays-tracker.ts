@@ -1,3 +1,4 @@
+import { Subject    } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { GoogleMapModule    } from '@bespunky/angular-google-maps/core';
@@ -6,15 +7,24 @@ import { DrawableOverlay    } from '../../abstraction/types/abstraction';
 import { IGoogleMapsMarker  } from '../../modules/marker/i-google-maps-marker';
 import { IGoogleMapsPolygon } from '../../modules/polygon/i-google-maps-polygon';
 import { IGoogleMapsData    } from '../../modules/data/i-google-maps-data';
+import { OverlaysState      } from './overlays-state';
 
+/**
+ * Tracks the overlays added to and removed from the map for easy access.
+ */
 @Injectable({
     providedIn: GoogleMapModule
 })
 export class OverlaysTracker
 {
-    public markers   : IGoogleMapsMarker [] = [];
-    public polygons  : IGoogleMapsPolygon[] = [];
-    public dataLayers: IGoogleMapsData   [] = [];
+    public readonly markers   : IGoogleMapsMarker [] = [];
+    public readonly polygons  : IGoogleMapsPolygon[] = [];
+    public readonly dataLayers: IGoogleMapsData   [] = [];
+    
+    /**
+     * Emits an `OverlaysState` object every time an overlay is added or removed from the map.
+     */
+    public changes: Subject<OverlaysState> = new Subject();
 
     private map = {
         [OverlayType.Marker ]: this.markers,
@@ -23,18 +33,34 @@ export class OverlaysTracker
         // TODO: Add here any new supported overlay type collection
     };
 
+    /**
+     * Registers an added overlay.
+     *
+     * @param {DrawableOverlay} overlay The overlay that was added to the map.
+     */
     public add(overlay: DrawableOverlay)
     {
         this.detectCollection(overlay).push(overlay);
+
+        this.reportChanges();
     }
 
+    /**
+     * Registers a removed overlay.
+     *
+     * @param {DrawableOverlay} overlay The overlay that was removed from the map.
+     */
     public remove(overlay: DrawableOverlay)
     {
         const collection = this.detectCollection(overlay);
         const index      = collection.indexOf(overlay);
 
         if (index > -1)
+        {
             collection.splice(index, 1);
+
+            this.reportChanges();
+        }
     }
 
     private detectCollection(overlay: DrawableOverlay): DrawableOverlay[]
@@ -44,5 +70,18 @@ export class OverlaysTracker
         if (collection) return collection;
 
         throw new Error('Overlay type not supported by OverlayTracker.');
+    }
+
+    private state(): OverlaysState
+    {
+        // Duplicate the array so the state won't reference the tracker's collections
+        return new OverlaysState([...this.markers], [...this.polygons], [...this.dataLayers]);
+    }
+
+    // TODO: This may cost in performance when working with large collections. Perform tests and consider refactoring to allow tracking code to complete
+    // immediately without having to create a state and report for each single overlay added or removed.
+    private reportChanges(): void
+    {
+        this.changes.next(this.state());
     }
 }
