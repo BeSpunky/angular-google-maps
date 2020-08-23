@@ -24,7 +24,7 @@ export class OverlaysTracker
     /**
      * Emits an `OverlaysState` object every time an overlay is added or removed from the map.
      */
-    public changes: BehaviorSubject<OverlaysState> = new BehaviorSubject(this.state());
+    public changes: BehaviorSubject<OverlaysState> = new BehaviorSubject(this.state(true));
 
     private map = {
         [OverlayType.Marker ]: this.markers,
@@ -72,10 +72,10 @@ export class OverlaysTracker
         throw new Error('Overlay type not supported by OverlayTracker.');
     }
 
-    private state(): OverlaysState
+    private state(first: boolean = false): OverlaysState
     {
         // Duplicate the array so the state won't reference the tracker's collections
-        return new OverlaysState([...this.markers], [...this.polygons], [...this.dataLayers]);
+        return new OverlaysState(first, [...this.markers], [...this.polygons], [...this.dataLayers]);
     }
 
     // TODO: This may cost in performance when working with large collections. Perform tests and consider refactoring to allow tracking code to complete

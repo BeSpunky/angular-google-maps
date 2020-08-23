@@ -9,9 +9,14 @@ import { IGoogleMapsData    } from '../../modules/data/i-google-maps-data';
 export class OverlaysState
 {
     constructor(
-        public markers   : IGoogleMapsMarker [] = [],
-        public polygons  : IGoogleMapsPolygon[] = [],
-        public dataLayers: IGoogleMapsData   [] = []
+        /** `true` if this is the first change (tracker was just created); otherwise `false`. */
+        public readonly first: boolean,
+        /** All current markers on the map. */
+        public readonly markers   : IGoogleMapsMarker [] = [],
+        /** All current polygons on the map. */
+        public readonly polygons  : IGoogleMapsPolygon[] = [],
+        /** All current data layers on the map. */
+        public readonly dataLayers: IGoogleMapsData   [] = []
     ) { }
 
     /**
