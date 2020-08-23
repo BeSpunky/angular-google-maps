@@ -19,7 +19,7 @@ export const InjectableServicesExamples: Example[] = [
         title      : 'GeometryTransformService',
         description: 'Transform geometry objects between types, calculate bounds and prepare your objects for interaction with the native API.',
         icon       : 'architecture',
-        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-geometry?devtoolsheight=33&embed=1&file=src/app/demo/demo.component.ts&hideExplorer=1'
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-geometry?embed=1&file=src/app/demo/demo.component.ts'
     },
     {
         title      : 'EventDataTransformService',

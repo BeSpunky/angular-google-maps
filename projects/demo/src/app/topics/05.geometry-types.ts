@@ -6,22 +6,25 @@ export const GeometryTypesExamples: Example[] = [
         title      : 'Single Coord',
         description: 'Format flexiblity with single coordinates.',
         icon       : 'gps_fixed',
-        embedUrl   : '',
-        soon       : true
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-geometry?embed=1&file=src/app/demo/coords.ts',
     },
     {
         title      : 'Single Paths',
         description: 'Format flexibility with single paths.',
         icon       : 'timeline',
-        embedUrl   : '',
-        soon       : true
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-geometry?embed=1&file=src/app/demo/single-paths.ts',
     },
     {
         title      : 'Multi Paths',
         description: 'Format flexibility with multi paths.',
         icon       : 'tonality',
-        embedUrl   : '',
-        soon       : true
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-geometry?embed=1&file=src/app/demo/multi-paths.ts',
+    },
+    {
+        title      : 'Bounds',
+        description: 'Format flexibility with bounds definition.',
+        icon       : 'border_style',
+        embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-injectables-geometry?embed=1&file=src/app/demo/bounds.ts',
     }
 ];
 
