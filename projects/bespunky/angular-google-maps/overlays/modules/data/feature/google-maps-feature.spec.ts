@@ -11,14 +11,17 @@ describe('GoogleMapsFeature', () =>
     let feature          : GoogleMapsFeature;
     let map              : MockGoogleMap;
     let data             : MockGoogleMapsData;
-
+    
+    /** Feature properties for testing the getProperties and setProperties methods. */
+    const properties = { a: 1, b: 2 };
+    
     beforeEach(async () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
         map     = new MockGoogleMap();
         data    = new MockGoogleMapsData(map);
-        feature = new GoogleMapsFeature(api, data, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }) });
+        feature = new GoogleMapsFeature(api, data, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }), properties});
 
         runOutsideAngular.calls.reset();
     });
@@ -35,6 +38,20 @@ describe('GoogleMapsFeature', () =>
             expect(geoJson.type).toBe('Feature');
             expect(geoJson?.geometry?.type).toBe('Point');
             expect(geoJson?.geometry?.coordinates).toEqual([2, 2]);
+        });
+    });
+
+    describe('properties', () =>
+    {
+        it('should be retrieved from the native feature when calling `getProperties()`', () => expect(feature.getProperties()).toEqual(properties));
+
+        it('should set all properties to the native feature when calling `setProperties()`', () =>
+        {
+            const newProperties = { a: 6, c: 3, d: 4 };
+
+            feature.setProperties(newProperties);
+
+            expect(feature.getProperties()).toEqual(Object.assign(properties, newProperties));
         });
     });
 
