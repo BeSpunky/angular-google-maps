@@ -24,7 +24,7 @@ export class OverlaysTracker
     /**
      * Emits an `OverlaysState` object every time an overlay is added or removed from the map.
      */
-    public changes: BehaviorSubject<OverlaysState> = new BehaviorSubject(this.state(true));
+    public readonly changes: BehaviorSubject<OverlaysState> = new BehaviorSubject(this.state(true));
 
     private map = {
         [OverlayType.Marker ]: this.markers,

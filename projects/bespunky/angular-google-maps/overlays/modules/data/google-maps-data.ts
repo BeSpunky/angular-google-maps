@@ -1,13 +1,11 @@
-import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, CoordPath, WrappedNativeFunctions, Delegation } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay  } from '../../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType                } from '../../abstraction/base/overlay-type.enum';
-import { isGoogleMapsFeatureOptions } from '../../abstraction/type-guards/feature-options-type-guard';
-import { IGoogleMapsData            } from './i-google-maps-data';
-import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
-import { GoogleMapsFeature          } from './feature/google-maps-feature';
-import { FeatureTracker             } from './services/feature-tracker';
-
-export type WrappedDataFunctions = WrappedNativeFunctions<google.maps.Data, 'add' | 'addGeoJson' | 'getFeatureById' | 'toGeoJson' | 'loadGeoJson' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, CoordPath, Delegation } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay             } from '../../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType                           } from '../../abstraction/base/overlay-type.enum';
+import { isGoogleMapsFeatureOptions            } from '../../abstraction/type-guards/feature-options-type-guard';
+import { IGoogleMapsData, WrappedDataFunctions } from './i-google-maps-data';
+import { IGoogleMapsFeature                    } from './feature/i-google-maps-feature';
+import { GoogleMapsFeature                     } from './feature/google-maps-feature';
+import { FeatureTracker                        } from './services/feature-tracker';
 
 export interface GoogleMapsData extends WrappedDataFunctions { }
 

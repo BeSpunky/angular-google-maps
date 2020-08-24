@@ -1,8 +1,6 @@
-import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Coord, CoordPath, WrappedNativeFunctions, OutsideAngular } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsData } from '../i-google-maps-data';
-import { IGoogleMapsFeature } from './i-google-maps-feature';
-
-export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Feature>;
+import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Coord, CoordPath, OutsideAngular } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsData                             } from '../i-google-maps-data';
+import { IGoogleMapsFeature, WrappedFeatureFunctions } from './i-google-maps-feature';
 
 export interface GoogleMapsFeature extends WrappedFeatureFunctions { }
 
