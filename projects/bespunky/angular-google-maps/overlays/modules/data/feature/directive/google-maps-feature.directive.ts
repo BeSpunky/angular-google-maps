@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 import { Directive, Output, Input } from '@angular/core';
 
 import { GoogleMapsComponentBase, GoogleMapsEventData, Hook, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsFeature               } from '../i-google-maps-feature';
-import { GoogleMapsFeatureFactoryProvider } from '../google-maps-feature-factory.provider';
+import { IGoogleMapsFeature, FeatureProperties } from '../i-google-maps-feature';
+import { GoogleMapsFeatureFactoryProvider      } from '../google-maps-feature-factory.provider';
 
 @Directive({
     selector : 'bs-google-maps-feature, [bsGoogleMapsFeature]',
@@ -19,6 +19,8 @@ export class GoogleMapsFeatureDirective extends GoogleMapsComponentBase<IGoogleM
     @Input() public geometry?: google.maps.Data.Geometry;
     @Input() public marker?  : Coord;
     @Input() public polygon? : CoordPath;
+    
+    @Input() public properties?: FeatureProperties;
     
     /** Fired when a feature is added to the collection. */
     @Hook('addfeature')     @Output() public addFeature          : Observable<GoogleMapsEventData>;
