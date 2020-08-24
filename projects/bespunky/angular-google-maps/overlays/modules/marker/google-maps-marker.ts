@@ -1,10 +1,8 @@
 
-import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, WrappedNativeFunctions, Delegation } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay } from '../../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType               } from '../../abstraction/base/overlay-type.enum';
-import { IGoogleMapsMarker         } from './i-google-maps-marker';
-
-export type WrappedMarkerFunctions = WrappedNativeFunctions<google.maps.Marker, 'getPosition' | 'setPosition' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, Delegation } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay                 } from '../../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType                               } from '../../abstraction/base/overlay-type.enum';
+import { IGoogleMapsMarker, WrappedMarkerFunctions } from './i-google-maps-marker';
 
 export interface GoogleMapsMarker extends WrappedMarkerFunctions { }
 

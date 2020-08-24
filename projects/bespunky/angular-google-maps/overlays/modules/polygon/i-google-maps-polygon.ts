@@ -1,7 +1,9 @@
-import { CoordPath                  } from '@bespunky/angular-google-maps/core';
+import { CoordPath, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsDrawableOverlay } from '../../abstraction/base/i-google-maps-drawable-overlay';
 
-export interface IGoogleMapsPolygon extends IGoogleMapsDrawableOverlay<google.maps.Polygon>
+export type WrappedPolygonFunctions = WrappedNativeFunctions<google.maps.Polygon, 'getPath' | 'setPath' | 'getPaths' | 'setPaths' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+
+export interface IGoogleMapsPolygon extends IGoogleMapsDrawableOverlay<google.maps.Polygon>, WrappedPolygonFunctions
 {
     getPath(): google.maps.LatLngLiteral[][];
     setPath(coords: CoordPath): void;

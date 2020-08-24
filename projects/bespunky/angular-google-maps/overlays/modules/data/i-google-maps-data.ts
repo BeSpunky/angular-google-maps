@@ -1,8 +1,10 @@
-import { Coord, CoordPath           } from '@bespunky/angular-google-maps/core';
+import { Coord, CoordPath, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsDrawableOverlay } from '../../abstraction/base/i-google-maps-drawable-overlay';
 import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
 
-export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.Data>
+export type WrappedDataFunctions = WrappedNativeFunctions<google.maps.Data, 'add' | 'addGeoJson' | 'getFeatureById' | 'toGeoJson' | 'loadGeoJson' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+
+export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.Data>, WrappedDataFunctions
 {
     createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
     createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;

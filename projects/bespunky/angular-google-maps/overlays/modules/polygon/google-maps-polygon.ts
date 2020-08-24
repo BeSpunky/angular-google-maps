@@ -1,9 +1,7 @@
-import { CoordPath, NativeObjectWrapper, OutsideAngular, GoogleMapsApiService, IGoogleMap, WrappedNativeFunctions, Delegation } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay } from '../../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType               } from '../../abstraction/base/overlay-type.enum';
-import { IGoogleMapsPolygon        } from './i-google-maps-polygon';
-
-export type WrappedPolygonFunctions = WrappedNativeFunctions<google.maps.Polygon, 'getPath' | 'setPath' | 'getPaths' | 'setPaths' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
+import { CoordPath, NativeObjectWrapper, OutsideAngular, GoogleMapsApiService, IGoogleMap, Delegation } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay                   } from '../../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType                                 } from '../../abstraction/base/overlay-type.enum';
+import { IGoogleMapsPolygon, WrappedPolygonFunctions } from './i-google-maps-polygon';
 
 export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
 
