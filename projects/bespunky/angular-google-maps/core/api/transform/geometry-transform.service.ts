@@ -21,7 +21,6 @@ export class GeometryTransformService
         return coord instanceof google.maps.LatLng ? [coord.lat(), coord.lng()] : [coord.lat, coord.lng];
     }
 
-
     /**
      * Converts a coord object of a known type to a native `LatLngLiteral` object.
      *

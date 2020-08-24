@@ -3,6 +3,8 @@ import { IGoogleMapsData } from '../i-google-maps-data';
 
 export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Feature>;
 
+export type FeatureProperties = { [name: string]: any };
+
 export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>, WrappedFeatureFunctions, IBounds
 {
     /** The data object this feature was added to. */
@@ -31,6 +33,21 @@ export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapp
      * @param {CoordPath} path The polygon's path.
      */
     setPolygon(path: CoordPath): void;
+
+    /**
+     * Gets a map of all properties assigned to the feature.
+     *
+     * @returns {FeatureProperties} The map of properties assigned to the feature.
+     */
+    getProperties(): FeatureProperties;
+
+    /**
+     * Assignes properties to the feature.
+     * Any existing properties will be overriten. Non specified properties will not be touched.
+     *
+     * @param {FeatureProperties} properties The properties to assigne to the feature.
+     */
+    setProperties(properties: FeatureProperties): void;
 
     /**
      * Should create the GeoJson representation of the feature and provide it as an object when the promise resolves.

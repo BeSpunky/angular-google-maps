@@ -1,6 +1,6 @@
 import { MockEmittingWrapper                                           } from '@bespunky/angular-google-maps/core/testing';
 import { Coord, CoordPath, NativeObjectWrapper, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsFeature, IGoogleMapsData                           } from '@bespunky/angular-google-maps/overlays';
+import { IGoogleMapsFeature, IGoogleMapsData, FeatureProperties        } from '@bespunky/angular-google-maps/overlays';
 
 export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Feature>;
 
@@ -29,6 +29,14 @@ export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.
         throw new Error("Method not implemented.");
     }
     toGeoJson(): Promise<any>
+    {
+        throw new Error("Method not implemented.");
+    }
+    getProperties(): FeatureProperties
+    {
+        throw new Error("Method not implemented.");
+    }
+    setProperties(properties: FeatureProperties): void
     {
         throw new Error("Method not implemented.");
     }
