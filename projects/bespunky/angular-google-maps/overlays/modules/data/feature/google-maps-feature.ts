@@ -1,6 +1,6 @@
 import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Coord, CoordPath, OutsideAngular } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData                             } from '../i-google-maps-data';
-import { IGoogleMapsFeature, WrappedFeatureFunctions } from './i-google-maps-feature';
+import { IGoogleMapsFeature, WrappedFeatureFunctions, FeatureProperties } from './i-google-maps-feature';
 
 export interface GoogleMapsFeature extends WrappedFeatureFunctions { }
 
@@ -12,7 +12,7 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     {
         super(api, options);
     }
-
+   
     protected createNativeObject(options?: google.maps.Data.FeatureOptions): google.maps.Data.Feature
     {
         return new google.maps.Data.Feature(options);
@@ -26,6 +26,21 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     public getId(): string | number
     {
         return this.native.getId();
+    }
+
+    public getProperties(): FeatureProperties
+    {
+        const properties = {};
+
+        this.native.forEachProperty((value, name) => properties[name] = value);
+
+        return properties;
+    }
+    
+    @OutsideAngular
+    public setProperties(properties: FeatureProperties): void
+    {
+        Object.keys(properties).forEach(name => this.native.setProperty(name, properties[name]));
     }
 
     @OutsideAngular
