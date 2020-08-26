@@ -11,7 +11,7 @@ When you define a custom provider for `GoogleMapsApiLoader`, you automatically i
 # Where should I use it?
 The whole idea of `*bsSafe` is to provide safe access to the native `google` namespace. Obviously, the library uses the native namespace internally, so the `<bs-google-map>` component should, by definition, be marked with the directive.
 
-That being said, if your component directly uses elements like `google.maps.Animation`, `google.maps.MapTypeId`, or attempts to access map elements on init, it should be marked with the directive. 
+That being said, if your component uses elements like `google.maps.Animation`, `google.maps.MapTypeId`, or attempts to access map elements on init, or indeit should be marked with the directive. 
 
 > **👍 The rule of thumb:** The top most component which refers to `google` or expects map elements to be ready on init should have the `*bsSafe` directive.
 
