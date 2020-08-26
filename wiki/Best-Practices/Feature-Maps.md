@@ -26,7 +26,7 @@ Down to business...
     // branch-location-map.component.ts
     
     import { Component, Input } from '@angular/core';
-    import { Coord } from '@bespunky/angular-google-maps/core';
+    import { Branch } from '......';
     
     @Component({
         selector   : 'app-branch-location-map',
@@ -35,7 +35,7 @@ Down to business...
     })
     export class BranchLocationMapComponent
     {
-        @Input() public location: Coord;
+        @Input() public branch: Branch;
     }
     ```
 
@@ -43,12 +43,14 @@ Down to business...
     ```html
     <!-- branch-location-map.component.html -->
 
-    <bs-google-map *bsSafe [center]="location"
+    <bs-google-map *bsSafe [center]="branch.location"
                            [zoom]="8"
                            [options]="{ disableDefaultUI: true }">
-        <bs-google-maps-marker [position]="location"></bs-google-maps-marker>
+        <bs-google-maps-marker [position]="branch.location"></bs-google-maps-marker>
     </bs-google-map>
     ```
+
+> Tip: Design your `@Input` properties to receive the entire data structure (e.g. an entity, or a model) they are intended for. Model changes will require zero-to-minimal effort as you will only have to adapt the component and not the using code.
 
 # Next Steps
 | Topic | Description |
