@@ -7,13 +7,13 @@ You may use the library as you like, with any app, under the MIT license.
 
 🎁 [What's in the library?](/What's-Inside)
 
-🙌 [Live demo](https://bs-angular-ggl-maps-demo.web.app)
+🙌 [Live demos](https://bs-angular-ggl-maps-demo.web.app)
 
 ✨ [Getting Started](Getting-Started)
 
 > The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
 > 
-> Compatibility with older versions is possible but not garantied.
+> Compatibility with older versions is possible but not guaranteed.
 
 # What's so cool about it
 ✔ Easy to use 🔌

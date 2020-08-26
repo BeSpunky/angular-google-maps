@@ -10,11 +10,10 @@ This angular **workspace** provides:
   
 > The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
 > 
-> Compatibility with older versions is possible but not garantied.
+> Compatibility with older versions is possible but not guaranteed.
 
 # 🙌 Examples
-The demo app is **live** at [angular-google-maps demo](https://bs-angular-ggl-maps-demo.web.app).  
-For implementation, [visit the code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fdemo&version=GBmaster&_a=contents) for the demo app.
+Demos are **live** at [angular-google-maps demos](https://bs-angular-ggl-maps-demo.web.app).  
 
 # 📖 Documentation
 
