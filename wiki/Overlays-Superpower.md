@@ -3,9 +3,12 @@
 🧩 `GoogleMapsOverlaysModule`  
 ⚡ `OverlaysSuperpower`
 
-Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).
-The overlays module will charge your app with the `OverlaysSuperpower` and provide you with overlay directives.
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Overlays%20Superpower/Overlay%20Tracking)
 
+Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).  
+The overlays module will provide you with directives for each overlay type, and will also charge your app with the `⚡ OverlaysSuperpower`.
+
+The most basic way to use overlays is to include overlay directives inside your map component.
 # Bootstrap
 Import `GoogleMapsOverlaysModule` in your app and you're good to go. 👍
 
@@ -13,18 +16,57 @@ Import `GoogleMapsOverlaysModule` in your app and you're good to go. 👍
 
 [[_TOC_]]
 
+# Directives
+Overlay directives are placed inside a [map component](/The-Map). A directive represents a single instance of the overlay and operates within the boundaries of the map it was placed in. That map instance is the only one it recognizes and interacts with.
+
+## Example
+This is how you would add a simple marker to the map for each branch of your business:
+```html
+<bs-google-map *bsSafe>
+    <bs-google-maps-marker *ngFor="let branch of branches" [position]="branch.location"></bs-google-maps-marker>
+</bs-google-map>
+```
+
+# Supported Overlays
+|     | Type                                          | Directive ⚙                | Wrapper 🧬         |
+|:---:|-----------------------------------------------|-----------------------------|---------------------|
+| ✔  | [Markers](/Overlays-Superpower/Markers)       | `<bs-google-maps-marker/>`  | `GoogleMapsMarker`  |
+| ✔  | [Polygons](/Overlays-Superpower/Polygons)     | `<bs-google-maps-polygon/>` | `GoogleMapsPolygon` |
+| 🚧 | Polylines                                     |                             |                     |
+| 🚧 | Circles                                       |                             |                     |
+| 🚧 | Rectangles                                    |                             |                     |
+| 🚧 | Info Windows                                  |                             |                     |
+| 🚧 | Symbols                                       |                             |                     |
+| 🚧 | Ground Overlays                               |                             |                     |
+| 🚧 | Custom Overlays                               |                             |                     |
+| ✔  | [Data Layer](/Overlays-Superpower/Data-Layer) | `<bs-google-maps-data/>`    | `GoogleMapsData`    |
+
 # The Superpower
 <small>[About Superpowers](/The-Map/Superpowers)</small> | <small>[Fetching The Map](/Programmatic-Control)</small>
 
 The `OverlaysSuperpower` provides quick overlay creation methods. It will additionally keep track of objects added and removed from the map. So now you can:
 ```typescript
 const overlays = map.superpowers.use(OverlaysSuperpower);
-
-const yourMarkers  = overlays.tracker.markers; // GoogleMapsMarker[]
-const yourPolygons = overlays.tracker.polygons; // GoogleMapsPolygon[]
+```
+###### Quick Creation Methods
+```typescript
+// Automatically added to the map
+const marker  = overlays.createMarker([1, 1]);
+const polygon = overlays.createPolygon([1, 1], [2, 2], [3, 3]);
 ...
 ```
+###### Overlay Tracking
+```typescript
+// Access the currently placed overlays
+const yourMarkers  = overlays.tracker.markers; // GoogleMapsMarker[]
+const yourPolygons = overlays.tracker.polygons; // GoogleMapsPolygon[]
+// Subscribe to changes
+overlays.tracker.changes.subscribe(...);
 
+```
+> It doesn't matter if you use directives or the superpower directly, `OverlaysSuperpower` will take care of tracking for you. 🏋️‍♂️
+
+## Easy Access
 Another way to quickly extract the superpower is using the 2-way-binding `overlay` property:
 ```html
 <!-- Your component template -->
@@ -45,33 +87,6 @@ export class YourComponent implements OnInit
     }
 }
 ```
-
-# Directives
-Overlay directives are placed inside a [map component](/The-Map). A directive represents a single instance of the overlay and operates within the boundaries of the map it was placed in. That map instance is the only one it recognizes and interacts with.
-
-## Example
-This is how you would add a simple marker to the map for each branch of your business:
-```html
-<bs-google-map *bsSafe>
-    <bs-google-maps-marker *ngFor="let branch of branches" [position]="branch.location"></bs-google-maps-marker>
-</bs-google-map>
-```
-
-> It doesn't matter if you use directives or the superpower directly, `OverlaysSuperpower` will take care of tracking for you. 🏋️‍♂️
-
-# Supported Overlays
-|     | Type                                          | Directive ⚙                | Wrapper 🧬         |
-|:---:|-----------------------------------------------|-----------------------------|---------------------|
-| ✔  | [Markers](/Overlays-Superpower/Markers)       | `<bs-google-maps-marker/>`  | `GoogleMapsMarker`  |
-| ✔  | [Polygons](/Overlays-Superpower/Polygons)     | `<bs-google-maps-polygon/>` | `GoogleMapsPolygon` |
-| 🚧 | Polylines                                     |                             |                     |
-| 🚧 | Circles                                       |                             |                     |
-| 🚧 | Rectangles                                    |                             |                     |
-| 🚧 | Info Windows                                  |                             |                     |
-| 🚧 | Symbols                                       |                             |                     |
-| 🚧 | Ground Overlays                               |                             |                     |
-| 🚧 | Custom Overlays                               |                             |                     |
-| ✔  | [Data Layer](/Overlays-Superpower/Data-Layer) | `<bs-google-maps-data/>`    | `GoogleMapsData`    |
 
 # Data Layer vs. Normal Overlays
 Data layers are a special kind of overlay defined by Google. You can attach multiple data layers to a single map, each having multiple features (marker, polygons, etc.).
