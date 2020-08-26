@@ -27,8 +27,6 @@ It would be great if we could centralize and encapsulate route rendering somehow
 I'm interested in a [Template driven solution](#Feature-Child-Component) | [Programmatic solution](#Feature-Child-Directive).
 
 ## Feature Child Component
-TODO: VERIFY THAT THIS WORKS. PROABLY AN `ng-container` IS REQUIRED IN THE TEMPLATE.
-
 We'll create a component and place all overlay directives necessary for our route rendering in its template:
 ```typescript
 // route-overlay.component.ts
