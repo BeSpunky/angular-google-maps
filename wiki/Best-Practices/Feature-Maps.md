@@ -12,7 +12,7 @@ We need a reusable component that will provide branch location functionality and
 ```html
 <!-- your-branch-list.component.html -->
 
-<app-branch-location-map *ngFor="let branch of branches" [location]="branch.location"></app-branch-location-map>
+<app-branch-location-map *ngFor="let branch of branches" [branch]="branch"></app-branch-location-map>
 ```
 
 Imagine you have a new view with a single branch's details. Now you can simply add an `<app-branch-location-map>` component to your view.
