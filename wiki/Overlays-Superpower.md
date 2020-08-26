@@ -9,7 +9,7 @@ The overlays module will charge your app with the `OverlaysSuperpower` and provi
 # Bootstrap
 Import `GoogleMapsOverlaysModule` in your app and you're good to go. 👍
 
-> You can also lazy load the module in case you'll only need them later.
+> You can also lazy load the module in case you'll only need it later.
 
 [[_TOC_]]
 
