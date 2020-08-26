@@ -52,6 +52,9 @@ We all have preferences as developers. I want my library to work a certain way a
 ## The challenge
 Of course 😁
 
+# Issues & Requests
+Unfortunately, Azure DevOps doesn't support issue collection. I'm considering moving this repo to GitHub.
+In the meantime, any issues or requests can be sent to @<2037E2B8-D0C2-6915-95A7-FC3557E105FD>
 
 # References
 
