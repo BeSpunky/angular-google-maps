@@ -38,3 +38,12 @@ In case you'll place a `script` tag manually and you can ensure that it will be 
 
 [Show me how](Getting-Started/Manually-Loading.md)
 </details>
+
+<br/>
+
+## 🔑 You'll need an API key from Google ([Get it here](https://developers.google.com/maps/documentation/javascript/get-api-key))
+You don't have to do so right now, but you'll need it later.  
+
+Google actually allows you to use their maps api in development mode without an api key, but it will stick an annoying overlay with a dialog each time your map loads.
+
+When you're ready for production, or simply want to work without interruptions, get your key and incorporate it into your app.
