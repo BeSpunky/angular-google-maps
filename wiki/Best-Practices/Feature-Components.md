@@ -1,4 +1,5 @@
 # The Concept
+
 Say you have an app like Uber, and you want to place the recorded route on the map. You have 3 different types of [feature map components](/Best-Practices/Feature-Maps) that display a route.
 
 Will you add the same map children over and over in each feature map component? What happens if you need to change the way you render the route? Will you change it in all components? 🤔
@@ -8,6 +9,8 @@ You could instead, create a feature child component or directive which will:
 2. Add a polyline with the route to the map.
 3. Add markers for the start and end points.
 4. Add info windows to the start and end markers.
+
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Best%20Practices/Feature%20Components)
 
 [[_TOC_]]
 
@@ -24,8 +27,6 @@ It would be great if we could centralize and encapsulate route rendering somehow
 I'm interested in a [Template driven solution](#Feature-Child-Component) | [Programmatic solution](#Feature-Child-Directive).
 
 ## Feature Child Component
-TODO: VERIFY THAT THIS WORKS. PROABLY AN `ng-container` IS REQUIRED IN THE TEMPLATE.
-
 We'll create a component and place all overlay directives necessary for our route rendering in its template:
 ```typescript
 // route-overlay.component.ts
@@ -95,6 +96,9 @@ export class RouteOverlayDirective
     }
 }
 ```
+
+> **Tip:** Design your `@Input` properties to receive the entire data structure (e.g. an entity, or a model) they are intended for. Model changes will require zero-to-minimal effort as you will only have to adapt the component and not the using code.
+
 
 # Next Steps
 | Topic | Description |

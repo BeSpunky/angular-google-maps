@@ -3,6 +3,8 @@ Feature maps are a great way to create order and scalability. Even if you're bui
 
 You have a view with a list of your business's branches. Each branch on the list should be displayed with a small map containing a pin with the branch's location. The map should initialize centered on the pin, with a zoom level of 8, and default UI should be disabled. 🤯
 
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Best%20Practices/Feature%20Maps)
+
 [[_TOC_]]
 
 # Aspiration
@@ -10,7 +12,7 @@ We need a reusable component that will provide branch location functionality and
 ```html
 <!-- your-branch-list.component.html -->
 
-<app-branch-location-map *ngFor="let branch of branches" [location]="branch.location"></app-branch-location-map>
+<app-branch-location-map *ngFor="let branch of branches" [branch]="branch"></app-branch-location-map>
 ```
 
 Imagine you have a new view with a single branch's details. Now you can simply add an `<app-branch-location-map>` component to your view.
@@ -24,7 +26,7 @@ Down to business...
     // branch-location-map.component.ts
     
     import { Component, Input } from '@angular/core';
-    import { Coord } from '@bespunky/angular-google-maps/core';
+    import { Branch } from '......';
     
     @Component({
         selector   : 'app-branch-location-map',
@@ -33,7 +35,7 @@ Down to business...
     })
     export class BranchLocationMapComponent
     {
-        @Input() public location: Coord;
+        @Input() public branch: Branch;
     }
     ```
 
@@ -41,12 +43,14 @@ Down to business...
     ```html
     <!-- branch-location-map.component.html -->
 
-    <bs-google-map *bsSafe [center]="location"
+    <bs-google-map *bsSafe [center]="branch.location"
                            [zoom]="8"
                            [options]="{ disableDefaultUI: true }">
-        <bs-google-maps-marker [position]="location"></bs-google-maps-marker>
+        <bs-google-maps-marker [position]="branch.location"></bs-google-maps-marker>
     </bs-google-map>
     ```
+
+> **Tip:** Design your `@Input` properties to receive the entire data structure (e.g. an entity, or a model) they are intended for. Model changes will require zero-to-minimal effort as you will only have to adapt the component and not the using code.
 
 # Next Steps
 | Topic | Description |

@@ -19,8 +19,8 @@
         imports: [
             BrowserModule,
             // 2. Include module in your app
-            GoogleMapsModule.forRoot({
-                key: 'YOUR_MAPS_API_KEY'
+            GoogleMapsModule.forRoot(apiUrl: {
+                { key: 'YOUR_MAPS_API_KEY' }
             })
         ],
         providers: [], 

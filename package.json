@@ -1,6 +1,6 @@
 {
   "name": "angular-google-maps",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

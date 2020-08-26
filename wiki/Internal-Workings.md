@@ -8,8 +8,6 @@ It was inevitable, once I realized wrapping the Google Maps Javascript library m
 # The Problem
 There's more than one way to bring Angular functionality (i.e. two-way bindings, event handling, template interpolation, change detection...) to a native library. However you do it, most likely you will implement your own functions/routines to use native functionalities you would like to provide in your library.
 
-> You can read about it more in details in [my blog post](https://ThoughtsOfARandomPerson.com/posts/how-i-wrapped-google-maps-api).
-
 So the big questions are:
 * What happens when the native library adds/removes/modifies a feature?  
 **I'll now have to do the same for my library.**
@@ -59,7 +57,7 @@ The base component is an abstract class which takes care of interaction with the
 You'll find that every component or directive in the library extends the base component.
 
 # The Result
-Clean code, easy to implement and support new types, scalability and zero-to-minimal effort required when the native library changes their implementation.
+Clean code, easy to implement and support new types, scalability and zero-to-minimal effort required when the native library changes its implementation.
 
 Creating a new component?
 Extend the base component, then simply declare properties and events.

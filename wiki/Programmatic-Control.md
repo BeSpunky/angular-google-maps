@@ -46,17 +46,48 @@ export class MyMapComponent
 
 > If you're thinking of storing the emitter instance as a component member so you may use it in other places as well, you can. However, it is probably better if you fetch it on init instead. Keep reading... 😉
 
-## Querying The View
-TODO: Add example with ViewChild
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20From%20Events)
 
-## Template References
-TODO: Add example with template reference variables and passing in the wrapper to a method, both to another template element, and to a component method.
+## Querying The View
+```typescript
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ZoomLevel, GoogleMap, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsPolygon, GoogleMapsPolygonDirective } from '@bespunky/angular-google-maps/overlays';
+
+@Component({
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
+})
+export class MapComponent implements AfterViewInit
+{
+    // Query for the <bs-google-maps> component instance
+    @ViewChild(GoogleMapComponent) private mapComponent: GoogleMapComponent;
+
+    private map: GoogleMap;
+    
+    ngAfterViewInit()
+    {
+        // The <bs-google-map> component is initialized. Extract wrapper.
+        this.map = this.mapComponent.wrapper as GoogleMap;
+    }
+}
+```
+
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20From%20%60ViewChild%60)
+
+# Template References
+To use the map component's api in your template, assign your variable with the `map` value. This will give your variable access to the `wrapper` property.
 
 ```html
-<... #map></..>
-<something (click)="map.wrapper.addPolygon(....)"/>
-<somethingElse (click)="do(map.wrapper)"/>
+<bs-google-map *bsSafe #yourMapVariable="map" ...></bs-google-map>
+
+<button (click)="yourMapVariable.wrapper.fitBounds(...)"/>
 ```
+
+> Other components and directives in the library normally use a camelCase name to export their api (e.g. `marker`, `polygon`, `dataLayer`...). See the docs relevant to the component for the exported name.
+
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20Directly%20In%20Template)
 
 # Custom Data
 Regardless of their type, every wrapper has a `custom` property which you can use for anything. This might serve you well for storing an entity, a configuration, or an id.
@@ -65,7 +96,31 @@ This is extremely useful when handling large amounts of overlays. Once you assoc
 
 Here's an example:
 
-TODO: EXAMPLEEEEEE
+```html
+<!-- Your component template -->
+<bs-google-map *bsSafe>
+    <!-- Use the `custom` attribute to bind the entity to the marker -->
+    <bs-google-maps-marker *ngFor="let place of specialPlaces.getAll() | async"
+                           
+                           [position]="place.coords"
+                           [custom]="place"
+
+                           (click)="onSpecialPlaceClicked($event)">
+    >
+    </bs-google-maps-marker>
+</bs-google-map>
+```
+
+```typescript
+// The marker click event handler for your component
+public onSpecialPlaceClicked(event: GoogleMapsEventData): void
+{
+    // Extract the entity from the clicked marker and directly pass it to the data service
+    this.specialPlaces.incrementViews(event.emitter.custom);
+}
+```
+
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Custom%20Data)
 
 # Next Steps
 | Topic                                       | Description                        |
