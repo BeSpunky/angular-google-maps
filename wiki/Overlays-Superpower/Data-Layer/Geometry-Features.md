@@ -43,7 +43,7 @@ You can either use a native `google.maps.Data.Geometry` object if you have it at
 # Feature Events
 The native feature object raises only a few events. The more interesting events are raised by the native data parent. This can sometimes be uncomfortable, as you'll have to check which feature raised the event.
 
-Using the `<bs-google-maps-feature/>` directive, events will automatically be filtered so only events raised by that specific feature will fire.
+The `<bs-google-maps-feature/>` directive is smart and allows you access to events raised by its parent data object, while automatically filtering them so that only events raised by that specific feature will fire.
 
 If you don't care about the specific feature which raised the event, bind your handlers to the data directive instead, and they will trigger any time any feature raises an event.
 
