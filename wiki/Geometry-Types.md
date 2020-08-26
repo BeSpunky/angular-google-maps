@@ -7,7 +7,7 @@ Your interaction with the library (e.g. passing arguments, binding, etc.) will a
 Forget about having to manually convert your objects to the specific type required by Google Maps API. 🤟😎
 
 **TLDR** Instead of reading and memorizing types, try and pass your types around to the library's methods. If you're thinking a method should receive your object type, it probably does. If it doesn't, contact me.
-[See interchangability section](/Geometry-Types#Interchangeability)
+[See interchangeability section](/Geometry-Types#Interchangeability)
 
 [[_TOC_]]
 # Single Coordinates
@@ -147,7 +147,7 @@ Overlay objects (e.g. markers, polygons...) implement it internally so you can s
 
 You can implement IBounds as needed in your objects as well.
 
-# Interchangability
+# Interchangeability
 
 | Type           | Can hold any                                                  |
 |----------------|---------------------------------------------------------------|
@@ -158,7 +158,7 @@ You can implement IBounds as needed in your objects as well.
 | `BoundsLike`   | `Coord`, `CoordPath`, `NativeBounds`, `IBounds`               |
 
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Injectable%20Services/GeometryTransformService)
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Fgeometry.type.ts&version=GBmaster)
 
 
 # See Also
