@@ -3,6 +3,8 @@ Feature maps are a great way to create order and scalability. Even if you're bui
 
 You have a view with a list of your business's branches. Each branch on the list should be displayed with a small map containing a pin with the branch's location. The map should initialize centered on the pin, with a zoom level of 8, and default UI should be disabled. 🤯
 
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Best%20Practices/Feature%20Maps)
+
 [[_TOC_]]
 
 # Aspiration
