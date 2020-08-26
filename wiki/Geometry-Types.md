@@ -142,11 +142,13 @@ const bounds: NativeBounds = { south: 1, east: 2, north: 3, west: 4 };
 const bounds: NativeBounds = new google.maps.LatLngBounds({ lat: 1, lng: 2 }, { lat: 3, lng: 4 });
 ```
 
-### IBounds
+#### IBounds
 Any object which implements the `IBounds` interface from the `core` module can also be used with bounds handling methods in the library.
 Overlay objects (e.g. markers, polygons...) implement it internally so you can simply pass them to a method like `fitBounds()` without any preprocessing.
 
 You can implement IBounds as needed in your objects as well.
+
+[Live demo](https://bs-angular-ggl-maps-demo.web.app/Geometry%20Types/Bounds)
 
 # Interchangeability
 
