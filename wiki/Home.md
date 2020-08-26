@@ -1,17 +1,22 @@
 <center>
-    <img src="~/.attachments/logo@1.5x.png"/>
+    <img src="https://dev.azure.com/BeSpunky/bebdc696-fbbf-4816-9247-9d1311da59bc/_apis/git/repositories/7dc3a677-7580-42a8-b49f-b4d614beaf97/items?path=%2Fprojects%2Fdemo%2Fsrc%2Fassets%2Flogo%400.75x.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0"/>
+
+   <h1 style="margin-top: 0">@bespunky/angular-google-maps</h1>
+   <h3 style="margin-top: 0">A brilliant solution for using Google Maps in Angular.</h3>
 </center>
 
-# @bespunky/angular-google-maps
+
+<br/>
 This library brings Google Maps API to angular and provides a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
+<br/>
 
 You may use the library as you like, with any app, under the MIT license.
 
-✨ [Getting Started](Getting-Started)
+<center>
 
-🙌 [Live demo](https://bs-angular-ggl-maps-demo.web.app)
+✨ [Getting Started](Getting-Started) | 🙌 [Live demo](https://bs-angular-ggl-maps-demo.web.app) | 🎁 [What's in the library?](/What's-Inside)
 
-🎁 [What's in the library?](/What's-Inside)
+</center>
 
 > The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
 > 
