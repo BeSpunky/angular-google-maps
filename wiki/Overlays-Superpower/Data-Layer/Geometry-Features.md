@@ -4,10 +4,10 @@
 | Directive ⚙ | `<bs-google-maps-feature/>`              |
 | Wrapper 🧬  | `GoogleMapsFeature`                      |
 
+[Wrapper API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fgoogle-maps-feature.ts&version=GBmaster) | [Directive API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fdirective%2Fgoogle-maps-feature.directive.ts&version=GBmaster) | [Live Demo](https://bs-angular-ggl-maps-demo.web.app/Overlays%20Superpower/Data%20Layer)
+
 # Concepts
 Data layer features are the parallels for normal overlays. Markers, polygons, and other friends, can be created as features as well. The type of object rendered on the map is defined by the type of geometry assigned to the feature.
-
-[Wrapper API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fgoogle-maps-feature.ts&version=GBmaster) | [Directive API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fdirective%2Fgoogle-maps-feature.directive.ts&version=GBmaster)
 
 Features are meant to be used in conjunction with the data layer. To create a feature, either:
 * Place a feature directive inside of a data directive:
