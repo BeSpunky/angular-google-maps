@@ -24,7 +24,7 @@ The following items are the ones the library user interacts with. Other items ca
 | Item                                                            | Purpose                                       | Tools                                                                                                              |
 |-----------------------------------------------------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
 | [Main Module](/Getting-Started/Manually-Loading)                | Bootstraping the library.                     | [🧩`GoogleMapsModule`](/Getting-Started/Manually-Loading)                                                         |
-| [Loading Tools](/Getting-Started/Providing-A-Loader)            | Providing the loading mechanism for maps api. | [🎫`GoogleMapsApiLoader`](/Getting-Started/Providing-A-Loader)                                                    |
+| [Loading Tools](/Getting-Started/Custom-Loader)            | Providing the loading mechanism for maps api. | [🎫`GoogleMapsApiLoader`](/Getting-Started/Custom-Loader)                                                    |
 | [Map Component](/The-Map)                                       | Displaying a map and controlling it.          | [⚙`<bs-google-map/>`](/The-Map)<br/>[🧬`GoogleMap`](/The-Map)<br/>[⚡`SuperpowersService`](/The-Map/Superpowers) |
 | [Superpower Tools](/The-Map/Superpowers#Extending-Superpowers)  | Extending superpowers.                        | [⚡`SuperpowersChargerService`](/The-Map/Superpowers#Extending-Superpowers)                                       |
 | [Low Level API](/Injectable-Services#GoogleMapsApiService)      | Low-level operations utils.                   | [💉`GoogleMapsApiService`](/Injectable-Services#GoogleMapsApiService)                                             |
@@ -35,8 +35,8 @@ The following items are the ones the library user interacts with. Other items ca
 
 | Item                                                | Purpose                                                    | Tools                                                               |
 |-----------------------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------|
-| [Async Module](/Getting-Started/Auto-Async-Loading) | Automating maps api loading and bootstrapping the library. | [🧩`GoogleMapsModule`](/Getting-Started/Auto-Async-Loading)        |
-| [Lazy Loader](/Getting-Started/Auto-Async-Loading)  | Lazy loading google maps api.                              | [💉`LazyGoogleMapsApiLoader`](/Getting-Started/Auto-Async-Loading) |
+| [Async Module](/Getting-Started/Plug-n-Play-Async-Loading) | Automating maps api loading and bootstrapping the library. | [🧩`GoogleMapsModule`](/Getting-Started/Plug-n-Play-Async-Loading)        |
+| [Lazy Loader](/Getting-Started/Plug-n-Play-Async-Loading)  | Lazy loading google maps api.                              | [💉`LazyGoogleMapsApiLoader`](/Getting-Started/Plug-n-Play-Async-Loading) |
 | [Safe Render](/The-Map/*bsSafe)                     | Rendering maps only when api is ready.                     | [⚙`*bsSafe`](/The-Map/*bsSafe)                                     |
 
 # 📦 `@bespunky/angular-google-maps/overlays`
