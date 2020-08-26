@@ -1,5 +1,5 @@
 <center>
-    <img src="~/.attachments/logo@0.75x-0da55818-8192-4367-a545-d1bc14b54435.png"/>
+    <img src="~/.attachments/logo@1.5x.png"/>
 </center>
 
 # @bespunky/angular-google-maps
