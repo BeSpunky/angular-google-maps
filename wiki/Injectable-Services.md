@@ -6,17 +6,17 @@ I mean, come on... Do I really need to extract all coords from my polygons and m
 Well, with `@bespunky/angular-google-maps`... you can!  
 Apart from components and directives, the library gives you access to powerful tools to do all the heavy-lifting for you. 🏋️‍♂️
 
-# [GoogleMapsApiService](/Injectable-Services/GoogleMapsApiService)
+# [GoogleMapsApiService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Fgoogle-maps-api.service.ts&version=GBmaster)
 Wrappers use this service internally, but you can use it too. Gives you access to underlying low-level operations, and saves you the need of injecting any of the other services into your components.
 
 **Injection 💉:** directly.
 
-# [GeometryTransformService](/Injectable-Services/GeometryTransformService)
+# [GeometryTransformService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Ftransform%2Fgeometry-transform.service.ts&version=GBmaster)
 Provides methods to construct, deconstruct and transform geometry data.
 
 **Injection 💉:** directly or through the `geometry` property of `GoogleMapsApiService`.
 
-# [EventDataTransformService](/Injectable-Services/EventDataTransformService)
+# [EventDataTransformService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Ftransform%2Fevent-data-transform.service.ts&version=GBmaster)
 The event data constructed by the native api has always been confusing and annoying to me. This service knows the different types of event data objects raised by the native api and provides transformation methods for easy extraction of useful information.
 
 **Injection 💉:** directly or through the `eventsData` property of `GoogleMapsApiService`.
