@@ -54,7 +54,7 @@ Of course 😁
 
 # Issues & Requests
 Unfortunately, Azure DevOps doesn't support issue collection. I'm considering moving this repo to GitHub.  
-In the meantime, any issues or requests can be sent to [us@bespunky.io](mailto:us@bespunky.io).
+In the meantime, any issues or requests can be sent to [us@bespunky.io](mailto:us@bespunky.io?subject=@bespunky/angular-google-maps).
 
 # References
 
