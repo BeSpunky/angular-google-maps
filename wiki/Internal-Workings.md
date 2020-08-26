@@ -26,19 +26,19 @@ So the big questions are:
 ## Wrappers
 The main purpose of these is **transparently** delegating function calls to the native object, **without implementing anything on the wrapper itself**. In turn, this also allows for preprocessing and postprocessing.
 
-### [Proxy](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Futils%2Fproxy-utils.ts&version=GBdevelopment&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+### [Proxy](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Futils%2Fproxy-utils.ts&version=GBmaster&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
 Every wrapper is by definition a [Javascript Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object. It traps calls to functions on the wrapper, then if the wrapper doesn't have the function, delegates the call to the native object.
 
 Wait, if the method doesn't exist on the wrapper, I won't have intellisense for it... 🤔  
 TypeScript to the rescue... 🙌
 
-### [Extension Interfaces](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fgoogle-map.ts&version=GBdevelopment&line=16&lineEnd=17&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+### [Extension Interfaces](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fgoogle-map.ts&version=GBmaster&line=16&lineEnd=17&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
 In a nutshell, TypeScript allows creating an interface with the same name of a class. The result is every method signature in the interface appearing in the class's intellisense.
 
 Oh bollocks... Do I now have to type all the signatures for the native functions manually?? 😨  
 TypeScript to the rescue! Again... 🙌
 
-### [Utility Types](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Futils.ts&version=GBdevelopment&line=1&lineEnd=2&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+### [Utility Types](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Futils.ts&version=GBmaster&_a=contents)
 With TypeScript's utility types it is possible to extract a sub type with only function signatures. It took some juggling... but the end result is pretty cool.
 
 Combine those three pieces together, and we have magic! ✨
@@ -47,12 +47,12 @@ Combine those three pieces together, and we have magic! ✨
 Two things are at the base of most Angular components: `@Input` properties and `@Output` event emitters.
 The library takes care of connecting properties and events to the wrapper object.
 
-### [Component API](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Fgoogle-maps-component-api.service.ts&version=GBdevelopment&line=19&lineEnd=20&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+### [Component API](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Fgoogle-maps-component-api.service.ts&version=GBmaster&line=19&lineEnd=20&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
 Implemented as an injectable service, the component api is the core bridge between components and wrappers. It has two functions:
 1. Create observables that, upon subscription, hook to wrapper events. Then assign them to the component's output properties.
 2. Delegate changes from `ngOnChanges()` to the wrapper's setter functions.
 
-### [Base Component](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Fbase%2Fgoogle-maps-component-base.ts&version=GBdevelopment&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
+### [Base Component](https://dev.azure.com/BeSpunky/libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Fbase%2Fgoogle-maps-component-base.ts&version=GBmaster&line=28&lineEnd=29&lineStartColumn=1&lineEndColumn=1&lineStyle=plain)
 The base component is an abstract class which takes care of interaction with the component API.
 You'll find that every component or directive in the library extends the base component.
 
