@@ -3,30 +3,22 @@
 
    <h1 style="margin-top: 0">@bespunky/angular-google-maps</h1>
    <h3 style="margin-top: 0">A brilliant solution for using Google Maps in Angular.</h3>
-</center>
-
-<br/>
-<p>
-This library brings Google Maps API to angular, providing a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
-</p>
-
-You may use the library as you like, with any app, under the MIT license.
-
-<center>
 <br/>
 
 ✨ [Getting Started](Getting-Started) | 🙌 [Live demo](https://bs-angular-ggl-maps-demo.web.app) | 🎁 [What's in the library?](/What's-Inside)
+### Pre-release. It is suggested not to use it for production yet.
 
 <br/>
 </center>
 
-> The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
-> 
-> Compatibility with older versions is possible but not guaranteed.
-# The library is still under development. It is suggested not to use it for production yet.
+This library brings Google Maps API to angular, providing a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
 
-# What's so cool about it
-✔ Easy to use 🔌
+You may use the library as you like, with any app, under the MIT license.
+
+# What's So Cool About It
+Here are some of the benefits:
+
+✔ Plug & Play 🔌
 
 ✔ No previous Google Maps knowledge needed 🤯
 
@@ -46,7 +38,8 @@ You may use the library as you like, with any app, under the MIT license.
 
 ✔ Open-source! 🤩
 
----
+More details in the [official site](https://bs-angular-ggl-maps-demo.web.app/).
+
 # Motivation
 There are a few Angular libraries out there for Google Maps. So why develop a new one?
 
@@ -62,12 +55,15 @@ We all have preferences as developers. I want my library to work a certain way a
 ## The challenge
 Of course 😁
 
+# Versions
+The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10. 
+Compatibility with older versions is possible but not guaranteed.
+
 # Issues & Requests
 Unfortunately, Azure DevOps doesn't support issue collection. I'm considering moving this repo to GitHub.  
 In the meantime, any issues or requests can be sent to [us@bespunky.io](mailto:us@bespunky.io?subject=@bespunky/angular-google-maps).
 
+
 # References
-
-[angular-google-maps repository](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps)
-
-[npm package](https://www.npmjs.com/package/%40bespunky/angular-google-maps)
+- [Source Code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps)
+- [npm package](https://www.npmjs.com/package/%40bespunky/angular-google-maps)
