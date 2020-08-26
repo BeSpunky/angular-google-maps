@@ -35,7 +35,7 @@ The wrapper is always accessible through the component's strongly-typed `wrapper
 # Functionality Wrapping
 
 ## Flexibility
-Wrappers [use magic ✨](Internal%20Workings/Delegation-Magic.md) to delegate access to the native object's functionality, and in most cases they will simply automatically call the native functions.
+Wrappers [use magic ✨](Internal%20Workings) to delegate access to the native object's functionality, and in most cases they will simply automatically call the native functions.
 
 To provide you with greater flexibility and ease of use, some functionalities are manually wrapped to allow support for a wider range of types, 'shortcut' some task, or do some transparent delegation preprocessing or postprocessing.
 
