@@ -1,15 +1,17 @@
-<center>
+<p align="center">
     <img src="https://dev.azure.com/BeSpunky/bebdc696-fbbf-4816-9247-9d1311da59bc/_apis/git/repositories/7dc3a677-7580-42a8-b49f-b4d614beaf97/items?path=%2Fprojects%2Fdemo%2Fsrc%2Fassets%2Flogo%400.75x.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0"/>
+</p>
 
-   <h1 style="margin-top: 0">@bespunky/angular-google-maps</h1>
-   <h3 style="margin-top: 0">A brilliant solution for using Google Maps in Angular.</h3>
-<br/>
+<p align="center" style="font-size: x-large">@bespunky/angular-google-maps</p>
+<p align="center" style="font-size: medium">A brilliant solution for using Google Maps in Angular.</p>
 
-✨ [Getting Started](Getting-Started) | 🙌 [Live demo](https://bs-angular-ggl-maps-demo.web.app) | 🎁 [What's in the library?](/What's-Inside)
-### Pre-release. It is suggested not to use it for production yet.
+<p align="center" style="font-size: medium; margin: 20px auto">
+    ✨ <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/196/Home">Getting Started</a> |
+    🙌 <a href="https://bs-angular-ggl-maps-demo.web.app">Live Demo</a> |
+    🎁 <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/210/What's-Inside">What's in the library?</a>
+</p>
 
-<br/>
-</center>
+<p align="center" style="font-size: smaller; margin: 20px auto;">Pre-release. It is suggested not to use it for production yet.</p>
 
 This library brings Google Maps API to angular, providing a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
 
@@ -43,16 +45,16 @@ More details in the [official site](https://bs-angular-ggl-maps-demo.web.app/).
 # Motivation
 There are a few Angular libraries out there for Google Maps. So why develop a new one?
 
-## Flexibility and quick response time
+### Flexibility and quick response time
 I'm working on a project where the map is the heart of the app. I can't afford an "oh shut... their library doesn't support this. Now what do I do??" moment. Fork it? Make a pull request? File an issue and hope for the best?...
 
-## Facilitating map functionality
+### Facilitating map functionality
 Maybe they wanted to reduce package size, or maybe it was simply a lack of initiative, but having used Google Maps API in different contexts in the last few years, I've always found that it lacks some basic functionality. I would like my library to take care of stuff for me. No manual map related labour in the app itself.
 
-## Usage and code style
+### Usage and code style
 We all have preferences as developers. I want my library to work a certain way and provide me with a certain API. I've always had some nice ideas regarding how it should be used. It was time to implement.
 
-## The challenge
+### The challenge
 Of course 😁
 
 # Versions
