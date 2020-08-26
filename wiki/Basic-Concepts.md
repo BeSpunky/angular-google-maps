@@ -74,7 +74,7 @@ The components in the library all use `ngOnChanges()` to delegate input changes 
 If a native object raises events, all events supported by the object are hooked by bindable observables.
 Component `@Output` properties names are always a camelCase representation of the native event name. So `bounds_changed` is hooked to `boundsChanged`, `rightclick` is hooked to `rightClick`, and so forth...
 
-Events raised by the library always provide an events data object, even if the native event doesn't. The data object will always be a [`GoogleMapsEventData`](API/GoogleMapsEventsData.md) object (or an extending type) which, in addition to the native event data, contains other useful information like:
+Events raised by the library always provide an events data object, even if the native event doesn't. The data object will always be a [`GoogleMapsEventData`](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Fevents%2Fgoogle-maps-event-data.ts) object (or an extending type) which, in addition to the native event data, contains other useful information like:
 * The emitting wrapper
 * The native object
 * A simplified transformed version of the native event args.
