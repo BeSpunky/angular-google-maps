@@ -13,7 +13,7 @@ You may use the library as you like, with any app, under the MIT license.
 
 > The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
 > 
-> Compatibility with older versions is possible but not garantied.
+> Compatibility with older versions is possible but not guaranteed.
 
 # What's so cool about it
 ✔ Easy to use 🔌
