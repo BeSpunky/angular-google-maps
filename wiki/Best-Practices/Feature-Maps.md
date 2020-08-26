@@ -50,7 +50,7 @@ Down to business...
     </bs-google-map>
     ```
 
-> Tip: Design your `@Input` properties to receive the entire data structure (e.g. an entity, or a model) they are intended for. Model changes will require zero-to-minimal effort as you will only have to adapt the component and not the using code.
+> **Tip:** Design your `@Input` properties to receive the entire data structure (e.g. an entity, or a model) they are intended for. Model changes will require zero-to-minimal effort as you will only have to adapt the component and not the using code.
 
 # Next Steps
 | Topic | Description |
