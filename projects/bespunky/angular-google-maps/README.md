@@ -6,7 +6,7 @@
 <p align="center" style="font-size: medium">A brilliant solution for using Google Maps in Angular.</p>
 
 <p align="center" style="font-size: medium; margin: 20px auto">
-    ✨ <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/196/Home">Getting Started</a> |
+    ✨ <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/193/Getting-Started">Getting Started</a> |
     🙌 <a href="https://bs-angular-ggl-maps-demo.web.app">Live Demo</a> |
     🎁 <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/210/What's-Inside">What's in the library?</a>
 </p>
