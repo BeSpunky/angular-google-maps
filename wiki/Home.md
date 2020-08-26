@@ -36,6 +36,7 @@ You may use the library as you like, with any app, under the MIT license.
 
 ✔ Open-source! 🤩
 
+---
 # Motivation
 There are a few Angular libraries out there for Google Maps. So why develop a new one?
 
