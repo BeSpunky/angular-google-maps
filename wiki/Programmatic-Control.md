@@ -85,7 +85,7 @@ To use the map component's api in your template, assign your variable with the `
 <button (click)="yourMapVariable.wrapper.fitBounds(...)"/>
 ```
 
-> Other components and directives in the library normally use a camelCamel case name to export their api (e.g. `marker`, `polygon`, `dataLayer`...). See the docs relevant to the component for the exported name.
+> Other components and directives in the library normally use a camelCase name to export their api (e.g. `marker`, `polygon`, `dataLayer`...). See the docs relevant to the component for the exported name.
 
 [Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20Directly%20In%20Template)
 
