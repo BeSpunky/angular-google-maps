@@ -103,7 +103,7 @@ export YourComponent
 }
 ```
 # [Superpowers](/The-Map/Superpowers)
-The different capabilities offered by the native library, such as drawing on the map, placing overlays and others, are represented by superpowers.
+The different capabilities offered by the native library, such as drawing on the map, placing overlays and others, along with enhancements implemented by `@bespunky/angular-google-maps` are represented by superpowers.
 
 These superpowers are dynamically added to the map object, depending on the modules you choose to import.
 In other words:
