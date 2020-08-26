@@ -5,11 +5,11 @@ This library brings Google Maps API to angular and provides a set of components,
 
 You may use the library as you like, with any app, under the MIT license.
 
-🎁 [What's in the library?](/What's-Inside)
+✨ [Getting Started](Getting-Started)
 
 🙌 [Live demos](https://bs-angular-ggl-maps-demo.web.app)
 
-✨ [Getting Started](Getting-Started)
+🎁 [What's in the library?](/What's-Inside)
 
 > The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
 > 
