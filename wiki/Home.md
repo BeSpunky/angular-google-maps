@@ -5,17 +5,19 @@
    <h3 style="margin-top: 0">A brilliant solution for using Google Maps in Angular.</h3>
 </center>
 
-
 <br/>
-This library brings Google Maps API to angular and provides a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
-<br/>
+<p>
+This library brings Google Maps API to angular, providing a set of components, directives, services and other tools to facilitate the creation and workflow with Google Maps.
+</p>
 
 You may use the library as you like, with any app, under the MIT license.
 
 <center>
+<br/>
 
 ✨ [Getting Started](Getting-Started) | 🙌 [Live demo](https://bs-angular-ggl-maps-demo.web.app) | 🎁 [What's in the library?](/What's-Inside)
 
+<br/>
 </center>
 
 > The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10.
