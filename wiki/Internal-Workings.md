@@ -57,7 +57,7 @@ The base component is an abstract class which takes care of interaction with the
 You'll find that every component or directive in the library extends the base component.
 
 # The Result
-Clean code, easy to implement and support new types, scalability and zero-to-minimal effort required when the native library changes their implementation.
+Clean code, easy to implement and support new types, scalability and zero-to-minimal effort required when the native library changes its implementation.
 
 Creating a new component?
 Extend the base component, then simply declare properties and events.
