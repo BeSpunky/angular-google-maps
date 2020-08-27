@@ -1,7 +1,6 @@
 import { ElementRef } from '@angular/core';
 
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
-import { WrappedNativeFunctions                } from '../../abstraction/types/abstraction';
 import { Coord, BoundsLike                     } from '../../abstraction/types/geometry.type';
 import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator';
 import { OutsideAngular                        } from '../../decorators/outside-angular.decorator';
@@ -9,9 +8,7 @@ import { Delegation                            } from '../../decorators/wrapper-
 import { GoogleMapsApiService                  } from '../../api/google-maps-api.service';
 import { ISuperpowers                          } from './superpowers/i-superpowers';
 import { Defaults                              } from './types/defaults';
-import { IGoogleMap                            } from './i-google-map';
-
-export type WrappedGoogleMapFunctions = WrappedNativeFunctions<google.maps.Map, 'getMapTypeId' | 'setMapTypeId' | 'fitBounds' | 'panToBounds'>;
+import { IGoogleMap, WrappedGoogleMapFunctions } from './i-google-map';
 
 export interface GoogleMap extends WrappedGoogleMapFunctions { }
 
