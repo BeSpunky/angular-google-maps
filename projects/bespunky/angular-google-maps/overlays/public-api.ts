@@ -49,3 +49,9 @@ export * from './modules/data/feature/google-maps-feature';
 export * from './modules/data/feature/google-maps-feature-factory.provider';
 export * from './modules/data/feature/directive/google-maps-feature.directive';
 
+// Info Window
+export * from './modules/info-window/google-maps-info-window.module';
+export * from './modules/info-window/i-google-maps-info-window';
+export * from './modules/info-window/google-maps-info-window';
+export * from './modules/info-window/google-maps-info-window-factory.provider';
+export * from './modules/info-window/directive/google-maps-info-window.directive';
