@@ -13,7 +13,7 @@ import { IGoogleMap                        } from '../i-google-map';
 @Component({
     selector     : 'bs-google-map',
     templateUrl  : './google-map.component.html',
-    styleUrls    : ['./google-map.component.css'],
+    styleUrls    : ['./google-map.component.scss'],
     providers    : [GoogleMapFactoryProvider, SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
     exportAs     : 'map',
     encapsulation: ViewEncapsulation.None
