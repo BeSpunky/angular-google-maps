@@ -23,7 +23,7 @@ export enum InfoWindowTrigger
     RightClick = 'rightClick'
 };
 
-export type WrappedInfoWindowFunctions = WrappedNativeFunctions<google.maps.InfoWindow, 'getPosition' | 'setPosition' | 'getContent' | 'setContent' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'get' | 'set' | 'changed' | 'open'>;
+export type WrappedInfoWindowFunctions = WrappedNativeFunctions<google.maps.InfoWindow, 'getPosition' | 'setPosition' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'get' | 'set' | 'changed' | 'open'>;
 
 export interface IGoogleMapsInfoWindow extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.InfoWindow>, WrappedInfoWindowFunctions 
 {
