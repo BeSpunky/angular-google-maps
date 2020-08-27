@@ -1,5 +1,6 @@
-import { Directive, OnInit       } from '@angular/core';
-import { GoogleMapsComponentBase } from '@bespunky/angular-google-maps/core';
+import { Observable        } from 'rxjs';
+import { Directive, OnInit } from '@angular/core';
+import { GoogleMapsComponentBase, IGoogleMapsMouseEventsEmitter, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
 
 import { DrawableOverlay    } from '../types/abstraction';
 import { OverlaysSuperpower } from '../../superpower/services/overlays-superpower.service';
@@ -11,8 +12,16 @@ import { OverlaysSuperpower } from '../../superpower/services/overlays-superpowe
 @Directive()
 export abstract class GoogleMapsOverlayComponentBase<TWrapper extends DrawableOverlay>
               extends GoogleMapsComponentBase<TWrapper>
-           implements OnInit
+           implements IGoogleMapsMouseEventsEmitter, OnInit
 {
+    abstract click      : Observable<GoogleMapsEventData>;
+    abstract doubleClick: Observable<GoogleMapsEventData>;
+    abstract mouseDown  : Observable<GoogleMapsEventData>;
+    abstract mouseOut   : Observable<GoogleMapsEventData>;
+    abstract mouseOver  : Observable<GoogleMapsEventData>;
+    abstract mouseUp    : Observable<GoogleMapsEventData>;
+    abstract rightClick : Observable<GoogleMapsEventData>;
+    
     ngOnInit()
     {
         // The map is attached to the overlay on overlay construction time. However, the overlay wrapper doesn't share the responsability of tracking.
