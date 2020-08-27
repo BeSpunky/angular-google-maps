@@ -1,7 +1,7 @@
 import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
 import { MockGoogleMap                    } from '@bespunky/angular-google-maps/core/testing';
 import { GoogleMapsApiService, Coord      } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsInfoWindow                 } from '@bespunky/angular-google-maps/overlays';
+import { GoogleMapsInfoWindow             } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsInfoWindow', () =>
 {

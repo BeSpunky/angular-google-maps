@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { GoogleMapsInfoWindowDirective       } from './directive/google-maps-info-window.directive';
+import { GoogleMapsInfoWindowDirective } from './directive/google-maps-info-window.directive';
 
 @NgModule({
     declarations: [GoogleMapsInfoWindowDirective],
