@@ -1,31 +1,40 @@
 
-import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, Delegation } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay                 } from '../../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType                               } from '../../abstraction/base/overlay-type.enum';
-import { IGoogleMapsInfoWindow, WrappedInfoWindowFunctions } from './i-google-maps-info-window';
+import { Subject, of      } from 'rxjs';
+import { takeUntil, delay } from 'rxjs/operators';
+
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, GoogleMapsNativeObjectEmittingWrapper, BoundsLike, IGoogleMapsMouseEventsEmitter, GoogleMapsEventData, IGoogleMapsMouseEvent, Delegation } from '@bespunky/angular-google-maps/core';
+import { OverlayType                                                          } from '../../abstraction/base/overlay-type.enum';
+import { IGoogleMapsInfoWindow, WrappedInfoWindowFunctions, InfoWindowTrigger } from './i-google-maps-info-window';
 
 export interface GoogleMapsInfoWindow extends WrappedInfoWindowFunctions { }
 
 // @dynamic
 @NativeObjectWrapper<google.maps.InfoWindow, GoogleMapsInfoWindow>({
-    getMap: Delegation.Exclude,
-    setMap: Delegation.Exclude
+    close: Delegation.Direct
 })
-export class GoogleMapsInfoWindow extends GoogleMapsDrawableOverlay<google.maps.InfoWindow> implements IGoogleMapsInfoWindow
+export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<google.maps.InfoWindow> implements IGoogleMapsInfoWindow
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.ReadonlyInfoWindowOptions)
+    private attachedTo: IGoogleMapsMouseEventsEmitter;
+    private trigger   : InfoWindowTrigger = InfoWindowTrigger.MouseOver;
+    private closeAfter: number = 0;
+
+    private readonly detach: Subject<void> = new Subject();
+
+    private readonly triggerEvents = {
+        [InfoWindowTrigger.Click      ]: [{ emitter: () => this.attachedTo.click,       handle: this.onTriggered }],
+        [InfoWindowTrigger.MouseOver  ]: [{ emitter: () => this.attachedTo.mouseOver,   handle: this.onTriggered }, { emitter: () => this.attachedTo.mouseOut, handle: this.close } ],
+        [InfoWindowTrigger.DoubleClick]: [{ emitter: () => this.attachedTo.doubleClick, handle: this.onTriggered }],
+        [InfoWindowTrigger.RightClick ]: [{ emitter: () => this.attachedTo.rightClick,  handle: this.onTriggered }],
+    };
+
+    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.InfoWindowOptions)
     {
         super(api, map, OverlayType.InfoWindow, options);
     }
 
-    protected createNativeObject(options?: google.maps.ReadonlyInfoWindowOptions): google.maps.InfoWindow
+    protected createNativeObject(options?: google.maps.InfoWindowOptions): google.maps.InfoWindow
     {
         return new google.maps.InfoWindow(options);
-    }
-    
-    public getBounds(): google.maps.LatLngBounds
-    {
-        return this.api.geometry.defineCoordBounds(this.getPosition());
     }
 
     public getPosition(): google.maps.LatLngLiteral
@@ -34,8 +43,92 @@ export class GoogleMapsInfoWindow extends GoogleMapsDrawableOverlay<google.maps.
     }
     
     @OutsideAngular
-    public setPosition(position: Coord): void
+    public setPosition(element: BoundsLike): void
     {
-        this.native.setPosition(this.api.geometry.toLiteralCoord(position));
+        const center = this.api.geometry.defineBounds(element).getCenter();
+        
+        this.native.setPosition(center);
+    }
+
+    public getTrigger(): InfoWindowTrigger
+    {
+        return this.trigger;
+    }
+    
+    public setTrigger(trigger: InfoWindowTrigger): void
+    {
+        this.trigger = trigger;
+
+        this.reattachEmitters();
+    }
+    
+    public getCloseAfter(): number
+    {
+        return this.closeAfter;
+    }
+    
+    public setCloseAfter(delay: number): void
+    {
+        this.closeAfter = delay;
+    }
+
+    public getAttachedTo(): IGoogleMapsMouseEventsEmitter
+    {
+        return this.attachedTo;
+    }
+
+    public setAttachedTo(attachedTo: IGoogleMapsMouseEventsEmitter): void
+    {
+        if (attachedTo === this.attachedTo) return;
+
+        this.attachedTo = attachedTo;
+
+        this.reattachEmitters();
+    }
+
+    public clearAttachedTo(): void
+    {
+        this.detach.next();
+
+        this.attachedTo = null;
+    }
+
+    @OutsideAngular
+    public open(position?: BoundsLike): void
+    {
+        position = position || this.getPosition() || this.map.getCenter();
+
+        this.setPosition(position);
+        this.native.open(this.map.native);
+
+        if (this.closeAfter > 0) this.autoClose();
+    }
+
+    private reattachEmitters(): void
+    {
+        if (!this.attachedTo) return;
+        
+        // Unsubscribe any previous emitter subscriptions
+        this.detach.next();
+        
+        // Get the emitters for the specified trigger and subscribe to each while directing them to the relevant handler (open or close)
+        this.triggerEvents[this.trigger].forEach(trigger => trigger.emitter()
+                                                                   .pipe     (takeUntil(this.detach))
+                                                                   .subscribe(trigger.handle.bind(this))
+                                                );
+    }
+
+    @OutsideAngular
+    protected onTriggered(event?: GoogleMapsEventData): void
+    {
+        const position = (event.args[0] as IGoogleMapsMouseEvent).position;
+
+        this.open(position);
+    }
+
+    private autoClose(): void
+    {
+        of(0).pipe(delay(this.closeAfter))
+             .subscribe(() => this.native.close());
     }
 }
