@@ -100,5 +100,27 @@ export interface IGoogleMapsInfoWindow extends IGoogleMapsNativeObjectEmittingWr
      * If this is undefined, `getPosition()` will be used by default.
      * If no position has been previously specified for the info window, it will default to the map's center.
      */
-    open(position?: BoundsLike): void;    
+    open(position?: BoundsLike): void;
+
+    /**
+     * Option shortcut. Enables/disables auto pan if the info window is out of map bounds.
+     * @see google.maps.InfoWindowOptions
+     * 
+     * @param {boolean} disableAutoPan `true` to disable auto pan; otherwise `false`. Default is `false`.
+     */
+    setDisableAutoPan(disableAutoPan: boolean): void;
+    /**
+     * Option shortcut. Sets the maximum width of the info window, regardless of content's width.
+     * @see google.maps.InfoWindowOptions
+     * 
+     * @param {number} maxWidth The maximum width for tne info window.
+     */
+    setMaxWidth(maxWidth: number): void;
+    /**
+     * Option shortcut. Sets the offset, in pixels, of the tip of the info window from the point on the map at whose geographical coordinates the info window is anchored.
+     * @see google.maps.InfoWindowOptions
+     * 
+     * @param {google.maps.Size} pixelOffset The offset size.
+     */
+    setPixelOffset(pixelOffset: google.maps.Size): void;
 }
