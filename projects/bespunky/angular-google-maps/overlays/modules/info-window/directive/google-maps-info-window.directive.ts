@@ -55,6 +55,13 @@ export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoog
         if (current !== last) this.wrapper.setContent(current);
     }
 
+    ngOnDestroy()
+    {
+        super.ngOnDestroy();
+
+        this.wrapper.clearAttachedTo();
+    }
+
     private buildContentTemplate(): string
     {
         const element      = this.element.nativeElement as HTMLElement;
