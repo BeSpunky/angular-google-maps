@@ -13,10 +13,14 @@ import { InfoWindowTrigger                   } from '../i-google-maps-info-windo
 })
 export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoogleMapsInfoWindow> implements AfterContentChecked
 {
-    @Input() public animation? : google.maps.Animation;
-    @Input() public position?  : BoundsLike;
-    @Input() public zIndex?    : number;
-    @Input() public options?   : google.maps.InfoWindowOptions;
+    @Input() public animation?     : google.maps.Animation;
+    @Input() public position?      : BoundsLike;
+    @Input() public zIndex?        : number;
+    @Input() public options?       : google.maps.InfoWindowOptions;
+    @Input() public disableAutoPan?: boolean;
+    @Input() public maxWidth?      : number;
+    @Input() public pixelOffset?   : google.maps.Size;
+    
     @Input() public trigger?   : InfoWindowTrigger;
     @Input() public closeAfter?: number;
     @Input() public attachedTo?: IGoogleMapsMouseEventsEmitter;
