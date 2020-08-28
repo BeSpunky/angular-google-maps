@@ -2,7 +2,7 @@
 import { Subject, of      } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
 
-import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, GoogleMapsNativeObjectEmittingWrapper, BoundsLike, IGoogleMapsMouseEventsEmitter, GoogleMapsEventData, IGoogleMapsMouseEvent, Delegation } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, GoogleMapsNativeObjectEmittingWrapper, BoundsLike, IGoogleMapsMouseEventsEmitter, IGoogleMapsEventData, IGoogleMapsMouseEvent, Delegation } from '@bespunky/angular-google-maps/core';
 import { OverlayType                                                          } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsInfoWindow, WrappedInfoWindowFunctions, InfoWindowTrigger } from './i-google-maps-info-window';
 
@@ -119,7 +119,7 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
     }
 
     @OutsideAngular
-    protected onTriggered(event?: GoogleMapsEventData): void
+    protected onTriggered(event?: IGoogleMapsEventData): void
     {
         const position = (event.args[0] as IGoogleMapsMouseEvent).position;
 

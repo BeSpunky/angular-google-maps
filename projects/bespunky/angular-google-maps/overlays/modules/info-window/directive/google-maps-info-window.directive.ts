@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Input, Output, Directive, AfterContentChecked } from '@angular/core';
 
-import { GoogleMapsComponentBase, GoogleMapsEventData, Hook, BoundsLike, IGoogleMapsMouseEventsEmitter } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsComponentBase, IGoogleMapsEventData, Hook, BoundsLike, IGoogleMapsMouseEventsEmitter } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsInfoWindow               } from '../i-google-maps-info-window';
 import { GoogleMapsInfoWindowFactoryProvider } from '../google-maps-info-window-factory.provider';
 import { InfoWindowTrigger                   } from '../i-google-maps-info-window';
@@ -22,15 +22,15 @@ export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoog
     @Input() public attachedTo?: IGoogleMapsMouseEventsEmitter;
 
     /** Fired when the infoWindow's animation property changes. */
-    @Hook('closeclick')       @Output() public closeClick: Observable<GoogleMapsEventData>;
+    @Hook('closeclick')       @Output() public closeClick: Observable<IGoogleMapsEventData>;
     /** Fired when the infoWindow icon was clicked. */
-    @Hook('content_changed')  @Output() public contentChanged: Observable<GoogleMapsEventData>;
+    @Hook('content_changed')  @Output() public contentChanged: Observable<IGoogleMapsEventData>;
     /** Fired for a rightclick on the infoWindow. */
-    @Hook('domready')         @Output() public domReady: Observable<GoogleMapsEventData>;
+    @Hook('domready')         @Output() public domReady: Observable<IGoogleMapsEventData>;
     /** Fired when the infoWindow's clickable property changes. */
-    @Hook('position_changed') @Output() public positionChanged: Observable<GoogleMapsEventData>;
+    @Hook('position_changed') @Output() public positionChanged: Observable<IGoogleMapsEventData>;
     /** Fired when the infoWindow icon was double clicked. */
-    @Hook('zindex_changed')   @Output() public zIndexChanged: Observable<GoogleMapsEventData>;
+    @Hook('zindex_changed')   @Output() public zIndexChanged: Observable<IGoogleMapsEventData>;
 
     /**
      * Reviews changes to the content placed inside <bs-google-maps-info-window> and updates the window's content with any changes.

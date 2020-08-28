@@ -1,14 +1,14 @@
 import { Observable } from 'rxjs';
 import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
-import { GoogleMapsComponentBase           } from '../../../abstraction/base/google-maps-component-base';
-import { GoogleMapsEventData               } from '../../../abstraction/events/google-maps-event-data'
-import { Coord                             } from '../../../abstraction/types/geometry.type';
-import { Hook                              } from '../../../decorators/hook.decorator';
-import { SuperpowersService                } from '../superpowers/superpowers.service';
-import { GoogleMapFactoryProvider          } from '../google-map-factory.provider';
-import { ZoomLevel                         } from '../types/zoom-level.enum';
-import { IGoogleMap                        } from '../i-google-map';
+import { GoogleMapsComponentBase  } from '../../../abstraction/base/google-maps-component-base';
+import { IGoogleMapsEventData     } from '../../../abstraction/events/i-google-maps-event-data'
+import { Coord                    } from '../../../abstraction/types/geometry.type';
+import { Hook                     } from '../../../decorators/hook.decorator';
+import { SuperpowersService       } from '../superpowers/superpowers.service';
+import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
+import { ZoomLevel                } from '../types/zoom-level.enum';
+import { IGoogleMap               } from '../i-google-map';
 
 @Component({
     selector     : 'bs-google-map',
@@ -30,41 +30,41 @@ export class GoogleMapComponent extends GoogleMapsComponentBase<IGoogleMap>
     @Input() public zoom?          : number | ZoomLevel;
 
     /** Fired when the viewport bounds have changed. */
-    @Hook('bounds_changed')     @Output() public boundsChanged      : Observable<GoogleMapsEventData>;
+    @Hook('bounds_changed')     @Output() public boundsChanged      : Observable<IGoogleMapsEventData>;
     /** Fired when the map center property changes. */
-    @Hook('center_changed')     @Output() public centerChanged      : Observable<GoogleMapsEventData>;
+    @Hook('center_changed')     @Output() public centerChanged      : Observable<IGoogleMapsEventData>;
     /** Fired when the map zoom property changes. */
-    @Hook('zoom_changed')       @Output() public zoomChanged        : Observable<GoogleMapsEventData>;
+    @Hook('zoom_changed')       @Output() public zoomChanged        : Observable<IGoogleMapsEventData>;
     /** Fired when the user clicks on the map. An ApiMouseEvent with properties for the clicked location is returned unless a place icon was clicked, in which case an IconMouseEvent with a placeid is returned. IconMouseEvent and ApiMouseEvent are identical, except that IconMouseEvent has the placeid field. The event can always be treated as an ApiMouseEvent when the placeid is not important. The click event is not fired if a marker or infowindow was clicked. */
-    @Hook('click')              @Output() public click              : Observable<GoogleMapsEventData>;
+    @Hook('click')              @Output() public click              : Observable<IGoogleMapsEventData>;
     /** Fired when the DOM contextmenu event is fired on the map container. */
-    @Hook('rightclick')         @Output() public rightClick         : Observable<GoogleMapsEventData>;
+    @Hook('rightclick')         @Output() public rightClick         : Observable<IGoogleMapsEventData>;
     /** Fired when the user double-clicks on the map. Note that the click event will also fire, right before this one. */
-    @Hook('dblclick')           @Output() public doubleClick        : Observable<GoogleMapsEventData>;
+    @Hook('dblclick')           @Output() public doubleClick        : Observable<IGoogleMapsEventData>;
     /** Fired whenever the user's mouse moves over the map container. */
-    @Hook('mousemove')          @Output() public mouseMove          : Observable<GoogleMapsEventData>;
+    @Hook('mousemove')          @Output() public mouseMove          : Observable<IGoogleMapsEventData>;
     /** Fired when the user's mouse enters the map container. */
-    @Hook('mouseover')          @Output() public mouseOver          : Observable<GoogleMapsEventData>;
+    @Hook('mouseover')          @Output() public mouseOver          : Observable<IGoogleMapsEventData>;
     /** Fired when the user's mouse exits the map container. */
-    @Hook('mouseout')           @Output() public mouseOut           : Observable<GoogleMapsEventData>;
+    @Hook('mouseout')           @Output() public mouseOut           : Observable<IGoogleMapsEventData>;
     /** Fired repeatedly while the user drags the map. */
-    @Hook('drag')               @Output() public drag               : Observable<GoogleMapsEventData>;
+    @Hook('drag')               @Output() public drag               : Observable<IGoogleMapsEventData>;
     /** Fired when the user starts dragging the map. */
-    @Hook('dragstart')          @Output() public dragStart          : Observable<GoogleMapsEventData>;
+    @Hook('dragstart')          @Output() public dragStart          : Observable<IGoogleMapsEventData>;
     /** Fired when the user stops dragging the map. */
-    @Hook('dragend')            @Output() public dragEnd            : Observable<GoogleMapsEventData>;
+    @Hook('dragend')            @Output() public dragEnd            : Observable<IGoogleMapsEventData>;
     /** Fired when the map heading property changes. */
-    @Hook('heading_changed')    @Output() public headingChanged     : Observable<GoogleMapsEventData>;
+    @Hook('heading_changed')    @Output() public headingChanged     : Observable<IGoogleMapsEventData>;
     /** Fired when the mapTypeId property changes. */
-    @Hook('maptypeid_changed')  @Output() public maptTypeChanged    : Observable<GoogleMapsEventData>;
+    @Hook('maptypeid_changed')  @Output() public maptTypeChanged    : Observable<IGoogleMapsEventData>;
     /** Fired when the projection has changed. */
-    @Hook('projection_changed') @Output() public projectionChanged  : Observable<GoogleMapsEventData>;
+    @Hook('projection_changed') @Output() public projectionChanged  : Observable<IGoogleMapsEventData>;
     /** Fired when the map is resized. */
-    @Hook('resize')             @Output() public resize             : Observable<GoogleMapsEventData>;
+    @Hook('resize')             @Output() public resize             : Observable<IGoogleMapsEventData>;
     /** Fired when the visible tiles have finished loading. */
-    @Hook('tilesloaded')        @Output() public tilesLoaded        : Observable<GoogleMapsEventData>;
+    @Hook('tilesloaded')        @Output() public tilesLoaded        : Observable<IGoogleMapsEventData>;
     /** Fired when the map tilt property changes. */
-    @Hook('tilt_changed')       @Output() public tiltChanged        : Observable<GoogleMapsEventData>;
+    @Hook('tilt_changed')       @Output() public tiltChanged        : Observable<IGoogleMapsEventData>;
     /** Fired when the map zoom property changes. */
-    @Hook('idle')               @Output() public idle               : Observable<GoogleMapsEventData>;
+    @Hook('idle')               @Output() public idle               : Observable<IGoogleMapsEventData>;
 }

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { GoogleMapsEventData } from './google-maps-event-data';
+import { IGoogleMapsEventData } from './i-google-maps-event-data';
 
 /**
  * Defines the contract for wrappers emitting mouse related events.
@@ -10,17 +10,17 @@ import { GoogleMapsEventData } from './google-maps-event-data';
 export interface IGoogleMapsMouseEventsEmitter
 {
     /** Fired for a click on the element. */
-    click      : Observable<GoogleMapsEventData>;
+    click      : Observable<IGoogleMapsEventData>;
     /** Fired for a double click on the element. */
-    doubleClick: Observable<GoogleMapsEventData>;
+    doubleClick: Observable<IGoogleMapsEventData>;
     /** Fired for a mousedown on the element. */
-    mouseDown  : Observable<GoogleMapsEventData>;
+    mouseDown  : Observable<IGoogleMapsEventData>;
     /** Fired when the mouse leaves the area of the element. */
-    mouseOut   : Observable<GoogleMapsEventData>;
+    mouseOut   : Observable<IGoogleMapsEventData>;
     /** Fired when the mouse enters the area of the element. */
-    mouseOver  : Observable<GoogleMapsEventData>;
+    mouseOver  : Observable<IGoogleMapsEventData>;
     /** Fired for a mouseup on the element. */
-    mouseUp    : Observable<GoogleMapsEventData>;
+    mouseUp    : Observable<IGoogleMapsEventData>;
     /** Fired for a rightclick on the element. */
-    rightClick : Observable<GoogleMapsEventData>;
+    rightClick : Observable<IGoogleMapsEventData>;
 }
