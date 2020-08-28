@@ -57,6 +57,8 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
     
     public setTrigger(trigger: InfoWindowTrigger): void
     {
+        if (trigger === this.trigger) return;
+
         this.trigger = trigger;
 
         this.reattachEmitters();
