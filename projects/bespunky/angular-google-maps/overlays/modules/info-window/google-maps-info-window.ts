@@ -114,9 +114,9 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
         this.detach.next();
         
         // Get the emitters for the specified trigger and subscribe to each while directing them to the relevant handler (open or close)
-        this.triggerEvents[this.trigger].forEach(trigger => trigger.emitter()
-                                                                   .pipe     (takeUntil(this.detach))
-                                                                   .subscribe(trigger.handle.bind(this))
+        this.triggerEvents[this.trigger].forEach(event => event.emitter()
+                                                               .pipe     (takeUntil(this.detach))
+                                                               .subscribe(event.handle.bind(this))
                                                 );
     }
 
