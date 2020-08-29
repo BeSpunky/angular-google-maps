@@ -35,7 +35,7 @@ This is how you would add a simple marker to the map for each branch of your bus
 | 🚧 | Polylines                                     |                             |                     |
 | 🚧 | Circles                                       |                             |                     |
 | 🚧 | Rectangles                                    |                             |                     |
-| 🚧 | Info Windows                                  |                             |                     |
+| ✔  | [Info Windows](/Overlays-Superpower/Info-Windows)     | `<bs-google-maps-info-window/>` | `GoogleMapsInfoWindow` |
 | 🚧 | Symbols                                       |                             |                     |
 | 🚧 | Ground Overlays                               |                             |                     |
 | 🚧 | Custom Overlays                               |                             |                     |
