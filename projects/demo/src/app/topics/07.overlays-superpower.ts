@@ -21,6 +21,13 @@ export const OverlaysSuperpowerExamples: Example[] = [
         embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-practices-overlays-superpower?embed=1&file=src/app/continents-data-layer-map/continents-data-layer-map.component.html'
     },
     {
+        title      : 'Info Windows',
+        description: 'Create a popup with custom info in different positions on the map.',
+        icon       : 'chat_bubble',
+        embedUrl   : '',
+        soon       : true
+    },
+    {
         title      : 'Overlay Tracking',
         description: 'Use the superpower\'s tracker to get a hold of all overlays you have placed on the map.',
         icon       : 'track_changes',
