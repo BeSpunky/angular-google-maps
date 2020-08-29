@@ -35,7 +35,7 @@ You can always open an info window programmaticaly at a specific position on the
 This will open the info window at the mouse position when the user's enters the polygon.
 
 # [trigger]
-The default trigger when attaching an overlay is the mouse over. You can change it by binding the `trigger` property, which takes an `InfoWindowTrigger` value.
+The default trigger when attaching an overlay is mouse over. You can change it by binding the `trigger` property, which takes an `InfoWindowTrigger` value.
 These are the supported triggers and how they are defined:
 
 ```typescript
