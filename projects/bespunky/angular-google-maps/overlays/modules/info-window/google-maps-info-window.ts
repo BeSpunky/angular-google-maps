@@ -120,7 +120,6 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
                                                 );
     }
 
-    @OutsideAngular
     protected onTriggered(event?: IGoogleMapsEventData): void
     {
         const position = (event.args[0] as IGoogleMapsMouseEvent).position;
