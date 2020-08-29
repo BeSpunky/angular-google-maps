@@ -12,7 +12,7 @@ Name for template reference variables: `infoWindow`
 Now this is a cool one... 😎
 
 The info window offered by the library presents new API and enhances the native one. You can now:
-1. Attach an info window to ANY ovelray (not just markers).
+1. Attach an info window to ANY overlay (not just markers).
 2. Select between 4 different triggers (Click, MouseOver, DoubleClick, RightClick).
 3. Set an auto close delay.
 
