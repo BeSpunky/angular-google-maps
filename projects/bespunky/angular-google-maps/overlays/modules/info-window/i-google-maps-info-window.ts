@@ -10,7 +10,7 @@ export enum InfoWindowTrigger
      */
     Click = 'click',
     /**
-     * The info window will open when the user enters the attached element with the mouse.
+     * The info window will open when the user enters the attached element with the mouse and close when the user exists the attached element.
      */
     MouseOver = 'mouseOver',
     /**
