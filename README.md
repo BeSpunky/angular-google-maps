@@ -1,3 +1,7 @@
+![npm bundle size](https://img.shields.io/bundlephobia/min/@bespunky/angular-google-maps.svg?style=flat-square)
+![npm downloads](https://img.shields.io/npm/dm/@bespunky/angular-google-maps.svg?style=flat-square)
+![npm (scoped)](https://img.shields.io/npm/v/@bespunky/angular-google-maps.svg?style=flat-square)
+
 <p align="center">
     <img src="https://dev.azure.com/BeSpunky/bebdc696-fbbf-4816-9247-9d1311da59bc/_apis/git/repositories/7dc3a677-7580-42a8-b49f-b4d614beaf97/items?path=%2Fprojects%2Fdemo%2Fsrc%2Fassets%2Flogo%400.75x.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0"/>
 </p>
