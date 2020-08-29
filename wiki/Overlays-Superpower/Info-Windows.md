@@ -24,7 +24,7 @@ If `open()` wasn't given anything, it will take the last position where the info
 
 If no previous position has been defined, the map's center will be used.
 
-# `[attachedTo]`
+# [attachedTo]
 You can always open an info window programmaticaly at a specific position on the map. But if you want your info window or react to events triggered by overlay object (marker, polygon, etc.), you simply bind it to the `attachedTo` property:
 
 ```html
@@ -34,7 +34,7 @@ You can always open an info window programmaticaly at a specific position on the
 
 This will open the info window at the mouse position when the user's enters the polygon.
 
-# `[trigger]`
+# [trigger]
 The default trigger when attaching an overlay is the mouse over. You can change it by binding the `trigger` property, which takes an `InfoWindowTrigger` value.
 These are the supported triggers and how they are defined:
 
@@ -68,7 +68,7 @@ The following will make the info window open at the mouse position when the user
 <bs-google-maps-info-window [attachedTo]="polygon" [trigger]="'rightClick'">...</bs-google-maps-info-window>
 ```
 
-# `[closeAfter]`
+# [closeAfter]
 To have the info window automatically close after a predefined time, define the time in milliseconds using `closeAfter`.
 When the info window opens (either automatically or programmatically), if `closeAfter` is a positive number, the info window will auto close.
 
