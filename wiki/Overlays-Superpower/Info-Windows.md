@@ -25,7 +25,7 @@ If `open()` wasn't given anything, it will take the last position where the info
 If no previous position has been defined, the map's center will be used.
 
 # [attachedTo]
-You can always open an info window programmaticaly at a specific position on the map. But if you want your info window or react to events triggered by overlay object (marker, polygon, etc.), you simply bind it to the `attachedTo` property:
+You can always open an info window programmaticaly at a specific position on the map. But if you want your info window to react to events triggered by an overlay object (marker, polygon, etc.), you simply bind it to the `attachedTo` property:
 
 ```html
 <bs-google-maps-polygon .... #polygon="polygon"></bs-google-maps-polygon>
