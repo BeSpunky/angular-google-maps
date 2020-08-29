@@ -1,13 +1,11 @@
-import { Observable } from 'rxjs';
-import { ElementRef } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 
-import { configureGoogleMapsTestingModule                                                                                          } from '@bespunky/angular-google-maps/testing';
-import { MockGoogleMap, produceBoundsLikeSpecs, expectCoord                                                                        } from '@bespunky/angular-google-maps/core/testing';
-import { camelCase                                                                                                                 } from '@bespunky/angular-google-maps/_internal';
-import { GoogleMapsApiService, IGoogleMapsEventData, GoogleMapsComponentApiService, Hook, IGoogleMapsMouseEvent, Coord, BoundsLike } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsInfoWindow, InfoWindowTrigger, GoogleMapsOverlayComponentBase                                                   } from '@bespunky/angular-google-maps/overlays';
-import { MockDrawableOverlay, MockNativeDrawableOverlay                                                                            } from '@bespunky/angular-google-maps/overlays/testing';
+import { configureGoogleMapsTestingModule                                       } from '@bespunky/angular-google-maps/testing';
+import { MockGoogleMap, produceBoundsLikeSpecs, expectCoord                     } from '@bespunky/angular-google-maps/core/testing';
+import { MockMouseEventEmitter                                                  } from '@bespunky/angular-google-maps/overlays/testing';
+import { camelCase                                                              } from '@bespunky/angular-google-maps/_internal';
+import { GoogleMapsApiService, GoogleMapsComponentApiService, Coord, BoundsLike } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsInfoWindow, InfoWindowTrigger                                } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsInfoWindow', () =>
 {
@@ -237,45 +235,3 @@ describe('GoogleMapsInfoWindow', () =>
         it('should set the `pixelOffset` option outside angular when calling `setPixelOffset()`',       () => testOption('pixelOffset', new google.maps.Size(11, 22)));
     });
 });
-
-class MockMouseEventEmitter extends GoogleMapsOverlayComponentBase<MockDrawableOverlay<MockNativeDrawableOverlay>>
-{
-    @Hook() click      : Observable<IGoogleMapsEventData>;
-    @Hook() doubleClick: Observable<IGoogleMapsEventData>;
-    @Hook() mouseDown  : Observable<IGoogleMapsEventData>;
-    @Hook() mouseOut   : Observable<IGoogleMapsEventData>;
-    @Hook() mouseOver  : Observable<IGoogleMapsEventData>;
-    @Hook() mouseUp    : Observable<IGoogleMapsEventData>;
-    @Hook() rightClick : Observable<IGoogleMapsEventData>;
-    
-    constructor(private componentApi: GoogleMapsComponentApiService, infoWindow: GoogleMapsInfoWindow)
-    {
-        super(componentApi, () => new MockDrawableOverlay(infoWindow.map, new MockNativeDrawableOverlay()), new ElementRef(null));      
-    }
-
-    private emit(eventName: string, position: Coord)
-    {
-        const mouseEvent: IGoogleMapsMouseEvent = { position: this.componentApi.api.geometry.toLiteralCoord(position) };
-
-        this.wrapper.events.raise(eventName, mouseEvent);
-    }
-
-    public emitClick      (position: Coord) { this.emit('click', position);       }
-    public emitMousOver   (position: Coord) { this.emit('mouseOver', position);   }
-    public emitMouseOut   (position: Coord) { this.emit('mouseOut', position);    }
-    public emitDoubldClick(position: Coord) { this.emit('doubleClick', position); }
-    public emitRightClick (position: Coord) { this.emit('rightClick', position);  }
-    
-    /**
-     * `true` if there are no event subscribers at all; otherwise `false`.
-     */
-    public get isDetached(): boolean
-    {        
-        return Object.keys(this.listeners).reduce<boolean>((noListeners, eventName) => noListeners && !this.listeners[eventName].length, true);
-    }
-
-    public get listeners(): {}
-    {
-        return this.wrapper.events.listeners;
-    }
-}
