@@ -22,7 +22,7 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
 
     private readonly triggerEvents = {
         [InfoWindowTrigger.Click      ]: [{ emitter: () => this.attachedTo.click,       handle: this.onTriggered }],
-        [InfoWindowTrigger.MouseOver  ]: [{ emitter: () => this.attachedTo.mouseOver,   handle: this.onTriggered }, { emitter: () => this.attachedTo.mouseOut, handle: this.close } ],
+        [InfoWindowTrigger.MouseOver  ]: [{ emitter: () => this.attachedTo.mouseOver,   handle: this.onTriggered }, { emitter: () => this.attachedTo.mouseOut, handle: this.onTriggeredClose } ],
         [InfoWindowTrigger.DoubleClick]: [{ emitter: () => this.attachedTo.doubleClick, handle: this.onTriggered }],
         [InfoWindowTrigger.RightClick ]: [{ emitter: () => this.attachedTo.rightClick,  handle: this.onTriggered }],
     };
@@ -125,6 +125,11 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
         const position = (event.args[0] as IGoogleMapsMouseEvent).position;
 
         this.open(position);
+    }
+
+    protected onTriggeredClose(): void
+    {
+        this.close();
     }
 
     private autoClose(): void
