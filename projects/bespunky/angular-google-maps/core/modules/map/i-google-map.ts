@@ -1,8 +1,11 @@
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/i-google-maps-native-object-emitting-wrapper';
+import { WrappedNativeFunctions                 } from '../../abstraction/types/abstraction';
 import { Coord, BoundsLike                      } from '../../abstraction/types/geometry.type';
 import { ISuperpowers                           } from './superpowers/i-superpowers';
 
-export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Map>
+export type WrappedGoogleMapFunctions = WrappedNativeFunctions<google.maps.Map, 'getMapTypeId' | 'setMapTypeId' | 'fitBounds' | 'panToBounds'>;
+
+export interface IGoogleMap extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Map>, WrappedGoogleMapFunctions
 {
     readonly superpowers: ISuperpowers;
 

@@ -148,7 +148,7 @@ export function throwExcludedError(wrapperTypeName: string, property: string): v
         An attempt to execute '${wrapperTypeName}.${property}' was made, but '${property}' was excluded from wrapper delegation.\n\n
         Probable causes:\n
         - Your TypeScript wrapper extension interface doesn't omit '${property}' and intellisense permitted access to it.\n
-        - This read attempt was made through a weak-typed object.\n
+        - This read attempt was made through a weakly-typed object.\n
         - You didn't define delegation for '${property}'.\n\n
         Solutions:\n
         - Omit '${property}' from the TypeScript wrapper extension interface so TypeScript won't allow access to it.\n

@@ -28,18 +28,18 @@ This is how you would add a simple marker to the map for each branch of your bus
 ```
 
 # Supported Overlays
-|     | Type                                          | Directive ⚙                | Wrapper 🧬         |
-|:---:|-----------------------------------------------|-----------------------------|---------------------|
-| ✔  | [Markers](/Overlays-Superpower/Markers)       | `<bs-google-maps-marker/>`  | `GoogleMapsMarker`  |
-| ✔  | [Polygons](/Overlays-Superpower/Polygons)     | `<bs-google-maps-polygon/>` | `GoogleMapsPolygon` |
-| 🚧 | Polylines                                     |                             |                     |
-| 🚧 | Circles                                       |                             |                     |
-| 🚧 | Rectangles                                    |                             |                     |
-| 🚧 | Info Windows                                  |                             |                     |
-| 🚧 | Symbols                                       |                             |                     |
-| 🚧 | Ground Overlays                               |                             |                     |
-| 🚧 | Custom Overlays                               |                             |                     |
-| ✔  | [Data Layer](/Overlays-Superpower/Data-Layer) | `<bs-google-maps-data/>`    | `GoogleMapsData`    |
+|     | Type                                              | Directive ⚙                    | Wrapper 🧬            |
+|:---:|---------------------------------------------------|---------------------------------|------------------------|
+| ✔  | [Markers](/Overlays-Superpower/Markers)           | `<bs-google-maps-marker/>`      | `GoogleMapsMarker`     |
+| ✔  | [Polygons](/Overlays-Superpower/Polygons)         | `<bs-google-maps-polygon/>`     | `GoogleMapsPolygon`    |
+| 🚧 | Polylines                                         |                                 |                        |
+| 🚧 | Circles                                           |                                 |                        |
+| 🚧 | Rectangles                                        |                                 |                        |
+| ✔  | [Info Windows](/Overlays-Superpower/Info-Windows) | `<bs-google-maps-info-window/>` | `GoogleMapsInfoWindow` |
+| 🚧 | Symbols                                           |                                 |                        |
+| 🚧 | Ground Overlays                                   |                                 |                        |
+| 🚧 | Custom Overlays                                   |                                 |                        |
+| ✔  | [Data Layer](/Overlays-Superpower/Data-Layer)     | `<bs-google-maps-data/>`        | `GoogleMapsData`       |
 
 # The Superpower
 <small>[About Superpowers](/The-Map/Superpowers)</small> | <small>[Fetching The Map](/Programmatic-Control)</small>

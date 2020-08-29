@@ -2,9 +2,9 @@ import { Observable } from 'rxjs';
 import { fakeAsync, tick, ComponentFixture                 } from '@angular/core/testing';
 import { Component, ViewChild, SimpleChanges, SimpleChange } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                   } from '@bespunky/angular-google-maps/testing';
-import { MockComponent, MockEmittingWrapper, MockNative     } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsComponentApiService, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule                    } from '@bespunky/angular-google-maps/testing';
+import { MockComponent, MockEmittingWrapper, MockNative      } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsComponentApiService, IGoogleMapsEventData } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapsComponentApiService', () =>
 {
@@ -45,7 +45,7 @@ describe('GoogleMapsComponentApiService', () =>
             
             component.wrapper.events.raise(component.NativeClickEventName);
             
-            const event = handleClick.calls.mostRecent().args[0] as GoogleMapsEventData;
+            const event = handleClick.calls.mostRecent().args[0] as IGoogleMapsEventData;
 
             expect(event.nativeEmitter).toBe(component.wrapper.native);
         });
@@ -56,7 +56,7 @@ describe('GoogleMapsComponentApiService', () =>
 
             api.hookAndSetEmitters(component, secondWrapper);
 
-            component.click.subscribe((e: GoogleMapsEventData) =>
+            component.click.subscribe((e: IGoogleMapsEventData) =>
             {
                 expect(e.emitter).toBe(secondWrapper);
                 expect(e.nativeEmitter).toBe(secondWrapper.native);
@@ -110,7 +110,7 @@ describe('GoogleMapsComponentApiService', () =>
                 
             component.wrapper.events.raise(component.NativeClickEventName, nativeArgs);
             
-            const event = handleClick.calls.mostRecent().args[0] as GoogleMapsEventData;
+            const event = handleClick.calls.mostRecent().args[0] as IGoogleMapsEventData;
 
             expect(event.eventName        ).toBe   ('click',                     'wrong event name');
             expect(event.emitter          ).toBe   (component.wrapper,           'wrong emitter');
@@ -154,7 +154,7 @@ class TestHost
     @ViewChild(MockComponent)
     public component: MockComponent;
 
-    public handleClick(e: GoogleMapsEventData)
+    public handleClick(e: IGoogleMapsEventData)
     {
 
     }

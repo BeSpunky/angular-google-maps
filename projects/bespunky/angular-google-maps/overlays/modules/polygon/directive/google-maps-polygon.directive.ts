@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { Coord, Hook, GoogleMapsEventData } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase   } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsPolygon               } from '../i-google-maps-polygon';
-import { GoogleMapsPolygonFactoryProvider } from '../google-maps-polygon-factory.provider';
+import { Coord, Hook, IGoogleMapsEventData } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase    } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { IGoogleMapsPolygon                } from '../i-google-maps-polygon';
+import { GoogleMapsPolygonFactoryProvider  } from '../google-maps-polygon-factory.provider';
 
 @Directive({    
     selector : 'bs-google-maps-polygon, [bsGoogleMapsPolygon]',
@@ -29,25 +29,25 @@ export class GoogleMapsPolygonDirective extends GoogleMapsOverlayComponentBase<I
     @Input() public options?       : google.maps.PolygonOptions;
 
     /** Fired when the DOM click event is fired on the Polygon. */
-    @Hook('click')        @Output() click:                   Observable<GoogleMapsEventData>;
+    @Hook('click')        @Output() click:                   Observable<IGoogleMapsEventData>;
     /** Fired when the DOM dblclick event is fired on the Polygon. */
-    @Hook('dblclick')     @Output() doubleClick:             Observable<GoogleMapsEventData>;
+    @Hook('dblclick')     @Output() doubleClick:             Observable<IGoogleMapsEventData>;
     /** Fired when the Polygon is right-clicked on. */
-    @Hook('rightclick')   @Output() rightClick:              Observable<GoogleMapsEventData>;
+    @Hook('rightclick')   @Output() rightClick:              Observable<IGoogleMapsEventData>;
     /** Fired repeatedly while the user drags the polygon. */
-    @Hook('drag')         @Output() drag:                    Observable<GoogleMapsEventData>;
+    @Hook('drag')         @Output() drag:                    Observable<IGoogleMapsEventData>;
     /** Fired when the user starts dragging the polygon. */
-    @Hook('dragstart')    @Output() dragStart:               Observable<GoogleMapsEventData>;
+    @Hook('dragstart')    @Output() dragStart:               Observable<IGoogleMapsEventData>;
     /** Fired when the the user stops dragging the polygon.. */
-    @Hook('dragend')      @Output() dragEnd:                 Observable<GoogleMapsEventData>;
+    @Hook('dragend')      @Output() dragEnd:                 Observable<IGoogleMapsEventData>;
     /** Fired when the DOM mousedown event is fired on the Polygon. */
-    @Hook('mousedown')    @Output() mouseDown:               Observable<GoogleMapsEventData>;
+    @Hook('mousedown')    @Output() mouseDown:               Observable<IGoogleMapsEventData>;
     /** Fired when the DOM mouseup event is fired on the Polygon. */
-    @Hook('mouseup')      @Output() mouseUp:                 Observable<GoogleMapsEventData>;
+    @Hook('mouseup')      @Output() mouseUp:                 Observable<IGoogleMapsEventData>;
     /** Fired when the DOM mousemove event is fired on the Polygon. */
-    @Hook('mousemove')    @Output() mouseMove:               Observable<GoogleMapsEventData>;
+    @Hook('mousemove')    @Output() mouseMove:               Observable<IGoogleMapsEventData>;
     /** Fired on Polygon mouseover. */
-    @Hook('mouseover')    @Output() mouseOver:               Observable<GoogleMapsEventData>;
+    @Hook('mouseover')    @Output() mouseOver:               Observable<IGoogleMapsEventData>;
     /** Fired on Polygon mouseout. */
-    @Hook('mouseout')     @Output() mouseOut:                Observable<GoogleMapsEventData>;
+    @Hook('mouseout')     @Output() mouseOut:                Observable<IGoogleMapsEventData>;
 }

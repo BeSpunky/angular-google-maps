@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { GoogleMapsEventData, Hook, Coord } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase  } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsMarker               } from '../i-google-maps-marker';
-import { GoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
+import { IGoogleMapsEventData, Hook, Coord } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase    } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { IGoogleMapsMarker                 } from '../i-google-maps-marker';
+import { GoogleMapsMarkerFactoryProvider   } from '../google-maps-marker-factory.provider';
 
 @Directive({
     selector : 'bs-google-maps-marker, [bsGoogleMapsMarker]',
@@ -28,45 +28,45 @@ export class GoogleMapsMarkerDirective extends GoogleMapsOverlayComponentBase<IG
     @Input() public zIndex?   : number;
 
     /** Fired when the marker's animation property changes. */
-    @Hook('animation_changed') @Output() public animationChanged      : Observable<GoogleMapsEventData>;
+    @Hook('animation_changed') @Output() public animationChanged      : Observable<IGoogleMapsEventData>;
     /** Fired when the marker icon was clicked. */
-    @Hook('click')             @Output() public click                 : Observable<GoogleMapsEventData>;
+    @Hook('click')             @Output() public click                 : Observable<IGoogleMapsEventData>;
     /** Fired for a rightclick on the marker. */
-    @Hook('rightclick')        @Output() public rightClick            : Observable<GoogleMapsEventData>;
+    @Hook('rightclick')        @Output() public rightClick            : Observable<IGoogleMapsEventData>;
     /** Fired when the marker's clickable property changes. */
-    @Hook('clickable_changed') @Output() public clickableChanged      : Observable<GoogleMapsEventData>;
+    @Hook('clickable_changed') @Output() public clickableChanged      : Observable<IGoogleMapsEventData>;
     /** Fired when the marker icon was double clicked. */
-    @Hook('dblclick')          @Output() public doubleClick           : Observable<GoogleMapsEventData>;
+    @Hook('dblclick')          @Output() public doubleClick           : Observable<IGoogleMapsEventData>;
     /** Fired for a mousedown on the marker. */
-    @Hook('mousedown')         @Output() public mouseDown             : Observable<GoogleMapsEventData>;
+    @Hook('mousedown')         @Output() public mouseDown             : Observable<IGoogleMapsEventData>;
     /** Fired when the mouse leaves the area of the marker icon. */
-    @Hook('mouseout')          @Output() public mouseOut              : Observable<GoogleMapsEventData>;
+    @Hook('mouseout')          @Output() public mouseOut              : Observable<IGoogleMapsEventData>;
     /** Fired when the mouse enters the area of the marker icon. */
-    @Hook('mouseover')         @Output() public mouseOver             : Observable<GoogleMapsEventData>;
+    @Hook('mouseover')         @Output() public mouseOver             : Observable<IGoogleMapsEventData>;
     /** Fired for a mouseup on the marker. */
-    @Hook('mouseup')           @Output() public mouseUp               : Observable<GoogleMapsEventData>;
+    @Hook('mouseup')           @Output() public mouseUp               : Observable<IGoogleMapsEventData>;
     /** Fired when the marker's cursor property changes. */
-    @Hook('cursor_changed')    @Output() public cursorChanged         : Observable<GoogleMapsEventData>;
+    @Hook('cursor_changed')    @Output() public cursorChanged         : Observable<IGoogleMapsEventData>;
     /** Fired repeatedly while the user drags the marker. */
-    @Hook('drag')              @Output() public drag                  : Observable<GoogleMapsEventData>;
+    @Hook('drag')              @Output() public drag                  : Observable<IGoogleMapsEventData>;
     /** Fired when the user stops dragging the marker. */
-    @Hook('dragend')           @Output() public dragEnd               : Observable<GoogleMapsEventData>;
+    @Hook('dragend')           @Output() public dragEnd               : Observable<IGoogleMapsEventData>;
     /** Fired when the marker's draggable property changes. */
-    @Hook('draggable_changed') @Output() public draggableChanged      : Observable<GoogleMapsEventData>;
+    @Hook('draggable_changed') @Output() public draggableChanged      : Observable<IGoogleMapsEventData>;
     /** Fired when the user starts dragging the marker. */
-    @Hook('dragstart')         @Output() public dragStart             : Observable<GoogleMapsEventData>;
+    @Hook('dragstart')         @Output() public dragStart             : Observable<IGoogleMapsEventData>;
     /** Fired when the marker's flat property changes. */
-    @Hook('flat_changed')      @Output() public flatChanged           : Observable<GoogleMapsEventData>;
+    @Hook('flat_changed')      @Output() public flatChanged           : Observable<IGoogleMapsEventData>;
     /** Fired when the marker icon property changes. */
-    @Hook('icon_changed')      @Output() public iconChanged           : Observable<GoogleMapsEventData>;
+    @Hook('icon_changed')      @Output() public iconChanged           : Observable<IGoogleMapsEventData>;
     /** Fired when the marker position property changes. */
-    @Hook('position_changed')  @Output() public positionChanged       : Observable<GoogleMapsEventData>;
+    @Hook('position_changed')  @Output() public positionChanged       : Observable<IGoogleMapsEventData>;
     /** Fired when the marker's shape property changes. */
-    @Hook('shape_changed')     @Output() public shapeChanged          : Observable<GoogleMapsEventData>;
+    @Hook('shape_changed')     @Output() public shapeChanged          : Observable<IGoogleMapsEventData>;
     /** Fired when the marker title property changes. */
-    @Hook('title_changed')     @Output() public titleChanged          : Observable<GoogleMapsEventData>;
+    @Hook('title_changed')     @Output() public titleChanged          : Observable<IGoogleMapsEventData>;
     /** Fired when the marker's visible property changes. */
-    @Hook('visible_changed')   @Output() public visibleChanged        : Observable<GoogleMapsEventData>;
+    @Hook('visible_changed')   @Output() public visibleChanged        : Observable<IGoogleMapsEventData>;
     /** Fired when the marker's zIndex property changes.    */
-    @Hook('zindex_changed')    @Output() public zIndexChanged         : Observable<GoogleMapsEventData>;
+    @Hook('zindex_changed')    @Output() public zIndexChanged         : Observable<IGoogleMapsEventData>;
 }

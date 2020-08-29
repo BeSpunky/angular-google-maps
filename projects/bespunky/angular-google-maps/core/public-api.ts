@@ -9,6 +9,7 @@ export * from './abstraction/base/google-maps-native-object-wrapper';
 export * from './abstraction/base/google-maps-native-object-emitting-wrapper';
 export * from './abstraction/base/google-maps-component-base';
 
+export * from './abstraction/events/i-google-maps-mouse-event-emitter';
 export * from './abstraction/events/i-google-maps-event-data';
 export * from './abstraction/events/i-google-maps-mouse-event';
 export * from './abstraction/events/google-maps-event-data';

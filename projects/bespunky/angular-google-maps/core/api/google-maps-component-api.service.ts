@@ -4,6 +4,7 @@ import { Injectable, SimpleChanges    } from '@angular/core';
 
 import { camelCase                } from '@bespunky/angular-google-maps/_internal';
 import { GoogleMapsEventsMap      } from '../abstraction/types/events-map.type';
+import { IGoogleMapsEventData     } from '../abstraction/events/i-google-maps-event-data';
 import { GoogleMapsEventData      } from '../abstraction/events/google-maps-event-data';
 import { GoogleMapsComponentBase  } from '../abstraction/base/google-maps-component-base';
 import { EmittingWrapper, Wrapper } from '../abstraction/types/abstraction';
@@ -48,9 +49,9 @@ export class GoogleMapsComponentApiService
      * Example: Google Maps's data layer native object raises events that should be emitted by the individual feature directives.
      * @see `google-maps-feature.directive.ts` for more info.
      * 
-     * @param {((event: GoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A filter function that will determine if the a specific event should be emitted or not.
+     * @param {((event: IGoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A filter function that will determine if the a specific event should be emitted or not.
      */
-    public hookAndSetEmitters(emittingComponent: GoogleMapsComponentBase<EmittingWrapper>, wrapper: EmittingWrapper = null, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>)
+    public hookAndSetEmitters(emittingComponent: GoogleMapsComponentBase<EmittingWrapper>, wrapper: EmittingWrapper = null, shouldEmit?: (event: IGoogleMapsEventData) => boolean | Promise<boolean>)
     {
         const eventsMap = (Reflect.getMetadata(HookOutputSymbol, emittingComponent) || []) as GoogleMapsEventsMap;
 
@@ -74,10 +75,10 @@ export class GoogleMapsComponentApiService
      * the native object contained by `wrapper`. Pass a value to this argument only if the emitting wrapper is not the one containing the native object.
      * Example: Google Maps's data layer native object raises events that should be emitted by the individual feature directives.
      * @see `google-maps-feature.directive.ts` for more info.
-     * @param {((event: GoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A filter function that will determine if the a specific event should be emitted or not.
-     * @returns {Observable<GoogleMapsEventData>} An observable hooked to the native event of the wrapper.
+     * @param {((event: IGoogleMapsEventData) => boolean | Promise<boolean>)} [shouldEmit] (Optional) A filter function that will determine if the a specific event should be emitted or not.
+     * @returns {Observable<IGoogleMapsEventData>} An observable hooked to the native event of the wrapper.
      */
-    public createEventEmitter(wrapper: EmittingWrapper, eventName: string, eventReference: string, associatedWrapper: EmittingWrapper = wrapper, shouldEmit?: (event: GoogleMapsEventData) => boolean | Promise<boolean>): Observable<GoogleMapsEventData>
+    public createEventEmitter(wrapper: EmittingWrapper, eventName: string, eventReference: string, associatedWrapper: EmittingWrapper = wrapper, shouldEmit?: (event: IGoogleMapsEventData) => boolean | Promise<boolean>): Observable<IGoogleMapsEventData>
     {
         let emitter = fromEventPattern(
             // Hook native event to observable subscribe

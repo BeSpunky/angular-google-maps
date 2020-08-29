@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, FactoryProvider } from '@angular/core';
 
-import { GoogleMapsComponentBase, WrapperFactory, Hook, GoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
-import { WrappedNativeFunctions                                                                  } from '@bespunky/angular-google-maps/core';
-import { MockNative                                                                              } from './mock-native';
-import { MockEmittingWrapper                                                                     } from './mock-emitting-wrapper';
+import { GoogleMapsComponentBase, WrapperFactory, Hook, IGoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
+import { WrappedNativeFunctions                                                                   } from '@bespunky/angular-google-maps/core';
+import { MockNative                                                                               } from './mock-native';
+import { MockEmittingWrapper                                                                      } from './mock-emitting-wrapper';
 
 @NativeObjectWrapper<MockNative, TestWrapper>()
 class     TestWrapper extends MockEmittingWrapper<MockNative> { }
@@ -36,6 +36,6 @@ export class MockComponent extends GoogleMapsComponentBase<TestWrapper>
 
     @Input() something: any;
 
-    @Hook()               @Output() click      : EventEmitter<GoogleMapsEventData>;
-    @Hook('dummy_change') @Output() dummyChange: EventEmitter<GoogleMapsEventData>;
+    @Hook()               @Output() click      : EventEmitter<IGoogleMapsEventData>;
+    @Hook('dummy_change') @Output() dummyChange: EventEmitter<IGoogleMapsEventData>;
 }
