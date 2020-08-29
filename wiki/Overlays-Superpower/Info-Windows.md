@@ -106,6 +106,9 @@ In the above example, the content will result in something like this:
 </div>
 ```
 
+# Best Practices
+As per the [original docs](https://developers.google.com/maps/documentation/javascript/infowindows#add), it is best to have only one info window visible at any given time for better UX.
+
 # See Also
 
 | Topic                             | Description                 |
