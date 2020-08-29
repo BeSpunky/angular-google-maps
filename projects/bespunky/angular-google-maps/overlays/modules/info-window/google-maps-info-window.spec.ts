@@ -162,6 +162,23 @@ describe('GoogleMapsInfoWindow', () =>
         });
     });
 
+    describe('clearAttachedTo', () =>
+    {
+        it('should detach the emitter and stop listening to events', () =>
+        {
+            const emitter = createEmitter();
+
+            infoWindow.setAttachedTo(emitter);
+
+            expect(emitter.isDetached).toBeFalse();
+
+            infoWindow.clearAttachedTo();
+
+            expect(infoWindow.getAttachedTo()).toBeFalsy();
+            expect(emitter.isDetached).toBeTrue();
+        });
+    });
+
     describe('open', () =>
     {
         function testOpen(position: BoundsLike, shouldBe: Coord)
