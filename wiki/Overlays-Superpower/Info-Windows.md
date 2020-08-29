@@ -11,6 +11,7 @@ Name for template reference variables: `infoWindow`
 # Concepts
 Now this is a cool one... 😎
 
+An info window is a popup-like element with custom content.
 The info window offered by the library presents new API and enhances the native one. You can now:
 1. Attach an info window to ANY overlay (not just markers).
 2. Select between 4 different triggers (Click, MouseOver, DoubleClick, RightClick).
