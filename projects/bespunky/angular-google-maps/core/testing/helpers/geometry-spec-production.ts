@@ -1,4 +1,4 @@
-import { GeometryTransformService, FlatCoord, Coord, Path, MultiPath, CoordPath, IBounds } from '@bespunky/angular-google-maps/core';
+import { GeometryTransformService, FlatCoord, Coord, Path, MultiPath, CoordPath, IBounds, BoundsLike, NativeBounds } from '@bespunky/angular-google-maps/core';
 import { MockBounds                                                                      } from '../mocks/mock-bounds';
 
 const geometry = new GeometryTransformService();
@@ -110,6 +110,19 @@ export function producePathSpecs(expectation: string, test: (path: CoordPath) =>
 }
 
 /**
+ * Produces a spec for each supported native bounds types and runs the test against the bounds.
+ *
+ * @export
+ * @param {string} expectation Format is `should <expectation> for a <geometry type>`.
+ * @param {(boundable: IBounds) => void} test The test to perform on the bounds object.
+ */
+export function produceNativeBoundsSpecs(expectation: string, test: (bounds: NativeBounds) => void): void
+{
+    it(`should ${expectation} for a LatLngBoundsLiteral`, () => test(mockBounds.bounds.toJSON()));
+    it(`should ${expectation} for a LatLngBounds`,        () => test(mockBounds.bounds));
+}
+
+/**
  * Produces a spec for each supported IBounds implementing types and runs the test against the implementers.
  *
  * @export
@@ -132,4 +145,20 @@ export function produceDataGeometrySpecs(expectation: string, test: (geo: google
 {
     it(`should ${expectation} for a data point`,   () => test(dataPoint));
     it(`should ${expectation} for a data polygon`, () => test(dataPolygon));
+}
+
+/**
+ * Produces a spec for each supported BoundsLike geometry type and runs the test against the geometry.
+ *
+ * @export
+ * @param {string} expectation
+ * @param {(element: BoundsLike) => void} test
+ */
+export function produceBoundsLikeSpecs(expectation: string, test: (element: BoundsLike) => void): void
+{
+    produceCoordSpecs       (expectation, test);
+    producePathSpecs        (expectation, test);
+    produceNativeBoundsSpecs(expectation, test);
+    produceIBoundsSpecs     (expectation, test);
+    produceDataGeometrySpecs(expectation, test);
 }

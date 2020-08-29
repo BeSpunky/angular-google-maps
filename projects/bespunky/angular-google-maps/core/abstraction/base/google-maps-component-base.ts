@@ -1,4 +1,5 @@
-import { OnChanges, SimpleChanges, Inject, Directive, ElementRef, Input } from '@angular/core';
+import { Subject } from 'rxjs';
+import { OnChanges, SimpleChanges, Inject, Directive, ElementRef, Input, OnDestroy } from '@angular/core';
 
 import { GoogleMapsComponentApiService                 } from '../../api/google-maps-component-api.service';
 import { WrapperFactory                                } from '../tokens/wrapper-factory.token';
@@ -26,11 +27,13 @@ import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstract
  */
 @Directive()
 export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
-           implements OnChanges
+           implements OnChanges, OnDestroy
 {
-    private nativeWrapper: TWrapper;
-
     @Input() public custom: any;
+
+    protected destroyed: Subject<void> = new Subject();
+
+    private nativeWrapper: TWrapper;
 
     /**
      * Creates an instance of GoogleMapsComponentBase.
@@ -48,6 +51,12 @@ export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
     ngOnChanges(changes: SimpleChanges)
     {
         this.api.delegateInputChangesToNativeObject(changes, this.wrapper);
+    }
+
+    ngOnDestroy()
+    {
+        this.destroyed.next();
+        this.destroyed.complete();
     }
 
     /**

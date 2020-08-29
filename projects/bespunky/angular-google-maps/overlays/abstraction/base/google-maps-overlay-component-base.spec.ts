@@ -1,11 +1,12 @@
-import { ComponentFixture } from '@angular/core/testing';
-import { Component        } from '@angular/core';
+import { Observable, empty } from 'rxjs';
+import { ComponentFixture  } from '@angular/core/testing';
+import { Component         } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                                                                                                } from '@bespunky/angular-google-maps/testing';
-import { MockGoogleMap                                                                                                                   } from '@bespunky/angular-google-maps/core/testing';
-import { MockDrawableOverlay, MockNativeDrawableOverlay                                                                                  } from '@bespunky/angular-google-maps/overlays/testing';
-import { WrapperFactory, SuperpowersService                                                                                              } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase, OverlayType, DrawableOverlay, GoogleMapsOverlaysModule, IOverlaysSuperpower, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule                                                                           } from '@bespunky/angular-google-maps/testing';
+import { MockGoogleMap                                                                                              } from '@bespunky/angular-google-maps/core/testing';
+import { MockDrawableOverlay, MockNativeDrawableOverlay                                                             } from '@bespunky/angular-google-maps/overlays/testing';
+import { WrapperFactory, SuperpowersService, GoogleMapsEventData                                                    } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase, OverlayType, DrawableOverlay, GoogleMapsOverlaysModule, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsOverlayComponentBase (abstract)', () =>
 {
@@ -60,4 +61,12 @@ function OverlayFactoryProvider(superpowers)
         SuperpowersService
     ]
 })
-class GoogleMapsOverlayComponentBaseTest extends GoogleMapsOverlayComponentBase<DrawableOverlay> { }
+class GoogleMapsOverlayComponentBaseTest extends GoogleMapsOverlayComponentBase<DrawableOverlay> {
+    click      : Observable<GoogleMapsEventData> = empty();
+    doubleClick: Observable<GoogleMapsEventData> = empty();
+    mouseDown  : Observable<GoogleMapsEventData> = empty();
+    mouseOut   : Observable<GoogleMapsEventData> = empty();
+    mouseOver  : Observable<GoogleMapsEventData> = empty();
+    mouseUp    : Observable<GoogleMapsEventData> = empty();
+    rightClick : Observable<GoogleMapsEventData> = empty();
+}

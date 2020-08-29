@@ -9,7 +9,7 @@ export const HookOutputSymbol = Symbol('LifecycleComponent.HookOutput');
  * @param {string} nativeName (Optional) The name of the native event. If not provided, the name of the component member will be used.
  * 
  * @example
- * ``` @Hook @Output() public click: EventEmitter<GoogleMapsEventData>;```
+ * ``` @Hook @Output() public click: EventEmitter<IGoogleMapsEventData>;```
  */
 export function Hook(nativeName?: string)
 {
