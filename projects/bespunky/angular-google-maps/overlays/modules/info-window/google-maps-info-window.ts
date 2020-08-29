@@ -139,6 +139,6 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
     }
 
     setDisableAutoPan(disableAutoPan: boolean)         : void { this.setOptions({ disableAutoPan }); }
-    setMaxWidth      (maxWidth      : number)          : void { this.setOptions({ maxWidth }); }
-    setPixelOffset   (pixelOffset   : google.maps.Size): void { this.setOptions({ pixelOffset }); }
+    setMaxWidth      (maxWidth      : number)          : void { this.setOptions({ maxWidth       }); }
+    setPixelOffset   (pixelOffset   : google.maps.Size): void { this.setOptions({ pixelOffset    }); }
 }
