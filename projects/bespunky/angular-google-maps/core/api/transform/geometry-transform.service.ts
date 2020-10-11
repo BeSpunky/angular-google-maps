@@ -32,7 +32,7 @@ export class GeometryTransformService
         // This relies on typescript to ensure 2 items in the array
         if (this.isFlatCoord(coord)) return { lat: coord[0], lng: coord[1] };
 
-        return coord instanceof google.maps.LatLng ? { lat: coord.lat(), lng: coord.lng() } : coord as google.maps.LatLngLiteral;
+        return coord instanceof google.maps.LatLng ? coord.toJSON() : coord as google.maps.LatLngLiteral;
     }
 
     /**
@@ -260,5 +260,16 @@ export class GeometryTransformService
 
             return bounds.union(elementBounds);
         }, new google.maps.LatLngBounds());
+    }
+
+    /**
+     * Calculates the center of the given elements by constructing their bounds and extracting its center.
+     *
+     * @param {...BoundsLike[]} elements The elements for which center should be calculated.
+     * @returns {google.maps.LatLngLiteral} The center of the bounding box for the given elements.
+     */
+    public centerOf(...elements: BoundsLike[]): google.maps.LatLngLiteral
+    {
+        return this.defineBounds(...elements).getCenter().toJSON();
     }
 }

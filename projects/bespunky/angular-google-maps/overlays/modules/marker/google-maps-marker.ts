@@ -1,5 +1,5 @@
 
-import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, Delegation } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, BoundsLike, Delegation } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay                 } from '../../abstraction/base/google-maps-drawable-overlay';
 import { OverlayType                               } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsMarker, WrappedMarkerFunctions } from './i-google-maps-marker';
@@ -34,8 +34,8 @@ export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Mark
     }
     
     @OutsideAngular
-    public setPosition(position: Coord): void
+    public setPosition(position: BoundsLike): void
     {
-        this.native.setPosition(this.api.geometry.toLiteralCoord(position));
+        this.native.setPosition(this.api.geometry.centerOf(position));
     }
 }

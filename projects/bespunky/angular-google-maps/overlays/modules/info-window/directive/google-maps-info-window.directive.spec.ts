@@ -3,7 +3,7 @@ import { Component        } from '@angular/core';
 
 import { configureGoogleMapsTestingModule                                              } from '@bespunky/angular-google-maps/testing';
 import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost       } from '@bespunky/angular-google-maps/core/testing';
-import { MockMouseEventEmitter                                                         } from '@bespunky/angular-google-maps/overlays/testing';
+import { MockMouseEventsEmitter                                                        } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsComponentApiService                                                 } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsInfoWindowDirective, GoogleMapsOverlaysModule, GoogleMapsInfoWindow } from '@bespunky/angular-google-maps/overlays';
 
@@ -84,7 +84,7 @@ describe('GoogleMapsInfoWindowDirective', () =>
 
     it('should detach the emmitter from the info window when destroyed', () =>
     {
-        infoWindow.setAttachedTo(new MockMouseEventEmitter(componentApi, infoWindow));
+        infoWindow.setAttachedTo(new MockMouseEventsEmitter(componentApi, infoWindow));
 
         directive.ngOnDestroy();
 

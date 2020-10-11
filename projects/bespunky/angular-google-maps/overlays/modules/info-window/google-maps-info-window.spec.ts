@@ -2,7 +2,7 @@ import { fakeAsync, tick } from '@angular/core/testing';
 
 import { configureGoogleMapsTestingModule                                       } from '@bespunky/angular-google-maps/testing';
 import { MockGoogleMap, produceBoundsLikeSpecs, expectCoord                     } from '@bespunky/angular-google-maps/core/testing';
-import { MockMouseEventEmitter                                                  } from '@bespunky/angular-google-maps/overlays/testing';
+import { MockMouseEventsEmitter                                                 } from '@bespunky/angular-google-maps/overlays/testing';
 import { camelCase                                                              } from '@bespunky/angular-google-maps/_internal';
 import { GoogleMapsApiService, GoogleMapsComponentApiService, Coord, BoundsLike } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsInfoWindow, InfoWindowTrigger                                } from '@bespunky/angular-google-maps/overlays';
@@ -14,9 +14,9 @@ describe('GoogleMapsInfoWindow', () =>
     let infoWindow       : GoogleMapsInfoWindow;
     let runOutsideAngular: jasmine.Spy;
 
-    function createEmitter(): MockMouseEventEmitter
+    function createEmitter(): MockMouseEventsEmitter
     {
-        return new MockMouseEventEmitter(componentApi, infoWindow);
+        return new MockMouseEventsEmitter(componentApi, infoWindow);
     }
 
     beforeEach(async () =>
@@ -117,7 +117,7 @@ describe('GoogleMapsInfoWindow', () =>
             expect(newEmitter .isDetached).toBeFalse();
         });
 
-        function testEventEmission(trigger: InfoWindowTrigger, emit: (emitter: MockMouseEventEmitter, position: Coord) => void, expectedRun: 'open' | 'close' = 'open'): void
+        function testEventEmission(trigger: InfoWindowTrigger, emit: (emitter: MockMouseEventsEmitter, position: Coord) => void, expectedRun: 'open' | 'close' = 'open'): void
         {
             const emitter = createEmitter();
 
