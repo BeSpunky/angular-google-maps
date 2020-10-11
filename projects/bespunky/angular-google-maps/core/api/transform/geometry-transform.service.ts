@@ -261,4 +261,15 @@ export class GeometryTransformService
             return bounds.union(elementBounds);
         }, new google.maps.LatLngBounds());
     }
+
+    /**
+     * Calculates the center of the given elements by constructing their bounds and extracting its center.
+     *
+     * @param {...BoundsLike[]} elements The elements for which center should be calculated.
+     * @returns {google.maps.LatLngLiteral} The center of the bounding box for the given elements.
+     */
+    public centerOf(...elements: BoundsLike[]): google.maps.LatLngLiteral
+    {
+        return this.defineBounds(...elements).getCenter().toJSON();
+    }
 }
