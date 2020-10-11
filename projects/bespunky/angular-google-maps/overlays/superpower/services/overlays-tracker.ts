@@ -6,6 +6,7 @@ import { OverlayType        } from '../../abstraction/base/overlay-type.enum';
 import { DrawableOverlay    } from '../../abstraction/types/abstraction';
 import { IGoogleMapsMarker  } from '../../modules/marker/i-google-maps-marker';
 import { IGoogleMapsPolygon } from '../../modules/polygon/i-google-maps-polygon';
+import { IGoogleMapsCircle  } from '../../modules/circle/i-google-maps-circle';
 import { IGoogleMapsData    } from '../../modules/data/i-google-maps-data';
 import { OverlaysState      } from './overlays-state';
 
@@ -19,6 +20,7 @@ export class OverlaysTracker
 {
     public readonly markers   : IGoogleMapsMarker [] = [];
     public readonly polygons  : IGoogleMapsPolygon[] = [];
+    public readonly circles   : IGoogleMapsCircle [] = [];
     public readonly dataLayers: IGoogleMapsData   [] = [];
     
     /**
@@ -29,6 +31,7 @@ export class OverlaysTracker
     private map = {
         [OverlayType.Marker ]: this.markers,
         [OverlayType.Polygon]: this.polygons,
+        [OverlayType.Circle ]: this.circles,
         [OverlayType.Data   ]: this.dataLayers,
         // TODO: Add here any new supported overlay type collection
     };
