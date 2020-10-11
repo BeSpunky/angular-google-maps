@@ -36,9 +36,8 @@ describe('GoogleMapsCircleDirective', () =>
 });
 
 @Component({
-    template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-circle [path]="path" #testedComponent></bs-google-maps-circle>')
+    template: createLifecycleTestingHostComponentTemplate('<bs-google-maps-circle [center]="[20, 20]" [radius]="999999" #testedComponent></bs-google-maps-circle>')
 })
 class TestHostComponent extends LifecycleComponentTestHost
 {
-    public path: Coord[] = [{ lat: 20, lng: 20 }];
 }

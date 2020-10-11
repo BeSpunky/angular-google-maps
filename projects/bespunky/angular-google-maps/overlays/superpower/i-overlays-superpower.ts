@@ -2,8 +2,8 @@ import { BoundsLike, CoordPath, ISuperpower } from '@bespunky/angular-google-map
 import { DrawableOverlay               } from '../abstraction/types/abstraction';
 import { IGoogleMapsMarker             } from '../modules/marker/i-google-maps-marker';
 import { IGoogleMapsPolygon            } from '../modules/polygon/i-google-maps-polygon';
-import { IGoogleMapsData               } from '../modules/data/i-google-maps-data';
 import { IGoogleMapsCircle             } from '../modules/circle/i-google-maps-circle';
+import { IGoogleMapsData               } from '../modules/data/i-google-maps-data';
 
 export interface IOverlaysSuperpower extends ISuperpower
 {

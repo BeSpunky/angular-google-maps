@@ -1,9 +1,9 @@
 import { TestBed    } from '@angular/core/testing';
 import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule, expectPositionEquals                                            } from '@bespunky/angular-google-maps/testing';
-import { GoogleMapsApiService, GoogleMap, Defaults, FlatCoord, SuperpowersService                          } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlaysModule, GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsData, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule, expectPositionEquals                                                              } from '@bespunky/angular-google-maps/testing';
+import { GoogleMapsApiService, GoogleMap, Defaults, FlatCoord, SuperpowersService                                            } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlaysModule, GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsCircle, GoogleMapsData, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
 
 const elementStub: any = document.createElement('div');
 
@@ -41,7 +41,7 @@ describe('OverlaysSuperpower', () =>
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
         expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsMarker)).toBeTruthy();
 
-        expect(marker instanceof GoogleMapsMarker).toBeTruthy();
+        expect(marker).toBeInstanceOf(GoogleMapsMarker);
         expectPositionEquals(marker.getPosition(), Defaults.Center);
     });
 
@@ -54,8 +54,23 @@ describe('OverlaysSuperpower', () =>
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
         expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsPolygon)).toBeTruthy();
 
-        expect(polygon instanceof GoogleMapsPolygon).toBeTruthy();
+        expect(polygon).toBeInstanceOf(GoogleMapsPolygon);
         expect(polygon.getPath()).toEqual(api.geometry.toLiteralMultiPath(flatPath));
+    });
+    
+    it('should create a circle outside angular when calling `createCircle()`', () => 
+    {            
+        const center = [10, 20] as FlatCoord;
+        const radius = 100000;
+        const circle = power.createCircle(center, radius);
+        
+        // Overlay creation ends up in more than one calls to runOutsideAngular().
+        // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
+        expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsCircle)).toBeTruthy();
+
+        expect(circle).toBeInstanceOf(GoogleMapsCircle);
+        expect(circle.getCenter()).toEqual(api.geometry.toLiteralCoord(center));
+        expect(circle.getRadius()).toEqual(radius);
     });
     
     it('should create a data layer outside angular when calling `createDataLayer()`', () => 
@@ -66,7 +81,7 @@ describe('OverlaysSuperpower', () =>
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
         expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsData)).toBeTruthy();
 
-        expect(data instanceof GoogleMapsData).toBeTruthy();
+        expect(data).toBeInstanceOf(GoogleMapsData);
         expect((data.getStyle() as any).title).toBe('awesome');
     });
 
