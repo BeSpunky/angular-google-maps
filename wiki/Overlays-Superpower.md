@@ -33,7 +33,7 @@ This is how you would add a simple marker to the map for each branch of your bus
 | ✔  | [Markers](/Overlays-Superpower/Markers)           | `<bs-google-maps-marker/>`      | `GoogleMapsMarker`     |
 | ✔  | [Polygons](/Overlays-Superpower/Polygons)         | `<bs-google-maps-polygon/>`     | `GoogleMapsPolygon`    |
 | 🚧 | Polylines                                         |                                 |                        |
-| 🚧 | Circles                                           |                                 |                        |
+| ✔  | [Circles](/Overlays-Superpower/Circles)           | `<bs-google-maps-circle/>`      | `GoogleMapsCircle`     |
 | 🚧 | Rectangles                                        |                                 |                        |
 | ✔  | [Info Windows](/Overlays-Superpower/Info-Windows) | `<bs-google-maps-info-window/>` | `GoogleMapsInfoWindow` |
 | 🚧 | Symbols                                           |                                 |                        |
@@ -60,6 +60,8 @@ const polygon = overlays.createPolygon([1, 1], [2, 2], [3, 3]);
 // Access the currently placed overlays
 const yourMarkers  = overlays.tracker.markers; // GoogleMapsMarker[]
 const yourPolygons = overlays.tracker.polygons; // GoogleMapsPolygon[]
+// ...
+
 // Subscribe to changes
 overlays.tracker.changes.subscribe(...);
 
