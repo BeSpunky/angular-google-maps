@@ -3,7 +3,7 @@
 ![npm (scoped)](https://img.shields.io/npm/v/@bespunky/angular-google-maps.svg?style=flat-square)
 
 <p align="center">
-    <img src="https://dev.azure.com/BeSpunky/bebdc696-fbbf-4816-9247-9d1311da59bc/_apis/git/repositories/7dc3a677-7580-42a8-b49f-b4d614beaf97/items?path=%2Fprojects%2Fdemo%2Fsrc%2Fassets%2Flogo%400.75x.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0"/>
+    <img src="https://dev.azure.com/BeSpunky/bebdc696-fbbf-4816-9247-9d1311da59bc/_apis/git/repositories/7dc3a677-7580-42a8-b49f-b4d614beaf97/items?path=%2Fprojects%2Fdemo%2Fsrc%2Fassets%2Flogo.svg&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0" width="230"/>
 </p>
 
 <p align="center" style="font-size: x-large">@bespunky/angular-google-maps</p>
@@ -65,10 +65,19 @@ Of course 😁
 The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10. 
 Compatibility with older versions is possible but not guaranteed.
 
+[Latest Changelog](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2FCHANGELOG.md&_a=preview)
+
 # Issues & Requests
 Unfortunately, Azure DevOps doesn't support issue collection. I'm considering moving this repo to GitHub.  
 In the meantime, any issues or requests can be sent to [us@bespunky.io](mailto:us@bespunky.io?subject=@bespunky/angular-google-maps).
 
+# Other Packages by [`@bespunky`](https://www.npmjs.com/~bespunky)
+
+📦 [`@bespunky/angular-zen`](https://www.npmjs.com/package/@bespunky/angular-zen)
+
+🚧 (soon) `@bespunky/angular-zen-ux` will help you with simple UX tasks.
+
+🚧 (soon) `@bespunky/angular-zen-seo` will help you with metadata and SEO related tasks.
 
 # References
 - [Source Code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps)
