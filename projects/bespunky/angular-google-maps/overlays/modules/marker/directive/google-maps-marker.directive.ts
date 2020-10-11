@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { IGoogleMapsEventData, Hook, Coord } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase    } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsMarker                 } from '../i-google-maps-marker';
-import { GoogleMapsMarkerFactoryProvider   } from '../google-maps-marker-factory.provider';
+import { IGoogleMapsEventData, Hook, BoundsLike } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase         } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { IGoogleMapsMarker                      } from '../i-google-maps-marker';
+import { GoogleMapsMarkerFactoryProvider        } from '../google-maps-marker-factory.provider';
 
 @Directive({
     selector : 'bs-google-maps-marker, [bsGoogleMapsMarker]',
@@ -21,7 +21,7 @@ export class GoogleMapsMarkerDirective extends GoogleMapsOverlayComponentBase<IG
     @Input() public label?    : string;
     @Input() public opacity?  : number;
     @Input() public options?  : google.maps.MarkerOptions;
-    @Input() public position? : Coord;
+    @Input() public position? : BoundsLike;
     @Input() public shape?    : google.maps.MarkerShape;
     @Input() public title?    : string;
     @Input() public visible?  : boolean;

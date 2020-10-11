@@ -45,9 +45,7 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
     @OutsideAngular
     public setPosition(element: BoundsLike): void
     {
-        const center = this.api.geometry.defineBounds(element).getCenter();
-        
-        this.native.setPosition(center);
+        this.native.setPosition(this.api.geometry.centerOf(element));
     }
 
     public getTrigger(): InfoWindowTrigger
