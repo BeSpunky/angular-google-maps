@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { GoogleMapModule, Superpower, GoogleMapsApiService, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
+import { GoogleMapModule, Superpower, GoogleMapsApiService, BoundsLike, CoordPath } from '@bespunky/angular-google-maps/core';
 import { DrawableOverlay     } from '../../abstraction/types/abstraction';
 import { GoogleMapsMarker    } from '../../modules/marker/google-maps-marker';
 import { GoogleMapsPolygon   } from '../../modules/polygon/google-maps-polygon';
+import { GoogleMapsCircle    } from '../../modules/circle/google-maps-circle';
 import { GoogleMapsData      } from '../../modules/data/google-maps-data';
 import { IOverlaysSuperpower } from '../i-overlays-superpower';
 import { OverlaysTracker     } from './overlays-tracker';
@@ -18,9 +19,9 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
         super();
     }
     
-    public createMarker(position: Coord, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
+    public createMarker(position: BoundsLike, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
     {
-        options = Object.assign({}, options, { position: this.api.geometry.toLiteralCoord(position) });
+        options = Object.assign({}, options, { position: this.api.geometry.centerOf(position) });
         
         // Marker creation will cause rendering. Run outside...
         return this.createOverlay(() => new GoogleMapsMarker(this.api, this.map, options));
@@ -31,6 +32,13 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
         options = Object.assign({}, options, { paths: this.api.geometry.toLiteralMultiPath(path) });
 
         return this.createOverlay(() => new GoogleMapsPolygon(this.api, this.map, options));
+    }
+    
+    public createCircle(center: BoundsLike, radius: number, options?: google.maps.CircleOptions): GoogleMapsCircle
+    {
+        options = Object.assign({}, options, { center: this.api.geometry.centerOf(center), radius });
+
+        return this.createOverlay(() => new GoogleMapsCircle(this.api, this.map, options));
     }
 
     public createDataLayer(options?: google.maps.Data.DataOptions): GoogleMapsData
