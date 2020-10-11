@@ -32,7 +32,7 @@ export class GeometryTransformService
         // This relies on typescript to ensure 2 items in the array
         if (this.isFlatCoord(coord)) return { lat: coord[0], lng: coord[1] };
 
-        return coord instanceof google.maps.LatLng ? { lat: coord.lat(), lng: coord.lng() } : coord as google.maps.LatLngLiteral;
+        return coord instanceof google.maps.LatLng ? coord.toJSON() : coord as google.maps.LatLngLiteral;
     }
 
     /**
