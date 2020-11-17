@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
-    "build-demo": "ng build --prod --project demo",
+    "build-demo": "ng build --prod --project demo && npm run generate-docs",
     "test": "ng test --code-coverage --browsers=ChromeHeadless --watch=false --reporters=junit,coverage-istanbul",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -20,6 +20,9 @@
     "vpatch": "npm run lib-vpatch && npm run app-vpatch",
     "publish": "cd dist/bespunky/angular-google-maps && npm publish --access public",
     "publish-demo": "firebase deploy --only hosting:bs-angular-g-maps",
+    "update-wiki-summary": "node generate-wiki-summary",
+    "generate-docs": "npm run update-wiki-summary -- ./wiki && cd projects/bespunky/angular-google-maps && compodoc",
+    "serve-docs": "npm run update-wiki-summary -- ./wiki && cd projects/bespunky/angular-google-maps && compodoc -s",
     "postinstall": "ngcc --tsconfig \"./projects/bespunky/angular-google-maps/tsconfig.lib.json\""
   },
   "private": false,
