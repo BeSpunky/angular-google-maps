@@ -5,8 +5,9 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 import { Topics } from './topics/all';
 
-export const WikiUrl: string = 'https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps';
-export const RepoUrl: string = 'https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps';
+export const WikiUrl   : string = 'https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps';
+export const RepoUrl   : string = 'https://www.github.com/BeSpunky/angular-google-maps';
+export const PackageUrl: string = 'https://www.npmjs.com/package/@bespunky/angular-google-maps';
 
 @Component({
     selector   : 'demo-root',
@@ -15,8 +16,9 @@ export const RepoUrl: string = 'https://dev.azure.com/BeSpunky/Libraries/_git/an
 })
 export class AppComponent
 {
-    public readonly wikiUrl: string = WikiUrl;
-    public readonly repoUrl: string = RepoUrl;
+    public readonly wikiUrl   : string = WikiUrl;
+    public readonly repoUrl   : string = RepoUrl;
+    public readonly packageUrl: string = PackageUrl;
 
     public isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
         .pipe(
