@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WindowRef  } from '@bespunky/angular-zen';
+import { WindowRef  } from '@bespunky/angular-zen/core';
 
 import { GoogleMapsApiLoader } from '@bespunky/angular-google-maps/_internal';
 

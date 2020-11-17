@@ -1,5 +1,5 @@
 import { ElementRef  } from '@angular/core';
-import { DocumentRef } from '@bespunky/angular-zen';
+import { DocumentRef } from '@bespunky/angular-zen/core';
 
 import { createAndAppendMapElement } from "./create-and-append-map-element";
 
