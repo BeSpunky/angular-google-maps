@@ -1,6 +1,6 @@
 import { BehaviorSubject            } from 'rxjs';
 import { Injectable, NgZone, Inject } from '@angular/core';
-import { promiseLater               } from '@bespunky/angular-zen';
+import { promiseLater               } from '@bespunky/angular-zen/async';
 
 import { GoogleMapsApiLoader       } from './google-maps-api-loader';
 import { GoogleMapsApiReadyPromise } from './google-maps-api-ready.token';

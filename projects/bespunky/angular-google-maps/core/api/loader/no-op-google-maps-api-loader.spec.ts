@@ -1,5 +1,5 @@
 import { async     } from '@angular/core/testing';
-import { WindowRef } from '@bespunky/angular-zen';
+import { WindowRef } from '@bespunky/angular-zen/core';
 
 import { NoOpGoogleMapsApiLoader } from '@bespunky/angular-google-maps/core';
 

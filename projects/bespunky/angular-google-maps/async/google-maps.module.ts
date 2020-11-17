@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CoreModule, UniversalModule   } from '@bespunky/angular-zen';
+import { CoreModule                    } from '@bespunky/angular-zen/core';
+import { UniversalModule               } from '@bespunky/angular-zen/universal';
 
 import { _GoogleMapsModule, _InternalModule         } from '@bespunky/angular-google-maps/_internal';
 import { _GoogleMapsCoreModule, GoogleMapsApiLoader } from '@bespunky/angular-google-maps/core';
