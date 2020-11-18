@@ -15,7 +15,7 @@ The library will load it for you asynchronously when you import the main module 
 </small>
 <br/><br/>
 
-[Show me how](Getting-Started/Plug-n-Play-Async-Loading.md)
+[Show me how](/docs/additional-documentation/getting-started/plug-n-play-async-loading.html)
 </details>
 
 <br/>
@@ -26,7 +26,7 @@ In case you need to create a custom loader and integrate it with the library. Th
 </small>
 <br/><br/>
 
-[Show me how](Getting-Started/Custom-Loader.md)
+[Show me how](/docs/additional-documentation/getting-started/custom-loader.html)
 </details>
 <br/>
 <details>
@@ -36,7 +36,7 @@ In case you'll place a `script` tag manually and you can ensure that it will be 
 </small>
 <br/><br/>
 
-[Show me how](Getting-Started/Manually-Loading.md)
+[Show me how](/docs/additional-documentation/getting-started/manually-loading.html)
 </details>
 
 <br/>
