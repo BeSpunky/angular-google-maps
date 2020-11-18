@@ -38,12 +38,12 @@
 
 Bam! You have a map on your screen! 🤟😎
 
-> [`*bsSafe`](/docs/additional-documentation/the-map/*bsSafe) will make sure the component is only rendered after maps API is locked-and-loaded.
+> [`*bsSafe`](/docs/additional-documentation/the-map/bssafe.html) will make sure the component is only rendered after maps API is locked-and-loaded.
 
 # Next steps
 | Topic | Description |
 | ----- | ----------- |
-|[Manual Loading](/docs/additional-documentation/getting-started/manually-loading)|Manually loading the native api.
-|[Custom Loader](/docs/additional-documentation/getting-started/custom-loader)|Define your own custom loader for maps api.|
-|[Basic Concepts](../basic-concepts.html)|The main ideas of how this library operates.|
+|[Manual Loading](/docs/additional-documentation/getting-started/manually-loading.html)|Manually loading the native api.
+|[Custom Loader](/docs/additional-documentation/getting-started/custom-loader.html)|Define your own custom loader for maps api.|
+|[Basic Concepts](/docs/additional-documentation/basic-concepts.html)|The main ideas of how this library operates.|
 |[The Map](/docs/additional-documentation/the-map.html)|Controlling the map, configuring it, handling events and more.|

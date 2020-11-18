@@ -1,9 +1,9 @@
 # Context
 You've probably seen the mysterious `*bsSafe` directive throughout the documentation. The directive simply prevents angular from rendering a component until maps api has been loaded by the library.
 
-`*bsSafe` is only needed if the native maps api is loaded async, either by using the [plug-n-play setup](/Getting-Started/Plug-n-Play-Async-Loading), or the [custom loader setup](/Getting-Started/Custom-Loader).
+`*bsSafe` is only needed if the native maps api is loaded async, either by using the [plug-n-play setup])(/docs/additional-documentation/getting-started/plug-n-play-async-loading.html), or the [custom loader setup])(/docs/additional-documentation/getting-started/custom-loader.html).
 
-[Manual loading setup](/Getting-Started/Manually-Loading) doesn't require, and will fail with, `*bsSafe` as the `async` module is not in play.
+[Manual loading setup])(/docs/additional-documentation/getting-started/manually-loading.html) doesn't require, and will fail with, `*bsSafe` as the `async` module is not in play.
 
 # What happens when I implement my own loading strategy...?
 When you define a custom provider for `GoogleMapsApiLoader`, you automatically interact with `*bsSafe` behind the scenes. Just make sure you return a valid promise that resolves when the api is loaded and you're...... safe! 🙌

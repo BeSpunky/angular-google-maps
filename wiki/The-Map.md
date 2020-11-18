@@ -6,9 +6,6 @@ To place a map in your template, use the `<bs-google-map/>` element.
 
 Content and tools related to the map instance you're defining will always go as children of your `<bs-google-map/>` element.
 
-
-[[_TOC_]]
-
 # Options
 [Live demo](https://bs-angular-g-maps.web.app/The%20Map/Map%20Options)
 
@@ -23,7 +20,7 @@ To configure your map, simply bind options using angular's syntax:
 ></bs-google-map>
 ```
 
-> [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) for a complete list of supported bindable `@Input` options and their types.
+> [See API](/docs/components/GoogleMapComponent.html#inputs) for a complete list of supported bindable `@Input` options and their types.
 
 # Events
 [Live demo](https://bs-angular-g-maps.web.app/The%20Map/Map%20Events)
@@ -37,7 +34,7 @@ To handle events emitted by your map, simply bind handlers using angular's synta
 ></bs-google-map>
 ```
 
-> [See source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fmodules%2Fmap%2Fcomponent%2Fgoogle-map.component.ts&version=GBmaster&_a=contents) for a complete list of supported bindable `@Output` events and their `$event` type.
+> [See API](/docs/components/GoogleMapComponent.html#outputs) for a complete list of supported bindable `@Output` events and their `$event` type.
 
 # Styles
 Inside of a `<bs-google-map/>` component, the top level container is always a `div.google-map` element. The map component is defined with no view encapsulation, meaning you can use the `.google-map` css selector to identify map elements and apply styles from your host component if necessary.
@@ -51,7 +48,7 @@ Inside of a `<bs-google-map/>` component, the top level container is always a `d
 |-----------------------------------------|----------------------------------------------------------|
 | [Superpowers](/docs/additional-documentation/the-map/superpowers.html)     | Enhance map capabilities with built-in and custom tools. |
 | [Multiple Maps](/docs/additional-documentation/the-map/multiple-maps.html) | Adding multiple map instances.                           |
-| [*bsSafe](/docs/additional-documentation/the-map/*bsSafe)             | Ensuring that maps api is loaded.                        |
+| [*bsSafe](/docs/additional-documentation/the-map/bssafe.html)             | Ensuring that maps api is loaded.                        |
 
 ## Other topics
 | Topic                                         | Description                                           |

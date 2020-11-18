@@ -3,8 +3,6 @@ Components, directives and event handlers try to give you as much control as pos
 
 If you still haven't read [Basic Concepts](/docs/additional-documentation/basic-concepts.html), now is the time...
 
-[[_TOC_]]
-
 # Accessing Wrappers
 
 ## Event Handlers

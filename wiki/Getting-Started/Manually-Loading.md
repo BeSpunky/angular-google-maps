@@ -47,7 +47,7 @@ Bam! You have a map on your screen! 🤟😎
 # Next steps
 | Topic | Description |
 | ----- | ----------- |
-|[Plug & Play Async Loading](/docs/additional-documentation/getting-started/plug-n-play-async-loading)|Let the library load the native api for ya. 💪
-|[Custom Loader](/docs/additional-documentation/getting-started/custom-loader)|Define your own custom loader for maps api.|
-|[Basic Concepts](../basic-concepts.html)|The main ideas of how this library operates.|
+|[Plug & Play Async Loading](/docs/additional-documentation/getting-started/plug-n-play-async-loading.html)|Let the library load the native api for ya. 💪
+|[Custom Loader](/docs/additional-documentation/getting-started/custom-loader.html)|Define your own custom loader for maps api.|
+|[Basic Concepts](/docs/additional-documentation/basic-concepts.html)|The main ideas of how this library operates.|
 |[The Map](/docs/additional-documentation/the-map.html)|Controlling the map, configuring it, handling events and more.|

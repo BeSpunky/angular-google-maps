@@ -8,9 +8,8 @@ Forget about having to manually convert your objects to the specific type requir
 
 **TLDR** Instead of reading and memorizing types, try and pass your types around to the library's methods. If you're thinking a method should receive your object type, it probably does. If it doesn't, contact me.
 
-[Live demo](https://bs-angular-g-maps.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Fgeometry.type.ts&version=GBmaster)
+[Live demo](https://bs-angular-g-maps.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://github.com/BeSpunky/angular-google-maps/blob/master/projects/bespunky/angular-google-maps/core/abstraction/types/geometry.type.ts)
 
-[[_TOC_]]
 # Single Coordinates
 Coordinates representation will always be done using the `Coord` type. Coords can take one of the following forms:
 ```typescript
@@ -161,10 +160,10 @@ You can implement IBounds as needed in your objects as well.
 | `BoundsLike`   | `Coord`, `CoordPath`, `NativeBounds`, `IBounds`               |
 
 
-[Live demo](https://bs-angular-g-maps.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Fgeometry.type.ts&version=GBmaster)
+[Live demo](https://bs-angular-g-maps.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://github.com/BeSpunky/angular-google-maps/blob/master/projects/bespunky/angular-google-maps/core/abstraction/types/geometry.type.ts)
 
 
 # See Also
 | Topic                                                                                                                                                                                                                     | Description                                  |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|
-| [GeometryTransformService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Ftransform%2Fgeometry-transform.service.ts&version=GBmaster) | Easily construct and convert geometry types. |
+| [GeometryTransformService](/docs/injectables/GeometryTransformService.html) | Easily construct and convert geometry types. |

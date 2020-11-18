@@ -11,10 +11,10 @@ A native object is always represented by a corresponding wrapper object. However
 
 <center>
 
-![Wrapper](/docs/.attachments/wrapper.png)
+![Wrapper](/docs/.attachments/Wrapper.png)
 </center>
 
-> **Note** Once you put your hands on the native object, the library has no way of knowing what you'll do with it. In certain cases the library expects you to use the wrapper for its magic to work. [Overlay tracking](overlays-superpower.html#The-Superpower) for example, will become useless if you add overlays directly to the native object.
+> **Note** Once you put your hands on the native object, the library has no way of knowing what you'll do with it. In certain cases the library expects you to use the wrapper for its magic to work. [Overlay tracking](/docs/additional-documentation/overlays-superpower.html#the-superpower) for example, will become useless if you add overlays directly to the native object.
 >
 > **Conclusions**:
 > 1. Stick to wrapper objects as much as possible.
@@ -33,7 +33,7 @@ The wrapper is always accessible through the component's strongly-typed `wrapper
 # Functionality Wrapping
 
 ## Flexibility
-Wrappers [use magic ✨](internal%20workings) to delegate access to the native object's functionality, and in most cases they will simply automatically call the native functions.
+Wrappers [use magic ✨](/docs/additional-documentation/internal-workings.html) to delegate access to the native object's functionality, and in most cases they will simply automatically call the native functions.
 
 To provide you with greater flexibility and ease of use, some functionalities are manually wrapped to allow support for a wider range of types, 'shortcut' some task, or do some transparent delegation preprocessing or postprocessing.
 
@@ -100,7 +100,7 @@ export YourComponent
     }
 }
 ```
-# [Superpowers](/The-Map/superpowers.html)
+# [Superpowers](/docs/additional-documentation/the-map/superpowers.html)
 The different capabilities offered by the native library, such as drawing on the map, placing overlays and others, along with enhancements implemented by `@bespunky/angular-google-maps` are represented by superpowers.
 
 These superpowers are dynamically added to the map object, depending on the modules you choose to import.
@@ -112,7 +112,7 @@ In other words:
 # Next Steps
 | Topic                                        | Description                                              |
 |----------------------------------------------|----------------------------------------------------------|
-| [The Map](/The-Map)                          | The map component and its friends.                       |
-| [Programmatic Control](Programmatic-Control) | Extract wrapper objects and use them in your components. |
+| [The Map](/docs/additional-documentation/the-map.html)                          | The map component and its friends.                       |
+| [Programmatic Control](/docs/additional-documentation/programmatic-control.html) | Extract wrapper objects and use them in your components. |
 | [Geometry Types](/docs/additional-documentation/geometry-types.html)            | Flexibility for geometries.                              |
-| [Injectable Services](/Injectable-Services)  | Injectable tools and providers.                          |
+| [Injectable Services](/docs/additional-documentation/injectable-services.html)  | Injectable tools and providers.                          |

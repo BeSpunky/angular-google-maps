@@ -5,8 +5,6 @@ You have a view with a list of your business's branches. Each branch on the list
 
 [Live demo](https://bs-angular-g-maps.web.app/Best%20Practices/Feature%20Maps)
 
-[[_TOC_]]
-
 # Aspiration
 We need a reusable component that will provide branch location functionality and allow us to easily place a branch location map, like so:
 ```html

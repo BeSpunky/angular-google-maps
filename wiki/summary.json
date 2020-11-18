@@ -8,7 +8,7 @@
     "file": "/Getting-Started.md",
     "children": [
       {
-        "title": "Plug n-Play-Async-Loading",
+        "title": "Plug n Play Async Loading",
         "file": "/Getting-Started/Plug-n-Play-Async-Loading.md"
       },
       {
@@ -20,10 +20,6 @@
         "file": "/Getting-Started/Manually-Loading.md"
       }
     ]
-  },
-  {
-    "title": "What's Inside",
-    "file": "/What's-Inside.md"
   },
   {
     "title": "Basic Concepts",
@@ -42,8 +38,8 @@
         "file": "/The-Map/Superpowers.md"
       },
       {
-        "title": "%2AbsSafe",
-        "file": "/The-Map/%2AbsSafe.md"
+        "title": "bsSafe",
+        "file": "/The-Map/bsSafe.md"
       }
     ]
   },

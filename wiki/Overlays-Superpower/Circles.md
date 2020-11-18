@@ -6,7 +6,7 @@
 
 Name for template reference variables: `circle`
 
-[Wrapper API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fcircle%2Fgoogle-maps-circle.ts&version=GBmaster) | [Directive API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fcircle%2Fdirective%2Fgoogle-maps-circle.directive.ts&version=GBmaster) | [Live Demo](https://bs-angular-g-maps.web.app/Overlays%20Superpower/circles.html)
+[Wrapper API](/docs/classes/GoogleMapsCircle.html) | [Directive API](/docs/directives/GoogleMapsCircleDirective.html) | [Live Demo](https://bs-angular-g-maps.web.app/Overlays%20Superpower/Circles)
 
 # Positioning
 The circle's center can be set using any geometry matching `BoundsLike` (see [Geometry Types](/docs/additional-documentation/geometry-types.html)). The wrapper will automatically get the center of the element's bounding box and use it as the position.

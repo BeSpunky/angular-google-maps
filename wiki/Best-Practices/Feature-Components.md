@@ -12,8 +12,6 @@ You could instead, create a feature child component or directive which will:
 
 [Live demo](https://bs-angular-g-maps.web.app/Best%20Practices/Feature%20Components)
 
-[[_TOC_]]
-
 # Aspiration
 It would be great if we could centralize and encapsulate route rendering somehow, then reuse it inside the different map types we have, so it is scalable. Something like:
 ```HTML
@@ -24,7 +22,7 @@ It would be great if we could centralize and encapsulate route rendering somehow
 
 # Implementation
 
-I'm interested in a [Template driven solution](#Feature-Child-Component) | [Programmatic solution](#Feature-Child-Directive).
+I'm interested in a [Template driven solution](#feature-child-component) | [Programmatic solution](#feature-child-directive).
 
 ## Feature Child Component
 We'll create a component and place all overlay directives necessary for our route rendering in its template:

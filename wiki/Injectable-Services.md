@@ -6,22 +6,22 @@ I mean, come on... Do I really need to extract all coords from my polygons and m
 Well, with `@bespunky/angular-google-maps`... you can!  
 Apart from components and directives, the library gives you access to powerful tools to do all the heavy-lifting for you. 🏋️‍♂️
 
-# [GoogleMapsApiService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Fgoogle-maps-api.service.ts&version=GBmaster)
+# [GoogleMapsApiService](/docs/injectables/GoogleMapsApiService.html)
 Wrappers use this service internally, but you can use it too. Gives you access to underlying low-level operations, and saves you the need of injecting any of the other services into your components.
 
 **Injection 💉:** directly.
 
-# [GoogleMapsComponentApiService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Fgoogle-maps-component-api.service.ts&version=GBmaster)
+# [GoogleMapsComponentApiService](/docs/injectables/GoogleMapsComponentApiService.html)
 This is the bridge between components and wrappers. It handles event hooking and property change delegation. It is a core part of the library's [infrastructure](/docs/additional-documentation/internal-workings.html). Use it if you're creating your own components.
 
 **Injection 💉:** directly.
 
-# [GeometryTransformService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Ftransform%2Fgeometry-transform.service.ts&version=GBmaster)
+# [GeometryTransformService](/docs/injectables/GeometryTransformService.html)
 Provides methods to construct, deconstruct and transform geometry data.
 
 **Injection 💉:** directly or through the `geometry` property of `GoogleMapsApiService`.
 
-# [EventDataTransformService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Ftransform%2Fevent-data-transform.service.ts&version=GBmaster)
+# [EventDataTransformService](/docs/injectables/EventDataTransformService.html)
 The event data constructed by the native api has always been confusing and annoying to me. This service knows the different types of event data objects raised by the native api and provides transformation methods for easy extraction of useful information.
 
 **Injection 💉:** directly or through the `eventsData` property of `GoogleMapsApiService`.

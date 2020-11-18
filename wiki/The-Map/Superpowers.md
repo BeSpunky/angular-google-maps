@@ -1,9 +1,7 @@
 # Here Comes The Fun
 Google Maps API provides different tools for doing more with your map, like placing overlays and allowing the user to draw shapes on it. `@bespunky/angular-google-maps` refers to them as **Superpowers** ⚡💪.
 
-[Live demo](https://bs-angular-g-maps.web.app/The%20Map/superpowers.html%20%28Built-in%29)
-
-[[_TOC_]]
+[Live demo](https://bs-angular-g-maps.web.app/The%20Map/Superpowers%20%28Built-in%29)
 
 ## Injection
 Superpowers are injected at the map component's level. Each map instance will have its own instances of the superpowers loaded by your system.
@@ -34,7 +32,7 @@ Provides quick overlay creation methods and keeps track of overlays added and re
 
 | Service                          | Module                         | Package                                      |
 |:--------------------------------:|:------------------------------:|:--------------------------------------------:|
-| ⚡ [`OverlaysSuperpower`](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fsuperpower%2Fservices%2Foverlays-superpower.service.ts&version=GBmaster) | 🧩 `GoogleMapsOverlaysModule` | 📦 `@bespunky/angular-google-maps/overlays` |
+| ⚡ [`OverlaysSuperpower`](/docs/injectables/OverlaysSuperpower.html) | 🧩 `GoogleMapsOverlaysModule` | 📦 `@bespunky/angular-google-maps/overlays` |
 
 
 ## Drawing Manager
@@ -133,7 +131,7 @@ Good candidates for superpowers are:
 * Extending map capabilities (e.g. tracking objects, data extraction, etc.).
 * Functionalities you can say "should be/have been built-into the map" about.
 
-You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better implemented as [feature components or directives](#See-Also).
+You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better implemented as [feature components or directives](#see-also).
 
 # See Also
 | Topic                                                    | Description                                   |

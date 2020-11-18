@@ -6,7 +6,7 @@
 
 Name for template reference variables: `infoWindow`
 
-[Wrapper API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Finfo-window%2Fgoogle-maps-info-window.ts&version=GBmaster) | [Directive API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Finfo-window%2Fdirective%2Fgoogle-maps-info-window.directive.ts&version=GBmaster) | [Live Demo](https://bs-angular-g-maps.web.app/Overlays%20Superpower/Info%20Windows)
+[Wrapper API](/docs/classes/GoogleMapsInfoWindow.html) | [Directive API](/docs/directives/GoogleMapsInfoWindowDirective.html) | [Live Demo](https://bs-angular-g-maps.web.app/Overlays%20Superpower/Info%20Windows)
 
 # Concepts
 Now this is a cool one... 😎
@@ -35,39 +35,16 @@ You can always open an info window programmaticaly at a specific position on the
 
 This will open the info window at the mouse position when the user's enters the polygon.
 
-# [trigger]
+# trigger
 The default trigger when attaching an overlay is mouse over. You can change it by binding the `trigger` property, which takes an `InfoWindowTrigger` value.
-These are the supported triggers and how they are defined:
-
-```typescript
-/**
- * The supported triggers for opening the info window.
- */
-export declare enum InfoWindowTrigger {
-    /**
-     * The info window will open when the user clicks the attached element.
-     */
-    Click = "click",
-    /**
-     * The info window will open when the user enters the attached element with the mouse and close when the user exists the attached element.
-     */
-    MouseOver = "mouseOver",
-    /**
-     * The info window will open when the user double clicks the attached element.
-     */
-    DoubleClick = "doubleClick",
-    /**
-     * The info window will open when the user right clicks the attached element.
-     */
-    RightClick = "rightClick"
-}
-```
 
 The following will make the info window open at the mouse position when the user right clicks inside the polygon:
 ```html
 <bs-google-maps-polygon .... #polygon="polygon"></bs-google-maps-polygon>
 <bs-google-maps-info-window [attachedTo]="polygon" [trigger]="'rightClick'">...</bs-google-maps-info-window>
 ```
+
+[Available trigger values](/docs/miscellaneous/enumerations.html#InfoWindowTrigger)
 
 # [closeAfter]
 To have the info window automatically close after a predefined time, define the time in milliseconds using `closeAfter`.

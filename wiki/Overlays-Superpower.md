@@ -14,8 +14,6 @@ Import `GoogleMapsOverlaysModule` in your app and you're good to go. 👍
 
 > You can also lazy load the module in case you'll only need it later.
 
-[[_TOC_]]
-
 # Directives
 Overlay directives are placed inside a [map component](/docs/additional-documentation/the-map.html). A directive represents a single instance of the overlay and operates within the boundaries of the map it was placed in. That map instance is the only one it recognizes and interacts with.
 
