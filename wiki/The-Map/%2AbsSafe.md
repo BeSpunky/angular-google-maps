@@ -15,7 +15,7 @@ That being said, if your component uses elements like `google.maps.Animation`, `
 
 > **👍 The rule of thumb:** The top most component which refers to `google` or expects map elements to be ready on init should have the `*bsSafe` directive.
 
-[**Safe map** example](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Map%20Options) | [**Safe host** example](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20From%20%60ViewChild%60)
+[**Safe map** example](https://bs-angular-g-maps.web.app/The%20Map/Map%20Options) | [**Safe host** example](https://bs-angular-g-maps.web.app/Programmatic%20Control/Wrappers%20From%20%60ViewChild%60)
 
 # What's the point anyways?
 Most components, wrappers and other tools in the library rely on the native api to be loaded.

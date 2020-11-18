@@ -3,7 +3,7 @@
 🧩 `GoogleMapsOverlaysModule`  
 ⚡ `OverlaysSuperpower`
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Overlays%20Superpower/Overlay%20Tracking)
+[Live demo](https://bs-angular-g-maps.web.app/Overlays%20Superpower/Overlay%20Tracking)
 
 Overlays are layers of information displayed on the map (see [original docs](https://developers.google.com/maps/documentation/javascript/overlays)).  
 The overlays module will provide you with directives for each overlay type, and will also charge your app with the `⚡ OverlaysSuperpower`.
@@ -17,7 +17,7 @@ Import `GoogleMapsOverlaysModule` in your app and you're good to go. 👍
 [[_TOC_]]
 
 # Directives
-Overlay directives are placed inside a [map component](/The-Map). A directive represents a single instance of the overlay and operates within the boundaries of the map it was placed in. That map instance is the only one it recognizes and interacts with.
+Overlay directives are placed inside a [map component](/docs/additional-documentation/the-map.html). A directive represents a single instance of the overlay and operates within the boundaries of the map it was placed in. That map instance is the only one it recognizes and interacts with.
 
 ## Example
 This is how you would add a simple marker to the map for each branch of your business:
@@ -30,19 +30,19 @@ This is how you would add a simple marker to the map for each branch of your bus
 # Supported Overlays
 |     | Type                                              | Directive ⚙                    | Wrapper 🧬            |
 |:---:|---------------------------------------------------|---------------------------------|------------------------|
-| ✔  | [Markers](/Overlays-Superpower/Markers)           | `<bs-google-maps-marker/>`      | `GoogleMapsMarker`     |
-| ✔  | [Polygons](/Overlays-Superpower/Polygons)         | `<bs-google-maps-polygon/>`     | `GoogleMapsPolygon`    |
+| ✔  | [Markers](/docs/additional-documentation/overlays-superpower/markers.html)           | `<bs-google-maps-marker/>`      | `GoogleMapsMarker`     |
+| ✔  | [Polygons](/docs/additional-documentation/overlays-superpower/polygons.html)         | `<bs-google-maps-polygon/>`     | `GoogleMapsPolygon`    |
 | 🚧 | Polylines                                         |                                 |                        |
-| ✔  | [Circles](/Overlays-Superpower/Circles)           | `<bs-google-maps-circle/>`      | `GoogleMapsCircle`     |
+| ✔  | [Circles](/docs/additional-documentation/overlays-superpower/circles.html)           | `<bs-google-maps-circle/>`      | `GoogleMapsCircle`     |
 | 🚧 | Rectangles                                        |                                 |                        |
-| ✔  | [Info Windows](/Overlays-Superpower/Info-Windows) | `<bs-google-maps-info-window/>` | `GoogleMapsInfoWindow` |
+| ✔  | [Info Windows](/docs/additional-documentation/overlays-superpower/info-windows.html) | `<bs-google-maps-info-window/>` | `GoogleMapsInfoWindow` |
 | 🚧 | Symbols                                           |                                 |                        |
 | 🚧 | Ground Overlays                                   |                                 |                        |
 | 🚧 | Custom Overlays                                   |                                 |                        |
-| ✔  | [Data Layer](/Overlays-Superpower/Data-Layer)     | `<bs-google-maps-data/>`        | `GoogleMapsData`       |
+| ✔  | [Data Layer](/docs/additional-documentation/overlays-superpower/data-layer.html)     | `<bs-google-maps-data/>`        | `GoogleMapsData`       |
 
 # The Superpower
-<small>[About Superpowers](/The-Map/Superpowers)</small> | <small>[Fetching The Map](/Programmatic-Control)</small>
+<small>[About Superpowers](/docs/additional-documentation/the-map/superpowers.html)</small> | <small>[Fetching The Map](/docs/additional-documentation/programmatic-control.html)</small>
 
 The `OverlaysSuperpower` provides quick overlay creation methods. It will additionally keep track of objects added and removed from the map. So now you can:
 ```typescript
@@ -112,5 +112,5 @@ Consider using the data layer instead of normal overlays when:
 # See Also
 | Topic                                                    | Description                                   |
 |----------------------------------------------------------|-----------------------------------------------|
-| [Feature Maps](/Best-Practices/Feature-Maps)             | Best practices for maps scalability.          |
-| [Feature Components](/Best-Practices/Feature-Components) | Best practices for centralizing map features. |
+| [Feature Maps](/docs/additional-documentation/best-practices/feature-maps.html)             | Best practices for maps scalability.          |
+| [Feature Components](/docs/additional-documentation/best-practices/feature-components.html) | Best practices for centralizing map features. |

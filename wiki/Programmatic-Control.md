@@ -1,7 +1,7 @@
 # Intro
 Components, directives and event handlers try to give you as much control as possible out of the box. However, advanced scenarios will probably require a different approach. This page will guide you through extracting the underlying objects from the components and using them to programmatically control what's going on with your maps.
 
-If you still haven't read [Basic Concepts](/Basic-Concepts), now is the time...
+If you still haven't read [Basic Concepts](/docs/additional-documentation/basic-concepts.html), now is the time...
 
 [[_TOC_]]
 
@@ -46,7 +46,7 @@ export class MyMapComponent
 
 > If you're thinking of storing the emitter instance as a component member so you may use it in other places as well, you can. However, it is probably better if you fetch it on init instead. Keep reading... 😉
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20From%20Events)
+[Live demo](https://bs-angular-g-maps.web.app/Programmatic%20Control/Wrappers%20From%20Events)
 
 ## Querying The View
 ```typescript
@@ -74,7 +74,7 @@ export class MapComponent implements AfterViewInit
 }
 ```
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20From%20%60ViewChild%60)
+[Live demo](https://bs-angular-g-maps.web.app/Programmatic%20Control/Wrappers%20From%20%60ViewChild%60)
 
 # Template References
 To use the map component's api in your template, assign your variable with the `map` value. This will give your variable access to the `wrapper` property.
@@ -87,7 +87,7 @@ To use the map component's api in your template, assign your variable with the `
 
 > Other components and directives in the library normally use a camelCase name to export their api (e.g. `marker`, `polygon`, `dataLayer`...). See the docs relevant to the component for the exported name.
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Wrappers%20Directly%20In%20Template)
+[Live demo](https://bs-angular-g-maps.web.app/Programmatic%20Control/Wrappers%20Directly%20In%20Template)
 
 # Custom Data
 Regardless of their type, every wrapper has a `custom` property which you can use for anything. This might serve you well for storing an entity, a configuration, or an id.
@@ -120,11 +120,11 @@ public onSpecialPlaceClicked(event: GoogleMapsEventData): void
 }
 ```
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Programmatic%20Control/Custom%20Data)
+[Live demo](https://bs-angular-g-maps.web.app/Programmatic%20Control/Custom%20Data)
 
 # Next Steps
 | Topic                                       | Description                        |
 |---------------------------------------------|------------------------------------|
-| [Injectable Services](/Injectable-Services) | Injectable tools and providers.    |
-| [Geometry Types](/Geometry-Types)           | Flexibility for geometries.        |
-| [Best Practices](/Best-Practices)           | Create scalable maps and features. |
+| [Injectable Services](/docs/additional-documentation/injectable-services.html) | Injectable tools and providers.    |
+| [Geometry Types](/docs/additional-documentation/geometry-types.html)           | Flexibility for geometries.        |
+| [Best Practices](/docs/additional-documentation/best-practices.html)           | Create scalable maps and features. |

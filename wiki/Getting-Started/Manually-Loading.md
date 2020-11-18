@@ -1,5 +1,5 @@
 # Manually loading Google Maps API
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Getting%20Started/Manual%20Loading)
+[Live demo](https://bs-angular-g-maps.web.app/Getting%20Started/Manual%20Loading)
 
 In case you prefer placing the `<script>` tag manually, or you have your own loading mechanism for fetching Google's Maps API, you can simply import the main module with no configuration.
 
@@ -47,7 +47,7 @@ Bam! You have a map on your screen! 🤟😎
 # Next steps
 | Topic | Description |
 | ----- | ----------- |
-|[Plug & Play Async Loading](/Getting-Started/Plug-n-Play-Async-Loading)|Let the library load the native api for ya. 💪
-|[Custom Loader](/Getting-Started/Custom-Loader)|Define your own custom loader for maps api.|
-|[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
-|[The Map](/The-Map)|Controlling the map, configuring it, handling events and more.|
+|[Plug & Play Async Loading](/docs/additional-documentation/getting-started/plug-n-play-async-loading)|Let the library load the native api for ya. 💪
+|[Custom Loader](/docs/additional-documentation/getting-started/custom-loader)|Define your own custom loader for maps api.|
+|[Basic Concepts](../basic-concepts.html)|The main ideas of how this library operates.|
+|[The Map](/docs/additional-documentation/the-map.html)|Controlling the map, configuring it, handling events and more.|

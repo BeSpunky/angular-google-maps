@@ -1,14 +1,14 @@
 <p align="center">
-    <img src="https://dev.azure.com/BeSpunky/bebdc696-fbbf-4816-9247-9d1311da59bc/_apis/git/repositories/7dc3a677-7580-42a8-b49f-b4d614beaf97/items?path=%2Fprojects%2Fdemo%2Fsrc%2Fassets%2Flogo.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0"/>
+    <img src="https://bs-angular-g-maps.web.app/assets/logo.svg" width="160"/>
 </p>
 
 <p align="center" style="font-size: x-large">@bespunky/angular-google-maps</p>
 <p align="center" style="font-size: medium">A brilliant solution for using Google Maps in Angular.</p>
 
 <p align="center" style="font-size: medium; margin: 20px auto">
-    ✨ <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/193/Getting-Started">Getting Started</a> |
-    🙌 <a href="https://bs-angular-ggl-maps-demo.web.app">Live Demo</a> |
-    🎁 <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/210/What's-Inside">What's in the library?</a>
+    ✨ <a href="https://bs-angular-g-maps.web.app/docs/additional-documentation/getting-started.html">Getting Started</a> |
+    🙌 <a href="https://bs-angular-g-maps.web.app">Official Site & Live Demo</a> |
+    🎁 <a href="https://bs-angular-g-maps.web.app/docs/additional-documentation/what's-inside.html">What's in the library?</a>
 </p>
 
 <p align="center" style="font-size: smaller; margin: 20px auto;">Pre-release. It is suggested not to use it for production yet.</p>
@@ -40,7 +40,7 @@ Here are some of the benefits:
 
 ✔ Open-source! 🤩
 
-More details in the [official site](https://bs-angular-ggl-maps-demo.web.app/).
+More details in the [official site](https://bs-angular-g-maps.web.app/).
 
 # Motivation
 There are a few Angular libraries out there for Google Maps. So why develop a new one?

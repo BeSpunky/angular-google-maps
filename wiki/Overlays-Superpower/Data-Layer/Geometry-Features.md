@@ -6,7 +6,7 @@
 
 Name for template reference variables: `feature`
 
-[Wrapper API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fgoogle-maps-feature.ts&version=GBmaster) | [Directive API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fdirective%2Fgoogle-maps-feature.directive.ts&version=GBmaster) | [Live Demo](https://bs-angular-ggl-maps-demo.web.app/Overlays%20Superpower/Data%20Layer)
+[Wrapper API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fgoogle-maps-feature.ts&version=GBmaster) | [Directive API](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fmodules%2Fdata%2Ffeature%2Fdirective%2Fgoogle-maps-feature.directive.ts&version=GBmaster) | [Live Demo](https://bs-angular-g-maps.web.app/Overlays%20Superpower/Data%20Layer)
 
 # Concepts
 Data layer features are the parallels for normal overlays. Markers, polygons, and other friends, can be created as features as well. The type of object rendered on the map is defined by the type of geometry assigned to the feature.
@@ -21,7 +21,7 @@ Features are meant to be used in conjunction with the data layer. To create a fe
     </bs-google-map>
     ```
 * Or use the data wrapper to add the feature.  
-<small>[How do I access the wrapper?](/Programmatic-Control)</small>
+<small>[How do I access the wrapper?](/docs/additional-documentation/programmatic-control.html)</small>
 
     ```typescript
     const data = ... // Fetch the data layer wrapper
@@ -53,4 +53,4 @@ If you don't care about the specific feature which raised the event, bind your h
 
 | Topic                             | Description                 |
 |-----------------------------------|-----------------------------|
-| [Geometry Types](/Geometry-Types) | Flexibility for geometries. |
+| [Geometry Types](/docs/additional-documentation/geometry-types.html) | Flexibility for geometries. |

@@ -12,7 +12,7 @@ Wrappers use this service internally, but you can use it too. Gives you access t
 **Injection 💉:** directly.
 
 # [GoogleMapsComponentApiService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Fgoogle-maps-component-api.service.ts&version=GBmaster)
-This is the bridge between components and wrappers. It handles event hooking and property change delegation. It is a core part of the library's [infrastructure](/Internal-Workings). Use it if you're creating your own components.
+This is the bridge between components and wrappers. It handles event hooking and property change delegation. It is a core part of the library's [infrastructure](/docs/additional-documentation/internal-workings.html). Use it if you're creating your own components.
 
 **Injection 💉:** directly.
 

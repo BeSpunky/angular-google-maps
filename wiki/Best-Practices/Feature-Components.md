@@ -1,6 +1,6 @@
 # The Concept
 
-Say you have an app like Uber, and you want to place the recorded route on the map. You have 3 different types of [feature map components](/Best-Practices/Feature-Maps) that display a route.
+Say you have an app like Uber, and you want to place the recorded route on the map. You have 3 different types of [feature map components](/docs/additional-documentation/best-practices/feature-maps.html) that display a route.
 
 Will you add the same map children over and over in each feature map component? What happens if you need to change the way you render the route? Will you change it in all components? 🤔
 
@@ -10,7 +10,7 @@ You could instead, create a feature child component or directive which will:
 3. Add markers for the start and end points.
 4. Add info windows to the start and end markers.
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Best%20Practices/Feature%20Components)
+[Live demo](https://bs-angular-g-maps.web.app/Best%20Practices/Feature%20Components)
 
 [[_TOC_]]
 
@@ -103,4 +103,4 @@ export class RouteOverlayDirective
 # Next Steps
 | Topic | Description |
 | ----- | ----------- |
-| [Feature Maps](/Best-Practices/Feature-Maps) | Best practices for maps scalability. |
+| [Feature Maps](/docs/additional-documentation/best-practices/feature-maps.html) | Best practices for maps scalability. |

@@ -1,6 +1,6 @@
 # Defining a Custom Loader For Maps API
 
-[Live Demo](https://bs-angular-ggl-maps-demo.web.app/Getting%20Started/Custom%20Loader)
+[Live Demo](https://bs-angular-g-maps.web.app/Getting%20Started/Custom%20Loader)
 
 1. Extend and implement the abstract `GoogleMapsApiLoader` class:
    
@@ -55,12 +55,12 @@
 
 Bam! You have a map on your screen! 🤟😎
 
-> [`*bsSafe`](/The-Map/*bsSafe) will make sure the component is only rendered after maps API is locked-and-loaded.
+> [`*bsSafe`](/docs/additional-documentation/the-map/*bsSafe) will make sure the component is only rendered after maps API is locked-and-loaded.
 
 # Next steps
 | Topic | Description |
 | ----- | ----------- |
-|[Plug & Play Async Loading](/Getting-Started/Plug-n-Play-Async-Loading)|Let the library load maps API for you.
-|[Manual Loading](/Getting-Started/Manually-Loading)|Manually loading the native api.
-|[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
-|[The Map](/The-Map)|Controlling the map, configuring it, handling events and more.|
+|[Plug & Play Async Loading](/docs/additional-documentation/getting-started/plug-n-play-async-loading)|Let the library load maps API for you.
+|[Manual Loading](/docs/additional-documentation/getting-started/manually-loading)|Manually loading the native api.
+|[Basic Concepts](../basic-concepts.html)|The main ideas of how this library operates.|
+|[The Map](/docs/additional-documentation/the-map.html)|Controlling the map, configuring it, handling events and more.|
