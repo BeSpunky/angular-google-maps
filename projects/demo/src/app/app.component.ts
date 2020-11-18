@@ -5,7 +5,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 import { Topics } from './topics/all';
 
-export const WikiUrl   : string = 'https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps';
+export const WikiUrl   : string = 'https://bs-angular-g-maps.web.app/docs/index.html';
 export const RepoUrl   : string = 'https://www.github.com/BeSpunky/angular-google-maps';
 export const PackageUrl: string = 'https://www.npmjs.com/package/@bespunky/angular-google-maps';
 
