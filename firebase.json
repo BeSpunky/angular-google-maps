@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "bs-angular-g-maps",
-    "public": "dist/demo",
+    "public": "dist/official-site",
     "ignore": [
       "firebase.json",
       "**/.*",
