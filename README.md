@@ -1,3 +1,11 @@
+![npm (scoped)](https://img.shields.io/npm/v/@bespunky/angular-google-maps?style=flat-square&label=version)
+![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@bespunky/angular-google-maps?style=flat-square)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/bespunky/angular-google-maps/@angular/core?style=flat-square)
+[![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/bespunky/angular-google-maps/@bespunky/angular-zen?style=flat-square)](https://npmjs.com/package/@bespunky/angular-zen)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-square)](https://github.com/BeSpunky/angular-google-maps/blob/master/code_of_conduct.md)
+![GitHub](https://img.shields.io/github/license/bespunky/angular-google-maps?style=flat-square)
+![npm](https://img.shields.io/npm/dt/@bespunky/angular-google-maps?style=flat-square)
+
 <p align="center">
     <img src="https://bs-angular-g-maps.web.app/assets/logo.svg" width="160"/>
 </p>
