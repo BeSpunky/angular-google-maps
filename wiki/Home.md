@@ -61,10 +61,10 @@ Of course 😁
 The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10. 
 Compatibility with older versions is possible but not guaranteed.
 
-[Full change log](/docs/changelog.html)
+[Full change log](https://bs-angular-g-maps.web.app/docs/changelog.html)
 
 # Issues & Requests
-Issues, suggestions and pull requests are welcome. Please follow the [contrubution guidelines](/docs/contributing.html).
+Issues, suggestions and pull requests are welcome. Please follow the [contrubution guidelines](https://bs-angular-g-maps.web.app/docs/contributing.html).
 
 # References
 - [Source Code](https://github.com/bespunky/angular-google-maps)
