@@ -2,9 +2,19 @@ import { IGoogleMapsNativeObjectEmittingWrapper, IGoogleMap, IBounds } from '@be
 import { IGoogleMapsNativeDrawableOverlay } from '../native/i-google-maps-native-drawable-overlay';
 import { OverlayType                      } from './overlay-type.enum';
 
+/**
+ * Represents the functionality that an overlay wrapper should provide.
+ *
+ * @export
+ * @interface IGoogleMapsDrawableOverlay
+ * @extends {IGoogleMapsNativeObjectEmittingWrapper<TNative>}
+ * @extends {IBounds}
+ * @template TNative The type of native overlay being wrapped.
+ */
 export interface IGoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDrawableOverlay>
          extends IGoogleMapsNativeObjectEmittingWrapper<TNative>, IBounds
 {
+    /** The map this overlay resides in. */
     readonly map: IGoogleMap;
     /** Useful when reflection is complex or not possible. */
     readonly type: OverlayType;

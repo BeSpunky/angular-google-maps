@@ -1,5 +1,6 @@
 import { Delegation } from './wrapper-definition';
 
+/** The symbol used for identifying the outside angular metadata of a wrapper object. See [@OutsideAngular](/docs/miscellaneous/functions.html#OutsideAngular) decorator. */
 export const OutsideAngularSymbol = Symbol('outsideAngular');
 
 /**

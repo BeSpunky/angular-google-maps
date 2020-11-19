@@ -13,6 +13,11 @@ import { ISuperpower                     } from './i-superpower';
 })
 export class SuperpowersChargerService
 {
+    /**
+     * Creates an instance of SuperpowersChargerService.
+     * 
+     * @param {ChargedSuperpowers} chargedPowers All the types of superpowers currently charged and known to the system.
+     */
     constructor(@Inject(Superpowers) private chargedPowers: ChargedSuperpowers) { }
     
     /**

@@ -50,6 +50,7 @@ export const defaultTestApiConfig: GoogleMapsConfig = {
     apiUrl: { key: 'testing-key' }
 };
 
+/** The default module configuration used by `configureGoogleMapsTestingModule` for options that were not provided. */
 const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
     moduleConfig: defaultTestApiConfig
 };

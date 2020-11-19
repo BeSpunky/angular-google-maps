@@ -6,6 +6,15 @@ import { GoogleMapsOverlayComponentBase    } from '../../../abstraction/base/goo
 import { IGoogleMapsPolygon                } from '../i-google-maps-polygon';
 import { GoogleMapsPolygonFactoryProvider  } from '../google-maps-polygon-factory.provider';
 
+/**
+ * Adds a polygon to the containing map.
+ * 
+ * Must be placed inside a `<bs-google-map/>` element.
+ *
+ * @export
+ * @class GoogleMapsPolygonDirective
+ * @extends {GoogleMapsOverlayComponentBase<IGoogleMapsPolygon>}
+ */
 @Directive({    
     selector : 'bs-google-maps-polygon, [bsGoogleMapsPolygon]',
     exportAs : 'polygon',

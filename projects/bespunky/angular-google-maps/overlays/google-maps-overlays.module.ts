@@ -7,6 +7,7 @@ import { GoogleMapsCircleModule     } from './modules/circle/google-maps-circle.
 import { GoogleMapsDataModule       } from './modules/data/google-maps-data.module';
 import { GoogleMapsInfoWindowModule } from './modules/info-window/google-maps-info-window.module';
 
+/** @ignore */
 const modules = [
     OverlaysSuperpowerModule,
     GoogleMapsMarkerModule,
@@ -16,6 +17,12 @@ const modules = [
     GoogleMapsInfoWindowModule,
 ];
 
+/**
+ * Enhances the maps module with overlay capabilities.
+ *
+ * @export
+ * @class GoogleMapsOverlaysModule
+ */
 @NgModule({
     imports  : modules,
     exports  : modules

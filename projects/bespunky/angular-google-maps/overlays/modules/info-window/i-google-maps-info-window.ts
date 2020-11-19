@@ -23,8 +23,17 @@ export enum InfoWindowTrigger
     RightClick = 'rightClick'
 };
 
+/** A type for the native functions of an info window which should be wrapped. Used along with the extension interface for the wrapper. */
 export type WrappedInfoWindowFunctions = WrappedNativeFunctions<google.maps.InfoWindow, 'getPosition' | 'setPosition' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'get' | 'set' | 'changed' | 'open'>;
 
+/**
+ * Represents the functionality that an info window should provide.
+ *
+ * @export
+ * @interface IGoogleMapsInfoWindow
+ * @extends {IGoogleMapsNativeObjectEmittingWrapper<google.maps.InfoWindow>}
+ * @extends {WrappedInfoWindowFunctions}
+ */
 export interface IGoogleMapsInfoWindow extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.InfoWindow>, WrappedInfoWindowFunctions 
 {
     /**

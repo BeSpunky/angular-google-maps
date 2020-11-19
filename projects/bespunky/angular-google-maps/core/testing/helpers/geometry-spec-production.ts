@@ -1,6 +1,7 @@
 import { GeometryTransformService, FlatCoord, Coord, Path, MultiPath, CoordPath, IBounds, BoundsLike, NativeBounds } from '@bespunky/angular-google-maps/core';
-import { MockBounds                                                                      } from '../mocks/mock-bounds';
+import { MockBounds                                                                                                } from '../mocks/mock-bounds';
 
+/** @ignore */
 const geometry = new GeometryTransformService();
 
 /**
@@ -9,44 +10,68 @@ const geometry = new GeometryTransformService();
  */
 
 // Coords
+/** Dummy coord for testing. See `produceCoordSpecs()`. */
 export const flatCoord    = [10, 11] as FlatCoord;
+/** Dummy coord for testing. See `produceCoordSpecs()`. */
 export const literalCoord = geometry.toLiteralCoord(flatCoord);
+/** Dummy coord for testing. See `produceCoordSpecs()`. */
 export const latLngCoord  = new google.maps.LatLng(literalCoord);
 
+/** All dummy coords for testing combined into an array. */
 export const allDummyCoords = [flatCoord, literalCoord, latLngCoord];
 
-// Single Paths - For bounds: [0] is defined as south-west, [length-1] is defined as north-east
+// Single Paths
+/** Dummy single-path for testing. See `produceSinglePathSpecs()`. For bounds: [0] is defined as south-west, [length-1] is defined as north-east. */
 export const flatPath       = [[10, 11], [20, 22], [30, 33], [40, 44]] as FlatCoord[];
+/** Dummy single-path for testing. See `produceSinglePathSpecs()`. For bounds: [0] is defined as south-west, [length-1] is defined as north-east. */
 export const literalPath    = flatPath.map(coord => geometry.toLiteralCoord(coord));
+/** Dummy single-path for testing. See `produceSinglePathSpecs()`. For bounds: [0] is defined as south-west, [length-1] is defined as north-east. */
 export const latLngPath     = flatPath.map(coord => new google.maps.LatLng(coord[0], coord[1]));
+/** Dummy single-path for testing. See `produceSinglePathSpecs()`. For bounds: [0] is defined as south-west, [length-1] is defined as north-east. */
 export const mvcPath        = new google.maps.MVCArray(flatPath.map(coord => geometry.toLiteralCoord(coord)));
+/** Dummy single-path for testing. See `produceSinglePathSpecs()`. For bounds: [0] is defined as south-west, [length-1] is defined as north-east. */
 export const linearRingPath = new google.maps.Data.LinearRing(literalPath);
 
+/** All dummy single paths for testing combined into an array. */
 export const allDummySinglePaths = [flatPath, literalPath, latLngPath, mvcPath, linearRingPath];
 
 // Multi Paths
+/** Dummy multi-path for testing. See `produceMultiPathSpecs()`. */
 export const flatMultiPath          = [flatPath, flatPath];
+/** Dummy multi-path for testing. See `produceMultiPathSpecs()`. */
 export const literalMultiPath       = [literalPath, literalPath];
+/** Dummy multi-path for testing. See `produceMultiPathSpecs()`. */
 export const latLngMultiPath        = [latLngPath, latLngPath];
+/** Dummy multi-path for testing. See `produceMultiPathSpecs()`. */
 export const linearRingMultiPath    = [linearRingPath, linearRingPath];
+/** Dummy multi-path for testing. See `produceMultiPathSpecs()`. */
 export const mvcMultiPath           = new google.maps.MVCArray([mvcPath, mvcPath]);
+/** Dummy multi-path for testing. See `produceMultiPathSpecs()`. */
 export const mvcMultiLinearRingPath = new google.maps.MVCArray(linearRingMultiPath);
 
+/** All dummy single paths for testing combined into an array. */
 export const allDummyMultiPaths = [flatMultiPath, literalMultiPath, latLngMultiPath, linearRingMultiPath, mvcMultiPath, mvcMultiLinearRingPath];
 
 // IBounds
+/** Dummy bounds for testing. See `produceNativeBoundsSpecs()` and `produceIBoundsSpecs()`. */
 export const mockBounds  = new MockBounds();
-       mockBounds.bounds = new google.maps.LatLngBounds(literalPath[0], literalPath[flatPath.length - 1]);
-      
+mockBounds.bounds = new google.maps.LatLngBounds(literalPath[0], literalPath[flatPath.length - 1]);
+
+/** The south-west coord of the dummy testing paths. */
 export const southWest = flatPath[0];
+/** The north-east coord of the dummy testing paths. */
 export const northEast = flatPath[flatPath.length - 1];
 
+/** All dummy bounds for testing combined into an array. */
 export const allDummyBounds = [mockBounds];
 
 // Data Layer Geometry
+/** Dummy geometry feature for testing. See `produceDataGeometrySpecs()`. */
 export const dataPoint   = new google.maps.Data.Point(literalCoord);
+/** Dummy geometry feature for testing. See `produceDataGeometrySpecs()`. */
 export const dataPolygon = new google.maps.Data.Polygon(linearRingMultiPath);
 
+/** All dummy geometry features for testing combined into an array. */
 export const allDummyDataGeometries = [dataPoint, dataPolygon];
 
 /**

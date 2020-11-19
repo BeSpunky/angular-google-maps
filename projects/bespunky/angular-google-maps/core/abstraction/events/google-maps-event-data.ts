@@ -2,6 +2,13 @@ import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 import { EmittingWrapper         } from '../types/abstraction';
 import { IGoogleMapsEventData    } from './i-google-maps-event-data';
 
+/**
+ * The base for all event data objects emitted by wrappers.
+ *
+ * @export
+ * @class GoogleMapsEventData
+ * @implements {IGoogleMapsEventData}
+ */
 export class GoogleMapsEventData implements IGoogleMapsEventData
 {
     /** The native object which actually emitted the event. */

@@ -67,6 +67,7 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
     }
 }
 
+/** The default configuration for `configureGoogleMapsTestingModule()` for options not provided. */
 const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
     createTestModuleMetadata: createGoogleMapsTestModuleMetadata,
     spies: {

@@ -2,6 +2,7 @@
 
 /**
  * Breaks a string like 'The_thing91 isBLACK83andWhite a BLACK' to words and composes it as either camelCase ('theThing91391IsBlackAndWhiteABlack') or CamelCase 'TheThing91391IsBlackAndWhiteABlack'.
+ * @internal
  * @export
  * @param {string} phrase The phrase to convert to camel case.
  * @param {boolean} upperFirst (Optional) `true` to convert the first letter to uppercase (creating CamelCase); otherwise `false` (creating camelCase). Default is `false`.
