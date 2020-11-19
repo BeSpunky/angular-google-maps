@@ -1,4 +1,4 @@
-import { GoogleMapsConfig, GoogleMapsLibrary, HttpProtocol } from '@bespunky/angular-google-maps/async';
+import { GoogleApiUrl, GoogleMapsConfig, GoogleMapsLibrary } from '@bespunky/angular-google-maps/async';
 
 describe('GoogleMapsConfig', () =>
 {
@@ -11,12 +11,12 @@ describe('GoogleMapsConfig', () =>
     {
         const config = new GoogleMapsConfig();
 
-        const apiUrl = {
+        const apiUrl: GoogleApiUrl = {
             key      : 'dummy key',
             language : 'en',
             libraries: [GoogleMapsLibrary.Drawing, GoogleMapsLibrary.Geometry],
             location : 'maps.google.com/api',
-            protocol : HttpProtocol.Https,
+            protocol : 'https',
             region   : 'dummy region'
         };
 

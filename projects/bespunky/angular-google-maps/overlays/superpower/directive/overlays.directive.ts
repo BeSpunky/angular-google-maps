@@ -46,12 +46,12 @@ export class OverlaysDirective implements OnInit
         this.power = mapComponent.wrapper.superpowers.use(OverlaysSuperpower);
     }
 
-    // 
     /**
-     *
-     *
+     * Dummy setter. Does nothing.
+     * Angular expects a setter to go with the getter, but the real value is actually set
+     * by ngOnInit() so this is not necessary.
      */
-    // public set overlays(noEffect: OverlaysSuperpower) { }
+    public set overlays(noEffect: OverlaysSuperpower) { }
 
     /**
      * Waits for change detection cicle to end, then emits the superpower.
