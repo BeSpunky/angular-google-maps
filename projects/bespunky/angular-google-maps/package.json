@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps"
+    "url": "https://github/BeSpunky/angular-google-maps"
   },
-  "homepage": "https://bs-angular-ggl-maps-demo.web.app",
+  "homepage": "https://bs-angular-g-maps.web.app",
   "bugs": {
     "email": "us@bespunky.io"
   },
