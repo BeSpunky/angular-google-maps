@@ -2,8 +2,17 @@ import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObje
 import { IGoogleMapsData                                                } from '../i-google-maps-data';
 import { IGoogleMapsFeature, WrappedFeatureFunctions, FeatureProperties } from './i-google-maps-feature';
 
+/** Extends intellisense for `GoogleMapsFeature` with native geometry feature functions. */
 export interface GoogleMapsFeature extends WrappedFeatureFunctions { }
 
+/**
+ * The angular-ready wrapper for the native `google.maps.Data.Feature` class.
+ *
+ * @export
+ * @class GoogleMapsFeature
+ * @extends {GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>}
+ * @implements {IGoogleMapsFeature}
+ */
 // @dynamic
 @NativeObjectWrapper<google.maps.Data.Feature, GoogleMapsFeature>()
 export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature

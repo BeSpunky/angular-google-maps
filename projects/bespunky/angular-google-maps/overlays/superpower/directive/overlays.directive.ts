@@ -27,7 +27,18 @@ export class OverlaysDirective implements OnInit
 {
     private power: OverlaysSuperpower;
 
+    /**
+     * The overlays power instantiated for the map.
+     *
+     * @readonly
+     * @type {OverlaysSuperpower}
+     */
     @Input () public get overlays(): OverlaysSuperpower { return this.power; }
+    /**
+     * Emits when the overlays power changed. This only happens when the map is instantiated.
+     *
+     * @type {EventEmitter<OverlaysSuperpower>}
+     */
     @Output() public overlaysChange: EventEmitter<OverlaysSuperpower> = new EventEmitter();
 
     constructor(mapComponent: GoogleMapComponent)
@@ -35,9 +46,16 @@ export class OverlaysDirective implements OnInit
         this.power = mapComponent.wrapper.superpowers.use(OverlaysSuperpower);
     }
 
-    // This is a dummy setter to satisfy angular and typescript
-    public set overlays(noEffect: OverlaysSuperpower) { }
+    // 
+    /**
+     *
+     *
+     */
+    // public set overlays(noEffect: OverlaysSuperpower) { }
 
+    /**
+     * Waits for change detection cicle to end, then emits the superpower.
+     */
     ngOnInit()
     {
         // To avoid the ExpressionChangedAfterItWasCheckedError, emission is done after angular finishes its detection cycle

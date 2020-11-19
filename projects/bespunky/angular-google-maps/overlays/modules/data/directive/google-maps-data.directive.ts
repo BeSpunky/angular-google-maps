@@ -6,6 +6,15 @@ import { GoogleMapsOverlayComponentBase } from '../../../abstraction/base/google
 import { IGoogleMapsData                } from '../i-google-maps-data';
 import { GoogleMapsDataFactoryProvider  } from '../google-maps-data-factory.provider';
 
+/**
+ * Adds a data layer to the containing map.
+ * 
+ * Must be placed inside a `<bs-google-map/>` element.
+ *
+ * @export
+ * @class GoogleMapsDataDirective
+ * @extends {GoogleMapsOverlayComponentBase<IGoogleMapsData>}
+ */
 @Directive({
     selector : 'bs-google-maps-data, [bsGoogleMapsData]',
     exportAs : 'dataLayer',

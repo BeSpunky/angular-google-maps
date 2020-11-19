@@ -1,5 +1,12 @@
 import { IGoogleMapsNativeObject } from '../native/i-google-maps-native-object';
 
+/**
+ * Represents the functionality every wrapper should provide.
+ *
+ * @export
+ * @interface IGoogleMapsNativeObjectWrapper
+ * @template TNative The type of native object being wrapped.
+ */
 export interface IGoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsNativeObject>
 {
     /** Returns the native object wrapped in the current object. */

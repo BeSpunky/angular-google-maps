@@ -1,6 +1,14 @@
 import { IGoogleMapsNativeObject        } from '../native/i-google-maps-native-object';
 import { IGoogleMapsNativeObjectWrapper } from './i-google-maps-native-object-wrapper';
 
+/**
+ * Represents the functionality a native google maps object which emits events should provide.
+ *
+ * @export
+ * @interface IGoogleMapsNativeObjectEmittingWrapper
+ * @extends {IGoogleMapsNativeObjectWrapper<TNative>}
+ * @template TNative The type of emitting native object.
+ */
 export interface IGoogleMapsNativeObjectEmittingWrapper<TNative extends IGoogleMapsNativeObject>
          extends IGoogleMapsNativeObjectWrapper<TNative>
 {

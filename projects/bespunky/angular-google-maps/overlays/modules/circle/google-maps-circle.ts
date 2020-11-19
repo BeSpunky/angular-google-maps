@@ -3,8 +3,17 @@ import { GoogleMapsDrawableOverlay                   } from '../../abstraction/b
 import { OverlayType                                 } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsCircle, WrappedCircleFunctions   } from './i-google-maps-circle';
 
+/** Extends intellisense for `GoogleMapsCircle` with native circle functions. */
 export interface GoogleMapsCircle extends WrappedCircleFunctions { }
 
+/**
+ * The angular-ready wrapper for the native `google.maps.Circle` class.
+ *
+ * @export
+ * @class GoogleMapsCircle
+ * @extends {GoogleMapsDrawableOverlay<google.maps.Circle>}
+ * @implements {IGoogleMapsCircle}
+ */
 // @dynamic
 @NativeObjectWrapper<google.maps.Circle, GoogleMapsCircle>({
     getMap: Delegation.Exclude,

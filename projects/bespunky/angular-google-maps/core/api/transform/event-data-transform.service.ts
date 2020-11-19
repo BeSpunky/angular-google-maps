@@ -4,6 +4,12 @@ import { IGoogleMapsMouseEvent    } from '../../abstraction/events/i-google-maps
 import { isGoogleMapsMouseEvent   } from '../../abstraction/type-guards/mouse-event-type-guard';
 import { GeometryTransformService } from './geometry-transform.service';
 
+/**
+ * Facilitates work with the native event data objects emitted on native events.
+ *
+ * @export
+ * @class EventDataTransformService
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -11,6 +17,13 @@ export class EventDataTransformService
 {
     constructor(private geometry: GeometryTransformService) { }
 
+    /**
+     * Detects the type of event data, then extracts essential data from it to construct it in a better way.
+     * If no better format is implemented for the data, it will be returned as is.
+     * 
+     * @param {*} event The native event data object to transform.
+     * @returns {(any[] | IGoogleMapsMouseEvent)} The essential data from the event in a better format.
+     */
     public auto(event: any): any[] | IGoogleMapsMouseEvent // TODO: | <IOtherEvents>
     {
         // If this is an array, run detection for each element and create a new array
@@ -24,11 +37,23 @@ export class EventDataTransformService
         return this.default(event);
     }
 
+    /**
+     * Returns the data as is.
+     *
+     * @param {*} event The event data.
+     * @returns {*} The event data, untouched.
+     */
     public default(event: any): any
     {
         return event;
     }
 
+    /**
+     * Transforms a native mouse event into a nicer type.
+     *
+     * @param {google.maps.MouseEvent} event
+     * @returns {IGoogleMapsMouseEvent}
+     */
     public mouseEvent(event: google.maps.MouseEvent): IGoogleMapsMouseEvent
     {
         return {

@@ -1,10 +1,21 @@
 import { IGoogleMapsNativeObjectEmittingWrapper, Coord, CoordPath, IBounds, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData } from '../i-google-maps-data';
 
+/** A type for the native functions of geometry feature which should be wrapped. Used along with the extension interface for the wrapper. */
 export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Feature>;
 
+/** A type for stongly typing geometry feature properties. */
 export type FeatureProperties = { [name: string]: any };
 
+/**
+ * Represents the functionality that a geometry feature should provide.
+ *
+ * @export
+ * @interface IGoogleMapsFeature
+ * @extends {IGoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>}
+ * @extends {WrappedFeatureFunctions}
+ * @extends {IBounds}
+ */
 export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature>, WrappedFeatureFunctions, IBounds
 {
     /** The data object this feature was added to. */

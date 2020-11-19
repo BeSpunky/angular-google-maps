@@ -8,6 +8,16 @@ import { GoogleMapsApiService      } from '../../api/google-maps-api.service';
 import { SuperpowersService        } from './superpowers/superpowers.service';
 import { GoogleMap                 } from './google-map';
 
+/**
+ * Produces a factory that can be used to create a new map wrapper.
+ *
+ * @export
+ * @param {SuperpowersService} superpowers The instance of the superpowers management service for the new map.
+ * @param {GoogleMapsApiService} api The instance of the api service.
+ * @param {DocumentRef} document The reference to the native document.
+ * @param {UniversalService} universal The instance of the universal service.
+ * @returns {(element: ElementRef, options?: google.maps.MapOptions) => GoogleMap} A factory function to use for creating a new map wrapper over the specified element.
+ */
 export function NativeMapWrapperFactoryProvider(superpowers: SuperpowersService, api: GoogleMapsApiService, document: DocumentRef, universal: UniversalService): (element: ElementRef, options?: google.maps.MapOptions) => GoogleMap
 {
     if (universal.isPlatformBrowser)
@@ -22,6 +32,7 @@ export function NativeMapWrapperFactoryProvider(superpowers: SuperpowersService,
     return function NullNativeMapWrapperFactory() { return null; };
 }
 
+/** Provides the factory used to create a map wrapper for the `WrapperFactory` token. */
 export const GoogleMapFactoryProvider: FactoryProvider = {
     provide   : WrapperFactory,
     useFactory: NativeMapWrapperFactoryProvider,

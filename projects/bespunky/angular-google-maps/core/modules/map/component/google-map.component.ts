@@ -10,6 +10,13 @@ import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
 import { ZoomLevel                } from '../types/zoom-level.enum';
 import { IGoogleMap               } from '../i-google-map';
 
+/**
+ * Adds a Google map to the app.
+ *
+ * @export
+ * @class GoogleMapComponent
+ * @extends {GoogleMapsComponentBase<IGoogleMap>}
+ */
 @Component({
     selector     : 'bs-google-map',
     templateUrl  : './google-map.component.html',

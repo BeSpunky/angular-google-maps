@@ -138,9 +138,30 @@ export function delegateOutside(exec: Function, wrapper: Wrapper): Function
     }.bind(wrapper);
 }
 
+/**
+ * Checks whether the given property name matches a setter method name pattern of `set<SomeProperty>`. *
+ * 
+ * @export
+ * @param {string} property The name of the property to evaluate.
+ * @returns {boolean} `true` if the property name matches the setter pattern; otherwise `false`.
+ */
 export function isSetter(property: string): boolean { return /^set[A-Z][a-zA-Z0-9]*/.test(property); }
+/**
+ * Checks whether the given property name matches a getter method name pattern of `get<SomeProperty>`. *
+ * 
+ * @export
+ * @param {string} property The name of the property to evaluate.
+ * @returns {boolean} `true` if the property name matches the getter pattern; otherwise `false`.
+ */
 export function isGetter(property: string): boolean { return /^get[A-Z][a-zA-Z0-9]*/.test(property); }
 
+/**
+ * Throws the error for method execution attemps of excluded properties on a proxy object with an explanatory message.
+ * 
+ * @export
+ * @param {string} wrapperTypeName The name of the wrapper class which was being accessed.
+ * @param {string} property The name of the excluded property which was being accessed.
+ */
 export function throwExcludedError(wrapperTypeName: string, property: string): void
 {
     throw new Error(

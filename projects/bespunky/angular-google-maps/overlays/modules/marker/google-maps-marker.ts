@@ -4,8 +4,17 @@ import { GoogleMapsDrawableOverlay                 } from '../../abstraction/bas
 import { OverlayType                               } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsMarker, WrappedMarkerFunctions } from './i-google-maps-marker';
 
+/** Extends intellisense for `GoogleMapsMarker` with native marker functions. */
 export interface GoogleMapsMarker extends WrappedMarkerFunctions { }
 
+/**
+ * The angular-ready wrapper for the native `google.maps.Marker` class.
+ *
+ * @export
+ * @class GoogleMapsMarker
+ * @extends {GoogleMapsDrawableOverlay<google.maps.Marker>}
+ * @implements {IGoogleMapsMarker}
+ */
 // @dynamic
 @NativeObjectWrapper<google.maps.Marker, GoogleMapsMarker>({
     getMap: Delegation.Exclude,

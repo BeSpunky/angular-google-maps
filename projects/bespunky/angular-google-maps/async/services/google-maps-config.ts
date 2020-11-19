@@ -1,11 +1,7 @@
+/** The placeholders structure that will be used to construct full url to Google Maps API. */
 export const DefaultApiUrlFormat = '{protocol}://{location}?key={key}{settings}';
+/** The default host and route for Google Maps API as specified in their docs. */
 export const DefaultApiLocation = 'maps.googleapis.com/maps/api/js';
-
-export enum HttpProtocol
-{
-    Http  = 'http',
-    Https = 'https'
-}
 
 /** https://developers.google.com/maps/documentation/javascript/libraries */
 export enum GoogleMapsLibrary
@@ -16,15 +12,44 @@ export enum GoogleMapsLibrary
     Visualization   = 'visualization'
 }
 
+/**
+ * Represents the parts of the url to the JavaScript API of Google Maps.
+ *
+ * @export
+ * @class GoogleApiUrl
+ */
 export class GoogleApiUrl
 {
-    public protocol?: HttpProtocol;
+    /**
+     * The protocol to fetch the API through.
+     *
+     * @type {('http' | 'https')}
+     */
+    public protocol?: 'http' | 'https';
 
+    /**
+     * The url pointing to the API.
+     *
+     * @type {string}
+     */
     public location?: string;
 
+    /**
+     * The API key created you created on https://developers.google.com/maps/documentation/javascript/get-api-key.
+     *
+     * @type {string}
+     */
     public key: string;
 
-    public libraries?: GoogleMapsLibrary[]; // TODO: Remove as option and read from a token { multi: true } provided by the different modules
+    /**
+     * > **This will be removed**
+     * > A future version of the library will set this automatically when importing the different superpower modules.
+     * 
+     * The native extension libraries to load with the API.
+     *
+     * @type {GoogleMapsLibrary[]}
+     */
+    public libraries?: GoogleMapsLibrary[];
     /**
      * By default, the Maps JavaScript API uses the user's preferred language setting
      * as specified in the browser, when displaying textual information such as the
@@ -51,5 +76,12 @@ export class GoogleApiUrl
 /** The configuration for the async module. Defined for scalability. */
 export class GoogleMapsConfig
 {
+    /**
+     * The full url pointing to Google's Maps API, including library imports, language and other relevant params.
+     * 
+     * When specifying a `GoogleApiUrl` object, the library will create the full url automatically.
+     *
+     * @type {(string | GoogleApiUrl)}
+     */
     public apiUrl: string | GoogleApiUrl;
 }

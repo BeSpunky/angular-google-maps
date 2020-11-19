@@ -3,6 +3,14 @@ import { Injectable } from '@angular/core';
 import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike, FlatCoord } from '../../abstraction/types/geometry.type';
 import { IBounds                                                                                         } from '../../abstraction/base/i-bounds';
 
+/**
+ * Provides flexible methods for converting and analyzing geometry types.
+ * 
+ * @see [Geometry Types](/docs/additional-documentation/geometry-types.html) for more info.
+ *
+ * @export
+ * @class GeometryTransformService
+ */
 @Injectable({
     providedIn: 'root'
 })

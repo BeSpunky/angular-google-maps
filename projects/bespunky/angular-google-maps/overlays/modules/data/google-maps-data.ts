@@ -7,8 +7,17 @@ import { IGoogleMapsFeature                    } from './feature/i-google-maps-f
 import { GoogleMapsFeature                     } from './feature/google-maps-feature';
 import { FeatureTracker                        } from './services/feature-tracker';
 
+/** Extends intellisense for `GoogleMapsData` with native data layer functions. */
 export interface GoogleMapsData extends WrappedDataFunctions { }
 
+/**
+ * The angular-ready wrapper for the native `google.maps.Data` class.
+ *
+ * @export
+ * @class GoogleMapsData
+ * @extends {GoogleMapsDrawableOverlay<google.maps.Data>}
+ * @implements {IGoogleMapsData}
+ */
 // @dynamic
 @NativeObjectWrapper<google.maps.Data, GoogleMapsData>({
     getMap: Delegation.Exclude,
@@ -16,6 +25,9 @@ export interface GoogleMapsData extends WrappedDataFunctions { }
 })
 export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
+    /**
+     * The tracker of geometry features currently added to the data layer.     *
+     */
     public readonly features = new FeatureTracker();
 
     constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.Data.DataOptions)
@@ -33,6 +45,13 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return this.api.geometry.defineBounds(...this.features.list.map(feature => feature.getBounds()));
     }
 
+    /**
+     * Creates a marker geometry feature with the specified properties and adds it to the map.
+     *
+     * @param {Coord} position The position at which the marker should be added.
+     * @param {google.maps.Data.FeatureOptions} [options] (Optional) Any native options to assign to the marker.
+     * @returns {IGoogleMapsFeature} The wrapper object for the new feature.
+     */
     @OutsideAngular
     public createMarker(position: Coord, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
@@ -41,6 +60,13 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return this.addFeature(options);
     }
 
+    /**
+     * Creates a polygon geometry feature with the specified properties and adds it to the map.
+     *
+     * @param {CoordPath} path The path describing the polygon coordinates.
+     * @param {google.maps.Data.FeatureOptions} [options] (Optional) Any native options to assign to the polygon.
+     * @returns {IGoogleMapsFeature} The wrapper object for the new feature.
+     */
     @OutsideAngular
     public createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
@@ -54,8 +80,23 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return Object.assign({}, baseOptions, { geometry });
     }
 
+    /**
+     * Adds a feature to the data layer.
+     *
+     * @param {IGoogleMapsFeature} feature The feature wrapper to add.
+     * @returns {IGoogleMapsFeature} The wrapper object for the new feature.
+     */
     public addFeature(feature: IGoogleMapsFeature): IGoogleMapsFeature;
+    /**
+     * Creates a wrapper object for the feature and adds it to the data layer.
+     *
+     * @param {(google.maps.Data.FeatureOptions | IGoogleMapsFeature)} feature The native feature or feature wrapper to add.
+     * @returns {IGoogleMapsFeature} The wrapper object for the new feature.
+     */
     public addFeature(options: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
+    /**
+     * @ignore
+     */
     @OutsideAngular
     public addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature
     {
@@ -68,9 +109,30 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return feature;
     }
 
+    /**
+     * Removes a feature from the data layer.
+     *
+     * @param {google.maps.Data.Feature} feature The native feature to remove.
+     * @returns {IGoogleMapsFeature} The removed feature wrapper or `null` if not found.
+     */
     public removeFeature(feature: google.maps.Data.Feature): IGoogleMapsFeature;
+    /**
+     * Removes a feature from the data layer.
+     *
+     * @param {IGoogleMapsFeature} feature The feature to remove.
+     * @returns {IGoogleMapsFeature} The removed feature wrapper or `null` if not found.
+     */
     public removeFeature(feature: IGoogleMapsFeature): IGoogleMapsFeature;
+    /**
+     * Removes a feature from the data layer.
+     *
+     * @param {(number | string)} featureId The id of the feature to remove.
+     * @returns {IGoogleMapsFeature} The removed feature wrapper or `null` if not found.
+     */
     public removeFeature(featureId: string | number): IGoogleMapsFeature;
+    /**
+     * @ignore
+     */
     @OutsideAngular
     public removeFeature(featureOrId: string | number | google.maps.Data.Feature | IGoogleMapsFeature): IGoogleMapsFeature
     {
@@ -82,13 +144,33 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
         return removed;
     }
 
+    /**
+     * Looks for a feature in the data layer.
+     *
+     * @param {(string | number)} id The id of the feature to look for.
+     * @returns {google.maps.Data.Feature} The feature associated with the specified id or `null` when not found.
+     */
     public findFeature(id: string | number): google.maps.Data.Feature { return this.native.getFeatureById(id); }
 
+    /**
+     * Creates the GeoJson representation of the data and provides it as an object when the promise resolves.
+     * Will automatically take care of the callback required by Google Maps Api internally.
+     *
+     * @returns {Promise<any>} A promise for the GeoJson object.
+     */
     public toGeoJson(): Promise<any>
     {
         return new Promise(resolve => this.native.toGeoJson(resolve));
     }
 
+    /**
+     * Downloads GeoJson data from the specified url, interprets it and creates map features for it.
+     * Will automatically take care of the callback required by Google Maps Api internally.
+
+     * @param {string} url The url to the GeoJson data to download.
+     * @param {google.maps.Data.GeoJsonOptions} [options] (Optional) Configures the process of reading the GeoJson.
+     * @returns {google.maps.Data.Feature[]} A promise for the features representing the geometries added from the GeoJson.
+     */
     @OutsideAngular
     public loadGeoJson(url: string, options?: google.maps.Data.GeoJsonOptions): Promise<google.maps.Data.Feature[]>
     {
