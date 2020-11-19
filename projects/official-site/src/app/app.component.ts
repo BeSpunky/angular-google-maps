@@ -10,7 +10,7 @@ export const RepoUrl   : string = 'https://www.github.com/BeSpunky/angular-googl
 export const PackageUrl: string = 'https://www.npmjs.com/package/@bespunky/angular-google-maps';
 
 @Component({
-    selector   : 'demo-root',
+    selector   : 'app-root',
     templateUrl: './app.component.html',
     styleUrls  : ['./app.component.scss']
 })

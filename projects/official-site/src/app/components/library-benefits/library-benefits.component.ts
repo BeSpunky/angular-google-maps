@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector   : 'demo-library-benefits',
+    selector   : 'app-library-benefits',
     templateUrl: './library-benefits.component.html',
     styleUrls  : ['./library-benefits.component.scss']
 })

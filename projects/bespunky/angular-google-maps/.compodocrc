@@ -5,8 +5,8 @@
     
     "name": "@bespunky/angular-google-maps Official Docs",
 
-    "customLogo"   : "../../demo/src/assets/logo.svg",
-    "customFavicon": "../../demo/src/favicon.ico",
+    "customLogo"   : "../../official-site/src/assets/logo.svg",
+    "customFavicon": "../../official-site/src/favicon.ico",
 
     "extTheme"    : "../../../compodoc/styles",
     "templates"   : "../../../compodoc/templates",
@@ -19,6 +19,6 @@
     "disablePrivate" : true,
     "disableInternal": true,
     
-    "output": "../../../dist/demo/docs",
+    "output": "../../../dist/official-site/docs",
     "watch" : true
 }
