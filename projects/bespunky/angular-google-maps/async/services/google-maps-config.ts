@@ -18,28 +18,28 @@ export enum GoogleMapsLibrary
  * @export
  * @class GoogleApiUrl
  */
-export class GoogleApiUrl
+export interface GoogleApiUrl
 {
     /**
      * The protocol to fetch the API through.
      *
      * @type {('http' | 'https')}
      */
-    public protocol?: 'http' | 'https';
+    protocol?: 'http' | 'https';
 
     /**
      * The url pointing to the API.
      *
      * @type {string}
      */
-    public location?: string;
+    location?: string;
 
     /**
      * The API key created you created on https://developers.google.com/maps/documentation/javascript/get-api-key.
      *
      * @type {string}
      */
-    public key: string;
+    key: string;
 
     /**
      * > **This will be removed**
@@ -49,7 +49,7 @@ export class GoogleApiUrl
      *
      * @type {GoogleMapsLibrary[]}
      */
-    public libraries?: GoogleMapsLibrary[];
+    libraries?: GoogleMapsLibrary[];
     /**
      * By default, the Maps JavaScript API uses the user's preferred language setting
      * as specified in the browser, when displaying textual information such as the
@@ -60,7 +60,7 @@ export class GoogleApiUrl
      *
      * @See https://developers.google.com/maps/documentation/javascript/localization
      */
-    public language?: string;
+    language?: string;
     /**
      * When you load the Maps JavaScript API from maps.googleapis.com it applies
      * a default bias for application behavior towards the United States. If you want
@@ -70,10 +70,14 @@ export class GoogleApiUrl
      *
      * @See https://developers.google.com/maps/documentation/javascript/localization
      */
-    public region?: string;
+    region?: string;
 }
 
-/** The configuration for the async module. Defined for scalability. */
+/**
+ * The configuration for the async module.
+ * 
+ * Defined for scalability. Declared as a class (and not an interface) for injectability.
+ */
 export class GoogleMapsConfig
 {
     /**
