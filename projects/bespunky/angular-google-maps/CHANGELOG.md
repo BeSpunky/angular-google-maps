@@ -9,15 +9,15 @@
 
 ♻ Simplified the `SuperpowersService` class using [Destroyable](https://bs-angular-zen.web.app/docs/zen/additional-documentation/coremodule/destroyable-(abstract).html)
 
+🚢 Migrated source code to GitHub.
 
+🚢 Moved official site to [https://bs-angular-g-maps.web.app](https://bs-angular-g-maps.web.app/)
 
 📃 Added automated documentation and api reference using compodoc.
 
 📃 Improved documentation coverage.
 
-🚢 Migrated source code to GitHub.
-
-🚢 Moved official site to [https://bs-angular-g-maps.web.app](https://bs-angular-g-maps.web.app/)
+📃 Added contribution guidelines and code of conduct docs.
 
 🔧 Updated links official site and readmes.
 
