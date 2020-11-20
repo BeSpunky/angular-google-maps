@@ -13,6 +13,7 @@
   },
   "homepage": "https://bs-angular-g-maps.web.app",
   "bugs": {
+    "url": "https://github.com/BeSpunky/angular-google-maps/issues",
     "email": "us@bespunky.io"
   },
   "keywords": [
