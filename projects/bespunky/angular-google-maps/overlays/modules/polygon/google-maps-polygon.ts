@@ -3,8 +3,17 @@ import { GoogleMapsDrawableOverlay                   } from '../../abstraction/b
 import { OverlayType                                 } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsPolygon, WrappedPolygonFunctions } from './i-google-maps-polygon';
 
+/** Extends intellisense for `GoogleMapsPolygon` with native polygon functions. */
 export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
 
+/**
+ * The angular-ready wrapper for the native `google.maps.Polygon` class.
+ *
+ * @export
+ * @class GoogleMapsPolygon
+ * @extends {GoogleMapsDrawableOverlay<google.maps.Polygon>}
+ * @implements {IGoogleMapsPolygon}
+ */
 // @dynamic
 @NativeObjectWrapper<google.maps.Polygon, GoogleMapsPolygon>({
     getMap: Delegation.Exclude,

@@ -3,9 +3,7 @@ Feature maps are a great way to create order and scalability. Even if you're bui
 
 You have a view with a list of your business's branches. Each branch on the list should be displayed with a small map containing a pin with the branch's location. The map should initialize centered on the pin, with a zoom level of 8, and default UI should be disabled. 🤯
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Best%20Practices/Feature%20Maps)
-
-[[_TOC_]]
+[Live demo](https://bs-angular-g-maps.web.app/Best%20Practices/Feature%20Maps)
 
 # Aspiration
 We need a reusable component that will provide branch location functionality and allow us to easily place a branch location map, like so:
@@ -55,4 +53,4 @@ Down to business...
 # Next Steps
 | Topic | Description |
 | ----- | ----------- |
-| [Feature Components](/Best-Practices/Feature-Components) | Best practices for centralizing map features. |
+| [Feature Components](/docs/additional-documentation/best-practices/feature-components.html) | Best practices for centralizing map features. |

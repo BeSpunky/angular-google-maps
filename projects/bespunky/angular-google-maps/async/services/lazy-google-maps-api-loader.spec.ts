@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
-import { LazyLoaderService, LazyLoadedFile } from '@bespunky/angular-zen';
+import { LazyLoaderService, LazyLoadedFile } from '@bespunky/angular-zen/async';
 
-import { LazyGoogleMapsApiLoader, GoogleMapsConfig, GoogleMapsLibrary, DefaultApiLocation, HttpProtocol, GoogleApiUrl } from '@bespunky/angular-google-maps/async';
+import { LazyGoogleMapsApiLoader, GoogleMapsConfig, GoogleMapsLibrary, DefaultApiLocation, GoogleApiUrl } from '@bespunky/angular-google-maps/async';
 
 describe('LazyGoogleMapsApiLoader', () =>
 {
@@ -50,7 +50,7 @@ describe('LazyGoogleMapsApiLoader', () =>
 
     it('should allow overriding url parts', () =>
     {
-        (config.apiUrl as GoogleApiUrl).protocol = HttpProtocol.Http;
+        (config.apiUrl as GoogleApiUrl).protocol = 'http';
         (config.apiUrl as GoogleApiUrl).location = 'dummy.maps.com/api';
 
         initLazyApiLoader();

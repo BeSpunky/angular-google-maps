@@ -5,6 +5,16 @@ import { GoogleMapsComponentBase, IGoogleMapsMouseEventsEmitter, IGoogleMapsEven
 import { IGoogleMapsFeature, FeatureProperties } from '../i-google-maps-feature';
 import { GoogleMapsFeatureFactoryProvider      } from '../google-maps-feature-factory.provider';
 
+/**
+ * Adds a feature to the containing data layer.
+ * 
+ * Must be placed inside a `<bs-google-maps-data/>` element.
+ *
+ * @export
+ * @class GoogleMapsFeatureDirective
+ * @extends {GoogleMapsComponentBase<IGoogleMapsFeature>}
+ * @implements {IGoogleMapsMouseEventsEmitter}
+ */
 @Directive({
     selector : 'bs-google-maps-feature, [bsGoogleMapsFeature]',
     exportAs : 'feature',

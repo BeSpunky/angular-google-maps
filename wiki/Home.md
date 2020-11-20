@@ -1,14 +1,22 @@
+![npm (scoped)](https://img.shields.io/npm/v/@bespunky/angular-google-maps?style=flat-square&label=version)
+![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@bespunky/angular-google-maps?style=flat-square)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/bespunky/angular-google-maps/@angular/core?style=flat-square)
+[![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/bespunky/angular-google-maps/@bespunky/angular-zen?style=flat-square)](https://npmjs.com/package/@bespunky/angular-zen)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-square)](https://github.com/BeSpunky/angular-google-maps/blob/master/code_of_conduct.md)
+![GitHub](https://img.shields.io/github/license/bespunky/angular-google-maps?style=flat-square)
+![npm](https://img.shields.io/npm/dt/@bespunky/angular-google-maps?style=flat-square)
+
 <p align="center">
-    <img src="https://dev.azure.com/BeSpunky/bebdc696-fbbf-4816-9247-9d1311da59bc/_apis/git/repositories/7dc3a677-7580-42a8-b49f-b4d614beaf97/items?path=%2Fprojects%2Fdemo%2Fsrc%2Fassets%2Flogo.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0"/>
+    <img src="https://bs-angular-g-maps.web.app/assets/logo.svg" width="160"/>
 </p>
 
 <p align="center" style="font-size: x-large">@bespunky/angular-google-maps</p>
 <p align="center" style="font-size: medium">A brilliant solution for using Google Maps in Angular.</p>
 
 <p align="center" style="font-size: medium; margin: 20px auto">
-    ✨ <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/193/Getting-Started">Getting Started</a> |
-    🙌 <a href="https://bs-angular-ggl-maps-demo.web.app">Live Demo</a> |
-    🎁 <a href="https://dev.azure.com/BeSpunky/Libraries/_wiki/wikis/angular-google-maps/210/What's-Inside">What's in the library?</a>
+    ✨ <a href="https://bs-angular-g-maps.web.app/docs/additional-documentation/getting-started.html">Getting Started</a> |
+    🙌 <a href="https://bs-angular-g-maps.web.app">Official Site & Live Demo</a> |
+    🎁 <a href="https://bs-angular-g-maps.web.app/docs/modules.html">What's in the library?</a>
 </p>
 
 <p align="center" style="font-size: smaller; margin: 20px auto;">Pre-release. It is suggested not to use it for production yet.</p>
@@ -40,7 +48,7 @@ Here are some of the benefits:
 
 ✔ Open-source! 🤩
 
-More details in the [official site](https://bs-angular-ggl-maps-demo.web.app/).
+More details in the [official site](https://bs-angular-g-maps.web.app/).
 
 # Motivation
 There are a few Angular libraries out there for Google Maps. So why develop a new one?
@@ -61,11 +69,11 @@ Of course 😁
 The library was generated using Angular 7 and has been gradually updated and tested up to Angular 10. 
 Compatibility with older versions is possible but not guaranteed.
 
-# Issues & Requests
-Unfortunately, Azure DevOps doesn't support issue collection. I'm considering moving this repo to GitHub.  
-In the meantime, any issues or requests can be sent to [us@bespunky.io](mailto:us@bespunky.io?subject=@bespunky/angular-google-maps).
+[Full change log](https://bs-angular-g-maps.web.app/docs/changelog.html)
 
+# Issues & Requests
+Issues, suggestions and pull requests are welcome. Please follow the [contrubution guidelines](https://bs-angular-g-maps.web.app/docs/contributing.html).
 
 # References
-- [Source Code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps)
+- [Source Code](https://github.com/bespunky/angular-google-maps)
 - [npm package](https://www.npmjs.com/package/%40bespunky/angular-google-maps)

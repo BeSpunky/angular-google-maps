@@ -1,5 +1,6 @@
 import { GoogleMapsEventsMap } from '../abstraction/types/events-map.type';
 
+/** The symbol identifying the hook metadata on a component instance. */
 export const HookOutputSymbol = Symbol('LifecycleComponent.HookOutput');
 
 /**

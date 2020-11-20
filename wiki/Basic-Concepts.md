@@ -3,8 +3,6 @@ The library wraps the native Google Maps API library, adds additional tooling ar
 
 The following concepts will help you better understand how the library operates, what to expect from it, and when to refer to Google's documentation...
 
-[[_TOC_]]
-
 # Natives
 The library refers to types presented by Google Maps JavaScript library as 'native types'. These can be `google.maps.Map`, or `google.maps.Marker`, or any other type presented by the `google.maps` namespace.
 
@@ -13,10 +11,10 @@ A native object is always represented by a corresponding wrapper object. However
 
 <center>
 
-![Wrapper](.attachments/Wrapper.png)
+![Wrapper](/docs/.attachments/Wrapper.png)
 </center>
 
-> **Note** Once you put your hands on the native object, the library has no way of knowing what you'll do with it. In certain cases the library expects you to use the wrapper for its magic to work. [Overlay tracking](/Overlays-Superpower#The-Superpower) for example, will become useless if you add overlays directly to the native object.
+> **Note** Once you put your hands on the native object, the library has no way of knowing what you'll do with it. In certain cases the library expects you to use the wrapper for its magic to work. [Overlay tracking](/docs/additional-documentation/overlays-superpower.html#the-superpower) for example, will become useless if you add overlays directly to the native object.
 >
 > **Conclusions**:
 > 1. Stick to wrapper objects as much as possible.
@@ -29,13 +27,13 @@ The wrapper is always accessible through the component's strongly-typed `wrapper
 
 <center>
 
-![Component](.attachments/Component.png)
+![Component](/docs/.attachments/Component.png)
 </center>
 
 # Functionality Wrapping
 
 ## Flexibility
-Wrappers [use magic ✨](Internal%20Workings) to delegate access to the native object's functionality, and in most cases they will simply automatically call the native functions.
+Wrappers [use magic ✨](/docs/additional-documentation/internal-workings.html) to delegate access to the native object's functionality, and in most cases they will simply automatically call the native functions.
 
 To provide you with greater flexibility and ease of use, some functionalities are manually wrapped to allow support for a wider range of types, 'shortcut' some task, or do some transparent delegation preprocessing or postprocessing.
 
@@ -46,7 +44,7 @@ To provide you with greater flexibility and ease of use, some functionalities ar
 <br/>
 <center>
 
-![Wrapped Function](.attachments/WrappedFunction.png)
+![Wrapped Function](/docs/.attachments/WrappedFunction.png)
 </center>
 
 ## Wrapping Rules
@@ -67,14 +65,14 @@ The components in the library all use `ngOnChanges()` to delegate input changes 
 
 <center>
 
-![Property Delegation](.attachments/PropertyDelegation.png)
+![Property Delegation](/docs/.attachments/PropertyDelegation.png)
 </center>
 
 # Event Hooking
 If a native object raises events, all events supported by the object are hooked by bindable observables.
 Component `@Output` properties names are always a camelCase representation of the native event name. So `bounds_changed` is hooked to `boundsChanged`, `rightclick` is hooked to `rightClick`, and so forth...
 
-Events raised by the library always provide an events data object, even if the native event doesn't. The data object will always be a [`GoogleMapsEventData`](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Fevents%2Fgoogle-maps-event-data.ts) object (or an extending type) which, in addition to the native event data, contains other useful information like:
+Events raised by the library always provide an events data object, even if the native event doesn't. The data object will always be a [`GoogleMapsEventData`](/docs/classes/GoogleMapsEventData.html) object (or an extending type) which, in addition to the native event data, contains other useful information like:
 * The emitting wrapper
 * The native object
 * A simplified transformed version of the native event args.
@@ -102,7 +100,7 @@ export YourComponent
     }
 }
 ```
-# [Superpowers](/The-Map/Superpowers)
+# [Superpowers](/docs/additional-documentation/the-map/superpowers.html)
 The different capabilities offered by the native library, such as drawing on the map, placing overlays and others, along with enhancements implemented by `@bespunky/angular-google-maps` are represented by superpowers.
 
 These superpowers are dynamically added to the map object, depending on the modules you choose to import.
@@ -114,7 +112,7 @@ In other words:
 # Next Steps
 | Topic                                        | Description                                              |
 |----------------------------------------------|----------------------------------------------------------|
-| [The Map](/The-Map)                          | The map component and its friends.                       |
-| [Programmatic Control](Programmatic-Control) | Extract wrapper objects and use them in your components. |
-| [Geometry Types](/Geometry-Types)            | Flexibility for geometries.                              |
-| [Injectable Services](/Injectable-Services)  | Injectable tools and providers.                          |
+| [The Map](/docs/additional-documentation/the-map.html)                          | The map component and its friends.                       |
+| [Programmatic Control](/docs/additional-documentation/programmatic-control.html) | Extract wrapper objects and use them in your components. |
+| [Geometry Types](/docs/additional-documentation/geometry-types.html)            | Flexibility for geometries.                              |
+| [Injectable Services](/docs/additional-documentation/injectable-services.html)  | Injectable tools and providers.                          |

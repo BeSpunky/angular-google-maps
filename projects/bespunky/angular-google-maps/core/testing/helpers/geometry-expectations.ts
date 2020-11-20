@@ -1,5 +1,6 @@
 import { GeometryTransformService, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
 
+/** @ignore */
 const geometry = new GeometryTransformService();
 
 /**

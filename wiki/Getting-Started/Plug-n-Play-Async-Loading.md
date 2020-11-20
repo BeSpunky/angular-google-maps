@@ -1,6 +1,6 @@
 # Automated async loading of Google Maps API
 
-[Live Demo](https://bs-angular-ggl-maps-demo.web.app/Getting%20Started/Plug%20&%20Play)
+[Live Demo](https://bs-angular-g-maps.web.app/Getting%20Started/Plug%20&%20Play)
 
 1. Import `GoogleMapsModule` from the `async` package.
 
@@ -38,12 +38,12 @@
 
 Bam! You have a map on your screen! 🤟😎
 
-> [`*bsSafe`](/The-Map/*bsSafe) will make sure the component is only rendered after maps API is locked-and-loaded.
+> [`*bsSafe`](/docs/additional-documentation/the-map/bssafe.html) will make sure the component is only rendered after maps API is locked-and-loaded.
 
 # Next steps
 | Topic | Description |
 | ----- | ----------- |
-|[Manual Loading](/Getting-Started/Manually-Loading)|Manually loading the native api.
-|[Custom Loader](/Getting-Started/Custom-Loader)|Define your own custom loader for maps api.|
-|[Basic Concepts](../Basic-Concepts.md)|The main ideas of how this library operates.|
-|[The Map](/The-Map)|Controlling the map, configuring it, handling events and more.|
+|[Manual Loading](/docs/additional-documentation/getting-started/manually-loading.html)|Manually loading the native api.
+|[Custom Loader](/docs/additional-documentation/getting-started/custom-loader.html)|Define your own custom loader for maps api.|
+|[Basic Concepts](/docs/additional-documentation/basic-concepts.html)|The main ideas of how this library operates.|
+|[The Map](/docs/additional-documentation/the-map.html)|Controlling the map, configuring it, handling events and more.|

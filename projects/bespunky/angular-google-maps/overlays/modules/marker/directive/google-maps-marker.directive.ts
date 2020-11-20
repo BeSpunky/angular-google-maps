@@ -6,6 +6,15 @@ import { GoogleMapsOverlayComponentBase         } from '../../../abstraction/bas
 import { IGoogleMapsMarker                      } from '../i-google-maps-marker';
 import { GoogleMapsMarkerFactoryProvider        } from '../google-maps-marker-factory.provider';
 
+/**
+ * Adds a marker to the containing map.
+ * 
+ * Must be placed inside a `<bs-google-map/>` element.
+ *
+ * @export
+ * @class GoogleMapsMarkerDirective
+ * @extends {GoogleMapsOverlayComponentBase<IGoogleMapsMarker>}
+ */
 @Directive({
     selector : 'bs-google-maps-marker, [bsGoogleMapsMarker]',
     exportAs : 'marker',

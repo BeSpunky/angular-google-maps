@@ -1,6 +1,6 @@
 # The Concept
 
-Say you have an app like Uber, and you want to place the recorded route on the map. You have 3 different types of [feature map components](/Best-Practices/Feature-Maps) that display a route.
+Say you have an app like Uber, and you want to place the recorded route on the map. You have 3 different types of [feature map components](/docs/additional-documentation/best-practices/feature-maps.html) that display a route.
 
 Will you add the same map children over and over in each feature map component? What happens if you need to change the way you render the route? Will you change it in all components? 🤔
 
@@ -10,9 +10,7 @@ You could instead, create a feature child component or directive which will:
 3. Add markers for the start and end points.
 4. Add info windows to the start and end markers.
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Best%20Practices/Feature%20Components)
-
-[[_TOC_]]
+[Live demo](https://bs-angular-g-maps.web.app/Best%20Practices/Feature%20Components)
 
 # Aspiration
 It would be great if we could centralize and encapsulate route rendering somehow, then reuse it inside the different map types we have, so it is scalable. Something like:
@@ -24,7 +22,7 @@ It would be great if we could centralize and encapsulate route rendering somehow
 
 # Implementation
 
-I'm interested in a [Template driven solution](#Feature-Child-Component) | [Programmatic solution](#Feature-Child-Directive).
+I'm interested in a [Template driven solution](#feature-child-component) | [Programmatic solution](#feature-child-directive).
 
 ## Feature Child Component
 We'll create a component and place all overlay directives necessary for our route rendering in its template:
@@ -103,4 +101,4 @@ export class RouteOverlayDirective
 # Next Steps
 | Topic | Description |
 | ----- | ----------- |
-| [Feature Maps](/Best-Practices/Feature-Maps) | Best practices for maps scalability. |
+| [Feature Maps](/docs/additional-documentation/best-practices/feature-maps.html) | Best practices for maps scalability. |

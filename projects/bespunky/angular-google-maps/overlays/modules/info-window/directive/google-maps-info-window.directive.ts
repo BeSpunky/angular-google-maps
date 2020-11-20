@@ -6,6 +6,16 @@ import { IGoogleMapsInfoWindow               } from '../i-google-maps-info-windo
 import { GoogleMapsInfoWindowFactoryProvider } from '../google-maps-info-window-factory.provider';
 import { InfoWindowTrigger                   } from '../i-google-maps-info-window';
 
+/**
+ * Adds an info window to the containing map.
+ * 
+ * Must be placed inside a `<bs-google-map/>` element.
+ *
+ * @export
+ * @class GoogleMapsInfoWindowDirective
+ * @extends {GoogleMapsComponentBase<IGoogleMapsInfoWindow>}
+ * @implements {AfterContentChecked}
+ */
 @Directive({
     selector : 'bs-google-maps-info-window, [bsGoogleMapsInfoWindow]',
     exportAs : 'infoWindow',

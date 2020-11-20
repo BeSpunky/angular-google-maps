@@ -10,8 +10,17 @@ import { ISuperpowers                          } from './superpowers/i-superpowe
 import { Defaults                              } from './types/defaults';
 import { IGoogleMap, WrappedGoogleMapFunctions } from './i-google-map';
 
+/** Extends intellisense for `GoogleMapsMap` with native map functions. */
 export interface GoogleMap extends WrappedGoogleMapFunctions { }
 
+/**
+ * The angular-ready wrapper for the native `google.maps.Map` class.
+ *
+ * @export
+ * @class GoogleMap
+ * @extends {GoogleMapsNativeObjectEmittingWrapper<google.maps.Map>}
+ * @implements {IGoogleMap}
+ */
 // @dynamic
 @NativeObjectWrapper<google.maps.Map, GoogleMap>({
     panBy: Delegation.OutsideAngular

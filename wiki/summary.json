@@ -1,0 +1,108 @@
+[
+  {
+    "title": "Home",
+    "file": "/Home.md"
+  },
+  {
+    "title": "Getting Started",
+    "file": "/Getting-Started.md",
+    "children": [
+      {
+        "title": "Plug n Play Async Loading",
+        "file": "/Getting-Started/Plug-n-Play-Async-Loading.md"
+      },
+      {
+        "title": "Custom Loader",
+        "file": "/Getting-Started/Custom-Loader.md"
+      },
+      {
+        "title": "Manually Loading",
+        "file": "/Getting-Started/Manually-Loading.md"
+      }
+    ]
+  },
+  {
+    "title": "Basic Concepts",
+    "file": "/Basic-Concepts.md"
+  },
+  {
+    "title": "The Map",
+    "file": "/The-Map.md",
+    "children": [
+      {
+        "title": "Multiple Maps",
+        "file": "/The-Map/Multiple-Maps.md"
+      },
+      {
+        "title": "Superpowers",
+        "file": "/The-Map/Superpowers.md"
+      },
+      {
+        "title": "bsSafe",
+        "file": "/The-Map/bsSafe.md"
+      }
+    ]
+  },
+  {
+    "title": "Programmatic Control",
+    "file": "/Programmatic-Control.md"
+  },
+  {
+    "title": "Geometry Types",
+    "file": "/Geometry-Types.md"
+  },
+  {
+    "title": "Injectable Services",
+    "file": "/Injectable-Services.md"
+  },
+  {
+    "title": "Best Practices",
+    "file": "/Best-Practices.md",
+    "children": [
+      {
+        "title": "Feature Maps",
+        "file": "/Best-Practices/Feature-Maps.md"
+      },
+      {
+        "title": "Feature Components",
+        "file": "/Best-Practices/Feature-Components.md"
+      }
+    ]
+  },
+  {
+    "title": "Overlays Superpower",
+    "file": "/Overlays-Superpower.md",
+    "children": [
+      {
+        "title": "Markers",
+        "file": "/Overlays-Superpower/Markers.md"
+      },
+      {
+        "title": "Polygons",
+        "file": "/Overlays-Superpower/Polygons.md"
+      },
+      {
+        "title": "Circles",
+        "file": "/Overlays-Superpower/Circles.md"
+      },
+      {
+        "title": "Data Layer",
+        "file": "/Overlays-Superpower/Data-Layer.md",
+        "children": [
+          {
+            "title": "Geometry Features",
+            "file": "/Overlays-Superpower/Data-Layer/Geometry-Features.md"
+          }
+        ]
+      },
+      {
+        "title": "Info Windows",
+        "file": "/Overlays-Superpower/Info-Windows.md"
+      }
+    ]
+  },
+  {
+    "title": "Internal Workings",
+    "file": "/Internal-Workings.md"
+  }
+]

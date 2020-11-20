@@ -9,6 +9,7 @@ import { GoogleMapsInternalApiService } from '../../api/google-maps-internal-api
  * When extending, remember to import the following in your NgModule definition:
  * CoreModule, UniversalModule, _InternalModule
  *
+ * @internal
  * @export
  * @class _GoogleMapsModule
  */

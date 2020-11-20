@@ -1,9 +1,7 @@
 # Here Comes The Fun
 Google Maps API provides different tools for doing more with your map, like placing overlays and allowing the user to draw shapes on it. `@bespunky/angular-google-maps` refers to them as **Superpowers** ⚡💪.
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Superpowers%20%28Built-in%29)
-
-[[_TOC_]]
+[Live demo](https://bs-angular-g-maps.web.app/The%20Map/Superpowers%20%28Built-in%29)
 
 ## Injection
 Superpowers are injected at the map component's level. Each map instance will have its own instances of the superpowers loaded by your system.
@@ -16,7 +14,7 @@ Superpowers are dynamically loaded when their parent module is imported. This me
 > Lazy loaded superpowers will automatically be loaded and attached for existing map instances as well.
 
 ## Usage
-The built-in components and directive internally use the superpowers, but you can manually use them too. To use the overlays superpower to create a marker for example, simply [get a hold of the map wrapper instance](/Programmatic-Control), then extract the required superpower like so:
+The built-in components and directive internally use the superpowers, but you can manually use them too. To use the overlays superpower to create a marker for example, simply [get a hold of the map wrapper instance](/docs/additional-documentation/programmatic-control.html), then extract the required superpower like so:
 ```typescript
 const overlays = map.superpowers.use(OverlaysSuperpower);
 
@@ -28,13 +26,13 @@ overlays.createMarker([11, 22]);
 # Supported Superpowers
 The following are superpowers provided by the library out of the box. To use them, simply import the corresponding module.
 
-## [Overlays](/Overlays-Superpower)
+## [Overlays](/docs/additional-documentation/overlays-superpower.html)
 Provides quick overlay creation methods and keeps track of overlays added and removed from the map.
 
 
 | Service                          | Module                         | Package                                      |
 |:--------------------------------:|:------------------------------:|:--------------------------------------------:|
-| ⚡ [`OverlaysSuperpower`](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Foverlays%2Fsuperpower%2Fservices%2Foverlays-superpower.service.ts&version=GBmaster) | 🧩 `GoogleMapsOverlaysModule` | 📦 `@bespunky/angular-google-maps/overlays` |
+| ⚡ [`OverlaysSuperpower`](/docs/injectables/OverlaysSuperpower.html) | 🧩 `GoogleMapsOverlaysModule` | 📦 `@bespunky/angular-google-maps/overlays` |
 
 
 ## Drawing Manager
@@ -43,7 +41,7 @@ NOT YET IMPLEMENTED
 # Extending Superpowers
 Custom superpowers can empower your maps with new tools. You can easily create your own superpowers and have them accompany every map instance in your app.
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/The%20Map/Extending%20Superpowers)
+[Live demo](https://bs-angular-g-maps.web.app/The%20Map/Extending%20Superpowers)
 
 ## Implementation
 Creating superpowers involves 2 simple steps...
@@ -111,7 +109,7 @@ Using your custom superpower is the same as using a built-in one. Import and fet
     export class AppModule { } // Or maybe some lazy loaded module?
     ```
 
-2.  Get a [hold of the map](/Programmatic-Control) and extract the superpower when you need to use it:
+2.  Get a [hold of the map](/docs/additional-documentation/programmatic-control.html) and extract the superpower when you need to use it:
     ```typescript
     @Component(...)
     export class MagicalMapComponent implements OnInit
@@ -133,9 +131,9 @@ Good candidates for superpowers are:
 * Extending map capabilities (e.g. tracking objects, data extraction, etc.).
 * Functionalities you can say "should be/have been built-into the map" about.
 
-You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better implemented as [feature components or directives](#See-Also).
+You could, theoretically, implement map related business logic as a set of superpowers, however those are probably better implemented as [feature components or directives](#see-also).
 
 # See Also
 | Topic                                                    | Description                                   |
 |----------------------------------------------------------|-----------------------------------------------|
-| [Feature Components](/Best-Practices/Feature-Components) | Best practices for centralizing map features. |
+| [Feature Components](/docs/additional-documentation/best-practices/feature-components.html) | Best practices for centralizing map features. |

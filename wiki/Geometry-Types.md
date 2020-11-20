@@ -8,9 +8,8 @@ Forget about having to manually convert your objects to the specific type requir
 
 **TLDR** Instead of reading and memorizing types, try and pass your types around to the library's methods. If you're thinking a method should receive your object type, it probably does. If it doesn't, contact me.
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Fgeometry.type.ts&version=GBmaster)
+[Live demo](https://bs-angular-g-maps.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://github.com/BeSpunky/angular-google-maps/blob/master/projects/bespunky/angular-google-maps/core/abstraction/types/geometry.type.ts)
 
-[[_TOC_]]
 # Single Coordinates
 Coordinates representation will always be done using the `Coord` type. Coords can take one of the following forms:
 ```typescript
@@ -26,7 +25,7 @@ const coord: Coord = { lat: 20, lng: 30 };
 const coord: Coord = new google.maps.LatLng(20, 30);
 ```
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Geometry%20Types/Single%20Coord)
+[Live demo](https://bs-angular-g-maps.web.app/Geometry%20Types/Single%20Coord)
 
 # Paths
 A set of coordinates describing a path (e.g. for polygons, polylines, etc.) will always be done using the `CoordPath` type.
@@ -80,7 +79,7 @@ const path: Path = new google.maps.Data.LinearRing([
 ]);
 ```
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Geometry%20Types/Single%20Paths)
+[Live demo](https://bs-angular-g-maps.web.app/Geometry%20Types/Single%20Paths)
 
 ## Multi Paths
 These may be expressed as 2D arrays of [`Coord`](#single-coordinates), data layer linear rings, or a 2D native `google.maps.MVCArray`. Multi paths can take one of the following forms:
@@ -128,7 +127,7 @@ const path: MultiPath = new google.maps.MVCArray([
     new google.maps.MVCArray([new google.maps.LatLng(4, 4), new google.maps.LatLng(5, 5), new google.maps.LatLng(6, 6)])
 ]);
 ```
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Geometry%20Types/Multi%20Paths)
+[Live demo](https://bs-angular-g-maps.web.app/Geometry%20Types/Multi%20Paths)
 
 # Bounds
 One of the main uses of bounds is centering the map and zooming it on a specific element(s). You may use any of the following to define the bounds for your elements:
@@ -148,7 +147,7 @@ Overlay objects (e.g. markers, polygons...) implement it internally so you can s
 
 You can implement IBounds as needed in your objects as well.
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Geometry%20Types/Bounds)
+[Live demo](https://bs-angular-g-maps.web.app/Geometry%20Types/Bounds)
 
 # Interchangeability
 
@@ -161,10 +160,10 @@ You can implement IBounds as needed in your objects as well.
 | `BoundsLike`   | `Coord`, `CoordPath`, `NativeBounds`, `IBounds`               |
 
 
-[Live demo](https://bs-angular-ggl-maps-demo.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fabstraction%2Ftypes%2Fgeometry.type.ts&version=GBmaster)
+[Live demo](https://bs-angular-g-maps.web.app/Injectable%20Services/GeometryTransformService) | [Source code](https://github.com/BeSpunky/angular-google-maps/blob/master/projects/bespunky/angular-google-maps/core/abstraction/types/geometry.type.ts)
 
 
 # See Also
 | Topic                                                                                                                                                                                                                     | Description                                  |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|
-| [GeometryTransformService](https://dev.azure.com/BeSpunky/Libraries/_git/angular-google-maps?path=%2Fprojects%2Fbespunky%2Fangular-google-maps%2Fcore%2Fapi%2Ftransform%2Fgeometry-transform.service.ts&version=GBmaster) | Easily construct and convert geometry types. |
+| [GeometryTransformService](/docs/injectables/GeometryTransformService.html) | Easily construct and convert geometry types. |

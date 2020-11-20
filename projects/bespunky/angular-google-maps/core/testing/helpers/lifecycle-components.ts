@@ -5,6 +5,14 @@ import { ViewChild, Directive } from '@angular/core';
 
 import { GoogleMapsComponentBase, EmittingWrapper, GoogleMap, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
 
+/**
+ * Wraps the template of a tested component with a map element template.
+ *
+ * @export
+ * @param {string} testedComponentTemplate The template to include inside of the map element.
+ * @param {string} [mapDirectives=''] (Optional) Any directives or attributes to add to the map element.
+ * @returns {string} A string containing the component template wrapped inside a map tempalte.
+ */
 export function createLifecycleTestingHostComponentTemplate(testedComponentTemplate: string, mapDirectives: string = ''): string
 {
     return `<bs-google-map ${mapDirectives} [center]="center">${testedComponentTemplate}</bs-google-map>`;

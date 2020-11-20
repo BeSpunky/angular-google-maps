@@ -1,6 +1,12 @@
 import { IGoogleMapsNativeObjectEmittingWrapper } from '../base/i-google-maps-native-object-emitting-wrapper';
 import { IGoogleMapsNativeObject                } from '../native/i-google-maps-native-object';
 
+/**
+ * Represents the data every map event provides.
+ *
+ * @export
+ * @interface IGoogleMapsEventData
+ */
 export interface IGoogleMapsEventData
 {
     /** The name of the triggered event. */

@@ -3,6 +3,7 @@ import { Type  } from '@angular/core';
 import { Wrapper           } from '../abstraction/types/abstraction';
 import { WrapperDefinition } from './wrapper-definition';
 
+/** The symbol used for identifying wrapping definition metadata of a wrapper object. See [`NativeObjectWrapper`](/docs/miscellaneous/functions.html#NativeObjectWrapper) decorator. */
 export const NativeObjectWrapperSymbol = Symbol('nativeObjectWrapper');
 
 /**
@@ -14,18 +15,18 @@ export const NativeObjectWrapperSymbol = Symbol('nativeObjectWrapper');
  * 2. Providing Intellisense for for wrapping methods without providing their implementation (as it will be automated by #1).
  * 3. Delegating component input changes to the wrapper's methods.
  * 
- * @see `WrappedNativeFunctions`        for implementing #2.
- * @see `GoogleMapsComponentApiService` for implementing #3.
- * 
- * Default behaviour:
+ * See [`WrappedNativeFunctions`](/docs/miscellaneous/typealiases.html#WrappedNativeFunctions) for implementing #2.  
+ * See [`GoogleMapsComponentApiService`](/docs/injectables/GoogleMapsComponentApiService.html) for implementing #3.
+ *
+ * #### Default behaviour:
  * - `getXXX()` and `setXXX()` calls are automatically delegated to the native object.
  * - `setXXX()` methods are automatically delegated outside angular.
  * - Anything else will be excluded and will throw an error if it doesn't already have an implementation on the wrapper.
  * 
- * Custom behaviour:
+ * #### Custom behaviour:
  * - Use the `definition` param to override and control what gets delegated and how it will be wrapped.
  * - Decorate manually implemented wrapper methods which should run outside angular with @OutsideAngular.
- * 
+ *  
  * @template TNative The type of native object being wrapped.
  * @template TWrapper The type of wrapper.
  * @param {WrapperDefinition<TNative, TWrapper>} [definition] (Optional) Additional wrapping definitions for native functions.

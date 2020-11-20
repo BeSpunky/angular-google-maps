@@ -1,6 +1,5 @@
-import { Subject   } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Injectable, Inject, Type, OnDestroy, Injector } from '@angular/core';
+import { Injectable, Inject, Type, Injector } from '@angular/core';
+import { Destroyable                        } from '@bespunky/angular-zen/core';
 
 import { IGoogleMap                      } from '../i-google-map';
 import { Superpowers, ChargedSuperpowers } from './superpowers.token';
@@ -15,23 +14,24 @@ import { ISuperpower                     } from './i-superpower';
  * was created for.
  */
 @Injectable()
-export class SuperpowersService implements ISuperpowers, OnDestroy
+export class SuperpowersService extends Destroyable implements ISuperpowers
 {
-    private destroyed: Subject<boolean> = new Subject();
-
     private map   : IGoogleMap;
     private powers: { [type: string]: ISuperpower } = { };
 
+    /**
+     * Creates an instance of SuperpowersService.
+     * 
+     * @param {ChargedSuperpowers} chargedPowers All the superpower types currently charged and known to the system.
+     * @param {Injector} injector The instance of the injector service.
+     */
     constructor(@Inject(Superpowers) chargedPowers: ChargedSuperpowers, private injector: Injector)
     {
-        chargedPowers.pipe(takeUntil(this.destroyed)).subscribe(this.load.bind(this));
+        super();
+
+        this.subscribe(chargedPowers, this.load.bind(this));
     }
 
-    ngOnDestroy()
-    {
-        this.destroyed.next(true);
-    }
-    
     /**
      * Instantiates a single superpower. If a map was already registered, the superpower will be attached to it.
      * Superpowers already registered will be ignored.
