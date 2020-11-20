@@ -19,6 +19,9 @@
     "disablePrivate" : true,
     "disableInternal": true,
     
+    "gaID"  : "G-QRDRDXWTLP",
+    "gaSite": "angular-google-maps",
+
     "output": "../../../dist/official-site/docs",
     "watch" : true
 }
