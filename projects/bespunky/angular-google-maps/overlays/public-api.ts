@@ -33,6 +33,13 @@ export * from './modules/polygon/google-maps-polygon';
 export * from './modules/polygon/google-maps-polygon-factory.provider';
 export * from './modules/polygon/directive/google-maps-polygon.directive';
 
+// Polyline
+export * from './modules/polyline/google-maps-polyline.module';
+export * from './modules/polyline/i-google-maps-polyline';
+export * from './modules/polyline/google-maps-polyline';
+export * from './modules/polyline/google-maps-polyline-factory.provider';
+export * from './modules/polyline/directive/google-maps-polyline.directive';
+
 // Circle
 export * from './modules/circle/google-maps-circle.module';
 export * from './modules/circle/i-google-maps-circle';
