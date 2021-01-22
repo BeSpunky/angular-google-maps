@@ -4,6 +4,7 @@ import { GoogleMapModule, Superpower, GoogleMapsApiService, BoundsLike, CoordPat
 import { DrawableOverlay     } from '../../abstraction/types/abstraction';
 import { GoogleMapsMarker    } from '../../modules/marker/google-maps-marker';
 import { GoogleMapsPolygon   } from '../../modules/polygon/google-maps-polygon';
+import { GoogleMapsPolyline  } from '../../modules/polyline/google-maps-polyline';
 import { GoogleMapsCircle    } from '../../modules/circle/google-maps-circle';
 import { GoogleMapsData      } from '../../modules/data/google-maps-data';
 import { IOverlaysSuperpower } from '../i-overlays-superpower';
@@ -60,6 +61,20 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
         options = Object.assign({}, options, { paths: this.api.geometry.toLiteralMultiPath(path) });
 
         return this.createOverlay(() => new GoogleMapsPolygon(this.api, this.map, options));
+    }
+    
+    /**
+     * Creates a polyline with the specified properties and adds it to the map.
+     *
+     * @param {Path} path The path describing the polyline coordinates.
+     * @param {google.maps.PolylineOptions} [options] (Optional) Any native options to assign to the polyline.
+     * @returns {GoogleMapsPolyline} The wrapper object created for the new polyline.
+     */
+    public createPolyline(path: CoordPath, options?: google.maps.PolylineOptions): GoogleMapsPolyline
+    {
+        options = Object.assign({}, options, { path: this.api.geometry.toLiteralMultiPath(path)[0] });
+
+        return this.createOverlay(() => new GoogleMapsPolyline(this.api, this.map, options));
     }
     
     /**
