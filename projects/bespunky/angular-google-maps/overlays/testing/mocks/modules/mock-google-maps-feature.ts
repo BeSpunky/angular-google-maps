@@ -1,6 +1,6 @@
-import { MockEmittingWrapper                                           } from '@bespunky/angular-google-maps/core/testing';
-import { Coord, CoordPath, NativeObjectWrapper, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsFeature, IGoogleMapsData, FeatureProperties        } from '@bespunky/angular-google-maps/overlays';
+import { MockEmittingWrapper                                                 } from '@bespunky/angular-google-maps/core/testing';
+import { Coord, CoordPath, NativeObjectWrapper, Path, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsFeature, IGoogleMapsData, FeatureProperties              } from '@bespunky/angular-google-maps/overlays';
 
 export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Feature>;
 
@@ -25,6 +25,10 @@ export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.
         throw new Error("Method not implemented.");
     }
     setPolygon(path: CoordPath): void
+    {
+        throw new Error("Method not implemented.");
+    }
+    setPolyline(path: Path): void
     {
         throw new Error("Method not implemented.");
     }

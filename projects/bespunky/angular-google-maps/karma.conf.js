@@ -9,7 +9,7 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
+      require('karma-coverage'),
       require('karma-junit-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
@@ -19,13 +19,12 @@ module.exports = function (config) {
         random: false
       }
     },
-    coverageIstanbulReporter: {
+    coverageReporter: {
       dir: require('path').join(__dirname, '../../../coverage/bespunky/angular-google-maps'),
-      reports: ['html', 'lcovonly', 'text-summary'],
-      fixWebpackSourcePaths: true
+      includeAllSources: true
     },
-      reporters: ['progress', 'kjhtml'],
-      junitReporter: {
+    reporters: ['progress', 'coverage', 'kjhtml'],
+    junitReporter: {
       outputDir: '../../../tests/angular-google-maps'
     },
     port: 9876,

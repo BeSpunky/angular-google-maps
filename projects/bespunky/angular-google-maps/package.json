@@ -1,6 +1,6 @@
 {
   "name": "@bespunky/angular-google-maps",
-  "version": "0.18.0",
+  "version": "0.19.1",
   "description": "A brilliant solution for using Google Maps in Angular.",
   "private": false,
   "author": {
@@ -9,10 +9,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github/BeSpunky/angular-google-maps"
+    "url": "https://github.com/BeSpunky/angular-google-maps"
   },
   "homepage": "https://bs-angular-g-maps.web.app",
   "bugs": {
+    "url": "https://github.com/BeSpunky/angular-google-maps/issues",
     "email": "us@bespunky.io"
   },
   "keywords": [
@@ -23,8 +24,8 @@
   "license": "MIT",
   "peerDependencies": {
     "rxjs": "^6.3.3",
-    "@angular/common": "^7.2.0",
-    "@angular/core": "^7.2.0",
+    "@angular/common": ">= ^7.2.0 <= 11.1.0",
+    "@angular/core": ">= ^7.2.0 <= 11.1.0",
     "@bespunky/angular-zen": "^3.0.0"
   },
   "dependencies": {

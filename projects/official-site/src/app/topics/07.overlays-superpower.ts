@@ -15,6 +15,18 @@ export const OverlaysSuperpowerExamples: Example[] = [
         embedUrl   : 'https://stackblitz.com/edit/bs-google-maps-practices-overlays-superpower?embed=1&file=src/app/continents-map/components/continent-overlays/continent-overlays.component.html'
     },
     {
+        title      : 'Polylines',
+        description: 'Draw polylines on the map.',
+        icon       : 'timeline',
+        embedUrl   : '', soon: true
+    },
+    {
+        title      : 'Circles',
+        description: 'Draw circles on the map.',
+        icon       : 'adjust',
+        embedUrl   : '', soon: true
+    },
+    {
         title      : 'Data Layer',
         description: 'Load different overlays straight from a GeoJson object, or manually add features.',
         icon       : 'category',

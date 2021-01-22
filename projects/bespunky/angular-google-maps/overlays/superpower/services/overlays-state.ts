@@ -1,6 +1,7 @@
-import { IGoogleMapsMarker  } from '../../modules/marker/i-google-maps-marker';
-import { IGoogleMapsPolygon } from '../../modules/polygon/i-google-maps-polygon';
-import { IGoogleMapsData    } from '../../modules/data/i-google-maps-data';
+import { IGoogleMapsMarker   } from '../../modules/marker/i-google-maps-marker';
+import { IGoogleMapsPolygon  } from '../../modules/polygon/i-google-maps-polygon';
+import { IGoogleMapsPolyline } from '../../modules/polyline/i-google-maps-polyline';
+import { IGoogleMapsData     } from '../../modules/data/i-google-maps-data';
 
 /**
  * Represents a snapshot of the map's overlays after changes happened.
@@ -15,6 +16,8 @@ export class OverlaysState
         public readonly markers   : IGoogleMapsMarker [] = [],
         /** All current polygons on the map. */
         public readonly polygons  : IGoogleMapsPolygon[] = [],
+        /** All current polygons on the map. */
+        public readonly polylines : IGoogleMapsPolyline[] = [],
         /** All current data layers on the map. */
         public readonly dataLayers: IGoogleMapsData   [] = []
     ) { }
@@ -24,6 +27,6 @@ export class OverlaysState
      */
     public get empty(): boolean
     {
-        return !(this.markers.length || this.polygons.length || this.dataLayers.length);
+        return !(this.markers.length || this.polygons.length || this.polylines || this.dataLayers.length);
     }
 }

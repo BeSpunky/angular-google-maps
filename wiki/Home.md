@@ -74,6 +74,14 @@ Compatibility with older versions is possible but not guaranteed.
 # Issues & Requests
 Issues, suggestions and pull requests are welcome. Please follow the [contrubution guidelines](https://bs-angular-g-maps.web.app/docs/contributing.html).
 
+# Other Packages by [`@bespunky`](https://www.npmjs.com/~bespunky)
+
+📦 [`@bespunky/angular-zen`](https://bs-angular-zen.web.app)
+
+🚧 (soon) `@bespunky/angular-zen-ux` will help you with simple UX tasks.
+
+🚧 (soon) `@bespunky/angular-zen-seo` will help you with metadata and SEO related tasks.
+
 # References
 - [Source Code](https://github.com/bespunky/angular-google-maps)
 - [npm package](https://www.npmjs.com/package/%40bespunky/angular-google-maps)
