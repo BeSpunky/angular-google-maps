@@ -139,8 +139,9 @@ describe('GeometryTransformService', () =>
         });
     });
 
-    describe('createDataPoint',   () => produceCoordSpecs('create a native geometry for a point',   (coord) => expectCoord(() => geometry.createDataPoint(coord).get(), coord)));
-    describe('createDataPolygon', () => producePathSpecs ('create a native geometry for a polygon', (path)  => expectPath (() => geometry.createDataPolygon(path).getArray(), path)));
+    describe('createDataPoint',   () => produceCoordSpecs('create a native geometry for a point',     (coord) => expectCoord(() => geometry.createDataPoint(coord).get(), coord)));
+    describe('createDataPolygon', () => producePathSpecs ('create a native geometry for a polygon',   (path)  => expectPath (() => geometry.createDataPolygon(path).getArray(), path)));
+    describe('createDataPolyline', () => produceSinglePathSpecs ('create a native geometry for a polyline', (path)  => expectPath (() => geometry.createDataPolyline(path).getArray(), path)));
 
     describe('defineCoordBounds', () => produceCoordSpecs('define the bounds', (coord) => expectBounds(() => geometry.defineCoordBounds(coord), coord, coord)));
  

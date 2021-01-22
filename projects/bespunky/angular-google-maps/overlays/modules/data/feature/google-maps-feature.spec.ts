@@ -80,5 +80,17 @@ describe('GoogleMapsFeature', () =>
             expect(geometry.type).toBe('Polygon');
             expect(geometry.coordinates).toEqual([[[0, 0], [1, 0], [0, 1], [1, 1], [0, 0]]]);
         });
+
+        it('should create and set a polyline geometry outside angular when calling `setPolyline()`', async () =>
+        {
+            feature.setPolyline([[0, 0], [0, 1], [1, 0], [1, 1]]);
+
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+
+            const geometry = (await feature.toGeoJson()).geometry;
+
+            expect(geometry.type).toBe('LineString');
+            expect(geometry.coordinates).toEqual([[0, 0], [1, 0], [0, 1], [1, 1], [0, 0]]);
+        });
     });
 });
