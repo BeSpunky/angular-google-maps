@@ -10,7 +10,7 @@
       "prefix": "bs",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/bespunky/angular-google-maps/tsconfig.lib.json",
             "project": "projects/bespunky/angular-google-maps/ng-package.json"
@@ -106,7 +106,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
