@@ -23,7 +23,7 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, '../../coverage/official-site'),
       reports: ['html', 'lcovonly', 'text-summary'],
     },
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress', 'coverage', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

@@ -23,7 +23,7 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, '../../../coverage/bespunky/angular-google-maps'),
       includeAllSources: true
     },
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress', 'coverage', 'kjhtml'],
     junitReporter: {
       outputDir: '../../../tests/angular-google-maps'
     },
