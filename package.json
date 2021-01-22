@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1101.0",
+    "@angular-devkit/core": "^11.1.0",
     "@angular/cli": "~11.1.0",
     "@angular/compiler-cli": "~11.1.0",
     "@types/google-maps": "^3.2.2",
