@@ -90,7 +90,7 @@ describe('GoogleMapsFeature', () =>
             const geometry = (await feature.toGeoJson()).geometry;
 
             expect(geometry.type).toBe('LineString');
-            expect(geometry.coordinates).toEqual([[0, 0], [1, 0], [0, 1], [1, 1], [0, 0]]);
+            expect(geometry.coordinates).toEqual([[0, 0], [1, 0], [0, 1], [1, 1]]);
         });
     });
 });

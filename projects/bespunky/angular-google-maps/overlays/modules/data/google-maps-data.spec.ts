@@ -166,7 +166,7 @@ describe('GoogleMapsData', () =>
             expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
             expect(geoJson.id).toBe('bombom');
             expect(geoJson.geometry.type).toBe('LineString');
-            expect(geoJson.geometry.coordinates).toEqual([[21, 20],[22,21],[23,22],[21,20]]);
+            expect(geoJson.geometry.coordinates).toEqual([[21, 20],[22,21],[23,22]]);
         });
     });
 });
