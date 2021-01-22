@@ -1,4 +1,4 @@
-import { Coord, CoordPath, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
+import { Coord, CoordPath, Path, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsDrawableOverlay } from '../../abstraction/base/i-google-maps-drawable-overlay';
 import { IGoogleMapsFeature         } from './feature/i-google-maps-feature';
 
@@ -31,6 +31,14 @@ export interface IGoogleMapsData extends IGoogleMapsDrawableOverlay<google.maps.
      * @returns {IGoogleMapsFeature} The wrapper object for the new feature.
      */
     createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
+    /**
+     * Creates a polyline geometry feature with the specified properties and adds it to the map.
+     *
+     * @param {Path} path The path describing the polyline coordinates.
+     * @param {google.maps.Data.FeatureOptions} [options] (Optional) Any native options to assign to the polyline.
+     * @returns {IGoogleMapsFeature} The wrapper object for the new feature.
+     */
+    createPolyline(path: Path, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature;
 
     /**
      * Adds a feature to the data layer. If a native feature is specified, a wrapper will be created for it.

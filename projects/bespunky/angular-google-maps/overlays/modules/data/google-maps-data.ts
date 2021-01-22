@@ -1,4 +1,4 @@
-import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, CoordPath, Delegation } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Coord, CoordPath, Delegation, Path } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDrawableOverlay             } from '../../abstraction/base/google-maps-drawable-overlay';
 import { OverlayType                           } from '../../abstraction/base/overlay-type.enum';
 import { isGoogleMapsFeatureOptions            } from '../../abstraction/type-guards/feature-options-type-guard';
@@ -71,6 +71,21 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     public createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
         options = this.buildOptions(this.api.geometry.createDataPolygon(path), options);
+
+        return this.addFeature(options);
+    }
+
+    /**
+     * Creates a polyline geometry feature with the specified properties and adds it to the map.
+     *
+     * @param {Path} path The path describing the polyline coordinates.
+     * @param {google.maps.Data.FeatureOptions} [options] (Optional) Any native options to assign to the polyline.
+     * @returns {IGoogleMapsFeature} The wrapper object for the new feature.
+     */
+    @OutsideAngular
+    public createPolyline(path: Path, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
+    {
+        options = this.buildOptions(this.api.geometry.createDataPolyline(path), options);
 
         return this.addFeature(options);
     }

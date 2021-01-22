@@ -1,6 +1,6 @@
-import { IGoogleMap, Coord, CoordPath, NativeObjectWrapper, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsData, IGoogleMapsFeature                                       } from '@bespunky/angular-google-maps/overlays';
-import { MockDrawableOverlay                                                       } from '../mock-drawable-overlay';
+import { IGoogleMap, Coord, CoordPath, NativeObjectWrapper, WrappedNativeFunctions, Path } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsData, IGoogleMapsFeature                                             } from '@bespunky/angular-google-maps/overlays';
+import { MockDrawableOverlay                                                             } from '../mock-drawable-overlay';
 
 export type WrappedDataFunctions = WrappedNativeFunctions<google.maps.Data, 'add' | 'addGeoJson' | 'getFeatureById' | 'toGeoJson' | 'loadGeoJson' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'getMap' | 'setMap' | 'get' | 'set'>;
 
@@ -20,6 +20,10 @@ export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> im
         throw new Error("Method not implemented.");
     }
     createPolygon(path: CoordPath, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
+    {
+        throw new Error("Method not implemented.");
+    }
+    createPolyline(path: Path, options?: google.maps.Data.FeatureOptions): IGoogleMapsFeature
     {
         throw new Error("Method not implemented.");
     }

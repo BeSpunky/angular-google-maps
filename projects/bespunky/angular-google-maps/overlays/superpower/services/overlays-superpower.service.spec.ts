@@ -3,7 +3,7 @@ import { ElementRef } from '@angular/core';
 
 import { configureGoogleMapsTestingModule, expectPositionEquals                                                              } from '@bespunky/angular-google-maps/testing';
 import { GoogleMapsApiService, GoogleMap, Defaults, FlatCoord, SuperpowersService                                            } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlaysModule, GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsCircle, GoogleMapsData, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
+import { GoogleMapsOverlaysModule, GoogleMapsMarker, GoogleMapsPolygon, GoogleMapsCircle, GoogleMapsData, OverlaysSuperpower, GoogleMapsPolyline } from '@bespunky/angular-google-maps/overlays';
 
 const elementStub: any = document.createElement('div');
 
@@ -56,6 +56,19 @@ describe('OverlaysSuperpower', () =>
 
         expect(polygon).toBeInstanceOf(GoogleMapsPolygon);
         expect(polygon.getPath()).toEqual(api.geometry.toLiteralMultiPath(flatPath));
+    });
+    
+    it('should create a polyline outside angular when calling `createPolyline()`', () => 
+    {            
+        const flatPath = [[10, 20], [20, 30], [30, 40]] as FlatCoord[];
+        const polyline = power.createPolyline(flatPath);
+        
+        // Overlay creation ends up in more than one calls to runOutsideAngular().
+        // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
+        expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsPolyline)).toBeTruthy();
+
+        expect(polyline).toBeInstanceOf(GoogleMapsPolyline);
+        expect(polyline.getPath()).toEqual(api.geometry.toLiteralMultiPath(flatPath)[0]);
     });
     
     it('should create a circle outside angular when calling `createCircle()`', () => 

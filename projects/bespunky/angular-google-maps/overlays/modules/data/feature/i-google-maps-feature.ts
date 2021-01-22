@@ -1,4 +1,4 @@
-import { IGoogleMapsNativeObjectEmittingWrapper, Coord, CoordPath, IBounds, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
+import { IGoogleMapsNativeObjectEmittingWrapper, Coord, CoordPath, IBounds, WrappedNativeFunctions, Path } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData } from '../i-google-maps-data';
 
 /** A type for the native functions of geometry feature which should be wrapped. Used along with the extension interface for the wrapper. */
@@ -44,6 +44,12 @@ export interface IGoogleMapsFeature extends IGoogleMapsNativeObjectEmittingWrapp
      * @param {CoordPath} path The polygon's path.
      */
     setPolygon(path: CoordPath): void;
+    /**
+     * Replaces the geometry of this feature with a polyline geometry.
+     *
+     * @param {Path} path The polyline's path.
+     */
+    setPolyline(path: Path): void;
 
     /**
      * Gets a map of all properties assigned to the feature.

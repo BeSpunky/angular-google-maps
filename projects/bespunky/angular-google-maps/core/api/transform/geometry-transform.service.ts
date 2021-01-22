@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike, FlatCoord } from '../../abstraction/types/geometry.type';
+import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike, FlatCoord, Path } from '../../abstraction/types/geometry.type';
 import { IBounds                                                                                         } from '../../abstraction/base/i-bounds';
 
 /**
@@ -194,6 +194,17 @@ export class GeometryTransformService
     public createDataPolygon(path: CoordPath): google.maps.Data.Polygon
     {
         return new google.maps.Data.Polygon(this.toLiteralMultiPath(path));
+    }
+
+    /**
+     * Creates a native data layer geometry for a polyline (google.maps.Data.Polyline).
+     *
+     * @param {Path} path The path of the polyline.
+     * @returns {google.maps.Data.LineString} The polyline geometry.
+     */
+    public createDataPolyline(path: Path): google.maps.Data.LineString
+    {
+        return new google.maps.Data.LineString(this.toLiteralMultiPath(path)[0]);
     }
 
     /**

@@ -1,4 +1,4 @@
-import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Coord, CoordPath, OutsideAngular } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper, NativeObjectWrapper, Coord, CoordPath, OutsideAngular, Path } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsData                                                } from '../i-google-maps-data';
 import { IGoogleMapsFeature, WrappedFeatureFunctions, FeatureProperties } from './i-google-maps-feature';
 
@@ -62,6 +62,12 @@ export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<goo
     public setPolygon(path: CoordPath): void
     {
         this.native.setGeometry(this.api.geometry.createDataPolygon(path));
+    }
+
+    @OutsideAngular
+    public setPolyline(path: Path): void
+    {
+        this.native.setGeometry(this.api.geometry.createDataPolyline(path));
     }
 
     public toGeoJson(): Promise<any>
