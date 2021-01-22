@@ -1,14 +1,15 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable      } from '@angular/core';
 
-import { GoogleMapModule    } from '@bespunky/angular-google-maps/core';
-import { OverlayType        } from '../../abstraction/base/overlay-type.enum';
-import { DrawableOverlay    } from '../../abstraction/types/abstraction';
-import { IGoogleMapsMarker  } from '../../modules/marker/i-google-maps-marker';
-import { IGoogleMapsPolygon } from '../../modules/polygon/i-google-maps-polygon';
-import { IGoogleMapsCircle  } from '../../modules/circle/i-google-maps-circle';
-import { IGoogleMapsData    } from '../../modules/data/i-google-maps-data';
-import { OverlaysState      } from './overlays-state';
+import { GoogleMapModule     } from '@bespunky/angular-google-maps/core';
+import { OverlayType         } from '../../abstraction/base/overlay-type.enum';
+import { DrawableOverlay     } from '../../abstraction/types/abstraction';
+import { IGoogleMapsMarker   } from '../../modules/marker/i-google-maps-marker';
+import { IGoogleMapsPolygon  } from '../../modules/polygon/i-google-maps-polygon';
+import { IGoogleMapsPolyline } from '../../modules/polyline/i-google-maps-polyline';
+import { IGoogleMapsCircle   } from '../../modules/circle/i-google-maps-circle';
+import { IGoogleMapsData     } from '../../modules/data/i-google-maps-data';
+import { OverlaysState       } from './overlays-state';
 
 /**
  * Tracks the overlays added to and removed from the map for easy access.
@@ -18,10 +19,11 @@ import { OverlaysState      } from './overlays-state';
 })
 export class OverlaysTracker
 {
-    public readonly markers   : IGoogleMapsMarker [] = [];
-    public readonly polygons  : IGoogleMapsPolygon[] = [];
-    public readonly circles   : IGoogleMapsCircle [] = [];
-    public readonly dataLayers: IGoogleMapsData   [] = [];
+    public readonly markers   : IGoogleMapsMarker  [] = [];
+    public readonly polygons  : IGoogleMapsPolygon [] = [];
+    public readonly polylines : IGoogleMapsPolyline[] = [];
+    public readonly circles   : IGoogleMapsCircle  [] = [];
+    public readonly dataLayers: IGoogleMapsData    [] = [];
     
     /**
      * Emits an `OverlaysState` object every time an overlay is added or removed from the map.
@@ -29,10 +31,11 @@ export class OverlaysTracker
     public readonly changes: BehaviorSubject<OverlaysState> = new BehaviorSubject(this.state(true));
 
     private map = {
-        [OverlayType.Marker ]: this.markers,
-        [OverlayType.Polygon]: this.polygons,
-        [OverlayType.Circle ]: this.circles,
-        [OverlayType.Data   ]: this.dataLayers,
+        [OverlayType.Marker  ]: this.markers,
+        [OverlayType.Polygon ]: this.polygons,
+        [OverlayType.Polyline]: this.polylines,
+        [OverlayType.Circle  ]: this.circles,
+        [OverlayType.Data    ]: this.dataLayers,
         // TODO: Add here any new supported overlay type collection
     };
 
@@ -78,7 +81,7 @@ export class OverlaysTracker
     private state(first: boolean = false): OverlaysState
     {
         // Duplicate the array so the state won't reference the tracker's collections
-        return new OverlaysState(first, [...this.markers], [...this.polygons], [...this.dataLayers]);
+        return new OverlaysState(first, [...this.markers], [...this.polygons], [...this.polylines], [...this.dataLayers]);
     }
 
     // TODO: This may cost in performance when working with large collections. Perform tests and consider refactoring to allow tracking code to complete
