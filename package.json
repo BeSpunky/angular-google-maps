@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "build-site": "ng build --prod --project official-site && npm run generate-docs",
-    "test": "ng test --code-coverage --browsers=ChromeHeadless --watch=false --reporters=junit,coverage-istanbul",
+    "test": "ng test --code-coverage --browsers=ChromeHeadless --watch=false --reporters=junit,coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "lib-vmajor": "git stash && cd projects/bespunky/angular-google-maps && (for /F %m in ('npm version major') do git commit --all -m \"Bumped library version to %m\") && git stash pop",
