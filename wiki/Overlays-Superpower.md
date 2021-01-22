@@ -30,7 +30,7 @@ This is how you would add a simple marker to the map for each branch of your bus
 |:---:|---------------------------------------------------|---------------------------------|------------------------|
 | ✔  | [Markers](/docs/additional-documentation/overlays-superpower/markers.html)           | `<bs-google-maps-marker/>`      | `GoogleMapsMarker`     |
 | ✔  | [Polygons](/docs/additional-documentation/overlays-superpower/polygons.html)         | `<bs-google-maps-polygon/>`     | `GoogleMapsPolygon`    |
-| 🚧 | Polylines                                         |                                 |                        |
+| ✔ | [Polylines](/docs/additional-documentation/overlays-superpower/polylines.html)        | `<bs-google-maps-polyline>` | `GoogleMapsPolyline` |
 | ✔  | [Circles](/docs/additional-documentation/overlays-superpower/circles.html)           | `<bs-google-maps-circle/>`      | `GoogleMapsCircle`     |
 | 🚧 | Rectangles                                        |                                 |                        |
 | ✔  | [Info Windows](/docs/additional-documentation/overlays-superpower/info-windows.html) | `<bs-google-maps-info-window/>` | `GoogleMapsInfoWindow` |
