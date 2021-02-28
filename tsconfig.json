@@ -23,5 +23,8 @@
         "dist/bespunky/angular-google-maps/*"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true
   }
 }
