@@ -1,10 +1,59 @@
-import { Directive } from '@angular/core';
+import { BehaviorSubject, combineLatest, merge, Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { Directive, ElementRef, Inject, Input, Output } from '@angular/core';
+
+import { EmittingNativeWrapperFactory, GoogleMapsComponentApiService, GoogleMapsComponentBase, Hook, IGoogleMapsEventData, WrapperFactory } from '@bespunky/angular-google-maps/core';
+import { DirectionsRequestConfig } from '../abstraction/types/directions-request-config';
+import { DirectionsPlace } from '../abstraction/types/types';
+import { GoogleMapsDirections } from '../google-maps-directions';
+import { GoogleMapsDirectionsService } from '../services/directions.service';
 
 @Directive({
     selector: 'bs-google-maps-directions'
 })
-export class GoogleMapsDirectionsDirective
+export class GoogleMapsDirectionsDirective extends GoogleMapsComponentBase<GoogleMapsDirections>
 {
-    constructor() { }
+    @Input() panel     : ElementRef;
+    @Input() routeIndex: number;
+    
+    private requestConfig : BehaviorSubject<DirectionsRequestConfig> = new BehaviorSubject(null);
+    private requestFrom   : BehaviorSubject<DirectionsPlace>         = new BehaviorSubject(null);
+    private requestTo     : BehaviorSubject<DirectionsPlace>         = new BehaviorSubject(null);
+    private requestThrough: BehaviorSubject<DirectionsPlace[]>       = new BehaviorSubject(null);
 
+    /** This event is fired when the rendered directions change, either when a new DirectionsResult is set or when the user finishes dragging a change to the directions path. */
+    @Hook('directions_changed') @Output() public directionsChanged: Observable<IGoogleMapsEventData>;
+ 
+    constructor(
+        private directions                         : GoogleMapsDirectionsService,
+                api                                : GoogleMapsComponentApiService,
+        @Inject(WrapperFactory) createNativeWrapper: EmittingNativeWrapperFactory<GoogleMapsDirections>,
+                element                            : ElementRef,
+    )
+    {
+        super(api, createNativeWrapper, element);
+
+        this.initDirectionsFeeds();
+    }
+    
+    private initDirectionsFeeds(): void
+    {
+        const fromChanged    = this.directionsFeedFor(this.requestFrom   , (place, config) => this.directions.from(place, config));
+        const toChanged      = this.directionsFeedFor(this.requestTo     , (place, config) => this.directions.to(place, config));
+        const throughChanged = this.directionsFeedFor(this.requestThrough, (place, config) => this.directions.through(place, config));
+
+        this.subscribe(merge(fromChanged, toChanged, throughChanged), result => this.wrapper.setDirections(result));
+    }
+
+    private directionsFeedFor<T>(places: Observable<T>, getDirections: (places: T, config: DirectionsRequestConfig) => Observable<google.maps.DirectionsResult>)
+    {
+        return combineLatest([places, this.requestConfig]).pipe(
+            mergeMap(([place, config]) => getDirections(place, config))
+        );
+    }
+
+    @Input() public set config (config: DirectionsRequestConfig) { this.requestConfig.next(config); }
+    @Input() public set from   (place: DirectionsPlace)          { this.requestFrom.next(place); }
+    @Input() public set to     (place: DirectionsPlace)          { this.requestTo.next(place); }
+    @Input() public set through(places: DirectionsPlace[])       { this.requestThrough.next(places); }
 }

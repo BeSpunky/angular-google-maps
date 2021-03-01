@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 
 import { GoogleMapsApiService, BoundsLike  } from '@bespunky/angular-google-maps/core';
-import { DirectionsRequestOptions } from '../abstraction/types/directions-request-options';
+import { DirectionsRequestConfig } from '../abstraction/types/directions-request-config';
 import { DirectionsPlace } from '../abstraction/types/types';
 import { DirectionsTransformService } from './directions-transform.service';
 
@@ -53,10 +53,10 @@ export class GoogleMapsDirectionsService
      *
      * @abstract
      * @param {DirectionsPlace} place
-     * @param {DirectionsRequestOptions} [options]
+     * @param {DirectionsRequestConfig} [options]
      * @returns {Observable<google.maps.DirectionsResult>}
      */
-    public from(place: DirectionsPlace, options?: DirectionsRequestOptions): Observable<google.maps.DirectionsResult>
+    public from(place: DirectionsPlace, options?: DirectionsRequestConfig): Observable<google.maps.DirectionsResult>
     {
         const request: google.maps.DirectionsRequest = {
             ...options,
@@ -72,10 +72,10 @@ export class GoogleMapsDirectionsService
      *
      * @abstract
      * @param {DirectionsPlace} place
-     * @param {DirectionsRequestOptions} [options]
+     * @param {DirectionsRequestConfig} [options]
      * @returns {Observable<google.maps.DirectionsResult>}
      */
-    public to(place: DirectionsPlace, options?: DirectionsRequestOptions): Observable<google.maps.DirectionsResult>
+    public to(place: DirectionsPlace, options?: DirectionsRequestConfig): Observable<google.maps.DirectionsResult>
     {
         const request: google.maps.DirectionsRequest = {
             ...options,
@@ -90,10 +90,10 @@ export class GoogleMapsDirectionsService
      *
      * @param {DirectionsPlace} from
      * @param {DirectionsPlace} to
-     * @param {DirectionsRequestOptions} [options]
+     * @param {DirectionsRequestConfig} [options]
      * @returns {Observable<google.maps.DirectionsResult>}
      */
-    public route(from: DirectionsPlace, to: DirectionsPlace, options?: DirectionsRequestOptions): Observable<google.maps.DirectionsResult>
+    public route(from: DirectionsPlace, to: DirectionsPlace, options?: DirectionsRequestConfig): Observable<google.maps.DirectionsResult>
     {
         const request: google.maps.DirectionsRequest = {
             ...options,
@@ -108,19 +108,19 @@ export class GoogleMapsDirectionsService
      * 
      * TODO: This ignores the stopover option of waypoints. Find a way to incorporate.
      *
-     * @param {BoundsLike[]} elements
-     * @param {Exclude<DirectionsRequestOptions, 'waypoints'>} [options]
+     * @param {DirectionsPlace[]} places
+     * @param {Exclude<DirectionsRequestConfig, 'waypoints'>} [options]
      * @returns {Observable<google.maps.DirectionsResult>}
      */
-    public through(elements: BoundsLike[], options?: Exclude<DirectionsRequestOptions, 'waypoints'>): Observable<google.maps.DirectionsResult>
+    public through(places: DirectionsPlace[], options?: Exclude<DirectionsRequestConfig, 'waypoints'>): Observable<google.maps.DirectionsResult>
     {
-        if (elements?.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${elements?.length} elements. At least 2 elements must be specified to retrieve directions.`);
+        if (places?.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${places?.length} places. At least 2 places must be specified to retrieve directions.`);
         
-        const places = elements.map(point => this.transform.toNativePlace(point));
+        const nativePlaces = places.map(point => this.transform.toNativePlace(point));
 
-        const origin      = places[0];
-        const destination = places.slice(-1)[0];
-        const waypoints   = places.slice(1, -1).map(place => this.transform.toNativeWaypoint(place));  // This will return an empty array if out of bounds
+        const origin      = nativePlaces[0];
+        const destination = nativePlaces.slice(-1)[0];
+        const waypoints   = nativePlaces.slice(1, -1).map(place => this.transform.toNativeWaypoint(place)); // This will return an empty array if out of bounds
         
         const request: google.maps.DirectionsRequest = {
             ...options,

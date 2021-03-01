@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GeometryTransformService } from '../../core';
+import { GeometryTransformService } from '@bespunky/angular-google-maps/core';
 import { DirectionsPlace, NativeDirectionsPlace } from '../abstraction/types/types';
 
 /**
