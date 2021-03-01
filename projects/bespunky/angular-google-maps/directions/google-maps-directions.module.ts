@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { GoogleMapsDirectionsDirective } from './directives/google-maps-directions.directive';
 
 /** @ignore */
 const modules = [
@@ -12,6 +13,7 @@ const modules = [
  */
 @NgModule({
     imports  : modules,
-    exports  : modules
+    exports  : modules,
+    declarations: [GoogleMapsDirectionsDirective]
 })
 export class GoogleMapsDirectionsModule { }
