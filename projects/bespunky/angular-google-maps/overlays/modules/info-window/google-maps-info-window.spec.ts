@@ -47,13 +47,13 @@ describe('GoogleMapsInfoWindow', () =>
     {
         it('should set the trigger for the info window', () =>
         {
-            infoWindow.setTrigger(InfoWindowTrigger.Click);
+            infoWindow.setTrigger('click');
 
-            expect(infoWindow.getTrigger()).toBe(InfoWindowTrigger.Click);
+            expect(infoWindow.getTrigger()).toBe('click');
 
-            infoWindow.setTrigger(InfoWindowTrigger.RightClick);
+            infoWindow.setTrigger('rightClick');
 
-            expect(infoWindow.getTrigger()).toBe(InfoWindowTrigger.RightClick);
+            expect(infoWindow.getTrigger()).toBe('rightClick');
         });
 
         it('should stop responding to old trigger events and start responding to new ones', () => 
@@ -68,7 +68,7 @@ describe('GoogleMapsInfoWindow', () =>
             const firstTriggerListeners = Object.assign({}, emitter.listeners);
 
             // Replace the emitter
-            infoWindow.setTrigger(InfoWindowTrigger.RightClick);
+            infoWindow.setTrigger('rightClick');
 
             expect(emitter.isDetached).toBeFalse();
             expect(emitter.listeners).not.toEqual(firstTriggerListeners);
@@ -138,27 +138,27 @@ describe('GoogleMapsInfoWindow', () =>
 
         it('should make click events open the info window at mouse position for the `click` trigger', () =>
         {
-            testEventEmission(InfoWindowTrigger.Click, (emitter, position) => emitter.emitClick(position));
+            testEventEmission('click', (emitter, position) => emitter.emitClick(position));
         });
         
         it('should make mouseOver events open the info window at mouse position for the `mouseOver` trigger', () =>
         {
-            testEventEmission(InfoWindowTrigger.MouseOver, (emitter, position) => emitter.emitMousOver(position));
+            testEventEmission('mouseOver', (emitter, position) => emitter.emitMousOver(position));
         });
 
         it('should make mouseOut events close the info window for the `mouseOver` trigger', () =>
         {
-            testEventEmission(InfoWindowTrigger.MouseOver, (emitter, position) => emitter.emitMouseOut(position), 'close');
+            testEventEmission('mouseOver', (emitter, position) => emitter.emitMouseOut(position), 'close');
         });
         
         it('should make doubleClick events open the info window at mouse position for the `doubleClick` trigger', () =>
         {
-            testEventEmission(InfoWindowTrigger.DoubleClick, (emitter, position) => emitter.emitDoubldClick(position));
+            testEventEmission('doubleClick', (emitter, position) => emitter.emitDoubldClick(position));
         });
 
         it('should make rightClick events open the info window at mouse position for the `rightClick` trigger', () =>
         {
-            testEventEmission(InfoWindowTrigger.RightClick, (emitter, position) => emitter.emitRightClick(position));
+            testEventEmission('rightClick', (emitter, position) => emitter.emitRightClick(position));
         });
     });
 

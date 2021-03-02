@@ -30,7 +30,7 @@ export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoog
     @Input() public maxWidth?      : number;
     @Input() public pixelOffset?   : google.maps.Size;
     
-    @Input() public trigger?   : InfoWindowTrigger;
+    @Input() public trigger?   : InfoWindowTrigger ;
     @Input() public closeAfter?: number;
     @Input() public attachedTo?: IGoogleMapsMouseEventsEmitter;
 
