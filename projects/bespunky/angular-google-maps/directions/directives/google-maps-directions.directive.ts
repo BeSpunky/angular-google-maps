@@ -1,13 +1,14 @@
 import { BehaviorSubject, combineLatest, merge, Observable } from 'rxjs';
-import { filter, mergeMap } from 'rxjs/operators';
-import { Directive, ElementRef, Inject, Input, Output } from '@angular/core';
+import { filter, mergeMap                                  } from 'rxjs/operators';
+import { Directive, ElementRef, Inject, Input, Output      } from '@angular/core';
 
 import { EmittingNativeWrapperFactory, GoogleMapsComponentApiService, GoogleMapsComponentBase, Hook, IGoogleMapsEventData, WrapperFactory } from '@bespunky/angular-google-maps/core';
-import { DirectionsRequestConfig } from '../abstraction/types/directions-request-config';
-import { DirectionsPlace } from '../abstraction/types/types';
-import { GoogleMapsDirections } from '../google-maps-directions';
-import { GoogleMapsDirectionsService } from '../services/directions.service';
+import { IGoogleMapsInfoWindow                                                                                                            } from '@bespunky/angular-google-maps/overlays';
+import { DirectionsRequestConfig             } from '../abstraction/types/directions-request-config';
+import { DirectionsPlace                     } from '../abstraction/types/types';
+import { GoogleMapsDirectionsService         } from '../services/directions.service';
 import { GoogleMapsDirectionsFactoryProvider } from '../google-maps-directions-factory.provider';
+import { GoogleMapsDirections                } from '../google-maps-directions';
 
 @Directive({
     selector : 'bs-google-maps-directions',
@@ -16,8 +17,20 @@ import { GoogleMapsDirectionsFactoryProvider } from '../google-maps-directions-f
 })
 export class GoogleMapsDirectionsDirective extends GoogleMapsComponentBase<GoogleMapsDirections>
 {
-    @Input() panel     : ElementRef;
-    @Input() routeIndex: number;
+    @Input() public panel     : ElementRef | HTMLElement;
+    @Input() public routeIndex: number;
+    @Input() public options   : google.maps.DirectionsRendererOptions;
+
+    @Input() public draggable             : boolean;
+    @Input() public hideRouteList         : boolean;
+    @Input() public infoWindow            : GoogleMapsComponentBase<IGoogleMapsInfoWindow> | IGoogleMapsInfoWindow;
+    @Input() public markerOptions         : google.maps.MarkerOptions;
+    @Input() public polylineOptions       : google.maps.PolylineOptions;
+    @Input() public preserveViewport      : boolean;
+    @Input() public suppressBicyclingLayer: boolean;
+    @Input() public suppressInfoWindows   : boolean;
+    @Input() public suppressMarkers       : boolean;
+    @Input() public suppressPolylines     : boolean;
     
     private requestConfig : BehaviorSubject<DirectionsRequestConfig> = new BehaviorSubject(null);
     private requestFrom   : BehaviorSubject<DirectionsPlace>         = new BehaviorSubject(null);
@@ -43,8 +56,6 @@ export class GoogleMapsDirectionsDirective extends GoogleMapsComponentBase<Googl
     private initDirectionsFeeds(): void
     {
         const directionsChanged = merge(this.routeFeed(), this.routeThroughFeed());
-        const routeThroughChanged = this.routeThroughFeed();
-        const directionsResult    = merge(routeChanged, routeThroughChanged);
 
         this.subscribe(directionsChanged, directions => this.wrapper.setDirections(directions));
     }
