@@ -42,11 +42,11 @@ export class GoogleMapsDirectionsDirective extends GoogleMapsComponentBase<Googl
     
     private initDirectionsFeeds(): void
     {
-        const routeChanged        = this.routeFeed();
+        const directionsChanged = merge(this.routeFeed(), this.routeThroughFeed());
         const routeThroughChanged = this.routeThroughFeed();
         const directionsResult    = merge(routeChanged, routeThroughChanged);
 
-        this.subscribe(directionsResult, result => this.wrapper.setDirections(result));
+        this.subscribe(directionsChanged, directions => this.wrapper.setDirections(directions));
     }
 
     private routeFeed(): Observable<google.maps.DirectionsResult>
