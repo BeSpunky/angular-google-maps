@@ -35,6 +35,13 @@ export class GoogleMapsDirectionsService
 
     private requestRoute(request: google.maps.DirectionsRequest): Observable<google.maps.DirectionsResult>
     {
+        // This cannot be a global const as it uses values from the google namespace which is lazy-loaded
+        const defaultConfig: DirectionsRequestConfig = {
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        request = { ...defaultConfig, ...request };
+
         const routeRequest = new Promise<google.maps.DirectionsResult>((resolve, reject) =>
         {
             const handleDirectionsResult: DirectionsCallback = (result, status) =>
@@ -49,44 +56,7 @@ export class GoogleMapsDirectionsService
     }
 
     /**
-     * TO: Current position.
-     *
-     * @abstract
-     * @param {DirectionsPlace} place
-     * @param {DirectionsRequestConfig} [options]
-     * @returns {Observable<google.maps.DirectionsResult>}
-     */
-    public from(place: DirectionsPlace, options?: DirectionsRequestConfig): Observable<google.maps.DirectionsResult>
-    {
-        const request: google.maps.DirectionsRequest = {
-            ...options,
-            origin     : this.transform.toNativePlace(place),
-            destination: this.transform.toNativePlace('Israel') // TODO: Implement a service to detect the current location and plant here
-        };
-
-        return this.requestRoute(request);
-    }
-    
-    /**
-     * FROM: Current position
-     *
-     * @abstract
-     * @param {DirectionsPlace} place
-     * @param {DirectionsRequestConfig} [options]
-     * @returns {Observable<google.maps.DirectionsResult>}
-     */
-    public to(place: DirectionsPlace, options?: DirectionsRequestConfig): Observable<google.maps.DirectionsResult>
-    {
-        const request: google.maps.DirectionsRequest = {
-            ...options,
-            origin     : this.transform.toNativePlace('Israel'), // TODO: Implement a service to detect the current location and plant here
-            destination: this.transform.toNativePlace(place)
-        };
-
-        return this.requestRoute(request);
-    }
-    /**
-     *
+     * 
      *
      * @param {DirectionsPlace} from
      * @param {DirectionsPlace} to
@@ -114,7 +84,9 @@ export class GoogleMapsDirectionsService
      */
     public through(places: DirectionsPlace[], options?: Exclude<DirectionsRequestConfig, 'waypoints'>): Observable<google.maps.DirectionsResult>
     {
-        if (places?.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${places?.length} places. At least 2 places must be specified to retrieve directions.`);
+        places = places || [];
+
+        if (places.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${places?.length} places. At least 2 places must be specified to retrieve directions.`);
         
         const nativePlaces = places.map(point => this.transform.toNativePlace(point));
 

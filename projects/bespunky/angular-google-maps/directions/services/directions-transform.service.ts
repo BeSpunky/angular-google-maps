@@ -26,6 +26,8 @@ export class DirectionsTransformService
 
     public isNativePlace(value: any): value is google.maps.Place
     {
+        if (!value) return false;
+        
         return value.placeId || value.query || value.location && this.geometry.isNativeCoord(value.location);
     }
 
