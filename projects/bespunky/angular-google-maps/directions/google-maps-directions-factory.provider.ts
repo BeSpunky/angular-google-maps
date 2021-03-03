@@ -1,7 +1,7 @@
 import { FactoryProvider, ElementRef } from '@angular/core';
 
 import { GoogleMapsApiService, WrapperFactory, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDirections } from './google-maps-directions';
+import { GoogleMapsDirections                                     } from './google-maps-directions';
 
 /**
  * Produces a factory that can be used to create a new directions wrapper for the specified map.
@@ -24,4 +24,4 @@ export const GoogleMapsDirectionsFactoryProvider: FactoryProvider = {
     provide   : WrapperFactory,
     useFactory: NativeDirectionsWrapperFactoryProvider,
     deps      : [GoogleMapsApiService, GoogleMapComponent]
-}
+};

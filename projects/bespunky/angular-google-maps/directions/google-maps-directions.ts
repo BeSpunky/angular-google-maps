@@ -2,8 +2,8 @@
 import { ElementRef } from '@angular/core';
 
 import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, Delegation, GoogleMapsComponentBase } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay, IGoogleMapsInfoWindow, OverlayType } from '@bespunky/angular-google-maps/overlays';
-import { IGoogleMapsDirections, WrappedDirectionsFunctions } from './i-google-maps-directions';
+import { GoogleMapsDrawableOverlay, IGoogleMapsInfoWindow, OverlayType                                              } from '@bespunky/angular-google-maps/overlays';
+import { IGoogleMapsDirections, WrappedDirectionsFunctions                                                          } from './i-google-maps-directions';
 
 /** Extends intellisense for `GoogleMapsDirections` with native directions functions. */
 export interface GoogleMapsDirections extends WrappedDirectionsFunctions { }
