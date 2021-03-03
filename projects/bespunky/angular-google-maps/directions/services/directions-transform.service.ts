@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GeometryTransformService } from '@bespunky/angular-google-maps/core';
-import { DirectionsPlace, NativeDirectionsPlace } from '../abstraction/types/types';
+import { DirectionsPlace, DirectionsWaypoint, NativeDirectionsPlace, NativeDirectionsWaypoint } from '../abstraction/types/types';
 
 /**
  * 
@@ -21,23 +21,58 @@ export class DirectionsTransformService
     {
         if (typeof place === 'string' || this.isNativePlace(place)) return place;
 
+        if (this.isWaypoint(place)) return this.isNativeWaypoint(place) ? place.location : this.toNativePlace(place.location);
+
         return this.geometry.centerOf(place);
     }
 
-    public isNativePlace(value: any): value is google.maps.Place
+    public isNativePlace(value: any): value is NativeDirectionsPlace
     {
         if (!value) return false;
         
         return value.placeId || value.query || value.location && this.geometry.isNativeCoord(value.location);
     }
 
-    public toNativeWaypoint(place: DirectionsPlace, stopover?: boolean): google.maps.DirectionsWaypoint
+    public toNativeWaypoint(place: DirectionsPlace): NativeDirectionsWaypoint
     {
-        const nativePlace = this.toNativePlace(place);
+        const waypoint = this.isWaypoint(place) ? place : { location: this.toNativePlace(place) };
+        
+        return this.convertWaypointLocationToNative(waypoint);
+    }
 
-        return {
-            location: this.geometry.isLiteralCoord(nativePlace) ? new google.maps.LatLng(nativePlace.lat, nativePlace.lng) : nativePlace,
-            stopover
-        };
+    /**
+     * In directions requests, origin and destination support `LatLngLiteral`s, while the `location` property of a waypoint doesn't.
+     * So if the waypoint holds a literal object it must be converted to a `LatLng` object.
+     *
+     * @private
+     * @param {NativeDirectionsWaypoint} waypoint
+     */
+    private convertWaypointLocationToNative(waypoint: DirectionsWaypoint): NativeDirectionsWaypoint
+    {
+        let location = waypoint?.location;
+
+        if (this.geometry.isLiteralCoord(location))
+            return { ...waypoint, location: new google.maps.LatLng(location.lat, location.lng) };
+        
+        return { ...waypoint } as NativeDirectionsWaypoint;
+    }
+    
+    /**
+     * (Type Guard)
+     * 
+     * 
+     * 
+     * 
+     * @param {*} value
+     * @returns {(value is NativeDirectionsWaypoint | DirectionsWaypoint)}
+     */
+    public isWaypoint(value: any): value is NativeDirectionsWaypoint | DirectionsWaypoint
+    {
+        return value && value.location && (this.isNativePlace(value.location) || this.geometry.isBoundsLike(value.location)) && ['boolean', 'undefined'].includes(typeof value.stepover);
+    }
+
+    public isNativeWaypoint(value: any): value is NativeDirectionsWaypoint
+    {
+        return this.isNativePlace(value?.location);
     }
 }
