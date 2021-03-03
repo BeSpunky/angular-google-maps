@@ -129,11 +129,9 @@ export class GoogleMapsDirectionsService
 
         if (places.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${places?.length} places. At least 2 places must be specified to retrieve directions.`);
         
-        const nativePlaces = places.map(point => this.transform.toNativePlace(point));
-
-        const origin      = nativePlaces[0];
-        const destination = nativePlaces.slice(-1)[0];
-        const waypoints   = nativePlaces.slice(1, -1).map(place => this.transform.toNativeWaypoint(place)); // This will return an empty array if out of bounds
+        const origin      = this.transform.toNativePlace(places[0]);
+        const destination = this.transform.toNativePlace(places.slice(-1)[0]);
+        const waypoints   = places.slice(1, -1).map(place => this.transform.toNativeWaypoint(place)); // This will return an empty array if out of bounds
         
         const request: google.maps.DirectionsRequest = {
             ...options,
