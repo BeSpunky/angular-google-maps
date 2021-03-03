@@ -1,14 +1,19 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
 
-import { GoogleMapsApiService, BoundsLike  } from '@bespunky/angular-google-maps/core';
-import { DirectionsRequestConfig } from '../abstraction/types/directions-request-config';
-import { DirectionsPlace } from '../abstraction/types/types';
+import { GoogleMapsApiService       } from '@bespunky/angular-google-maps/core';
+import { DirectionsRequestConfig    } from '../abstraction/types/directions-request-config';
+import { DirectionsPlace            } from '../abstraction/types/types';
 import { DirectionsTransformService } from './directions-transform.service';
 
 type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => void;
 
 /**
+ * Integrates the `google.maps.DirectionsService` into the framework and provides tools for directions.
+ * The service can be used directly, however the `GoogleMapsDirectionsDirective` allows integrating it and rendering it
+ * directly on an existing map.
+ * 
+ * @see [original notes of the native service](https://developers.google.com/maps/documentation/javascript/directions)
  * 
  * Note: As this is an independent service, it is provided in root to allow using it without importing the `GoogleMapsDirectionsModule` itself.  
  *       If at any point the service becomes dependent of the module, this should be changed to `{ providedIn: GoogleMapsDirectionsModule }`.  
@@ -21,6 +26,7 @@ type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.
 @Injectable({ providedIn: 'root' })
 export class GoogleMapsDirectionsService
 {
+    /** The native directions service that will be used to make the request and receive the directions. */
     private native: google.maps.DirectionsService;
 
     constructor(private api: GoogleMapsApiService, private transform: DirectionsTransformService)
@@ -33,6 +39,13 @@ export class GoogleMapsDirectionsService
         this.api.runOutsideAngularWhenReady(() => this.native = new google.maps.DirectionsService());
     }
 
+    /**
+     * Creates an observable that, when subscribed to, launches a directions request safely (i.e. when api is ready).
+     *
+     * @private
+     * @param {google.maps.DirectionsRequest} request The directions request to send.
+     * @returns {Observable<google.maps.DirectionsResult>} An observable that emits the results for the specified directions request.
+     */
     private requestRoute(request: google.maps.DirectionsRequest): Observable<google.maps.DirectionsResult>
     {
         return new Observable<google.maps.DirectionsResult>(observer =>
@@ -48,6 +61,7 @@ export class GoogleMapsDirectionsService
                     observer.error(`Failed to retrieve directions: ${status}.\nRefer to https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus for more information.`);
             };
 
+            // Wait for the native service to be assigned, then use it outside Angular
             this.api.runOutsideAngularWhenReady(() => this.nativeRequestRoute(request, handleDirectionsResult));
         });
     }
@@ -73,12 +87,17 @@ export class GoogleMapsDirectionsService
     }
 
     /**
+     * Finds the directions from the specified origin to the specified destination. If no travel mode was provided
+     * `google.maps.TravelMode.DRIVING` will be used.
      * 
+     * If the native service returned an `'OK'` status, the observable will emit the results. Otherwise, the observable will
+     * error with the status code received in the response.
+     * @See original docs about [result status](https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus).
      * 
-     * @param {DirectionsPlace} from
-     * @param {DirectionsPlace} to
-     * @param {DirectionsRequestConfig} [options]
-     * @returns {Observable<google.maps.DirectionsResult>}
+     * @param {DirectionsPlace} from The origin for the route.
+     * @param {DirectionsPlace} to The destination of the route.
+     * @param {DirectionsRequestConfig} [options] (Optional) Any additional route options.
+     * @returns {Observable<google.maps.DirectionsResult>} The directions for the specified points.
      */
     public route(from: DirectionsPlace, to: DirectionsPlace, options?: DirectionsRequestConfig): Observable<google.maps.DirectionsResult>
     {
@@ -92,12 +111,17 @@ export class GoogleMapsDirectionsService
     }
 
     /**
+     * Finds the directions from the first place to the last place, through all the places in between. If no travel mode was provided
+     * `google.maps.TravelMode.DRIVING` will be used.
      * 
-     * TODO: This ignores the stopover option of waypoints. Find a way to incorporate.
+     * If the native service returned an `'OK'` status, the observable will emit the results. Otherwise, the observable will
+     * error with the status code received in the response.
+     * @See original docs about [result status](https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus).
      *
-     * @param {DirectionsPlace[]} places
-     * @param {Exclude<DirectionsRequestConfig, 'waypoints'>} [options]
-     * @returns {Observable<google.maps.DirectionsResult>}
+     * @param {DirectionsPlace[]} places The array of places to pass through. The first item will be considered as origin, the last one as destination,
+     * and all of which are in between will be considered waypoints. At least 2 items must be provided.
+     * @param {Exclude<DirectionsRequestConfig, 'waypoints'>} [options] (Optional) Any additional route options.
+     * @returns {Observable<google.maps.DirectionsResult>} The directions for the specified places.
      */
     public through(places: DirectionsPlace[], options?: Exclude<DirectionsRequestConfig, 'waypoints'>): Observable<google.maps.DirectionsResult>
     {
