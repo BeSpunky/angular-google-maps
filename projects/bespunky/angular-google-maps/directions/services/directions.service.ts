@@ -35,29 +35,46 @@ export class GoogleMapsDirectionsService
 
     private requestRoute(request: google.maps.DirectionsRequest): Observable<google.maps.DirectionsResult>
     {
+        return new Observable<google.maps.DirectionsResult>(observer =>
+        {
+            const handleDirectionsResult: DirectionsCallback = (result, status) =>
+            {
+                if (status === google.maps.DirectionsStatus.OK)
+                {
+                    observer.next(result);
+                    observer.complete();
+                }
+                else
+                    observer.error(`Failed to retrieve directions: ${status}.\nRefer to https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus for more information.`);
+            };
+
+            this.api.runOutsideAngularWhenReady(() => this.nativeRequestRoute(request, handleDirectionsResult));
+        });
+    }
+
+    /**
+     * Applies default values for mandatory options which were not provided and executes the directions request
+     * through the native `google.maps.DirectionsService`.
+     *
+     * @private
+     * @param {google.maps.DirectionsRequest} request The request to execute.
+     * @param {DirectionsCallback} handleDirectionsResult The callback to execute once directions result have returned.
+     */
+    private nativeRequestRoute(request: google.maps.DirectionsRequest, handleDirectionsResult: DirectionsCallback): void
+    {
         // This cannot be a global const as it uses values from the google namespace which is lazy-loaded
         const defaultConfig: DirectionsRequestConfig = {
             travelMode: google.maps.TravelMode.DRIVING
         };
 
         request = { ...defaultConfig, ...request };
-
-        const routeRequest = new Promise<google.maps.DirectionsResult>((resolve, reject) =>
-        {
-            const handleDirectionsResult: DirectionsCallback = (result, status) =>
-            {
-                status === google.maps.DirectionsStatus.OK ? resolve(result) : reject(`Failed to retrieve directions: ${status}.\nRefer to https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus for more information.`);
-            };
-
-            this.api.runOutsideAngularWhenReady(() => this.native.route(request, handleDirectionsResult));
-        });
-
-        return from(routeRequest);
+        
+        this.native.route(request, handleDirectionsResult);
     }
 
     /**
      * 
-     *
+     * 
      * @param {DirectionsPlace} from
      * @param {DirectionsPlace} to
      * @param {DirectionsRequestConfig} [options]
