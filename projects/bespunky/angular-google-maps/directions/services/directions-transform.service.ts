@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { GeometryTransformService                                                             } from '@bespunky/angular-google-maps/core';
 import { DirectionsPlace, DirectionsWaypoint, NativeDirectionsPlace, NativeDirectionsWaypoint } from '../abstraction/types/directions.type';
+
 /**
+ * Provides flexible methods for converting and analyzing directions related types.
  * 
  * Note: As this is an independent service, it is provided in root to allow using it without importing the `GoogleMapsDirectionsModule` itself.  
  *       If at any point the service becomes dependent of the module, this should be changed to `{ providedIn: GoogleMapsDirectionsModule }`.  
@@ -17,6 +19,14 @@ export class DirectionsTransformService
 {
     constructor(private geometry: GeometryTransformService) { }
 
+    /**
+     * Converts the given place to a native directions place.
+     * If the place is a waypoint, it's location will be used.
+     * If the place is a `BoundsLike` type, its center coordinate will be calculated and used as the place.
+     *
+     * @param {DirectionsPlace} place The place to use for directions.
+     * @returns {NativeDirectionsPlace} The native representation of the place.
+     */
     public toNativePlace(place: DirectionsPlace): NativeDirectionsPlace
     {
         if (typeof place === 'string' || this.isNativePlace(place)) return place;
@@ -26,6 +36,12 @@ export class DirectionsTransformService
         return this.geometry.centerOf(place);
     }
 
+    /**
+     * (Type Guard) Determines whether the given value is a native directions place object.
+     *
+     * @param {*} value The value to test.
+     * @returns {value is NativeDirectionsPlace} `true` if the value is a native directions place object; otherwise `false`.
+     */
     public isNativePlace(value: any): value is NativeDirectionsPlace
     {
         if (!value) return false;
@@ -33,6 +49,13 @@ export class DirectionsTransformService
         return value.placeId || value.query || value.location && this.geometry.isNativeCoord(value.location);
     }
 
+    /**
+     * Transforms a place to a native waypoint.
+     * If this is a place (not already a waypoint), it will be wrapped as a waypoint and assigned as the `location` property.
+     *
+     * @param {DirectionsPlace} place The place to transfrom to a native waypoint.
+     * @returns {NativeDirectionsWaypoint} The native waypoint representation of the place.
+     */
     public toNativeWaypoint(place: DirectionsPlace): NativeDirectionsWaypoint
     {
         const waypoint = this.isWaypoint(place) ? place : { location: this.toNativePlace(place) };
@@ -58,19 +81,22 @@ export class DirectionsTransformService
     }
     
     /**
-     * (Type Guard)
+     * (Type Guard) Determines if the given value is either a native waypoint or flexible waypoint (i.e. `google.maps.DirectionsWaypoint` or `DirectionsWaypoint`).
      * 
-     * 
-     * 
-     * 
-     * @param {*} value
-     * @returns {(value is NativeDirectionsWaypoint | DirectionsWaypoint)}
+     * @param {*} value The value to test.
+     * @returns {(value is NativeDirectionsWaypoint | DirectionsWaypoint)} `true` if the given value is a waypoint; otherwise `false`.
      */
     public isWaypoint(value: any): value is NativeDirectionsWaypoint | DirectionsWaypoint
     {
         return value && value.location && (this.isNativePlace(value.location) || this.geometry.isBoundsLike(value.location)) && ['boolean', 'undefined'].includes(typeof value.stepover);
     }
 
+    /**
+     * (Type Guard) Determines if the given value is a native waypoint (e.g. `google.maps.DirectionsWaypoint`).
+     *
+     * @param {*} value The value to test.
+     * @returns {value is NativeDirectionsWaypoint} `true` if the value is a native waypoint; otherwise `false`.
+     */
     public isNativeWaypoint(value: any): value is NativeDirectionsWaypoint
     {
         return this.isNativePlace(value?.location);
