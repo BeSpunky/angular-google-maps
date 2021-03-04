@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike, FlatCoord, Path } from '../../abstraction/types/geometry.type';
-import { IBounds                                                                                         } from '../../abstraction/base/i-bounds';
+import { IBounds                                                                                               } from '../../abstraction/base/i-bounds';
 
 /**
  * Provides flexible methods for converting and analyzing geometry types.
@@ -156,7 +156,7 @@ export class GeometryTransformService
      */
     public isLiteralCoord(object: any): object is google.maps.LatLngLiteral
     {
-        return !!(object && object.lat && object.lng);
+        return !!(object && this.isLatitude(object.lat) && this.isLongitude(object.lng));
     }
 
     /**
@@ -180,11 +180,21 @@ export class GeometryTransformService
     {
         return coord instanceof Array 
             && coord.length === 2
-            // Latitude range
-            && coord[0] >= -90  && coord[0] <= 90
-            // Longitude range
-            && coord[1] >= -180 && coord[1] <= 180;
-    }   
+            && this.isLatitude(coord[0])
+            && this.isLongitude(coord[1])
+    }
+
+    private isLatitude(value: any): boolean
+    {
+        // Latitude range
+        return typeof value === 'number' && value >= -90 && value <= 90;
+    }
+    
+    private isLongitude(value: any): boolean
+    {
+        // Longitude range
+        return typeof value === 'number' &&  value >= -180 && value <= 180;
+    }
 
     /**
      * (Type Guard) Checks whether the given object is any of the supported coord types.
