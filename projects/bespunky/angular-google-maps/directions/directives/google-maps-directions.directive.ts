@@ -5,7 +5,7 @@ import { EmittingNativeWrapperFactory, GoogleMapsComponentApiService, GoogleMaps
 import { IGoogleMapsInfoWindow                                                                                                            } from '@bespunky/angular-google-maps/overlays';
 import { DirectionsRequestConfig             } from '../abstraction/types/directions-request-config.type';
 import { DirectionsPlace                     } from '../abstraction/types/directions.type';
-import { GoogleMapsDirectionsService         } from '../services/directions.service';
+import { GoogleMapsDirectionsService         } from '../services/google-maps-directions.service';
 import { GoogleMapsDirectionsFactoryProvider } from '../google-maps-directions-factory.provider';
 import { GoogleMapsDirections                } from '../google-maps-directions';
 
