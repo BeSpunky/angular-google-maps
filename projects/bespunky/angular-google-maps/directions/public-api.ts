@@ -5,8 +5,8 @@ export * from './i-google-maps-directions';
 export * from './google-maps-directions';
 export * from './google-maps-directions-factory.provider';
 
-export * from './abstraction/types/directions-request-config';
-export * from './abstraction/types/types';
+export * from './abstraction/types/directions-request-config.type';
+export * from './abstraction/types/directions.type';
 
 export * from './directives/google-maps-directions.directive';
 

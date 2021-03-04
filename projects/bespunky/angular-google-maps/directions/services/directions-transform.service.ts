@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { GeometryTransformService } from '@bespunky/angular-google-maps/core';
-import { DirectionsPlace, DirectionsWaypoint, NativeDirectionsPlace, NativeDirectionsWaypoint } from '../abstraction/types/types';
 
+import { GeometryTransformService                                                             } from '@bespunky/angular-google-maps/core';
+import { DirectionsPlace, DirectionsWaypoint, NativeDirectionsPlace, NativeDirectionsWaypoint } from '../abstraction/types/directions.type';
 /**
  * 
  * Note: As this is an independent service, it is provided in root to allow using it without importing the `GoogleMapsDirectionsModule` itself.  

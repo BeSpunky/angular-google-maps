@@ -4,8 +4,8 @@ import { Directive, ElementRef, Inject, Input, Output      } from '@angular/core
 
 import { EmittingNativeWrapperFactory, GoogleMapsComponentApiService, GoogleMapsComponentBase, Hook, IGoogleMapsEventData, WrapperFactory } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsInfoWindow                                                                                                            } from '@bespunky/angular-google-maps/overlays';
-import { DirectionsRequestConfig             } from '../abstraction/types/directions-request-config';
-import { DirectionsPlace                     } from '../abstraction/types/types';
+import { DirectionsRequestConfig             } from '../abstraction/types/directions-request-config.type';
+import { DirectionsPlace                     } from '../abstraction/types/directions.type';
 import { GoogleMapsDirectionsService         } from '../services/directions.service';
 import { GoogleMapsDirectionsFactoryProvider } from '../google-maps-directions-factory.provider';
 import { GoogleMapsDirections                } from '../google-maps-directions';

@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { GoogleMapsApiService       } from '@bespunky/angular-google-maps/core';
-import { DirectionsRequestConfig    } from '../abstraction/types/directions-request-config';
-import { DirectionsPlace            } from '../abstraction/types/types';
+import { DirectionsRequestConfig    } from '../abstraction/types/directions-request-config.type';
+import { DirectionsPlace            } from '../abstraction/types/directions.type';
 import { DirectionsTransformService } from './directions-transform.service';
 
 type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => void;
