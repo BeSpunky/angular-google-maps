@@ -88,16 +88,16 @@ describe('GeometryTransformService', () =>
         });
     });
 
-    describe('isBounds', () =>
+    describe('isNativeBounds', () =>
     {
         it('should determine whether an object is a native bounds object', () =>
         {
-            testTypeGuardFalseAgainstStandardValues((value) => geometry.isBounds(value));
+            testTypeGuardFalseAgainstStandardValues((value) => geometry.isNativeBounds(value));
 
-            expect(geometry.isBounds({ north: 1, south: 1, east: 1 })).toBeFalse();
+            expect(geometry.isNativeBounds({ north: 1, south: 1, east: 1 })).toBeFalse();
 
-            expect(geometry.isBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeTrue();
-            expect(geometry.isBounds(new google.maps.LatLngBounds())).toBeTrue();
+            expect(geometry.isNativeBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeTrue();
+            expect(geometry.isNativeBounds(new google.maps.LatLngBounds())).toBeTrue();
         });
     });
 
