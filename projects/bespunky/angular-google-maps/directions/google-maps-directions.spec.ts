@@ -22,22 +22,11 @@ describe('GoogleMapsDirections', () =>
     {
         it('should create an instance', () => expect(directions).toBeTruthy());
 
-        // Also tests the getPosition method
-        function testPosition(makeCoord: () => BoundsLike)
-        {
-            spyOn(directions.native, 'setPosition').and.callThrough();
+        it('should return the bounds of the current directions');
 
-            const coord   = makeCoord();
-            const literal = api.geometry.centerOf(coord);
-                
-            directions.setPosition(coord);
+        it('should return the panel used for textual directions wrapped as an `ElementRef`');
 
-            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
-            expect(directions.native.setPosition).toHaveBeenCalledTimes(1);
-            expect(directions.native.setPosition).toHaveBeenCalledWith(literal);
-            expect(directions.getPosition()).toEqual(literal);
-        }
-
-        produceBoundsLikeSpecs('set the position of the directions outside angular', coord => testPosition(() => coord));
+        it('should set the panel used for textual directions outside angular when given an `ElementRef`');
+        it('should set the panel used for textual directions outside angular when given an `HTMLElement`');
     });
 });
