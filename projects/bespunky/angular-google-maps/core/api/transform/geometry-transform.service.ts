@@ -86,7 +86,7 @@ export class GeometryTransformService
     }
 
     /**
-     * (Type Guard) Determines if the given path is a flat coord path (e.g. [[0, 0], [1, 1]]).
+     * (Type Guard) Determines if the given path is a flat coord path (e.g. `[[0, 0], [1, 1]]`).
      *
      * @param {CoordPath} path The path to test.
      * @returns {path is FlatCoord[]} `true` if the given path is a flat coord path; otherwise `false`.
@@ -96,6 +96,17 @@ export class GeometryTransformService
         // Relying on TS, if the first element is a flat coord, all are guaranteed to be flat coords
         return path instanceof Array && this.isFlatCoord(path[0]);
     }    
+
+    /**
+     * (Type Guard) Determines if the given path is a native coord path (i.e. `<LatLng | LatLngLiteral>[]`).
+     *
+     * @param {CoordPath} path The path to test.
+     * @returns {path is NativePath} `true` if the given path is a native coord path; otherwise `false`.
+     */
+    public isNativeCoordPath(path: CoordPath): path is Coord[]
+    {
+        return path instanceof Array && this.isNativeCoord(path[0]);
+    }
 
     /**
      * (Type Guard) Determines if the given path is a native path.
@@ -116,7 +127,7 @@ export class GeometryTransformService
      */
     public isSinglePath(path: CoordPath): path is Path
     {
-        return !this.isMultiPath(path) && (this.isNativePath(path) || this.isFlatCoordPath(path));
+        return !this.isMultiPath(path) && (this.isNativePath(path) || this.isNativeCoordPath(path) || this.isFlatCoordPath(path));
     }
     
     /**

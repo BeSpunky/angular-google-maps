@@ -1,7 +1,7 @@
 import {
     produceCoordSpecs, produceSinglePathSpecs, produceMultiPathSpecs, producePathSpecs, produceIBoundsSpecs,
     expectCoord, expectPath, expectBounds,
-    northEast, southWest, mockBounds, flatCoord, flatPath, allDummyCoords, allDummySinglePaths, allDummyMultiPaths, allDummyBounds
+    northEast, southWest, iBounds, flatCoord, flatPath, allDummyCoords, allDummySinglePaths, allDummyMultiPaths, allDummyBounds
 } from '@bespunky/angular-google-maps/core/testing';
 
 import { GeometryTransformService } from '@bespunky/angular-google-maps/core';
@@ -123,7 +123,7 @@ describe('GeometryTransformService', () =>
             expect(geometry.isIBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeFalse();
             expect(geometry.isIBounds(new google.maps.LatLngBounds())).toBeFalse();
 
-            expect(geometry.isIBounds(mockBounds)).toBeTrue();
+            expect(geometry.isIBounds(iBounds)).toBeTrue();
         });
     });
 
