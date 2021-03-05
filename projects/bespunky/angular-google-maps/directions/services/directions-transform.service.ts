@@ -29,7 +29,7 @@ export class DirectionsTransformService
      */
     public toNativePlace(place: DirectionsPlace): NativeDirectionsPlace
     {
-        if (typeof place === 'string' || this.isNativePlace(place)) return place;
+        if (this.isNativePlace(place)) return place;
 
         if (this.isWaypoint(place)) return this.isNativeWaypoint(place) ? place.location : this.toNativePlace(place.location);
 
@@ -44,9 +44,12 @@ export class DirectionsTransformService
      */
     public isNativePlace(value: any): value is NativeDirectionsPlace
     {
-        if (!value) return false;
-        
-        return value.placeId || value.query || value.location && this.geometry.isNativeCoord(value.location);
+        return value && (
+            typeof value === 'string' ||
+            this.geometry.isNativeCoord(value) ||
+            // This will detect `google.maps.Place`
+            this.geometry.isNativeCoord(value.location)
+        );
     }
 
     /**
@@ -58,9 +61,15 @@ export class DirectionsTransformService
      */
     public toNativeWaypoint(place: DirectionsPlace): NativeDirectionsWaypoint
     {
-        const waypoint = this.isWaypoint(place) ? place : { location: this.toNativePlace(place) };
-        
-        return this.convertWaypointLocationToNative(waypoint);
+        if (this.isNativeWaypoint(place)) return place;
+
+        let waypoint: DirectionsWaypoint;
+
+        if      (this.isWaypoint(place)   ) waypoint = { ...place, location: this.toNativePlace(place.location) };
+        else if (this.isNativePlace(place)) waypoint = { location: place };
+        else                                waypoint = { location: this.toNativePlace(place) };
+
+        return this.ensureNativeLocationTypeSupported(waypoint);
     }
 
     /**
@@ -70,7 +79,7 @@ export class DirectionsTransformService
      * @private
      * @param {NativeDirectionsWaypoint} waypoint
      */
-    private convertWaypointLocationToNative(waypoint: DirectionsWaypoint): NativeDirectionsWaypoint
+    private ensureNativeLocationTypeSupported(waypoint: DirectionsWaypoint): NativeDirectionsWaypoint
     {
         let location = waypoint?.location;
 
@@ -88,7 +97,7 @@ export class DirectionsTransformService
      */
     public isWaypoint(value: any): value is NativeDirectionsWaypoint | DirectionsWaypoint
     {
-        return value && value.location && (this.isNativePlace(value.location) || this.geometry.isBoundsLike(value.location)) && ['boolean', 'undefined'].includes(typeof value.stepover);
+        return value && value.location && (this.isNativePlace(value.location) || this.geometry.isBoundsLike(value.location));
     }
 
     /**
@@ -99,6 +108,7 @@ export class DirectionsTransformService
      */
     public isNativeWaypoint(value: any): value is NativeDirectionsWaypoint
     {
-        return this.isNativePlace(value?.location);
+        // Literal coords are not part of `google.maps.DirectionsWaypoint.location`.
+        return !this.geometry.isLiteralCoord(value?.location) && this.isNativePlace(value?.location);
     }
 }
