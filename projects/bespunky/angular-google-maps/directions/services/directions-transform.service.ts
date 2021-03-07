@@ -44,7 +44,7 @@ export class DirectionsTransformService
      */
     public isNativePlace(value: any): value is NativeDirectionsPlace
     {
-        return value && (
+        return !!value && (
             typeof value === 'string' ||
             this.geometry.isNativeCoord(value) ||
             // This will detect `google.maps.Place`
@@ -81,7 +81,7 @@ export class DirectionsTransformService
      */
     private ensureNativeLocationTypeSupported(waypoint: DirectionsWaypoint): NativeDirectionsWaypoint
     {
-        let location = waypoint?.location;
+        let location = waypoint.location;
 
         if (this.geometry.isLiteralCoord(location))
             return { ...waypoint, location: new google.maps.LatLng(location.lat, location.lng) };
@@ -97,7 +97,7 @@ export class DirectionsTransformService
      */
     public isWaypoint(value: any): value is NativeDirectionsWaypoint | DirectionsWaypoint
     {
-        return value && value.location && (this.isNativePlace(value.location) || this.geometry.isBoundsLike(value.location));
+        return !!value && value.location && (this.isNativePlace(value.location) || this.geometry.isBoundsLike(value.location));
     }
 
     /**
