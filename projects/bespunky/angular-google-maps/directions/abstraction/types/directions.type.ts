@@ -14,5 +14,5 @@ export type DirectionsWaypoint       = NativeDirectionsWaypoint | Omit<NativeDir
     *
     * @type {DirectionsPlace}
     */
-    location?: DirectionsPlace
+    location?: NativeDirectionsPlace | BoundsLike
 };
