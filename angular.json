@@ -26,7 +26,8 @@
           "options": {
             "main": "projects/bespunky/angular-google-maps/test.ts",
             "tsConfig": "projects/bespunky/angular-google-maps/tsconfig.spec.json",
-            "karmaConfig": "projects/bespunky/angular-google-maps/karma.conf.js"
+            "karmaConfig": "projects/bespunky/angular-google-maps/karma.conf.js",
+            "scripts": ["projects/bespunky/angular-google-maps/testing/google-maps-api.js"]
           }
         },
         "lint": {
