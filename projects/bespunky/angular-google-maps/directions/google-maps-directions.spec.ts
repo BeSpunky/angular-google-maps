@@ -1,17 +1,23 @@
-import { configureGoogleMapsTestingModule      } from '@bespunky/angular-google-maps/testing';
-import { MockGoogleMap, produceBoundsLikeSpecs } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsApiService, BoundsLike      } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDirections                  } from '@bespunky/angular-google-maps/directions';
+import { camelCase                        } from '@bespunky/angular-google-maps/_internal';
+import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
+import { MockGoogleMap                    } from '@bespunky/angular-google-maps/core/testing';
+import { directionsResult             } from '@bespunky/angular-google-maps/directions/testing';
+import { GoogleMapsApiService, GoogleMapsComponentApiService             } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDirections             } from '@bespunky/angular-google-maps/directions';
+import { GoogleMapsInfoWindow, GoogleMapsInfoWindowDirective             } from '@bespunky/angular-google-maps/overlays';
+import { directionsRoute } from './testing';
+import { ElementRef } from '@angular/core';
 
 describe('GoogleMapsDirections', () =>
 {
     let api              : GoogleMapsApiService;
+    let componentApi     : GoogleMapsComponentApiService;
     let directions       : GoogleMapsDirections;
     let runOutsideAngular: jasmine.Spy;
 
     beforeEach(async () =>
     {
-        ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
+        ({ api, componentApi, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
         directions = new GoogleMapsDirections(api, new MockGoogleMap());
 
@@ -22,11 +28,79 @@ describe('GoogleMapsDirections', () =>
     {
         it('should create an instance', () => expect(directions).toBeTruthy());
 
-        it('should return the bounds of the current directions');
+        it('should return the bounds of the current directions', () =>
+        {
+            // Define the bounds 
+            const route1Bounds = new google.maps.LatLngBounds({ lat: -1, lng: -1 }, { lat: 0, lng: 0 });
+            const route2Bounds = new google.maps.LatLngBounds({ lat:  0, lng: 0  }, { lat: 1, lng: 1 });
 
-        it('should return the panel used for textual directions wrapped as an `ElementRef`');
+            const route1 = { ...directionsRoute, bounds: route1Bounds };
+            const route2 = { ...directionsRoute, bounds: route2Bounds };
 
-        it('should set the panel used for textual directions outside angular when given an `ElementRef`');
-        it('should set the panel used for textual directions outside angular when given an `HTMLElement`');
+            const result = { ...directionsResult, routes: [route1, route2] };
+
+            directions.setDirections(result);
+
+            expect(directions.getBounds().toJSON()).toEqual(route1Bounds.union(route2Bounds).toJSON());
+        });
+
+        it('should return the panel used for textual directions wrapped as an `ElementRef`', () =>
+        {
+            const panel = document.createElement('div');
+
+            directions.setPanel(panel);
+
+            const panelRef = directions.getPanel();
+
+            expect(panelRef).toBeInstanceOf(ElementRef);
+            expect(panelRef.nativeElement).toBe(panel);
+        });
+
+        function testSetPanel(createPanel: (panel: HTMLElement) => HTMLElement | ElementRef<HTMLElement>)
+        {
+            const panel = document.createElement('div');
+
+            spyOn(directions.native, 'setPanel').and.stub();
+            
+            directions.setPanel(createPanel(panel));
+
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+            expect(directions.native.setPanel).toHaveBeenCalledTimes(1);
+            expect(directions.native.setPanel).toHaveBeenCalledWith(panel);
+        }
+
+        it('should set the panel used for textual directions outside angular when given an `ElementRef`', () => testSetPanel(panel => new ElementRef(panel)));
+
+        it('should set the panel used for textual directions outside angular when given an `HTMLElement`', () => testSetPanel(panel => panel));
+    });
+
+    describe('quick options', () =>
+    {
+        function testOption<T, E>(option: string, value: T, getExpected: (value: T) => T | E = (value) => value)
+        {
+            runOutsideAngular.calls.reset();
+
+            const expected = getExpected(value);
+
+            expect(directions.native.get(option)).not.toBe(expected);
+            
+            // Set the option
+            directions[`set${camelCase(option, true)}`](value);
+            
+            expect(runOutsideAngular).toHaveBeenCalledTimes(1);
+            expect(directions.native.get(option)).toBe(expected);
+        }
+
+        it('should set draggable',                    () => testOption('draggable', true));
+        it('should set hideRouteList',                () => testOption('hideRouteList', true));
+        it('should set infoWindow using a wrapper',   () => testOption('infoWindow', new GoogleMapsInfoWindow(api, directions.map), infoWindow => infoWindow.native));
+        it('should set infoWindow using a directive', () => testOption('infoWindow', new GoogleMapsInfoWindowDirective(componentApi, () =>  new GoogleMapsInfoWindow(api, directions.map), null), directive => directive.wrapper.native));
+        it('should set markerOptions',                () => testOption('markerOptions', {}));
+        it('should set polylineOptions',              () => testOption('polylineOptions', {}));
+        it('should set preserveViewport',             () => testOption('preserveViewport', true));
+        it('should set suppressBicyclingLayer',       () => testOption('suppressBicyclingLayer', true));
+        it('should set suppressInfoWindows',          () => testOption('suppressInfoWindows', true));
+        it('should set suppressMarkers',              () => testOption('suppressMarkers', true));
+        it('should set suppressPolylines',            () => testOption('suppressPolylines', true));
     });
 });
