@@ -1,5 +1,5 @@
-import { literalCoord, latLngCoord, allBoundsLike, produceBoundsLikeSpecs } from '@bespunky/angular-google-maps/core/testing';
-import { DirectionsPlace, DirectionsWaypoint                               } from '@bespunky/angular-google-maps/directions';
+import { literalCoord, latLngCoord, allBoundsLike, latLngBounds, produceFlexibleDummiesSpecs, FlexibleDummies } from '@bespunky/angular-google-maps/core/testing';
+import { DirectionsPlace, DirectionsWaypoint, NativeDirectionsPlace, NativeDirectionsWaypoint                               } from '@bespunky/angular-google-maps/directions';
 
 /**
  * The following are the directions types supported by the library.
@@ -12,19 +12,51 @@ export const latLngCoordPlace  = latLngCoord;
 export const nativePlace       = { location: literalCoord } as google.maps.Place;
 export const boundsLikePlaces  = [...allBoundsLike];
 
-export const allNativePlaces = [stringPlace, literalCoordPlace, latLngCoordPlace, nativePlace];
-/** All dummy places for testing combined into an array. */
-export const allDummyPlaces  = [...allNativePlaces, ...boundsLikePlaces];
+export const allNativePlaces: FlexibleDummies<NativeDirectionsPlace> = [
+    { typeName: 'string place'       , value: stringPlace       },
+    { typeName: 'literal coord place', value: literalCoordPlace },
+    { typeName: 'LatLng coord place' , value: latLngCoordPlace  },
+    { typeName: 'native Place place' , value: nativePlace       }
+];
 
 export const stringWaypoint       = { location: stringPlace } as google.maps.DirectionsWaypoint;
-export const literalCoordWaypoint = { location: literalCoordPlace } as DirectionsWaypoint;
 export const latLngCoordWaypoint  = { location: latLngCoordPlace } as google.maps.DirectionsWaypoint;
 export const placeWaypoint        = { location: nativePlace } as google.maps.DirectionsWaypoint;
-export const boundsLikeWaypoint   = boundsLikePlaces.map(({ typeName, value }) => ({ typeName, value: ({ locations: value } as DirectionsWaypoint) }));
+export const literalCoordWaypoint = { location: literalCoordPlace } as DirectionsWaypoint;
+export const boundsLikeWaypoints   = boundsLikePlaces.map(({ typeName, value }) => ({ typeName, value: ({ location: value } as DirectionsWaypoint) }));
 
-export const allNativeWaypoints = [stringWaypoint, latLngCoordWaypoint, placeWaypoint];
-/** All dummy waypoints for testing combined into an array. */
-export const allDummyWaypoints  = [...allNativeWaypoints, literalCoordWaypoint, ...boundsLikeWaypoint]
+export const allNativeWaypoints: FlexibleDummies<NativeDirectionsWaypoint> = [
+    { typeName: 'string waypoint'      , value: stringWaypoint      },
+    { typeName: 'LatLng coord waypoint', value: latLngCoordWaypoint },
+    { typeName: 'native Place waypoint', value: placeWaypoint       }
+];
+
+export const allFlexibleWaypoints: FlexibleDummies<DirectionsWaypoint> = [
+    { typeName: 'literal coord waypoint', value: literalCoordWaypoint },
+    ...boundsLikeWaypoints
+];
+
+export const allFlexiblePlaces: FlexibleDummies<DirectionsPlace> = [
+    ...boundsLikePlaces,
+    ...allNativeWaypoints,
+    ...allFlexibleWaypoints
+];
+
+export const directionsRoute: google.maps.DirectionsRoute = {
+    bounds           : latLngBounds,
+    copyrights       : '',
+    fare             : { currency: '', value: 0 },
+    legs             : [],
+    overview_path    : [],
+    overview_polyline: '',
+    warnings         : [],
+    waypoint_order   : []
+};
+
+export const directionsResult: google.maps.DirectionsResult = {
+    geocoded_waypoints: [{partial_match: false, place_id: 'some place', types: ['dummy']}],
+    routes            : [directionsRoute]
+};
 
 /**
  * Produces a spec for each native place type and runs the test against the place.
@@ -50,10 +82,13 @@ export function produceNativePlaceSpecs(expectation: string, test: (place: Direc
  */
 export function produceFlexiblePlaceSpecs(expectation: string, test: (place: DirectionsPlace) => void): void
 {
-    // These are native types which happen to be bounds like. They will be tested apart.
-    const boundsLikeExcludes = ['literal coord', 'LatLng coord'];
+    // Native place types which happen to be bounds like. Excluded as they should be tested using `produceNativePlacesSpecs()`.
+    const boundsLikeExcludes  = ['literal coord', 'LatLng coord'];
+    // Flexible waypoint types which take the same shape as a `google.maps.Place`. Excluded as they should be tested using `produceNativePlacesSpecs()`.
+    const nativePlaceExcludes = ['literal coord waypoint', 'LatLng coord waypoint'];
+    const excludes            = [...boundsLikeExcludes, ...nativePlaceExcludes];
 
-    produceBoundsLikeSpecs(expectation, test, boundsLikeExcludes);
+    produceFlexibleDummiesSpecs(allFlexiblePlaces, 'DirectionsPlace', expectation, test, excludes);
 }
 
 /**
@@ -92,12 +127,10 @@ export function produceNativeWaypointSpecs(expectation: string, test: (place: Di
  */
 export function produceFlexibleWaypointSpecs(expectation: string, test: (place: DirectionsWaypoint) => void): void
 {
-    it(`should ${expectation} for native LatLngLiteral waypoint`, () => test(literalCoordWaypoint));
+    // These are native waypoint types which happen to be bounds like. They will be tested apart.
+    const boundsLikeExcludes = ['LatLng coord'];
 
-    // These are native types which happen to be bounds like. They will be tested apart.
-    const boundsLikeExcludes = ['literal coord', 'LatLng coord'];
-
-    produceBoundsLikeSpecs(expectation, value => test({ location: value }), boundsLikeExcludes);
+    produceFlexibleDummiesSpecs(allFlexibleWaypoints, 'DirectionsWaypoint', expectation, test, boundsLikeExcludes);
 }
 
 /**

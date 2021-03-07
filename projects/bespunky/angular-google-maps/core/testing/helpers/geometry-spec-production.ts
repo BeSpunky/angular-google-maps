@@ -4,6 +4,9 @@ import { MockBounds                                                             
 /** @ignore */
 const geometry = new GeometryTransformService();
 
+export type FlexibleDummy<T>   = { typeName: string, value: T };
+export type FlexibleDummies<T> = FlexibleDummy<T>[];
+
 /**
  * The following are the geometry types supported by the library.
  * They have been assigned with dummy values for testing.
@@ -79,7 +82,7 @@ export const dataPolygon = new google.maps.Data.Polygon(linearRingMultiPath);
 export const allDummyDataGeometries = [dataPoint, dataPolygon];
 
 /** All supported BoundsLike dummy values for testing combined into an array. */
-export const allBoundsLike: { typeName: string, value: any }[] = [
+export const allBoundsLike: FlexibleDummies<BoundsLike> = [
     { typeName: 'flat coord'            , value: flatCoord           },
     { typeName: 'literal coord'         , value: literalCoord        },
     { typeName: 'LatLng coord'          , value: latLngCoord         },
@@ -214,8 +217,13 @@ export function produceDataGeometrySpecs(expectation: string, test: (geo: google
  * @param {(element: BoundsLike) => void} test The test to perform on the bounds like element.
  * @param {string[]} exclude (Optional) Type names of bounds like object to exclude from the specs. Example: `['literal coord', 'LatLng coord']`.
  */
-export function produceBoundsLikeSpecs(expectation: string, test: (element: BoundsLike) => void, exclude: string[] = []): void
+export function produceBoundsLikeSpecs(expectation: string, test: (value: BoundsLike) => void, exclude?: string[]): void
 {
-    allBoundsLike.filter(boundsLike => !exclude.includes(boundsLike.typeName))
-                 .forEach(boundsLike => it(`should ${expectation} for a bounds like of ${boundsLike.typeName}`, () => test(boundsLike.value)))
+    produceFlexibleDummiesSpecs(allBoundsLike, 'BoundsLike', expectation, test, exclude);
+}
+
+export function produceFlexibleDummiesSpecs<T>(flexibles: FlexibleDummies<T>, flexibleType: string, expectation: string, test: (value: T) => void, exclude: string[] = []): void
+{
+    flexibles.filter(flexible => !exclude.includes(flexible.typeName))
+             .forEach(flexible => it(`should ${expectation} for a ${flexibleType} of ${flexible.typeName}`, () => test(flexible.value)));
 }
