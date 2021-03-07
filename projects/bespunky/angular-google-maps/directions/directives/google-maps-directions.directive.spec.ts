@@ -31,7 +31,21 @@ describe('GoogleMapsDirectionsDirective', () =>
         directive = hostComponent.testedComponent as GoogleMapsDirectionsDirective;
     });
 
-    it('should create an instance', () => expect(directive).toBeTruthy());
+    describe('basically', () =>
+    {
+        it('should create an instance', () => expect(directive).toBeTruthy());    
+    });
+
+    describe('route requests', () =>
+    {
+        it('should set the directions when both `from` and `to` have been set');
+        it('should set the directions when `through` have been set');
+
+        it('should do nothing if either `from` or `to` are not set');
+        it('should fail if either `through` is set with less than 2 items');
+
+        it('should update directions with the new options when setting `config`');
+    })
 });
 
 @Component({
