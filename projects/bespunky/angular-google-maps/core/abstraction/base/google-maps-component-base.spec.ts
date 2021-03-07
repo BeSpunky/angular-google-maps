@@ -19,7 +19,7 @@ describe('GoogleMapsComponentBase (abstract)', () =>
 
     it('should instantiate the wrapper member', () => expect(mockComponent.wrapper).toBeDefined());
 
-    it('should assign emitters to the component @Output members', () => expect(mockComponent.click instanceof Observable).toBeTruthy());
+    it('should assign emitters to the component @Output members', () => expect(mockComponent.click).toBeInstanceOf(Observable));
 
     it('delegate @Input changes to the native object', () =>
     {
