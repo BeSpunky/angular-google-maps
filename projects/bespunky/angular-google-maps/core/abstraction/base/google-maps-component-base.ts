@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
 import { OnChanges, SimpleChanges, Inject, Directive, ElementRef, Input, OnDestroy } from '@angular/core';
+import { Destroyable                                                               } from '@bespunky/angular-zen/core';
 
 import { GoogleMapsComponentApiService                 } from '../../api/google-maps-component-api.service';
 import { WrapperFactory                                } from '../tokens/wrapper-factory.token';
@@ -27,11 +27,10 @@ import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstract
  */
 @Directive()
 export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
+              extends Destroyable
            implements OnChanges, OnDestroy
 {
     @Input() public custom: any;
-
-    protected destroyed: Subject<void> = new Subject();
 
     private nativeWrapper: TWrapper;
 
@@ -44,6 +43,8 @@ export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
      */
     constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory<TWrapper>, protected element: ElementRef)
     {
+        super();
+
         this.initNativeWrapper();
         this.initEmitters();
     }
@@ -51,12 +52,6 @@ export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
     ngOnChanges(changes: SimpleChanges)
     {
         this.api.delegateInputChangesToNativeObject(changes, this.wrapper);
-    }
-
-    ngOnDestroy()
-    {
-        this.destroyed.next();
-        this.destroyed.complete();
     }
 
     /**
