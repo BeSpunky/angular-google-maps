@@ -15,7 +15,7 @@ export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
  * @implements {IGoogleMapsPolygon}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Polygon, GoogleMapsPolygon>({
+@NativeObjectWrapper<GoogleMapsPolygon>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })

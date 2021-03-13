@@ -22,7 +22,7 @@ export interface GoogleMap extends WrappedGoogleMapFunctions { }
  * @implements {IGoogleMap}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Map, GoogleMap>({
+@NativeObjectWrapper<GoogleMap>({
     panBy: Delegation.OutsideAngular
 })
 export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Map> implements IGoogleMap

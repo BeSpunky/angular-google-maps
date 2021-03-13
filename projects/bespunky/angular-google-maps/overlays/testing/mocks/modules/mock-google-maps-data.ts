@@ -7,7 +7,7 @@ export type WrappedDataFunctions = WrappedNativeFunctions<google.maps.Data, 'add
 export interface MockGoogleMapsData extends WrappedDataFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<google.maps.Data, MockGoogleMapsData>()
+@NativeObjectWrapper<MockGoogleMapsData>()
 export class MockGoogleMapsData extends MockDrawableOverlay<google.maps.Data> implements IGoogleMapsData
 {
     constructor(public map: IGoogleMap)
