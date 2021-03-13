@@ -16,7 +16,7 @@ export interface GoogleMapsMarker extends WrappedMarkerFunctions { }
  * @implements {IGoogleMapsMarker}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Marker, GoogleMapsMarker>({
+@NativeObjectWrapper<GoogleMapsMarker>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })

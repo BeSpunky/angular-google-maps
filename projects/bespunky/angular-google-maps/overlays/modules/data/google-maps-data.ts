@@ -19,7 +19,7 @@ export interface GoogleMapsData extends WrappedDataFunctions { }
  * @implements {IGoogleMapsData}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Data, GoogleMapsData>({
+@NativeObjectWrapper<GoogleMapsData>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })

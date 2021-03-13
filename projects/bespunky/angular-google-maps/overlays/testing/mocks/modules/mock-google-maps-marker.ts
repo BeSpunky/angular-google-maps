@@ -7,7 +7,7 @@ export type WrappedMarkerFunctions = WrappedNativeFunctions<google.maps.Marker, 
 export interface MockMarker extends WrappedMarkerFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<google.maps.Marker, MockMarker>()
+@NativeObjectWrapper<MockMarker>()
 export class MockMarker extends MockDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
     private geometry = new GeometryTransformService();

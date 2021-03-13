@@ -27,11 +27,10 @@ export const NativeObjectWrapperSymbol = Symbol('nativeObjectWrapper');
  * - Use the `definition` param to override and control what gets delegated and how it will be wrapped.
  * - Decorate manually implemented wrapper methods which should run outside angular with @OutsideAngular.
  *  
- * @template TNative The type of native object being wrapped.
  * @template TWrapper The type of wrapper.
- * @param {WrapperDefinition<TNative, TWrapper>} [definition] (Optional) Additional wrapping definitions for native functions.
+ * @param {WrapperDefinition<TWrapper>} [definition] (Optional) Additional wrapping definitions for native functions.
  */
-export function NativeObjectWrapper<TNative extends Object, TWrapper extends Wrapper = any>(definition: WrapperDefinition<TNative, TWrapper> = {})
+export function NativeObjectWrapper<TWrapper extends Wrapper = any>(definition: WrapperDefinition<TWrapper> = {})
 {
     return function NativeObjectWrapperFactory<TConstructor extends Type<Wrapper>>(wrapperType: TConstructor)
     {

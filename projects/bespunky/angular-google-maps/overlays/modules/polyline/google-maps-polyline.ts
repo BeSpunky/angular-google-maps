@@ -15,7 +15,7 @@ export interface GoogleMapsPolyline extends WrappedPolylineFunctions { }
  * @implements {IGoogleMapsPolyline}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Polyline, GoogleMapsPolyline>({
+@NativeObjectWrapper<GoogleMapsPolyline>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })

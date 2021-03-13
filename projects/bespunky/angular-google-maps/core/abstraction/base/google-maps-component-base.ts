@@ -3,7 +3,7 @@ import { Destroyable                                                            
 
 import { GoogleMapsComponentApiService                 } from '../../api/google-maps-component-api.service';
 import { WrapperFactory                                } from '../tokens/wrapper-factory.token';
-import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstraction';
+import { EmittingWrapper, EmittingWrapperObjectFactory } from '../types/abstraction';
 
 /**
  * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.
@@ -41,7 +41,7 @@ export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
      * @param {EmittingNativeWrapperFactory<TWrapper>} createNativeWrapper The factory for creating the wrapper this component should work with. Must be provided by the component's providers.
      * @param {ElementRef} element The element created for the component.
      */
-    constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory<TWrapper>, protected element: ElementRef)
+    constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingWrapperObjectFactory<TWrapper>, protected element: ElementRef)
     {
         super();
 

@@ -15,7 +15,7 @@ export interface GoogleMapsCircle extends WrappedCircleFunctions { }
  * @implements {IGoogleMapsCircle}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Circle, GoogleMapsCircle>({
+@NativeObjectWrapper<GoogleMapsCircle>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })

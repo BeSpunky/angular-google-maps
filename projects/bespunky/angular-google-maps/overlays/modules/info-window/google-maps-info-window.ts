@@ -18,7 +18,7 @@ export interface GoogleMapsInfoWindow extends WrappedInfoWindowFunctions { }
  * @implements {IGoogleMapsInfoWindow}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.InfoWindow, GoogleMapsInfoWindow>({
+@NativeObjectWrapper<GoogleMapsInfoWindow>({
     close: Delegation.OutsideAngular
 })
 export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<google.maps.InfoWindow> implements IGoogleMapsInfoWindow
