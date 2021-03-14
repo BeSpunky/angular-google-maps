@@ -16,7 +16,8 @@ export * from './abstraction/events/google-maps-event-data';
 
 export * from './abstraction/native/i-google-maps-native-object';
 
-export * from './abstraction/tokens/wrapper-factory.token';
+export * from './abstraction/factories/helpers';
+export * from './abstraction/factories/tokens';
 
 export * from './abstraction/types/abstraction';
 export * from './abstraction/types/geometry.type';

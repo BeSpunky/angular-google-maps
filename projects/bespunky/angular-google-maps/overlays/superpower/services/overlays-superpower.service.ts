@@ -43,10 +43,12 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
      */
     public createMarker(position: BoundsLike, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
     {
-        options = Object.assign({}, options, { position: this.api.geometry.centerOf(position) });
+        options = { ...options, position: this.api.geometry.centerOf(position) };
+
+        const native = new google.maps.Marker(options);
         
         // Marker creation will cause rendering. Run outside...
-        return this.createOverlay(() => new GoogleMapsMarker(this.api, this.map, options));
+        return this.createOverlay(() => new GoogleMapsMarker(this.map, this.api, native));
     }
     
     /**
@@ -58,9 +60,11 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
      */
     public createPolygon(path: CoordPath, options?: google.maps.PolygonOptions): GoogleMapsPolygon
     {
-        options = Object.assign({}, options, { paths: this.api.geometry.toLiteralMultiPath(path) });
+        options = { ...options, paths: this.api.geometry.toLiteralMultiPath(path) };
 
-        return this.createOverlay(() => new GoogleMapsPolygon(this.api, this.map, options));
+        const native = new google.maps.Polygon(options);
+
+        return this.createOverlay(() => new GoogleMapsPolygon(this.map, this.api, native));
     }
     
     /**
@@ -72,9 +76,11 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
      */
     public createPolyline(path: CoordPath, options?: google.maps.PolylineOptions): GoogleMapsPolyline
     {
-        options = Object.assign({}, options, { path: this.api.geometry.toLiteralMultiPath(path)[0] });
+        options = { ...options, path: this.api.geometry.toLiteralMultiPath(path)[0] };
 
-        return this.createOverlay(() => new GoogleMapsPolyline(this.api, this.map, options));
+        const native = new google.maps.Polyline(options);
+
+        return this.createOverlay(() => new GoogleMapsPolyline(this.map, this.api, native));
     }
     
     /**
@@ -87,9 +93,11 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
      */
     public createCircle(center: BoundsLike, radius: number, options?: google.maps.CircleOptions): GoogleMapsCircle
     {
-        options = Object.assign({}, options, { center: this.api.geometry.centerOf(center), radius });
+        options = { ...options, center: this.api.geometry.centerOf(center), radius };
 
-        return this.createOverlay(() => new GoogleMapsCircle(this.api, this.map, options));
+        const native = new google.maps.Circle(options);
+
+        return this.createOverlay(() => new GoogleMapsCircle(this.map, this.api, native));
     }
 
     /**
@@ -100,7 +108,9 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
      */
     public createDataLayer(options?: google.maps.Data.DataOptions): GoogleMapsData
     {
-        return this.createOverlay(() => new GoogleMapsData(this.api, this.map, options));
+        const native = new google.maps.Data(options);
+        
+        return this.createOverlay(() => new GoogleMapsData(this.map, this.api, native));
     }
 
     // TODO: Add here create methods for any new featured overlay type (e.g. polygons, polylines, etc.)

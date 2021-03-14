@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 import { Directive, Output, Input } from '@angular/core';
 
 import { GoogleMapsComponentBase, IGoogleMapsMouseEventsEmitter, IGoogleMapsEventData, Hook, Coord, CoordPath } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsFeature, FeatureProperties } from '../i-google-maps-feature';
-import { GoogleMapsFeatureFactoryProvider      } from '../google-maps-feature-factory.provider';
+import { GoogleMapsFeatureFactoryProvider, NativeGoogleMapsFeatureFactoryProvider                             } from '../google-maps-feature-factory.provider';
+import { IGoogleMapsFeature, FeatureProperties                                                                } from '../i-google-maps-feature';
 
 /**
  * Adds a feature to the containing data layer.
@@ -18,7 +18,7 @@ import { GoogleMapsFeatureFactoryProvider      } from '../google-maps-feature-fa
 @Directive({
     selector : 'bs-google-maps-feature, [bsGoogleMapsFeature]',
     exportAs : 'feature',
-    providers: [GoogleMapsFeatureFactoryProvider]
+    providers: [GoogleMapsFeatureFactoryProvider, NativeGoogleMapsFeatureFactoryProvider]
 })
 export class GoogleMapsFeatureDirective extends GoogleMapsComponentBase<IGoogleMapsFeature> implements IGoogleMapsMouseEventsEmitter
 {

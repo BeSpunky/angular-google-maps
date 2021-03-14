@@ -16,7 +16,7 @@ describe('GoogleMapsData', () =>
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
         map  = new MockGoogleMap();
-        data = new GoogleMapsData(api, map);
+        data = new GoogleMapsData(map, api, new google.maps.Data());
 
         runOutsideAngular.calls.reset();
     });

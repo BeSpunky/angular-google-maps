@@ -36,14 +36,9 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
         [InfoWindowTrigger.RightClick ]: [{ emitter: () => this.attachedTo.rightClick,  handle: this.onTriggered }],
     };
 
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.InfoWindowOptions)
+    constructor(public readonly map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.InfoWindow)
     {
-        super(api, map, OverlayType.InfoWindow, options);
-    }
-
-    protected createNativeObject(options?: google.maps.InfoWindowOptions): google.maps.InfoWindow
-    {
-        return new google.maps.InfoWindow(options);
+        super(api, native);
     }
 
     /**

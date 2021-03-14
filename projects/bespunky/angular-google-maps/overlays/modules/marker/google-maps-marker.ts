@@ -22,14 +22,9 @@ export interface GoogleMapsMarker extends WrappedMarkerFunctions { }
 })
 export class GoogleMapsMarker extends GoogleMapsDrawableOverlay<google.maps.Marker> implements IGoogleMapsMarker
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.ReadonlyMarkerOptions)
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.Marker)
     {
-        super(api, map, OverlayType.Marker, options);
-    }
-
-    protected createNativeObject(options?: google.maps.ReadonlyMarkerOptions): google.maps.Marker
-    {
-        return new google.maps.Marker(options);
+        super(OverlayType.Marker, map, api, native);
     }
     
     public getBounds(): google.maps.LatLngBounds

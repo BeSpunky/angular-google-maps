@@ -21,14 +21,9 @@ export interface GoogleMapsPolyline extends WrappedPolylineFunctions { }
 })
 export class GoogleMapsPolyline extends GoogleMapsDrawableOverlay<google.maps.Polyline> implements IGoogleMapsPolyline
 {
-    constructor(api: GoogleMapsApiService, map: IGoogleMap, ...nativeArgs: any[])
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.Polyline)
     {
-        super(api, map, OverlayType.Polyline, ...nativeArgs);
-    }
-
-    protected createNativeObject(options?: google.maps.PolylineOptions): google.maps.Polyline
-    {
-        return new google.maps.Polyline(options);
+        super(OverlayType.Polyline, map, api, native);
     }
 
     public getBounds(): google.maps.LatLngBounds

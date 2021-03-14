@@ -4,7 +4,7 @@ import { Component        } from '@angular/core';
 import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
 import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '@bespunky/angular-google-maps/core/testing';
 import { Coord                                                                   } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsCircleDirective, GoogleMapsOverlaysModule                     } from '@bespunky/angular-google-maps/overlays';
+import { GoogleMapsCircleDirective, GoogleMapsCircleFactoryProvider, GoogleMapsOverlaysModule, NativeGoogleMapsCircleFactoryProvider                     } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --
@@ -24,7 +24,11 @@ describe('GoogleMapsCircleDirective', () =>
     {
         ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({
             componentType: TestHostComponent,
-            customize    : def => def.imports.push(GoogleMapsOverlaysModule)
+            customize: def =>
+            {
+                def.imports.push(GoogleMapsOverlaysModule);
+                def.providers = [GoogleMapsCircleFactoryProvider, NativeGoogleMapsCircleFactoryProvider]
+            }
         }));
         
         hostFixture.detectChanges();

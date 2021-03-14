@@ -7,9 +7,9 @@ export abstract class GoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativ
                 extends GoogleMapsNativeObjectEmittingWrapper<TNative>
                 implements IGoogleMapsDrawableOverlay<TNative>
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, public readonly type: OverlayType, ...nativeArgs: any[])
+    constructor(public readonly type: OverlayType, public map: IGoogleMap, api: GoogleMapsApiService, native: TNative)
     {
-        super(api, ...nativeArgs);
+        super(api, native);
 
         this.attach(map);
     }

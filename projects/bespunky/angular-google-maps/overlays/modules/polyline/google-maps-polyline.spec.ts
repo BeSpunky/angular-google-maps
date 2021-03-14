@@ -14,7 +14,7 @@ describe('GoogleMapsPolyline', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        polyline = new GoogleMapsPolyline(api, new MockGoogleMap());
+        polyline = new GoogleMapsPolyline(new MockGoogleMap(), api, new google.maps.Polyline());
 
         runOutsideAngular.calls.reset();
     });

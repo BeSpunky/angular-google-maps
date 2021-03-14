@@ -2,7 +2,7 @@ import { TestBed                                     } from '@angular/core/testi
 import { FactoryProvider, Type, Provider, ElementRef } from '@angular/core';
 
 import { configureGoogleMapsTestingModule                                                   } from '@bespunky/angular-google-maps/async/testing';
-import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperFactory, EmittingWrapper } from '@bespunky/angular-google-maps/core';
+import { GoogleMapComponent, GoogleMapsComponentApiService, WrapperInstance, EmittingWrapper } from '@bespunky/angular-google-maps/core';
 import { MockGoogleMap                                                                      } from '../mocks/modules/mock-google-map';
 
 /**
@@ -18,26 +18,28 @@ function setupOverlayWrapperFactoryProviderTest(factoryProvider: FactoryProvider
     configureGoogleMapsTestingModule({
         customize: (def) =>
         {
-            def.providers.push({
-                provide : MockGoogleMap,
-                useValue: new MockGoogleMap()
-            });
-            def.providers.push({
-                provide   : GoogleMapComponent,
-                useFactory: (api, map, element) => new GoogleMapComponent(api, () => map, element),
-                deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
-            });
-            def.providers.push({
-                provide : ElementRef,
-                useValue: new ElementRef(document.createElement('div'))
-            });
-            def.providers.push(...deps, factoryProvider);
+            def.providers.push(
+                {
+                    provide : MockGoogleMap,
+                    useValue: new MockGoogleMap()
+                },
+                {
+                    provide   : GoogleMapComponent,
+                    useFactory: (api, map, element) => new GoogleMapComponent(api, map, element),
+                    deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
+                },
+                {
+                    provide : ElementRef,
+                    useValue: new ElementRef(document.createElement('div'))
+                },
+                factoryProvider,
+                ...deps,
+            );
         }
     });
 
     return {
-        createWrapper: TestBed.inject(WrapperFactory),
-        element      : TestBed.inject(ElementRef)
+        wrapper: TestBed.inject(WrapperInstance)
     };
 }
 
@@ -54,9 +56,8 @@ export function itShouldCreateWrapper(factoryProvider: FactoryProvider, wrapperT
 {
     it(`should allow the creation of a new ${wrapperType.name} object when injected`, () =>
     {
-        const { createWrapper, element } = setupOverlayWrapperFactoryProviderTest(factoryProvider, ...deps);
+        const { wrapper } = setupOverlayWrapperFactoryProviderTest(factoryProvider, ...deps);
 
-        expect(createWrapper instanceof Function).toBeTruthy();
-        expect(createWrapper(element) instanceof wrapperType).toBeTruthy();
+        expect(wrapper instanceof wrapperType).toBeTruthy();
     });
 }

@@ -3,7 +3,7 @@ import { Component        } from '@angular/core';
 
 import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
 import { LifecycleComponentTestHost, createLifecycleTestingHostComponentTemplate } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapComponent                                                      } from '@bespunky/angular-google-maps/core';
+import { GoogleMapComponent, GoogleMapFactoryProvider, NativeGoogleMapFactoryProvider } from '@bespunky/angular-google-maps/core';
 
 /**
  * -- NOTE --
@@ -21,7 +21,10 @@ describe('GoogleMapComponent', () =>
 
     beforeEach(async () =>
     {
-        ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
+        ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({
+            componentType: TestHostComponent,
+            customize: (def) => def.providers = [GoogleMapFactoryProvider, NativeGoogleMapFactoryProvider]
+        }));
         
         hostFixture.detectChanges();
 

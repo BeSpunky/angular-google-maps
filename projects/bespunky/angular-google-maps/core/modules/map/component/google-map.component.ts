@@ -1,14 +1,14 @@
 import { Observable } from 'rxjs';
 import { Component, Input, Output, ViewEncapsulation } from '@angular/core';
 
-import { GoogleMapsComponentBase  } from '../../../abstraction/base/google-maps-component-base';
-import { IGoogleMapsEventData     } from '../../../abstraction/events/i-google-maps-event-data'
-import { Coord                    } from '../../../abstraction/types/geometry.type';
-import { Hook                     } from '../../../decorators/hook.decorator';
-import { SuperpowersService       } from '../superpowers/superpowers.service';
-import { GoogleMapFactoryProvider } from '../google-map-factory.provider';
-import { ZoomLevel                } from '../types/zoom-level.enum';
-import { IGoogleMap               } from '../i-google-map';
+import { GoogleMapsComponentBase                                  } from '../../../abstraction/base/google-maps-component-base';
+import { IGoogleMapsEventData                                     } from '../../../abstraction/events/i-google-maps-event-data'
+import { Coord                                                    } from '../../../abstraction/types/geometry.type';
+import { Hook                                                     } from '../../../decorators/hook.decorator';
+import { SuperpowersService                                       } from '../superpowers/superpowers.service';
+import { ZoomLevel                                                } from '../types/zoom-level.enum';
+import { GoogleMapFactoryProvider, NativeGoogleMapFactoryProvider } from '../google-map-factory.provider';
+import { IGoogleMap                                               } from '../i-google-map';
 
 /**
  * Adds a Google map to the app.
@@ -21,7 +21,7 @@ import { IGoogleMap               } from '../i-google-map';
     selector     : 'bs-google-map',
     templateUrl  : './google-map.component.html',
     styleUrls    : ['./google-map.component.scss'],
-    providers    : [GoogleMapFactoryProvider, SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
+    providers    : [GoogleMapFactoryProvider, NativeGoogleMapFactoryProvider, SuperpowersService], // Every map component instance will get a new instance of the superpowers to allow a clean state
     exportAs     : 'map',
     encapsulation: ViewEncapsulation.None
 })

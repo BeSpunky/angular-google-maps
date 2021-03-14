@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { Coord, Hook, IGoogleMapsEventData } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase    } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsPolygon                } from '../i-google-maps-polygon';
-import { GoogleMapsPolygonFactoryProvider  } from '../google-maps-polygon-factory.provider';
+import { Coord, Hook, IGoogleMapsEventData                                        } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase                                           } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { GoogleMapsPolygonFactoryProvider, NativeGoogleMapsPolygonFactoryProvider } from '../google-maps-polygon-factory.provider';
+import { IGoogleMapsPolygon                                                       } from '../i-google-maps-polygon';
 
 /**
  * Adds a polygon to the containing map.
@@ -18,7 +18,7 @@ import { GoogleMapsPolygonFactoryProvider  } from '../google-maps-polygon-factor
 @Directive({    
     selector : 'bs-google-maps-polygon, [bsGoogleMapsPolygon]',
     exportAs : 'polygon',
-    providers: [GoogleMapsPolygonFactoryProvider]
+    providers: [GoogleMapsPolygonFactoryProvider, NativeGoogleMapsPolygonFactoryProvider]
 })
 export class GoogleMapsPolygonDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsPolygon>
 {

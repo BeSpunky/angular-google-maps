@@ -5,7 +5,7 @@ import { configureGoogleMapsTestingModule                                       
 import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost       } from '@bespunky/angular-google-maps/core/testing';
 import { MockMouseEventsEmitter                                                        } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsComponentApiService                                                 } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsInfoWindowDirective, GoogleMapsOverlaysModule, GoogleMapsInfoWindow } from '@bespunky/angular-google-maps/overlays';
+import { GoogleMapsInfoWindowDirective, GoogleMapsOverlaysModule, GoogleMapsInfoWindow, GoogleMapsInfoWindowFactoryProvider, NativeGoogleMapsInfoWindowFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --
@@ -27,7 +27,11 @@ describe('GoogleMapsInfoWindowDirective', () =>
     {
         ({ fixture: hostFixture, component: hostComponent, componentApi } = await configureGoogleMapsTestingModule({
             componentType: TestHostComponent,
-            customize: def => def.imports.push(GoogleMapsOverlaysModule)
+            customize: def =>
+            {
+                def.imports.push(GoogleMapsOverlaysModule);
+                def.providers = [GoogleMapsInfoWindowFactoryProvider, NativeGoogleMapsInfoWindowFactoryProvider]
+            }
         }));
         
         hostFixture.detectChanges();

@@ -14,7 +14,7 @@ describe('GoogleMapsPolygon', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        polygon = new GoogleMapsPolygon(api, new MockGoogleMap());
+        polygon = new GoogleMapsPolygon(new MockGoogleMap(), api, new google.maps.Polygon());
 
         runOutsideAngular.calls.reset();
     });

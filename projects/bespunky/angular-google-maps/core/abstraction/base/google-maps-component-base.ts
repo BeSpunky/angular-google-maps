@@ -1,9 +1,9 @@
 import { OnChanges, SimpleChanges, Inject, Directive, ElementRef, Input, OnDestroy } from '@angular/core';
 import { Destroyable                                                               } from '@bespunky/angular-zen/core';
 
-import { GoogleMapsComponentApiService                 } from '../../api/google-maps-component-api.service';
-import { WrapperFactory                                } from '../tokens/wrapper-factory.token';
-import { EmittingWrapper, EmittingWrapperObjectFactory } from '../types/abstraction';
+import { GoogleMapsComponentApiService } from '../../api/google-maps-component-api.service';
+import { EmittingWrapper               } from '../types/abstraction';
+import { WrapperInstance               } from '../factories/tokens';
 
 /**
  * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.
@@ -15,7 +15,7 @@ import { EmittingWrapper, EmittingWrapperObjectFactory } from '../types/abstract
  * Requirements for the magic to happen:
  * --- Must ---
  * 1. Create a component or a directive and extend `GoogleMapsComponentBase`.
- * 2. Define a factory provider for the `WrapperFactory` token on the new component / directive.
+ * 2. Define a factory provider for the `WrapperInstance` token on the new component / directive.
  * 
  * --- To expose native events as bindable template events ---
  * 3. Add `@Hook('native_name') @Output()` marked event emitters to the component / directive.
@@ -32,50 +32,22 @@ export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
 {
     @Input() public custom: any;
 
-    private nativeWrapper: TWrapper;
-
     /**
      * Creates an instance of GoogleMapsComponentBase.
      * 
      * @param {GoogleMapsComponentApiService} api The instance of the component api service.
-     * @param {EmittingNativeWrapperFactory<TWrapper>} createNativeWrapper The factory for creating the wrapper this component should work with. Must be provided by the component's providers.
      * @param {ElementRef} element The element created for the component.
      */
-    constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingWrapperObjectFactory<TWrapper>, protected element: ElementRef)
+    constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperInstance) public readonly wrapper: TWrapper, protected element: ElementRef)
     {
         super();
 
-        this.initNativeWrapper();
         this.initEmitters();
     }
 
     ngOnChanges(changes: SimpleChanges)
     {
         this.api.delegateInputChangesToNativeObject(changes, this.wrapper);
-    }
-
-    /**
-     * The instance of the wrapper used by the component to delegate functionality to the native object.
-     *
-     * @readonly
-     * @type {TWrapper} The type of wrapper this component works with.
-     */
-    public get wrapper(): TWrapper
-    {
-        return this.nativeWrapper;
-    }
-
-    /**
-     * Creates the native wrapper instance for this component and sets it to the `wrapper` property.
-     * The default implementation simply calls the provided wrapper factory without specifying options.
-     * Override this method to change implementation.
-     * 
-     * @protected
-     * @virtual
-     */
-    protected initNativeWrapper(): void
-    {
-        this.nativeWrapper = this.createNativeWrapper(this.element);
     }
     
     /**

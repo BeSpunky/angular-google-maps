@@ -6,15 +6,15 @@ import { IGoogleMapsNativeObject                } from '../native/i-google-maps-
 import { FunctionsPartial                       } from './utils';
 
 export type Native                                      = IGoogleMapsNativeObject;
-export type NativeObjectFactory<TNative extends Native> = (...nativeArgs: any[]) => TNative;
+export type NativeObjectFactory<TNative extends Native> = () => TNative;
 
 export type Wrapper        <TNative extends Native = Native> = IGoogleMapsNativeObjectWrapper<TNative>;
 export type EmittingWrapper<TNative extends Native = Native> = IGoogleMapsNativeObjectEmittingWrapper<TNative>;
 
 /** Represents functions which can be used to instantiate a native Google Maps object wrapper. */
-export type WrapperObjectFactory        <TWrapper extends Wrapper        , TOptions = any> = (element: ElementRef, options?: TOptions) => TWrapper;
+export type WrapperObjectFactory        <TWrapper extends Wrapper        > = (element: ElementRef) => TWrapper;
 /** Represents functions which can be used to instantiate a native Google Maps object wrapper which emits events. */
-export type EmittingWrapperObjectFactory<TWrapper extends EmittingWrapper, TOptions = any> = (element: ElementRef, options?: TOptions) => TWrapper;
+export type EmittingWrapperObjectFactory<TWrapper extends EmittingWrapper> = (element: ElementRef) => TWrapper;
 
 /**
  * Extracts a type containing only the functions properties of the native type, omitting the functions specified for exclusion.

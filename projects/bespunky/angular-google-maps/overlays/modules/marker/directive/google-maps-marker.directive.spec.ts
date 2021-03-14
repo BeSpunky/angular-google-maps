@@ -3,7 +3,7 @@ import { Component        } from '@angular/core';
 
 import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
 import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsMarkerDirective, GoogleMapsOverlaysModule                     } from '@bespunky/angular-google-maps/overlays';
+import { GoogleMapsMarkerDirective, GoogleMapsMarkerFactoryProvider, GoogleMapsOverlaysModule, NativeGoogleMapsMarkerFactoryProvider                     } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --
@@ -23,7 +23,11 @@ describe('GoogleMapsMarkerDirective', () =>
     {
         ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({
             componentType: TestHostComponent,
-            customize    : def => def.imports.push(GoogleMapsOverlaysModule)
+            customize: def =>
+            {
+                def.imports.push(GoogleMapsOverlaysModule);
+                def.providers = [GoogleMapsMarkerFactoryProvider, NativeGoogleMapsMarkerFactoryProvider]
+            }
         }));
         
         hostFixture.detectChanges();

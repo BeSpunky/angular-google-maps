@@ -7,7 +7,6 @@ import { OutsideAngular                        } from '../../decorators/outside-
 import { Delegation                            } from '../../decorators/wrapper-definition';
 import { GoogleMapsApiService                  } from '../../api/google-maps-api.service';
 import { ISuperpowers                          } from './superpowers/i-superpowers';
-import { Defaults                              } from './types/defaults';
 import { IGoogleMap, WrappedGoogleMapFunctions } from './i-google-map';
 
 /** Extends intellisense for `GoogleMapsMap` with native map functions. */
@@ -30,25 +29,24 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
     constructor(
         /** The superpowers loaded for this map instance. Any lazy loaded superpowers will automatically load here as well. */
         public readonly superpowers: ISuperpowers,
-        protected api: GoogleMapsApiService,
-        mapElement: ElementRef,
-        options?: google.maps.MapOptions
+                        api        : GoogleMapsApiService,
+                        native     : google.maps.Map
     )
     {
-        super(api, mapElement, options);
+        super(api, native);
 
         superpowers.attachToMap(this);
     }
 
-    protected createNativeObject(mapElement: ElementRef, options?: google.maps.MapOptions): google.maps.Map
-    {
-        options = Object.assign({}, {
-            center: Defaults.Center,
-            zoom  : Defaults.ZoomLevel,
-        }, options);
+    // protected createNativeObject(mapElement: ElementRef, options?: google.maps.MapOptions): google.maps.Map
+    // {
+    //     options = Object.assign({}, {
+    //         center: Defaults.Center,
+    //         zoom  : Defaults.ZoomLevel,
+    //     }, options);
         
-        return new google.maps.Map(mapElement.nativeElement, options);
-    }
+    //     return new google.maps.Map(mapElement.nativeElement, options);
+    // }
 
     @OutsideAngular
     public setCenter(center: Coord)

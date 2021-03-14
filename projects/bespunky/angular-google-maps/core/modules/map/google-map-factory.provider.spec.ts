@@ -2,13 +2,13 @@ import { TestBed          } from '@angular/core/testing';
 import { ElementRef       } from '@angular/core';
 import { UniversalService } from '@bespunky/angular-zen/universal';
 
-import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
-import { itShouldCreateWrapper                                                   } from '@bespunky/angular-google-maps/core/testing';
-import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap, SuperpowersService } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule                                                                        } from '@bespunky/angular-google-maps/testing';
+import { itShouldCreateWrapper                                                                                   } from '@bespunky/angular-google-maps/core/testing';
+import { WrapperInstance, GoogleMapFactoryProvider, GoogleMap, SuperpowersService, NativeGoogleMapFactoryProvider } from '@bespunky/angular-google-maps/core';
 
 describe('GoogleMapFactoryProvider', () =>
 {
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, SuperpowersService);
+    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, SuperpowersService, NativeGoogleMapFactoryProvider);
 
     it('should return null when used in non-browser platforms', async () =>
     {
@@ -19,12 +19,13 @@ describe('GoogleMapFactoryProvider', () =>
                 { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
                 { provide: ElementRef, useValue: element },
                 SuperpowersService,
+                NativeGoogleMapFactoryProvider,
                 GoogleMapFactoryProvider
             ]
         });
 
-        const createWrapper = TestBed.inject(WrapperFactory);
+        const wrapper = TestBed.inject(WrapperInstance);
 
-        expect(createWrapper(element)).toBeNull();
+        expect(wrapper).toBeNull();
     });
 });

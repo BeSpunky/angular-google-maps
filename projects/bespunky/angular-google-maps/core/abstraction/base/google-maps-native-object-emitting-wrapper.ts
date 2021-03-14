@@ -20,11 +20,10 @@ export abstract class GoogleMapsNativeObjectEmittingWrapper<TNative extends IGoo
      * Creates an instance of GoogleMapsNativeObjectEmittingWrapper.
      * 
      * @param {GoogleMapsApiService} api The instance of the maps api service.
-     * @param {...any[]} nativeArgs (Optional) Any arguments to pass into the native object's constructor.
      */
-    constructor(api: GoogleMapsApiService, ...nativeArgs: any[])
+    constructor(api: GoogleMapsApiService, native: TNative)
     {
-        super(api, ...nativeArgs);
+        super(api, native);
     }
 
     /**
