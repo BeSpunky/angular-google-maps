@@ -5,6 +5,5 @@ For example, if `GoogleMapsOverlaysModule` is imported, the overlays capabilitie
 To allow map capabilities to be extended in runtime, the superpowers concept was introduced.
 Extending modules will provide a new superpower (capability) to the map component using the `Superpowers` token.
 
-Any superpower provider should be declared `{ multi: true }` to allow the component to receive an array of capabilities loaded
-by the different module imports.
+Any superpower provider should be declared `{ multi: true }` to allow the component to receive an array of capabilities loaded by the different module imports.
 
