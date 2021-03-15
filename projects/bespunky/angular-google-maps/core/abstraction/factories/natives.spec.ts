@@ -1,68 +1,40 @@
-import { TestBed                                                  } from '@angular/core/testing';
-import { ɵPLATFORM_BROWSER_ID, ɵPLATFORM_SERVER_ID                } from '@angular/common';
-import { ElementRef, FactoryProvider, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { ElementRef, FactoryProvider } from '@angular/core';
 
-import { configureGoogleMapsTestingModule            } from '@bespunky/angular-google-maps/testing';
-import { createNativeFactoryProvider, NativeInstance } from '@bespunky/angular-google-maps/core';
+import { MockNative, produceNativeFactoryProviderSpecs, setupNativeFactoryProviderGeneratorTest, someValue } from '@bespunky/angular-google-maps/core/testing';
+import { createNativeFactoryProvider                                                                       } from '@bespunky/angular-google-maps/core';
 
-// A dummy provider to use in the `deps` array
-const SomeToken = new InjectionToken<any>('SomeToken');
-const someValue = 123;
-// A dummy element to provide to the factory
-const someElement = new ElementRef(null);
-// 
-const mockNative = { value: 'dummy native' };
+const mockNative  = new MockNative();
+const mockElement = new ElementRef({});
 
 describe('createNativeFactoryProvider', () =>
 {
+    let factoryProvider  : FactoryProvider;
     let runOutsideAngular: jasmine.Spy;
     let produceNative    : jasmine.Spy;
-    let nativeFactory    : FactoryProvider;
-    let native           : any;
-    
+    let producedNative   : any;
+
     async function setup(platform: any)
     {
-        produceNative = jasmine.createSpy('produceNative').and.returnValue(mockNative);
-        nativeFactory = createNativeFactoryProvider(produceNative, [SomeToken]);
-
-        ({ spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule({
-            customize: def => def.providers = [
-                nativeFactory,
-                { provide: ElementRef, useValue: someElement },
-                // Add a dummy provider to use in the `deps` array
-                { provide: SomeToken, useValue: someValue },
-                { provide: PLATFORM_ID, useValue: platform }
-            ]
-        }));
-
-        native = TestBed.inject(NativeInstance);
+        ({
+            factoryProvider,
+            runOutsideAngular,
+            produceValue : produceNative,
+            producedValue: producedNative
+        } = await setupNativeFactoryProviderGeneratorTest(createNativeFactoryProvider, { platform, element: mockElement, mockValue: mockNative }));
     }
 
-    describe('on browsers', () =>
+    function browser()
     {
-        beforeEach(() => setup(ɵPLATFORM_BROWSER_ID));
-
-        it('should create an Angular `FactoryProvider` for the `NativeInstance` token', () =>
+        it('should run the `produceNative` once with the current element and the specified dependencies', () =>
         {
-            expect(nativeFactory.provide).toBe(NativeInstance);
-            expect(nativeFactory.useFactory).toBeInstanceOf(Function);
+            expect(produceNative).toHaveBeenCalledOnceWith(mockElement, someValue);
         });
+    }
 
-        it('should provide a factory which creates the native object outside angular', () => expect(runOutsideAngular).toHaveBeenCalledTimes(1));
-
-        it('should provide a factory which runs the `produceNative` once with the current element and the specified dependencies', () => expect(produceNative).toHaveBeenCalledOnceWith(someElement, someValue));
-    });
-
-    describe('on non-browsers', () =>
+    function nonBrowser()
     {
-        beforeEach(() => setup(ɵPLATFORM_SERVER_ID));
+        it('should not call the `produceNative` function', () => expect(produceNative).not.toHaveBeenCalled());
+    }
 
-        it('should create an Angular `FactoryProvider` for the `NativeInstance` token', () =>
-        {
-            expect(nativeFactory.provide).toBe(NativeInstance);
-            expect(nativeFactory.useFactory).toBeInstanceOf(Function);
-        });
-
-        it('should provide a factory which returns null when running on non-browser platforms', () => expect(native).toBeNull());
-    });
+    produceNativeFactoryProviderSpecs(setup, () => factoryProvider, () => producedNative, () => runOutsideAngular, MockNative, { browser, nonBrowser });
 });
