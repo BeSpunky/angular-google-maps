@@ -1,7 +1,4 @@
-import { itShouldCreateWrapper                                                                          } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsPolylineFactoryProvider, GoogleMapsPolyline, NativeGoogleMapsPolylineFactoryProvider } from '@bespunky/angular-google-maps/overlays';
+import { produceOverlayWrapperFactoryProviderSpecs             } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsPolylineFactoryProvider, GoogleMapsPolyline } from '@bespunky/angular-google-maps/overlays';
 
-describe('GoogleMapsPolylineFactoryProvider', () =>
-{
-    itShouldCreateWrapper(GoogleMapsPolylineFactoryProvider, GoogleMapsPolyline, NativeGoogleMapsPolylineFactoryProvider);
-});
+produceOverlayWrapperFactoryProviderSpecs('GoogleMapsPolylineFactoryProvider', GoogleMapsPolylineFactoryProvider, GoogleMapsPolyline);

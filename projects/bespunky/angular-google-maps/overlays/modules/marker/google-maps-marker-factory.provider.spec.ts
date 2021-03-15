@@ -1,7 +1,4 @@
-import { itShouldCreateWrapper                                                                    } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsMarkerFactoryProvider, GoogleMapsMarker, NativeGoogleMapsMarkerFactoryProvider } from '@bespunky/angular-google-maps/overlays';
+import { produceOverlayWrapperFactoryProviderSpecs         } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsMarkerFactoryProvider, GoogleMapsMarker } from '@bespunky/angular-google-maps/overlays';
 
-describe('GoogleMapsMarkerFactoryProvider', () =>
-{
-    itShouldCreateWrapper(GoogleMapsMarkerFactoryProvider, GoogleMapsMarker, NativeGoogleMapsMarkerFactoryProvider);
-});
+produceOverlayWrapperFactoryProviderSpecs('GoogleMapsMarkerFactoryProvider', GoogleMapsMarkerFactoryProvider, GoogleMapsMarker);

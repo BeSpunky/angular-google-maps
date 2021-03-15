@@ -1,31 +1,18 @@
-import { TestBed          } from '@angular/core/testing';
-import { ElementRef       } from '@angular/core';
-import { UniversalService } from '@bespunky/angular-zen/universal';
+import { MockNative, produceWrapperFactoryProviderSpecs, setupWrapperFactoryProviderTest } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMap, GoogleMapFactoryProvider, SuperpowersService                         } from '@bespunky/angular-google-maps/core';
 
-import { configureGoogleMapsTestingModule                                                                        } from '@bespunky/angular-google-maps/testing';
-import { itShouldCreateWrapper                                                                                   } from '@bespunky/angular-google-maps/core/testing';
-import { WrapperInstance, GoogleMapFactoryProvider, GoogleMap, SuperpowersService, NativeGoogleMapFactoryProvider } from '@bespunky/angular-google-maps/core';
+const mockNative = new MockNative();
 
 describe('GoogleMapFactoryProvider', () =>
 {
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, SuperpowersService, NativeGoogleMapFactoryProvider);
+    let producedNative   : any;
 
-    it('should return null when used in non-browser platforms', async () =>
+    async function setup(platform: any)
     {
-        const element = new ElementRef({});
+        const config = { platform, native: mockNative, providers: [SuperpowersService] };
+        
+        ({ producedValue: producedNative } = await setupWrapperFactoryProviderTest(GoogleMapFactoryProvider, config));
+    }
 
-        await configureGoogleMapsTestingModule({
-            customize: def => def.providers = [
-                { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
-                { provide: ElementRef, useValue: element },
-                SuperpowersService,
-                NativeGoogleMapFactoryProvider,
-                GoogleMapFactoryProvider
-            ]
-        });
-
-        const wrapper = TestBed.inject(WrapperInstance);
-
-        expect(wrapper).toBeNull();
-    });
+    produceWrapperFactoryProviderSpecs(setup, () => GoogleMapFactoryProvider, () => producedNative, GoogleMap, mockNative);
 });
