@@ -9,4 +9,4 @@ export const NativeInstance = new InjectionToken<Native>('GoogleMaps.NativeInsta
  * 
  * Components and directives extending `GoogleMapsComponentBase` should define a `FactoryProvider` for this token.
  */
-export const WrapperInstance = new InjectionToken<Wrapper>('GoogleMaps.WrapperInstaace');
+export const WrapperInstance = new InjectionToken<Wrapper>('GoogleMaps.WrapperInstance');
