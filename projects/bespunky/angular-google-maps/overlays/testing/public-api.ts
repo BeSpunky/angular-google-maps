@@ -1,3 +1,6 @@
+export * from './helpers/overlay-wrapper-factory-provider-test-setup';
+export * from './helpers/overlay-wrapper-factory-provider-spec-production';
+
 export * from './mocks/mock-native-drawable-overlay';
 export * from './mocks/mock-drawable-overlay';
 export * from './mocks/mock-mouse-events-emitter';

@@ -1,7 +1,16 @@
 export * from './helpers/lifecycle-components';
-export * from './helpers/wrapper-factory-provider-test-setup';
 export * from './helpers/geometry-spec-production';
 export * from './helpers/geometry-expectations';
+
+export * from './helpers/factories/setup/common/factory-provider-generator-test-setup';
+export * from './helpers/factories/setup/common/factory-provider-test-setup';
+export * from './helpers/factories/setup/natives/native-factory-provider-generator-test-setup';
+export * from './helpers/factories/setup/natives/native-factory-provider-test-setup';
+export * from './helpers/factories/setup/wrappers/wrapper-factory-provider-generator-test-setup';
+export * from './helpers/factories/setup/wrappers/wrapper-factory-provider-test-setup';
+
+export * from './helpers/factories/specs/native-factory-provider-spec-production';
+export * from './helpers/factories/specs/wrapper-factory-provider-spec-production';
 
 export * from './mocks/mock.module';
 export * from './mocks/mock-native';
