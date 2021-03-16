@@ -12,6 +12,9 @@ export * from './helpers/factories/setup/wrappers/wrapper-factory-provider-test-
 export * from './helpers/factories/specs/native-factory-provider-spec-production';
 export * from './helpers/factories/specs/wrapper-factory-provider-spec-production';
 
+export * from './helpers/factories/native-factory-provider-test-production';
+export * from './helpers/factories/wrapper-factory-provider-test-production';
+
 export * from './mocks/mock.module';
 export * from './mocks/mock-native';
 export * from './mocks/mock-wrapper';

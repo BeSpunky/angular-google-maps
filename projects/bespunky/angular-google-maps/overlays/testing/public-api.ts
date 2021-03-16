@@ -1,5 +1,6 @@
 export * from './helpers/overlay-wrapper-factory-provider-test-setup';
-export * from './helpers/overlay-wrapper-factory-provider-spec-production';
+export * from './helpers/overlay-native-factory-provider-test-production';
+export * from './helpers/overlay-wrapper-factory-provider-test-production';
 
 export * from './mocks/mock-native-drawable-overlay';
 export * from './mocks/mock-drawable-overlay';

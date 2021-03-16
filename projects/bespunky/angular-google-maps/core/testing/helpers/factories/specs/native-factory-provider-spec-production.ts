@@ -30,13 +30,21 @@ export function produceNonBrowserNativeFactoryProviderSpecs(provider: () => Fact
     it('should returns null', () => expect(producedNative()).toBeNull());
 }
 
+type AdditionalSpecDefinition = (producedNative: () => Native, provider: () => FactoryProvider, runOutsideAngular: () => jasmine.Spy) => void;
+
+export interface AdditionalNativeFactoryProviderSpecs
+{
+    browser?   : AdditionalSpecDefinition;
+    nonBrowser?: AdditionalSpecDefinition;
+};
+
 export function produceNativeFactoryProviderSpecs(
     setup             : (platform: any) => any,
     provider          : () => FactoryProvider,
     producedNative    : () => Native,
-    runOutsideAngular: () => jasmine.Spy,
+    runOutsideAngular : () => jasmine.Spy,
     expectedNativeType: Type<Native>,
-    additionalSpecs?  : { browser?: () => void, nonBrowser?: () => void }
+    additionalSpecs?  : AdditionalNativeFactoryProviderSpecs
 )
 {
     describe('on browsers', () =>
@@ -45,7 +53,7 @@ export function produceNativeFactoryProviderSpecs(
 
         produceBrowserNativeFactoryProviderSpecs(provider, producedNative, runOutsideAngular, expectedNativeType);
 
-        if (additionalSpecs?.browser) additionalSpecs.browser();
+        if (additionalSpecs?.browser) additionalSpecs.browser(producedNative, provider, runOutsideAngular);
     });
 
     describe('on non-browsers', () =>
@@ -54,6 +62,6 @@ export function produceNativeFactoryProviderSpecs(
 
         produceNonBrowserNativeFactoryProviderSpecs(provider, producedNative);
 
-        if (additionalSpecs?.nonBrowser) additionalSpecs.nonBrowser();
+        if (additionalSpecs?.nonBrowser) additionalSpecs.nonBrowser(producedNative, provider, runOutsideAngular);
     });
 }

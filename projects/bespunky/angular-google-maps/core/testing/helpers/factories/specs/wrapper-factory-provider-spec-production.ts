@@ -1,5 +1,5 @@
 import { ɵPLATFORM_BROWSER_ID, ɵPLATFORM_SERVER_ID } from '@angular/common';
-import { FactoryProvider, Type } from '@angular/core';
+import { FactoryProvider, Type                     } from '@angular/core';
 
 import { Wrapper, WrapperInstance } from '@bespunky/angular-google-maps/core';
 
@@ -30,13 +30,21 @@ export function produceNonBrowserWrapperFactoryProviderSpecs(provider: () => Fac
     it('should returns null', () => expect(producedWrapper()).toBeNull());
 }
 
+type AdditionalSpecDefinition = (producedNative: () => Wrapper, provider: () => FactoryProvider) => void;
+
+export interface AdditionalWrapperFactoryProviderSpecs
+{
+    browser?   : AdditionalSpecDefinition;
+    nonBrowser?: AdditionalSpecDefinition;
+};
+
 export function produceWrapperFactoryProviderSpecs(
     setup              : (platform: any) => any,
     provider           : () => FactoryProvider,
     producedWrapper    : () => Wrapper,
     expectedWrapperType: Type<Wrapper>,
     expectedNative     : any,
-    additionalSpecs?   : { browser?: () => void, nonBrowser?: () => void }
+    additionalSpecs?   : AdditionalWrapperFactoryProviderSpecs
 )
 {
     describe('on browsers', () =>
@@ -45,7 +53,7 @@ export function produceWrapperFactoryProviderSpecs(
 
         produceBrowserWrapperFactoryProviderSpecs(provider, producedWrapper, expectedWrapperType, expectedNative);
 
-        if (additionalSpecs?.browser) additionalSpecs.browser();
+        if (additionalSpecs?.browser) additionalSpecs.browser(producedWrapper, provider);
     });
 
     describe('on non-browsers', () =>
@@ -54,6 +62,6 @@ export function produceWrapperFactoryProviderSpecs(
 
         produceNonBrowserWrapperFactoryProviderSpecs(provider, producedWrapper);
 
-        if (additionalSpecs?.nonBrowser) additionalSpecs.nonBrowser();
+        if (additionalSpecs?.nonBrowser) additionalSpecs.nonBrowser(producedWrapper, provider);
     });
 }
