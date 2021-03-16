@@ -21,14 +21,9 @@ export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
 })
 export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Polygon> implements IGoogleMapsPolygon
 {
-    constructor(api: GoogleMapsApiService, map: IGoogleMap, ...nativeArgs: any[])
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.Polygon)
     {
-        super(api, map, OverlayType.Polygon, ...nativeArgs);
-    }
-
-    protected createNativeObject(options?: google.maps.PolygonOptions): google.maps.Polygon
-    {
-        return new google.maps.Polygon(options);
+        super(OverlayType.Polygon, map, api, native);
     }
 
     public getBounds(): google.maps.LatLngBounds

@@ -13,7 +13,7 @@ describe('GoogleMapsMarker', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        marker = new GoogleMapsMarker(api, new MockGoogleMap());
+        marker = new GoogleMapsMarker(new MockGoogleMap(), api, new google.maps.Marker());
 
         runOutsideAngular.calls.reset();
     });

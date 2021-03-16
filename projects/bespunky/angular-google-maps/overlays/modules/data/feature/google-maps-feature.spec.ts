@@ -19,9 +19,16 @@ describe('GoogleMapsFeature', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
+        const nativeFeature = new google.maps.Data.Feature(
+            {
+                geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }),
+                properties
+            }
+        );
+
         map     = new MockGoogleMap();
         data    = new MockGoogleMapsData(map);
-        feature = new GoogleMapsFeature(api, data, { geometry: new google.maps.Data.Point({ lat: 2, lng: 2 }), properties});
+        feature = new GoogleMapsFeature(data, api, nativeFeature);
 
         runOutsideAngular.calls.reset();
     });
@@ -36,8 +43,8 @@ describe('GoogleMapsFeature', () =>
 
             expect(typeof geoJson).toBe('object');
             expect(geoJson.type).toBe('Feature');
-            expect(geoJson?.geometry?.type).toBe('Point');
-            expect(geoJson?.geometry?.coordinates).toEqual([2, 2]);
+            expect(geoJson.geometry.type).toBe('Point');
+            expect(geoJson.geometry.coordinates).toEqual([2, 2]);
         });
     });
 

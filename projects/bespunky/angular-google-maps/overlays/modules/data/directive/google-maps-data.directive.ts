@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Output, Input } from '@angular/core';
 
-import { Hook, IGoogleMapsEventData     } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsData                } from '../i-google-maps-data';
-import { GoogleMapsDataFactoryProvider  } from '../google-maps-data-factory.provider';
+import { Hook, IGoogleMapsEventData                                         } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase                                     } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { GoogleMapsDataFactoryProvider, NativeGoogleMapsDataFactoryProvider } from '../google-maps-data-factory.provider';
+import { IGoogleMapsData                                                    } from '../i-google-maps-data';
 
 /**
  * Adds a data layer to the containing map.
@@ -18,7 +18,7 @@ import { GoogleMapsDataFactoryProvider  } from '../google-maps-data-factory.prov
 @Directive({
     selector : 'bs-google-maps-data, [bsGoogleMapsData]',
     exportAs : 'dataLayer',
-    providers: [GoogleMapsDataFactoryProvider]
+    providers: [GoogleMapsDataFactoryProvider, NativeGoogleMapsDataFactoryProvider]
 })
 export class GoogleMapsDataDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsData>
 {

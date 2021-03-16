@@ -9,7 +9,7 @@ import { GoogleMapsPolygonDirective, GoogleMapsOverlaysModule                   
 /**
  * -- NOTE --
  * Events hooking and property delegation are not tested in components deriving from `GoogleMapsComponentBase`.
- * The appropriate tests are already done by `GoogleMapsComponentBase` and `GoogleMapsInternalApiService`/
+ * The appropriate tests are already done by `GoogleMapsComponentBase` and `GoogleMapsComponentApiService`/
  * 
  * @see `google-maps-internal-api.service.spec.ts` For testing of the hooking and delegation mechanisms.
  * @see `google-maps-component-base.spec.ts` For testing of the integration between the component and the internal API service.

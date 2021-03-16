@@ -23,7 +23,7 @@ describe('GoogleMapsInfoWindow', () =>
     {
         ({ api, componentApi, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        infoWindow = new GoogleMapsInfoWindow(api, new MockGoogleMap());
+        infoWindow = new GoogleMapsInfoWindow(new MockGoogleMap(), api, new google.maps.InfoWindow());
 
         runOutsideAngular.calls.reset();
     });

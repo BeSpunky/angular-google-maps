@@ -44,7 +44,7 @@ export type WrapperFunctionDefinition<TWrapper extends Wrapper> = Delegation;
  * An object which keys are the names of native functions, and values are their delegation definition.
  * 
  * @example
- * const options: WrapperDefinition<google.maps.Map, GoogleMap> = {
+ * const options: WrapperDefinition<GoogleMap> = {
  *     panTo      : Delegation.Direct,
  *     getOptions : Delegation.Exclude,
  *     fitBounds  : Delegation.OutsideAngular

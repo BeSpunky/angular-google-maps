@@ -1,19 +1,25 @@
 import { ElementRef } from '@angular/core';
 
-import { itShouldCreateWrapper                                                        } from '@bespunky/angular-google-maps/core/testing';
-import { MockGoogleMap                                                                } from '@bespunky/angular-google-maps/core/testing';
-import { MockGoogleMapsData                                                           } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsComponentApiService                                                } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDataDirective, GoogleMapsFeatureFactoryProvider, GoogleMapsFeature } from '@bespunky/angular-google-maps/overlays';
+import { MockGoogleMap                                                                                                        } from '@bespunky/angular-google-maps/core/testing';
+import { MockGoogleMapsData, testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                              } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsComponentApiService                                                                                        } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDataDirective, GoogleMapsFeatureFactoryProvider, GoogleMapsFeature, NativeGoogleMapsFeatureFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
-describe('GoogleMapsFeatureFactoryProvider', () =>
-{
-    itShouldCreateWrapper(GoogleMapsFeatureFactoryProvider, GoogleMapsFeature,
-        {
-            provide   : GoogleMapsDataDirective,
-            useFactory: (api, map, element) => new GoogleMapsDataDirective(api, () => new MockGoogleMapsData(map), element),
-            deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
-        },
-        { provide: MockGoogleMap, useValue: new MockGoogleMap() }
-    );
+testOverlayNativeFactoryProvider({
+    providerName      : 'NativeGoogleMapsFeatureFactoryProvider',
+    provider          : NativeGoogleMapsFeatureFactoryProvider,
+    expectedNativeType: google.maps.Data.Feature
+});
+
+const DataDirectiveProvider = {
+    provide   : GoogleMapsDataDirective,
+    useFactory: (api, map, element) => new GoogleMapsDataDirective(api, new MockGoogleMapsData(map), element),
+    deps      : [GoogleMapsComponentApiService, MockGoogleMap, ElementRef]
+};
+
+testOverlayWrapperFactoryProvider({
+    providerName       : 'GoogleMapsFeatureFactoryProvider',
+    provider           : GoogleMapsFeatureFactoryProvider,
+    expectedWrapperType: GoogleMapsFeature,
+    providers          : [DataDirectiveProvider]
 });

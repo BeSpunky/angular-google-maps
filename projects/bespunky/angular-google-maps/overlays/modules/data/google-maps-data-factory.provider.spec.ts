@@ -1,7 +1,14 @@
-import { itShouldCreateWrapper                         } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsDataFactoryProvider, GoogleMapsData } from '@bespunky/angular-google-maps/overlays';
+import { testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                      } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsDataFactoryProvider, GoogleMapsData, NativeGoogleMapsDataFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
-describe('GoogleMapsDataFactoryProvider', () =>
-{
-    itShouldCreateWrapper(GoogleMapsDataFactoryProvider, GoogleMapsData);
+testOverlayNativeFactoryProvider({
+    providerName      : 'NativeGoogleMapsDataFactoryProvider',
+    provider          : NativeGoogleMapsDataFactoryProvider,
+    expectedNativeType: google.maps.Data
+});
+
+testOverlayWrapperFactoryProvider({
+    providerName       : 'GoogleMapsDataFactoryProvider',
+    provider           : GoogleMapsDataFactoryProvider,
+    expectedWrapperType: GoogleMapsData
 });

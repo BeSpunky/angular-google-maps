@@ -1,30 +1,30 @@
-import { TestBed          } from '@angular/core/testing';
-import { ElementRef       } from '@angular/core';
-import { UniversalService } from '@bespunky/angular-zen/universal';
+import { ElementRef } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
-import { itShouldCreateWrapper                                                   } from '@bespunky/angular-google-maps/core/testing';
-import { WrapperFactory, GoogleMapFactoryProvider, GoogleMap, SuperpowersService } from '@bespunky/angular-google-maps/core';
+import { expectCoord, MockNative, testNativeFactoryProvider, testWrapperFactoryProvider                    } from '@bespunky/angular-google-maps/core/testing';
+import { Defaults, GoogleMap, GoogleMapFactoryProvider, NativeGoogleMapFactoryProvider, SuperpowersService } from '@bespunky/angular-google-maps/core';
 
-describe('GoogleMapFactoryProvider', () =>
-{
-    itShouldCreateWrapper(GoogleMapFactoryProvider, GoogleMap, SuperpowersService);
+const mockElement = new ElementRef(document.createElement('div'));
 
-    it('should return null when used in non-browser platforms', async () =>
-    {
-        const element = new ElementRef({});
+testNativeFactoryProvider({
+    providerName      : 'NativeGoogleMapFactoryProvider',
+    provider          : NativeGoogleMapFactoryProvider,
+    expectedNativeType: google.maps.Map,
+    element           : mockElement,
+    additionalSpecs   : {
+        browser: (producedNative: () => google.maps.Map) =>
+        {
+            it('should create the map as a div.google-map inside of the current element', () => expect(mockElement.nativeElement.querySelector('.google-map')).toBeDefined());
+            it('should attach the native map to the created div.google-map', () => expect(producedNative().getDiv().parentElement).toBe(mockElement.nativeElement));
+            it('should create the native map with the default center', () => expectCoord(() => producedNative().getCenter(), Defaults.Center));
+            it('should create the native map with the default zoom', () => expect(producedNative().getZoom()).toBe(Defaults.ZoomLevel));
+        }
+    }
+});
 
-        await configureGoogleMapsTestingModule({
-            customize: def => def.providers = [
-                { provide: UniversalService, useValue: new UniversalService('non-browser-dummy-id') },
-                { provide: ElementRef, useValue: element },
-                SuperpowersService,
-                GoogleMapFactoryProvider
-            ]
-        });
-
-        const createWrapper = TestBed.inject(WrapperFactory);
-
-        expect(createWrapper(element)).toBeNull();
-    });
+testWrapperFactoryProvider({
+    providerName       : 'GoogleMapFactoryProvider',
+    provider           : GoogleMapFactoryProvider,
+    expectedWrapperType: GoogleMap,
+    mockNative         : new MockNative(),
+    providers          : [SuperpowersService]
 });

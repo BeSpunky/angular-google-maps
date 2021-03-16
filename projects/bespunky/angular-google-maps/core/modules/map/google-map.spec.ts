@@ -9,9 +9,10 @@ const elementStub: any = document.createElement('div');
 
 describe('GoogleMap', () =>
 {
+    let nativeMap        : google.maps.Map;
     let map              : GoogleMap;
     let api              : GoogleMapsApiService;
-    let mapElement       : ElementRef;
+    // let mapElement       : ElementRef;
     let superpowers      : ISuperpowers
     let runOutsideAngular: jasmine.Spy;
 
@@ -24,31 +25,14 @@ describe('GoogleMap', () =>
         TestBed.inject(SuperpowersChargerService).charge(MockSuperpower1);
         
         superpowers = TestBed.inject(SuperpowersService);
-        mapElement  = new ElementRef(elementStub);
-        map         = new GoogleMap(superpowers, api, mapElement);
+        // mapElement  = new ElementRef(elementStub);
+        nativeMap   = new google.maps.Map(elementStub);
+        map         = new GoogleMap(superpowers, api, nativeMap);
     });
 
     describe('basically', () =>
     {
         it('should create an instance', () => expect(map).toBeTruthy());
-
-        it('should instantiate a new native map with the default zoom and center', () =>
-        {
-            expectPositionEquals(map.getCenter(), Defaults.Center);
-            expect(map.getZoom()).toBe(Defaults.ZoomLevel);
-        });
-
-        it('should allow instantiating the native map with custom options', () =>
-        {
-            const customMap = new GoogleMap(superpowers, api, mapElement, {
-                center: new google.maps.LatLng({ lat: 2, lng: 2 }),
-                zoom: 999
-            });
-
-            expect(customMap).toBeDefined();
-            expectPositionEquals(customMap.getCenter(), { lat: 2, lng: 2 });
-            expect(customMap.getZoom()).toBe(999);
-        });
 
         it('should attach all superpowers to itself', () => expect(map.superpowers.use(MockSuperpower1).map).toBe(map));
     });
