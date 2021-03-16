@@ -1,5 +1,3 @@
-import { ElementRef } from '@angular/core';
-
 import { GoogleMapsNativeObjectEmittingWrapper } from '../../abstraction/base/google-maps-native-object-emitting-wrapper';
 import { Coord, BoundsLike                     } from '../../abstraction/types/geometry.type';
 import { NativeObjectWrapper                   } from '../../decorators/native-object-wrapper.decorator';
@@ -37,16 +35,6 @@ export class GoogleMap extends GoogleMapsNativeObjectEmittingWrapper<google.maps
 
         superpowers.attachToMap(this);
     }
-
-    // protected createNativeObject(mapElement: ElementRef, options?: google.maps.MapOptions): google.maps.Map
-    // {
-    //     options = Object.assign({}, {
-    //         center: Defaults.Center,
-    //         zoom  : Defaults.ZoomLevel,
-    //     }, options);
-        
-    //     return new google.maps.Map(mapElement.nativeElement, options);
-    // }
 
     @OutsideAngular
     public setCenter(center: Coord)

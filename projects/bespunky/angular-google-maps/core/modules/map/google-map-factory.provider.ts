@@ -7,6 +7,7 @@ import { SuperpowersService           } from './superpowers/superpowers.service'
 import { Defaults                     } from './types/defaults';
 import { GoogleMap                    } from './google-map';
 
+/** Provides the factory used to create a native map object for the `NativeInstance` token. */
 export const NativeGoogleMapFactoryProvider = createNativeFactoryProvider((element, document: DocumentRef) =>
 {
     const { nativeElement: mapElement } = createAndAppendMapElement(element, document);

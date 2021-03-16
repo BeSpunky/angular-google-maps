@@ -14,6 +14,16 @@ function itShouldBeAFactoryProviderForWrapperInstance(provider: () => FactoryPro
     });
 }
 
+/**
+ * Produces specs for wrapper factory providers for browser platforms.
+ * See implementation for included tests.
+ *
+ * @export
+ * @param {() => FactoryProvider} provider A function that returns the tested provider.
+ * @param {() => Wrapper} producedWrapper A function that returns the value produced by the provider.
+ * @param {Type<Wrapper>} expectedWrapperType The type of wrapper object expected to be produced by the factory.
+ * @param {*} expectedNative The native object expected to be wrapped in the produced wrapper object.
+ */
 export function produceBrowserWrapperFactoryProviderSpecs(provider: () => FactoryProvider, producedWrapper: () => Wrapper, expectedWrapperType: Type<Wrapper>,  expectedNative: any)
 {
     itShouldBeAFactoryProviderForWrapperInstance(provider);
@@ -23,6 +33,14 @@ export function produceBrowserWrapperFactoryProviderSpecs(provider: () => Factor
     it('should wrap the native object provided by `NativeInstance`', () => expect(producedWrapper().native).toBe(expectedNative));
 }
 
+/**
+ * Produces specs for wrapper factory providers for non-browser platforms.
+ * See implementation for included tests.
+ *
+ * @export
+ * @param {() => FactoryProvider} provider A function that returns the tested provider.
+ * @param {() => Wrapper} producedWrapper A function that returns the value produced by the provider.
+ */
 export function produceNonBrowserWrapperFactoryProviderSpecs(provider: () => FactoryProvider, producedWrapper: () => Wrapper)
 {
     itShouldBeAFactoryProviderForWrapperInstance(provider);
@@ -32,12 +50,35 @@ export function produceNonBrowserWrapperFactoryProviderSpecs(provider: () => Fac
 
 type AdditionalSpecDefinition = (producedNative: () => Wrapper, provider: () => FactoryProvider) => void;
 
+/**
+ * Represents additional specs that should be run after the automated specs provided by the spec production functions in this file.
+ *
+ * @export
+ * @interface AdditionalWrapperFactoryProviderSpecs
+ */
 export interface AdditionalWrapperFactoryProviderSpecs
 {
-    browser?   : AdditionalSpecDefinition;
+    /**
+     * (Optional) A function that creates additional specs (i.e. `it('should...')` calls) for browser platforms.
+     */
+    browser?: AdditionalSpecDefinition;
+    /**
+     * (Optional) A function that creates additional specs (i.e. `it('should...')` calls) for non-browser platforms.
+     */
     nonBrowser?: AdditionalSpecDefinition;
 };
 
+/**
+ * Produces specs for wrapper factory providers for both browser and non-browser platforms.
+ *
+ * @export
+ * @param {(platform: any) => any} setup The function that will setup the testing environment.
+ * @param {() => FactoryProvider} provider A function that returns the tested provider.
+ * @param {() => Wrapper} producedWrapper A function that returns the value produced by the provider.
+ * @param {Type<Wrapper>} expectedWrapperType The type of wrapper object expected to be produced by the factory.
+ * @param {*} expectedNative The native object expected to be wrapped in the produced wrapper object.
+ * @param {AdditionalWrapperFactoryProviderSpecs} [additionalSpecs] (Optional) Additional specs that should be run after the automated specs provided by `produceBrowserWrapperFactoryProviderSpecs()` and `produceNonBrowserWrapperFactoryProviderSpecs()`.
+ */
 export function produceWrapperFactoryProviderSpecs(
     setup              : (platform: any) => any,
     provider           : () => FactoryProvider,

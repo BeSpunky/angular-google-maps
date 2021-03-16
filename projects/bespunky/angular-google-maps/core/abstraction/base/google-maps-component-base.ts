@@ -15,6 +15,7 @@ import { WrapperInstance               } from '../factories/tokens';
  * Requirements for the magic to happen:
  * --- Must ---
  * 1. Create a component or a directive and extend `GoogleMapsComponentBase`.
+ * 2. Define a factory provider for the `NativeInstance` token on the new component / directive.
  * 2. Define a factory provider for the `WrapperInstance` token on the new component / directive.
  * 
  * --- To expose native events as bindable template events ---

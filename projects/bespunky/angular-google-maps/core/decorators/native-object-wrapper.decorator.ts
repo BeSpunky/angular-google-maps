@@ -7,7 +7,7 @@ import { WrapperDefinition } from './wrapper-definition';
 export const NativeObjectWrapperSymbol = Symbol('nativeObjectWrapper');
 
 /**
- * Takes care of delegating method calls to the native object.
+ * Defines how method calls should be delegated to the native object.
  * All classes implementing `IGoogleMapsNativeObjectWrapper` (directly or indirectly) should be decorated with `@NativeObjectWrapper`.
  *
  * There are 3 pieces to the puzzle:

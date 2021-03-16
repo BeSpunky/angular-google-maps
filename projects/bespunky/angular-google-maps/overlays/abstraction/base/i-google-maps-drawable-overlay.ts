@@ -15,7 +15,7 @@ export interface IGoogleMapsDrawableOverlay<TNative extends IGoogleMapsNativeDra
          extends IGoogleMapsNativeObjectEmittingWrapper<TNative>, IBounds
 {
     /** The map this overlay resides in. */
-    readonly map: IGoogleMap;
+    readonly map : IGoogleMap;
     /** Useful when reflection is complex or not possible. */
     readonly type: OverlayType;
 
