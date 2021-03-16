@@ -1,4 +1,14 @@
-import { produceOverlayWrapperFactoryProviderSpecs         } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsCircleFactoryProvider, GoogleMapsCircle } from '@bespunky/angular-google-maps/overlays';
+import { testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                      } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsCircleFactoryProvider, GoogleMapsCircle, NativeGoogleMapsCircleFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
-produceOverlayWrapperFactoryProviderSpecs('GoogleMapsCircleFactoryProvider', GoogleMapsCircleFactoryProvider, GoogleMapsCircle);
+testOverlayNativeFactoryProvider({
+    providerName      : 'NativeGoogleMapsCircleFactoryProvider',
+    provider          : NativeGoogleMapsCircleFactoryProvider,
+    expectedNativeType: google.maps.Circle
+});
+
+testOverlayWrapperFactoryProvider({
+    providerName       : 'GoogleMapsCircleFactoryProvider',
+    provider           : GoogleMapsCircleFactoryProvider,
+    expectedWrapperType: GoogleMapsCircle
+});

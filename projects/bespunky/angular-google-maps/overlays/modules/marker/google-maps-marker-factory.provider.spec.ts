@@ -1,4 +1,14 @@
-import { produceOverlayWrapperFactoryProviderSpecs         } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsMarkerFactoryProvider, GoogleMapsMarker } from '@bespunky/angular-google-maps/overlays';
+import { testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                      } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsMarkerFactoryProvider, GoogleMapsMarker, NativeGoogleMapsMarkerFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
-produceOverlayWrapperFactoryProviderSpecs('GoogleMapsMarkerFactoryProvider', GoogleMapsMarkerFactoryProvider, GoogleMapsMarker);
+testOverlayNativeFactoryProvider({
+    providerName      : 'NativeGoogleMapsMarkerFactoryProvider',
+    provider          : NativeGoogleMapsMarkerFactoryProvider,
+    expectedNativeType: google.maps.Marker
+});
+
+testOverlayWrapperFactoryProvider({
+    providerName       : 'GoogleMapsMarkerFactoryProvider',
+    provider           : GoogleMapsMarkerFactoryProvider,
+    expectedWrapperType: GoogleMapsMarker
+});
