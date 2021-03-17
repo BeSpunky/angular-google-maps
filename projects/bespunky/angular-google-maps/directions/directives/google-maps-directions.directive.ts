@@ -1,7 +1,7 @@
 import { BehaviorSubject, merge, Observable           } from 'rxjs';
 import { Directive, ElementRef, Inject, Input, Output } from '@angular/core';
 
-import { EmittingNativeWrapperFactory, GoogleMapsComponentApiService, GoogleMapsComponentBase, Hook, IGoogleMapsEventData, WrapperFactory } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsComponentApiService, GoogleMapsComponentBase, Hook, IGoogleMapsEventData, WrapperInstance } from '@bespunky/angular-google-maps/core';
 import { IGoogleMapsInfoWindow                                                                                                            } from '@bespunky/angular-google-maps/overlays';
 import { DirectionsRequestConfig             } from '../abstraction/types/directions-request-config.type';
 import { DirectionsPlace                     } from '../abstraction/types/directions.type';
@@ -51,12 +51,12 @@ export class GoogleMapsDirectionsDirective extends GoogleMapsComponentBase<Googl
     constructor(
         private directions         : GoogleMapsDirectionsService,
                 api                : GoogleMapsComponentApiService,
-                @Inject(WrapperFactory)
-                createNativeWrapper: EmittingNativeWrapperFactory<GoogleMapsDirections>,
+                @Inject(WrapperInstance)
+                wrapper            : GoogleMapsDirections,
                 element            : ElementRef
     )
     {
-        super(api, createNativeWrapper, element);
+        super(api, wrapper, element);
 
         this.initDirectionsFeeds();
     }

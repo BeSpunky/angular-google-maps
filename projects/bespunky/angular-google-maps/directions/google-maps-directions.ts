@@ -17,20 +17,15 @@ export interface GoogleMapsDirections extends WrappedDirectionsFunctions { }
  * @implements {IGoogleMapsDirections}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.DirectionsRenderer, GoogleMapsDirections>({
+@NativeObjectWrapper<GoogleMapsDirections>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })
 export class GoogleMapsDirections extends GoogleMapsDrawableOverlay<google.maps.DirectionsRenderer> implements IGoogleMapsDirections
 {
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.DirectionsRendererOptions)
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.DirectionsRenderer)
     {
-        super(api, map, OverlayType.Directions, options);
-    }
-
-    protected createNativeObject(options?: google.maps.DirectionsRendererOptions): google.maps.DirectionsRenderer
-    {
-        return new google.maps.DirectionsRenderer(options);
+        super(OverlayType.Directions, map, api, native);
     }
     
     public getBounds(): google.maps.LatLngBounds

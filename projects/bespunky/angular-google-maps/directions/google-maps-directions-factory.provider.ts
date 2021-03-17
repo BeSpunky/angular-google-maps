@@ -1,27 +1,12 @@
-import { FactoryProvider, ElementRef } from '@angular/core';
 
-import { GoogleMapsApiService, WrapperFactory, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
+import { GoogleMapComponent, createWrapperFactoryProvider, createNativeFactoryProvider } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsDirections                                     } from './google-maps-directions';
 
-/**
- * Produces a factory that can be used to create a new directions wrapper for the specified map.
- *
- * @export
- * @param {GoogleMapsApiService} api The instance of the api service.
- * @param {GoogleMapComponent} mapComponent The map component the directions was declared in.
- * @returns A factory function to use for creating a new directions wrapper for the specified map.
- */
-export function NativeDirectionsWrapperFactoryProvider(api: GoogleMapsApiService, mapComponent: GoogleMapComponent)
-{
-    return function NativeDirectionsWrapperFactory(element: ElementRef, options?: google.maps.DirectionsRendererOptions)
-    {
-        return new GoogleMapsDirections(api, mapComponent.wrapper, options);
-    };
-}
+/** Provides the factory used to create a native directions object for the `NativeInstance` token. */
+export const NativeGoogleMapsDirectionsFactoryProvider = createNativeFactoryProvider(() => new google.maps.DirectionsRenderer());
 
-/** Provides the factory used to create a directions wrapper for the `WrapperFactory` token. */
-export const GoogleMapsDirectionsFactoryProvider: FactoryProvider = {
-    provide   : WrapperFactory,
-    useFactory: NativeDirectionsWrapperFactoryProvider,
-    deps      : [GoogleMapsApiService, GoogleMapComponent]
-};
+/** Provides the factory used to create a directions wrapper for the `WrapperInstance` token. */
+export const GoogleMapsDirectionsFactoryProvider = createWrapperFactoryProvider(
+    (api, native, map) => new GoogleMapsDirections(map, api, native as google.maps.DirectionsRenderer),
+    [GoogleMapComponent]
+);
