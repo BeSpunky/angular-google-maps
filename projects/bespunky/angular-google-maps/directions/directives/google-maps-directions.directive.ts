@@ -2,12 +2,12 @@ import { BehaviorSubject, merge, Observable           } from 'rxjs';
 import { Directive, ElementRef, Inject, Input, Output } from '@angular/core';
 
 import { GoogleMapsComponentApiService, GoogleMapsComponentBase, Hook, IGoogleMapsEventData, WrapperInstance } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsInfoWindow                                                                                                            } from '@bespunky/angular-google-maps/overlays';
-import { DirectionsRequestConfig             } from '../abstraction/types/directions-request-config.type';
-import { DirectionsPlace                     } from '../abstraction/types/directions.type';
-import { GoogleMapsDirectionsService         } from '../services/google-maps-directions.service';
-import { GoogleMapsDirectionsFactoryProvider } from '../google-maps-directions-factory.provider';
-import { GoogleMapsDirections                } from '../google-maps-directions';
+import { IGoogleMapsInfoWindow                                                                               } from '@bespunky/angular-google-maps/overlays';
+import { DirectionsRequestConfig                                                                             } from '../abstraction/types/directions-request-config.type';
+import { DirectionsPlace                                                                                     } from '../abstraction/types/directions.type';
+import { GoogleMapsDirectionsService                                                                         } from '../services/google-maps-directions.service';
+import { GoogleMapsDirectionsFactoryProvider, NativeGoogleMapsDirectionsFactoryProvider                      } from '../google-maps-directions-factory.provider';
+import { GoogleMapsDirections                                                                                } from '../google-maps-directions';
 
 /**
  * Renders directions for the specified waypoints on the map.
@@ -21,7 +21,7 @@ import { GoogleMapsDirections                } from '../google-maps-directions';
 @Directive({
     selector : 'bs-google-maps-directions',
     exportAs : 'directions',
-    providers: [GoogleMapsDirectionsFactoryProvider]
+    providers: [GoogleMapsDirectionsFactoryProvider, NativeGoogleMapsDirectionsFactoryProvider]
 })
 export class GoogleMapsDirectionsDirective extends GoogleMapsComponentBase<GoogleMapsDirections>
 {
