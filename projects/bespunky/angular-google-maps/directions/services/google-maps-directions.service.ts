@@ -1,11 +1,12 @@
 import { combineLatest, Observable } from 'rxjs';
-import { filter, mergeMap          } from 'rxjs/operators';
-import { Injectable                } from '@angular/core';
+import { filter, mergeMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
-import { GoogleMapsApiService       } from '@bespunky/angular-google-maps/core';
-import { DirectionsRequestConfig    } from '../abstraction/types/directions-request-config.type';
-import { DirectionsPlace            } from '../abstraction/types/directions.type';
+import { Delegation, GoogleMapsApiService, GoogleMapsNativeObjectWrapper, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
+import { DirectionsRequestConfig } from '../abstraction/types/directions-request-config.type';
+import { DirectionsPlace } from '../abstraction/types/directions.type';
 import { DirectionsTransformService } from './directions-transform.service';
+import { NativeGoogleMapsDirectionsServiceFactoryProvider } from './google-maps-directions-service-factory.provider';
 
 type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => void;
 
@@ -24,20 +25,18 @@ type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.
  * @export
  * @class GoogleMapsDirectionsService
  */
-@Injectable({ providedIn: 'root' })
-export class GoogleMapsDirectionsService
+@NativeObjectWrapper<GoogleMapsDirectionsService>({
+    route: Delegation.OutsideAngular
+})
+@Injectable({
+    providedIn: 'root',
+    deps      : [NativeGoogleMapsDirectionsServiceFactoryProvider]
+})
+export class GoogleMapsDirectionsService extends GoogleMapsNativeObjectWrapper<google.maps.DirectionsService>
 {
-    /** The native directions service that will be used to make the request and receive the directions. */
-    private native: google.maps.DirectionsService;
-
-    constructor(private api: GoogleMapsApiService, private transform: DirectionsTransformService)
+    constructor(private transform: DirectionsTransformService, api: GoogleMapsApiService, native: google.maps.DirectionsService)
     {
-        this.initNativeService();
-    }
-
-    private initNativeService()
-    {
-        this.api.runOutsideAngularWhenReady(() => this.native = new google.maps.DirectionsService());
+        super(api, native);
     }
 
     /**
@@ -58,11 +57,11 @@ export class GoogleMapsDirectionsService
         places = places || [];
 
         if (places.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${places?.length} places. At least 2 places must be specified to retrieve directions.`);
-        
-        const origin      = this.transform.toNativePlace(places[0]);
+
+        const origin = this.transform.toNativePlace(places[0]);
         const destination = this.transform.toNativePlace(places.slice(-1)[0]);
-        const waypoints   = places.slice(1, -1).map(place => this.transform.toNativeWaypoint(place)); // This will return an empty array if out of bounds
-        
+        const waypoints = places.slice(1, -1).map(place => this.transform.toNativeWaypoint(place)); // This will return an empty array if out of bounds
+
         const request: google.maps.DirectionsRequest = {
             ...options,
             origin,
@@ -89,9 +88,9 @@ export class GoogleMapsDirectionsService
     public route(from: DirectionsPlace, to: DirectionsPlace, options?: DirectionsRequestConfig): Observable<google.maps.DirectionsResult>
     {
         const throwNullError = (name: string) => { throw new Error(`[GoogleMapsDirectionsService] '${name}' must be specified`); };
-        
+
         if (!from) throwNullError('from');
-        if (!to  ) throwNullError('to');
+        if (!to) throwNullError('to');
 
         return this.through([from, to], options);
     }
@@ -183,7 +182,7 @@ export class GoogleMapsDirectionsService
         };
 
         request = { ...defaultConfig, ...request };
-        
+
         this.native.route(request, handleDirectionsResult);
     }
 }
