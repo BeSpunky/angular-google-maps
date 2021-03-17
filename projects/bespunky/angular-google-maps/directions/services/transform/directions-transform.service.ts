@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { GeometryTransformService                                                             } from '@bespunky/angular-google-maps/core';
-import { DirectionsPlace, DirectionsWaypoint, NativeDirectionsPlace, NativeDirectionsWaypoint } from '../abstraction/types/directions.type';
+import { DirectionsPlace, DirectionsWaypoint, NativeDirectionsPlace, NativeDirectionsWaypoint } from '../../abstraction/types/directions.type';
 
 /**
  * Provides flexible methods for converting and analyzing directions related types.

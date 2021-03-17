@@ -10,6 +10,6 @@ export * from './abstraction/types/directions.type';
 
 export * from './directives/google-maps-directions.directive';
 
-export * from './services/directions-transform.service';
+export * from './services/transform/directions-transform.service';
 export * from './services/google-maps-directions.service';
 export * from './services/google-maps-directions-service-factory.provider';

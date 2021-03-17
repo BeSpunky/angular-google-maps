@@ -1,12 +1,12 @@
 import { combineLatest, Observable } from 'rxjs';
-import { filter, mergeMap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { filter, mergeMap          } from 'rxjs/operators';
+import { Injectable                } from '@angular/core';
 
 import { Delegation, GoogleMapsApiService, GoogleMapsNativeObjectWrapper, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
-import { DirectionsRequestConfig } from '../abstraction/types/directions-request-config.type';
-import { DirectionsPlace } from '../abstraction/types/directions.type';
-import { DirectionsTransformService } from './directions-transform.service';
-import { NativeGoogleMapsDirectionsServiceFactoryProvider } from './google-maps-directions-service-factory.provider';
+import { DirectionsRequestConfig                                                              } from '../abstraction/types/directions-request-config.type';
+import { DirectionsPlace                                                                      } from '../abstraction/types/directions.type';
+import { DirectionsTransformService                                                           } from './transform/directions-transform.service';
+import { NativeGoogleMapsDirectionsServiceFactoryProvider                                     } from './google-maps-directions-service-factory.provider';
 
 type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => void;
 
