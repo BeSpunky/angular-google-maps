@@ -1,5 +1,6 @@
 import { ElementRef } from '@angular/core';
 
+import { Native, NativeInstance                                                                   } from '@bespunky/angular-google-maps/core';
 import { MockNative                                                                               } from '../../../../mocks/mock-native';
 import { FactoryProviderGenerator, ProviderGeneratorTestConfig, setupFactoryProviderGeneratorTest } from '../common/factory-provider-generator-test-setup';
 import { configTestDefaults                                                                       } from '../common/factory-provider-test-setup';
@@ -11,7 +12,7 @@ import { configTestDefaults                                                     
  * @interface NativeProviderGeneratorTestConfig
  * @extends {ProviderGeneratorTestConfig}
  */
-export interface NativeProviderGeneratorTestConfig extends ProviderGeneratorTestConfig
+export interface NativeProviderGeneratorTestConfig extends ProviderGeneratorTestConfig<Native>
 {
     /**
      * (Optional) The element to use when providing injecting `ElementRef`. Default is `new ElementRef({})`.
@@ -30,12 +31,14 @@ export interface NativeProviderGeneratorTestConfig extends ProviderGeneratorTest
  * @param {NativeProviderGeneratorTestConfig} config The configuration to which to apply default values.
  * @returns A full config object with default values for properties that were not specified.
  */
-export function configNativeProviderGeneratorTestDefaults(config: NativeProviderGeneratorTestConfig)
+export function configNativeProviderGeneratorTestDefaults(config: NativeProviderGeneratorTestConfig): Required<NativeProviderGeneratorTestConfig>
 {
     return {
         ...configTestDefaults(config),
+        token    : config.token     || NativeInstance,
         mockValue: config.mockValue || new MockNative(),
-        element  : config.element   || new ElementRef({})
+        element  : config.element   || new ElementRef({}),
+        deps     : config.deps      || []
     };
 }
 
@@ -54,7 +57,9 @@ export function setupNativeFactoryProviderGeneratorTest(createNativeFactoryProvi
 {
     config = configNativeProviderGeneratorTestDefaults(config);
 
-    config.providers.push({ provide: ElementRef, useValue: config.element });
+    // If the current element should be injected, add a provider for it
+    if (config.element)
+        config.providers.unshift({ provide: ElementRef, useValue: config.element });
 
     return setupFactoryProviderGeneratorTest(createNativeFactoryProvider, config);
 }

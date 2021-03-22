@@ -1,10 +1,10 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Component        } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                                              } from '@bespunky/angular-google-maps/testing';
-import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost       } from '@bespunky/angular-google-maps/core/testing';
-import { MockMouseEventsEmitter                                                        } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsComponentApiService                                                 } from '@bespunky/angular-google-maps/core';
+import { configureGoogleMapsTestingModule                                                                                                                              } from '@bespunky/angular-google-maps/testing';
+import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost                                                                                       } from '@bespunky/angular-google-maps/core/testing';
+import { MockMouseEventsEmitter                                                                                                                                        } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsComponentApiService                                                                                                                                 } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsInfoWindowDirective, GoogleMapsOverlaysModule, GoogleMapsInfoWindow, GoogleMapsInfoWindowFactoryProvider, NativeGoogleMapsInfoWindowFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
 /**

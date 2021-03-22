@@ -1,10 +1,9 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Component        } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
-import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost } from '@bespunky/angular-google-maps/core/testing';
-import { Coord                                                                   } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsCircleDirective, GoogleMapsCircleFactoryProvider, GoogleMapsOverlaysModule, NativeGoogleMapsCircleFactoryProvider                     } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule                                                                                            } from '@bespunky/angular-google-maps/testing';
+import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost                                                     } from '@bespunky/angular-google-maps/core/testing';
+import { GoogleMapsCircleDirective, GoogleMapsCircleFactoryProvider, GoogleMapsOverlaysModule, NativeGoogleMapsCircleFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --

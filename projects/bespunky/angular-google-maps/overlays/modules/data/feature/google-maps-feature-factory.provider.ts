@@ -10,4 +10,4 @@ export const NativeGoogleMapsFeatureFactoryProvider = createNativeFactoryProvide
 export const GoogleMapsFeatureFactoryProvider = createWrapperFactoryProvider<GoogleMapsFeature>((api, native, data: GoogleMapsDataDirective) =>
 {
     return new GoogleMapsFeature(data.wrapper, api, native);
-}, [GoogleMapsDataDirective]);
+}, { deps: [GoogleMapsDataDirective] });

@@ -53,6 +53,17 @@ export class DirectionsTransformService
     }
 
     /**
+     * (Type Guard) Determines whether the given value is a native `google.maps.Place` object.
+     *
+     * @param {*} value The value to test.
+     * @returns {value is google.maps.Place} `true` if the value is a native `google.maps.Place` object; otherwise `false`.
+     */
+    public isNativePlaceObject(value: any): value is google.maps.Place
+    {
+        return value && typeof value === 'object' && 'location' in value && this.geometry.isNativeCoord(value.location);
+    }
+    
+    /**
      * Transforms a place to a native waypoint.
      * If this is a place (not already a waypoint), it will be wrapped as a waypoint and assigned as the `location` property.
      *

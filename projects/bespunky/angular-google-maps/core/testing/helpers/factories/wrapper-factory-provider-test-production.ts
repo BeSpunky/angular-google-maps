@@ -1,6 +1,6 @@
-import { FactoryProvider, Type } from '@angular/core';
+import { FactoryProvider, InjectionToken, Type } from '@angular/core';
 
-import { Native, Wrapper                                                           } from '@bespunky/angular-google-maps/core';
+import { Native, Wrapper, WrapperInstance                                          } from '@bespunky/angular-google-maps/core';
 import { setupWrapperFactoryProviderTest, WrapperProviderTestConfig                } from './setup/wrappers/wrapper-factory-provider-test-setup';
 import { produceWrapperFactoryProviderSpecs, AdditionalWrapperFactoryProviderSpecs } from './specs/wrapper-factory-provider-spec-production';
 
@@ -20,6 +20,7 @@ export interface WrapperFactoryProviderTest
     provider           : FactoryProvider;
     /** The function that will setup the testing environment. */
     setup              : SetupFn;
+    expectedToken?     : InjectionToken<Wrapper>;
     /** The type of the wrapper object expected to be produced by the factory. */
     expectedWrapperType: Type<Wrapper>;
     /**
@@ -43,7 +44,7 @@ export interface WrapperFactoryProviderTest
  * @export
  * @param {WrapperFactoryProviderTest} config The configuration for the test.
  */
-export function testWrapperFactoryProviderCore({providerName, provider, setup, expectedWrapperType, mockNative, providers, additionalSpecs }: WrapperFactoryProviderTest)
+export function testWrapperFactoryProviderCore({providerName, provider, setup, expectedToken, expectedWrapperType, mockNative, providers, additionalSpecs }: WrapperFactoryProviderTest)
 {
     describe(providerName, () =>
     {
@@ -55,8 +56,10 @@ export function testWrapperFactoryProviderCore({providerName, provider, setup, e
             
             ({ producedValue: producedWrapper } = await setup(provider, config));
         }
+
+        expectedToken = expectedToken || WrapperInstance;
     
-        produceWrapperFactoryProviderSpecs(runSetup, () => provider, () => producedWrapper, expectedWrapperType, mockNative, additionalSpecs);
+        produceWrapperFactoryProviderSpecs(runSetup, () => provider, () => producedWrapper, () => expectedToken, expectedWrapperType, mockNative, additionalSpecs);
     });
 }
 

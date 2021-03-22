@@ -1,12 +1,12 @@
-import { camelCase                        } from '@bespunky/angular-google-maps/_internal';
-import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/testing';
-import { MockGoogleMap                    } from '@bespunky/angular-google-maps/core/testing';
-import { directionsResult             } from '@bespunky/angular-google-maps/directions/testing';
-import { GoogleMapsApiService, GoogleMapsComponentApiService             } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDirections             } from '@bespunky/angular-google-maps/directions';
-import { GoogleMapsInfoWindow, GoogleMapsInfoWindowDirective             } from '@bespunky/angular-google-maps/overlays';
-import { directionsRoute } from './testing';
 import { ElementRef } from '@angular/core';
+
+import { configureGoogleMapsTestingModule                    } from '@bespunky/angular-google-maps/testing';
+import { MockGoogleMap                                       } from '@bespunky/angular-google-maps/core/testing';
+import { directionsResult, directionsRoute                   } from '@bespunky/angular-google-maps/directions/testing';
+import { camelCase                                           } from '@bespunky/angular-google-maps/_internal';
+import { GoogleMapsApiService, GoogleMapsComponentApiService } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsInfoWindow, GoogleMapsInfoWindowDirective } from '@bespunky/angular-google-maps/overlays';
+import { GoogleMapsDirections                                } from '@bespunky/angular-google-maps/directions';
 
 describe('GoogleMapsDirections', () =>
 {
@@ -19,7 +19,7 @@ describe('GoogleMapsDirections', () =>
     {
         ({ api, componentApi, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        directions = new GoogleMapsDirections(api, new MockGoogleMap());
+        directions = new GoogleMapsDirections(new MockGoogleMap(), api, new google.maps.DirectionsRenderer());
 
         runOutsideAngular.calls.reset();
     });
@@ -69,8 +69,7 @@ describe('GoogleMapsDirections', () =>
             expect(directions.native.setPanel).toHaveBeenCalledWith(panel);
         }
 
-        it('should set the panel used for textual directions outside angular when given an `ElementRef`', () => testSetPanel(panel => new ElementRef(panel)));
-
+        it('should set the panel used for textual directions outside angular when given an `ElementRef`',  () => testSetPanel(panel => new ElementRef(panel)));
         it('should set the panel used for textual directions outside angular when given an `HTMLElement`', () => testSetPanel(panel => panel));
     });
 
@@ -93,8 +92,8 @@ describe('GoogleMapsDirections', () =>
 
         it('should set draggable',                    () => testOption('draggable', true));
         it('should set hideRouteList',                () => testOption('hideRouteList', true));
-        it('should set infoWindow using a wrapper',   () => testOption('infoWindow', new GoogleMapsInfoWindow(api, directions.map), infoWindow => infoWindow.native));
-        it('should set infoWindow using a directive', () => testOption('infoWindow', new GoogleMapsInfoWindowDirective(componentApi, () =>  new GoogleMapsInfoWindow(api, directions.map), null), directive => directive.wrapper.native));
+        it('should set infoWindow using a wrapper',   () => testOption('infoWindow', new GoogleMapsInfoWindow(directions.map, api, new google.maps.InfoWindow()), infoWindow => infoWindow.native));
+        it('should set infoWindow using a directive', () => testOption('infoWindow', new GoogleMapsInfoWindowDirective(componentApi, new GoogleMapsInfoWindow(directions.map, api, new google.maps.InfoWindow()), null), directive => directive.wrapper.native));
         it('should set markerOptions',                () => testOption('markerOptions', {}));
         it('should set polylineOptions',              () => testOption('polylineOptions', {}));
         it('should set preserveViewport',             () => testOption('preserveViewport', true));

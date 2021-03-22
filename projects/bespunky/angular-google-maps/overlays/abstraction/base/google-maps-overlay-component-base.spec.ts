@@ -5,7 +5,7 @@ import { Component         } from '@angular/core';
 import { configureGoogleMapsTestingModule                                                                           } from '@bespunky/angular-google-maps/testing';
 import { MockGoogleMap                                                                                              } from '@bespunky/angular-google-maps/core/testing';
 import { MockDrawableOverlay, MockNativeDrawableOverlay                                                             } from '@bespunky/angular-google-maps/overlays/testing';
-import { WrapperInstance, SuperpowersService, GoogleMapsEventData                                                    } from '@bespunky/angular-google-maps/core';
+import { WrapperInstance, SuperpowersService, GoogleMapsEventData                                                   } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsOverlayComponentBase, OverlayType, DrawableOverlay, GoogleMapsOverlaysModule, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsOverlayComponentBase (abstract)', () =>

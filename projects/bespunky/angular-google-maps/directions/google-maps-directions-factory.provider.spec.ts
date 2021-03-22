@@ -1,7 +1,14 @@
-import { itShouldCreateWrapper                                     } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsDirectionsFactoryProvider, GoogleMapsDirections } from '@bespunky/angular-google-maps/directions';
+import { testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                                  } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsDirectionsFactoryProvider, GoogleMapsDirections, NativeGoogleMapsDirectionsFactoryProvider } from '@bespunky/angular-google-maps/directions';
 
-describe('GoogleMapsDirectionsFactoryProvider', () =>
-{
-    itShouldCreateWrapper(GoogleMapsDirectionsFactoryProvider, GoogleMapsDirections);
+testOverlayNativeFactoryProvider({
+    providerName      : 'NativeGoogleMapsDirectionsFactoryProvider',
+    provider          : NativeGoogleMapsDirectionsFactoryProvider,
+    expectedNativeType: google.maps.DirectionsRenderer,
+});
+
+testOverlayWrapperFactoryProvider({
+    providerName       : 'GoogleMapsDirectionsFactoryProvider',
+    provider           : GoogleMapsDirectionsFactoryProvider,
+    expectedWrapperType: GoogleMapsDirections
 });

@@ -1,15 +1,15 @@
-import { FactoryProvider, Type                     } from '@angular/core';
+import { FactoryProvider, InjectionToken, Type     } from '@angular/core';
 import { ɵPLATFORM_BROWSER_ID, ɵPLATFORM_SERVER_ID } from '@angular/common';
 
-import { Native, NativeInstance } from '@bespunky/angular-google-maps/core';
+import { Native } from '@bespunky/angular-google-maps/core';
 
-function itShouldBeAFactoryProviderForNativeInstance(provider: () => FactoryProvider)
+function itShouldBeAFactoryProviderForNative(provider: () => FactoryProvider, expectedToken: () => InjectionToken<Native>)
 {
-    it('should be a `FactoryProvider` for the `NativeInstance` token', () =>
+    it('should be a `FactoryProvider` for the expected token', () =>
     {
         const factoryProvider = provider();
         
-        expect(factoryProvider.provide   ).toBe(NativeInstance);
+        expect(factoryProvider.provide   ).toBe(expectedToken());
         expect(factoryProvider.useFactory).toBeInstanceOf(Function);
     });
 }
@@ -24,9 +24,9 @@ function itShouldBeAFactoryProviderForNativeInstance(provider: () => FactoryProv
  * @param {() => jasmine.Spy} runOutsideAngular A function that returns the `runOutsideAngular` spy.
  * @param {Type<Native>} expectedNativeType The type of native object expected to be produced by the factory.
  */
-export function produceBrowserNativeFactoryProviderSpecs(provider: () => FactoryProvider, producedNative: () => Native, runOutsideAngular: () => jasmine.Spy, expectedNativeType: Type<Native>)
+export function produceBrowserNativeFactoryProviderSpecs(provider: () => FactoryProvider, producedNative: () => Native, runOutsideAngular: () => jasmine.Spy, expectedToken: () => InjectionToken<Native>, expectedNativeType: Type<Native>)
 {
-    itShouldBeAFactoryProviderForNativeInstance(provider);
+    itShouldBeAFactoryProviderForNative(provider, expectedToken);
 
     it('should return the correct native type', () => expect(producedNative()).toBeInstanceOf(expectedNativeType));
 
@@ -41,9 +41,9 @@ export function produceBrowserNativeFactoryProviderSpecs(provider: () => Factory
  * @param {() => FactoryProvider} provider A function that returns the tested provider.
  * @param {() => Native} producedNative A function that returns the value produced by the provider.
  */
-export function produceNonBrowserNativeFactoryProviderSpecs(provider: () => FactoryProvider, producedNative: () => Native)
+export function produceNonBrowserNativeFactoryProviderSpecs(provider: () => FactoryProvider, producedNative: () => Native, expectedToken: () => InjectionToken<Native>)
 {
-    itShouldBeAFactoryProviderForNativeInstance(provider);
+    itShouldBeAFactoryProviderForNative(provider, expectedToken);
     
     it('should returns null', () => expect(producedNative()).toBeNull());
 }
@@ -84,6 +84,7 @@ export function produceNativeFactoryProviderSpecs(
     provider          : () => FactoryProvider,
     producedNative    : () => Native,
     runOutsideAngular : () => jasmine.Spy,
+    expectedToken     : () => InjectionToken<Native>,
     expectedNativeType: Type<Native>,
     additionalSpecs?  : AdditionalNativeFactoryProviderSpecs
 )
@@ -92,7 +93,7 @@ export function produceNativeFactoryProviderSpecs(
     {
         beforeEach(() => setup(ɵPLATFORM_BROWSER_ID));
 
-        produceBrowserNativeFactoryProviderSpecs(provider, producedNative, runOutsideAngular, expectedNativeType);
+        produceBrowserNativeFactoryProviderSpecs(provider, producedNative, runOutsideAngular, expectedToken, expectedNativeType);
 
         if (additionalSpecs?.browser) additionalSpecs.browser(producedNative, provider, runOutsideAngular);
     });
@@ -101,7 +102,7 @@ export function produceNativeFactoryProviderSpecs(
     {
         beforeEach(() => setup(ɵPLATFORM_SERVER_ID));
 
-        produceNonBrowserNativeFactoryProviderSpecs(provider, producedNative);
+        produceNonBrowserNativeFactoryProviderSpecs(provider, producedNative, expectedToken);
 
         if (additionalSpecs?.nonBrowser) additionalSpecs.nonBrowser(producedNative, provider, runOutsideAngular);
     });

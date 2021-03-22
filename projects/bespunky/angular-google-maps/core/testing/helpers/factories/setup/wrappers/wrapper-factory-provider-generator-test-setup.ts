@@ -1,4 +1,6 @@
-import { NativeInstance                                                                           } from '@bespunky/angular-google-maps/core';
+import { InjectionToken } from '@angular/core';
+
+import { Native, NativeInstance, Wrapper, WrapperInstance                                                          } from '@bespunky/angular-google-maps/core';
 import { MockNative                                                                               } from '../../../../mocks/mock-native';
 import { MockWrapper                                                                              } from '../../../../mocks/mock-wrapper';
 import { FactoryProviderGenerator, ProviderGeneratorTestConfig, setupFactoryProviderGeneratorTest } from '../common/factory-provider-generator-test-setup';
@@ -11,8 +13,9 @@ import { configTestDefaults                                                     
  * @interface WrapperProviderGeneratorTestConfig
  * @extends {ProviderGeneratorTestConfig}
  */
-export interface WrapperProviderGeneratorTestConfig extends ProviderGeneratorTestConfig
+export interface WrapperProviderGeneratorTestConfig extends ProviderGeneratorTestConfig<Wrapper>
 {
+    nativeToken?: InjectionToken<Native>;
     /**
      * (Optional) The value that will be returned by the **simulated** `produceValue` function passed
      * to the generator function. Meaning, when the factory returns, this will be the value it produces.
@@ -29,11 +32,14 @@ export interface WrapperProviderGeneratorTestConfig extends ProviderGeneratorTes
  * @param {WrapperProviderGeneratorTestConfig} config The configuration to which to apply default values.
  * @returns A full config object with default values for properties that were not specified.
  */
-export function configWrapperProviderGeneratorTestDefaults(config: WrapperProviderGeneratorTestConfig)
+export function configWrapperProviderGeneratorTestDefaults(config: WrapperProviderGeneratorTestConfig): Required<WrapperProviderGeneratorTestConfig>
 {
     return {
         ...configTestDefaults(config),
-        mockValue: config.mockValue || new MockWrapper(new MockNative()),
+        token      : config.token       || WrapperInstance,
+        nativeToken: config.nativeToken || NativeInstance,
+        mockValue  : config.mockValue   || new MockWrapper(new MockNative()),
+        deps       : config.deps        || []
     };
 }
 
@@ -52,7 +58,7 @@ export function setupWrapperFactoryProviderGeneratorTest(createWrapperFactoryPro
 {
     config = configWrapperProviderGeneratorTestDefaults(config);
 
-    config.providers.push({ provide: NativeInstance, useValue: config.mockValue.native });
+    config.providers.push({ provide: config.nativeToken, useValue: config.mockValue.native });
 
     return setupFactoryProviderGeneratorTest(createWrapperFactoryProvider, config);
 }

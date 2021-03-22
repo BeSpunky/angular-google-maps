@@ -1,7 +1,7 @@
-import { FactoryProvider } from '@angular/core';
+import { FactoryProvider, InjectionToken } from '@angular/core';
 
 import { MockNative, MockWrapper, produceWrapperFactoryProviderSpecs, setupWrapperFactoryProviderGeneratorTest, someValue } from '@bespunky/angular-google-maps/core/testing';
-import { createWrapperFactoryProvider, GoogleMapsApiService                                                               } from '@bespunky/angular-google-maps/core';
+import { createWrapperFactoryProvider, GoogleMapsApiService, Wrapper, WrapperInstance                                              } from '@bespunky/angular-google-maps/core';
 
 const mockNative  = new MockNative();
 const mockWrapper = new MockWrapper(mockNative);
@@ -10,6 +10,7 @@ describe('createWrapperFactoryProvider', () =>
 {
     let api            : GoogleMapsApiService;
     let factoryProvider: FactoryProvider;
+    let wrapperToken   : InjectionToken<Wrapper>;
     let produceWrapper : jasmine.Spy;
     let producedWrapper: any;
 
@@ -18,6 +19,7 @@ describe('createWrapperFactoryProvider', () =>
         ({
             api,
             factoryProvider,
+            token        : wrapperToken,
             produceValue : produceWrapper,
             producedValue: producedWrapper
         } = await setupWrapperFactoryProviderGeneratorTest(createWrapperFactoryProvider, { platform, mockValue: mockWrapper }));
@@ -36,5 +38,5 @@ describe('createWrapperFactoryProvider', () =>
         it('should not call the `produceWrapper` function', () => expect(produceWrapper).not.toHaveBeenCalled());
     }
 
-    produceWrapperFactoryProviderSpecs(setup, () => factoryProvider, () => producedWrapper, MockWrapper, mockNative, { browser, nonBrowser });
+    produceWrapperFactoryProviderSpecs(setup, () => factoryProvider, () => producedWrapper, () => wrapperToken, MockWrapper, mockNative, { browser, nonBrowser });
 });

@@ -27,7 +27,7 @@ export interface NativeProviderTestConfig extends ProviderTestConfig
  * @param {NativeProviderTestConfig} config The configuration to which to apply default values.
  * @returns A full config object with default values for properties that were not specified.
  */
-export function configNativeProviderTestDefaults(config: NativeProviderTestConfig)
+export function configNativeProviderTestDefaults(config: NativeProviderTestConfig): Required<NativeProviderTestConfig>
 {
     return {
         ...configTestDefaults(config),

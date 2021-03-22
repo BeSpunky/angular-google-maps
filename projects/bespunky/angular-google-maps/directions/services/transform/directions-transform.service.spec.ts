@@ -1,8 +1,9 @@
-import { producePlaceSpecs, produceWaypointSpecs, produceNativePlaceSpecs, produceFlexiblePlaceSpecs, produceNativeWaypointSpecs, produceFlexibleWaypointSpecs } from '@bespunky/angular-google-maps/directions/testing';
-import { GeometryTransformService   } from '@bespunky/angular-google-maps/core';
-import { DirectionsTransformService } from '@bespunky/angular-google-maps/directions';
-import { configureGoogleMapsTestingModule } from '@bespunky/angular-google-maps/async/testing';
 import { TestBed } from '@angular/core/testing';
+
+import { configureGoogleMapsTestingModule                                                                                                                      } from '@bespunky/angular-google-maps/async/testing';
+import { producePlaceSpecs, produceWaypointSpecs, produceNativePlaceSpecs, produceFlexiblePlaceSpecs, produceNativeWaypointSpecs, produceFlexibleWaypointSpecs } from '@bespunky/angular-google-maps/directions/testing';
+import { GeometryTransformService                                                                                                                              } from '@bespunky/angular-google-maps/core';
+import { DirectionsTransformService                                                                                                                            } from '@bespunky/angular-google-maps/directions';
 
 describe('DirectionsTransformService', () =>
 {
@@ -51,6 +52,27 @@ describe('DirectionsTransformService', () =>
 
         produceNativePlaceSpecs  ('determine whether the object is a native place', place => expect(directions.isNativePlace(place)).toBeTruthy());
         produceFlexiblePlaceSpecs('determine whether the object is a native place', place => expect(directions.isNativePlace(place)).toBeFalse());
+    });
+    
+    describe('isNativePlaceObject', () =>
+    {
+        it('should determine whether an object is a native `google.maps.Place` object', () =>
+        {
+            testTypeGuardFalseAgainstStandardValues((value) => directions.isNativePlaceObject(value));
+            
+            expect(directions.isNativePlaceObject({ location: 123 })).toBeFalse();
+        });
+
+        produceNativePlaceSpecs('determine whether the object is a native `google.maps.Place` object', place =>
+        {
+            const expectIsNativePlaceObject = expect(directions.isNativePlaceObject(place));
+
+            typeof place === 'object' && 'location' in place && geometry.isNativeCoord(place.location) ?
+                expectIsNativePlaceObject.toBeTrue() :
+                expectIsNativePlaceObject.toBeFalse();
+        });
+
+        produceFlexiblePlaceSpecs('determine whether the object is a native `google.maps.Place` object', place => expect(directions.isNativePlaceObject(place)).toBeFalse());
     });
 
     // As toNativeWaypoint() recives a DirectionsPlace, this test runs on all PLACES, not waypoints.

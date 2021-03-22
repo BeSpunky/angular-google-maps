@@ -1,9 +1,10 @@
 import { InjectionToken, Provider } from '@angular/core';
 
+import { FactoryGeneratorConfig                                           } from '@bespunky/angular-google-maps/core';
 import { configTestDefaults, ProviderTestConfig, setupFactoryProviderTest } from './factory-provider-test-setup';
 
 /** Represents a function that creates a factory provider,  */
-export type FactoryProviderGenerator = (produceValue: jasmine.Spy, ...deps: any[]) => any;
+export type FactoryProviderGenerator = (produceValue: jasmine.Spy, config?: FactoryGeneratorConfig<any>) => any;
 
 /** A dummy token to use for testing that the `deps` array is passed correctly. */
 export const SomeToken = new InjectionToken<any>('SomeToken');
@@ -19,14 +20,16 @@ export const SomeProvider: Provider = { provide: SomeToken, useValue: someValue 
  * @interface ProviderGeneratorTestConfig
  * @extends {ProviderTestConfig}
  */
-export interface ProviderGeneratorTestConfig extends ProviderTestConfig
+export interface ProviderGeneratorTestConfig<TToken = any> extends ProviderTestConfig
 {
+    token?    : InjectionToken<TToken>;
     /**
      * (Optional) The value that will be returned by the **simulated** `produceValue` function passed
      * to the generator function. Meaning, when the factory returns, this will be the value it produces.
      * Default is `'produced value'`.
      */
     mockValue?: any;
+    deps?     : any[];
 }
 
 /**
@@ -36,11 +39,13 @@ export interface ProviderGeneratorTestConfig extends ProviderTestConfig
  * @param {ProviderGeneratorTestConfig} config The configuration to which to apply default values.
  * @returns A full config object with default values for properties that were not specified.
  */
-function configProviderGeneratorTestDefaults(config: ProviderGeneratorTestConfig)
+function configProviderGeneratorTestDefaults(config: ProviderGeneratorTestConfig): Required<ProviderGeneratorTestConfig>
 {
     return {
         ...configTestDefaults(config),
+        token    : config.token,
         mockValue: config.mockValue || 'produced value',
+        deps     : config.deps      || []
     };
 }
 
@@ -59,15 +64,16 @@ function configProviderGeneratorTestDefaults(config: ProviderGeneratorTestConfig
  */
 export async function setupFactoryProviderGeneratorTest(createProvider: FactoryProviderGenerator, config: ProviderGeneratorTestConfig = {})
 {
-    const { mockValue, providers } = configProviderGeneratorTestDefaults(config);
+    const { mockValue, providers, token, deps } = configProviderGeneratorTestDefaults(config);
 
-    const produceValue    = jasmine.createSpy('produceValue').and.returnValue(mockValue);
-    const factoryProvider = createProvider(produceValue, [SomeToken]);
-    
     // Add a dummy provider to use as a proof that the `deps` array in the provider generator function works
     config.providers = [...providers, SomeProvider];
+    config.deps      = [...deps, SomeToken];
+
+    const produceValue    = jasmine.createSpy('produceValue').and.returnValue(mockValue);
+    const factoryProvider = createProvider(produceValue, { token, deps: config.deps });
 
     const { api, runOutsideAngular, factory, producedValue } = await setupFactoryProviderTest(factoryProvider, config);
 
-    return { api, runOutsideAngular, produceValue, factoryProvider, factory, producedValue, mockValue };
+    return { api, runOutsideAngular, produceValue, factoryProvider, factory, producedValue, mockValue, token };
 }

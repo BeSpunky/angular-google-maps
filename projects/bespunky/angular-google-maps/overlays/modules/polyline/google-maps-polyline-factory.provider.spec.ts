@@ -1,4 +1,4 @@
-import { testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                      } from '@bespunky/angular-google-maps/overlays/testing';
+import { testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                            } from '@bespunky/angular-google-maps/overlays/testing';
 import { GoogleMapsPolylineFactoryProvider, GoogleMapsPolyline, NativeGoogleMapsPolylineFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
 testOverlayNativeFactoryProvider({

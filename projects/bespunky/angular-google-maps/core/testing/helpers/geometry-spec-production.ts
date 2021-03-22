@@ -76,7 +76,7 @@ export const allDummyBounds = [literalBounds, latLngBounds, iBounds];
 /** Dummy geometry feature for testing. See `produceDataGeometrySpecs()`. */
 export const dataPoint   = new google.maps.Data.Point(literalCoord);
 /** Dummy geometry feature for testing. See `produceDataGeometrySpecs()`. */
-export const dataPolygon = new google.maps.Data.Polygon(linearRingMultiPath);
+export const dataPolygon = new google.maps.Data.Polygon(literalMultiPath);
 
 /** All dummy geometry features for testing combined into an array. */
 export const allDummyDataGeometries = [dataPoint, dataPolygon];

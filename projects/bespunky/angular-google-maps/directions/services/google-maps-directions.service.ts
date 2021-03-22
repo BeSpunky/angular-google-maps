@@ -1,14 +1,14 @@
 import { combineLatest, Observable } from 'rxjs';
 import { filter, mergeMap          } from 'rxjs/operators';
-import { Injectable                } from '@angular/core';
+import { Inject, Injectable                } from '@angular/core';
 
 import { Delegation, GoogleMapsApiService, GoogleMapsNativeObjectWrapper, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
 import { DirectionsRequestConfig                                                              } from '../abstraction/types/directions-request-config.type';
 import { DirectionsPlace                                                                      } from '../abstraction/types/directions.type';
 import { DirectionsTransformService                                                           } from './transform/directions-transform.service';
-import { NativeGoogleMapsDirectionsServiceFactoryProvider                                     } from './google-maps-directions-service-factory.provider';
+import { NativeDirectionsService                                                              } from './google-maps-directions-service-factory.provider';
 
-type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => void;
+export type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => void;
 
 /**
  * Integrates the `google.maps.DirectionsService` into the framework and provides tools for directions.
@@ -17,24 +17,17 @@ type DirectionsCallback = (result: google.maps.DirectionsResult, status: google.
  * 
  * @see [original notes of the native service](https://developers.google.com/maps/documentation/javascript/directions)
  * 
- * Note: As this is an independent service, it is provided in root to allow using it without importing the `GoogleMapsDirectionsModule` itself.  
- *       If at any point the service becomes dependent of the module, this should be changed to `{ providedIn: GoogleMapsDirectionsModule }`.  
- *       A single instance will be created and Ivy will tree shake the service (if it is not injected anywhere in the using app) in both cases,
- *       the only difference will be the ability to use it without importing the module.
+ * Note: This service is intended to be injected once, at root level. Therefore the native object provider should also be
+ * provided at root level. `GoogleMapsDirectionsModule` should be imported `forRoot()` to provide the native factory.
  *
  * @export
  * @class GoogleMapsDirectionsService
  */
-@NativeObjectWrapper<GoogleMapsDirectionsService>({
-    route: Delegation.OutsideAngular
-})
-@Injectable({
-    providedIn: 'root',
-    deps      : [NativeGoogleMapsDirectionsServiceFactoryProvider]
-})
+@Injectable({ providedIn: 'root' })
+@NativeObjectWrapper<GoogleMapsDirectionsService>({ route: Delegation.OutsideAngular })
 export class GoogleMapsDirectionsService extends GoogleMapsNativeObjectWrapper<google.maps.DirectionsService>
 {
-    constructor(private transform: DirectionsTransformService, api: GoogleMapsApiService, native: google.maps.DirectionsService)
+    constructor(private transform: DirectionsTransformService, api: GoogleMapsApiService, @Inject(NativeDirectionsService) native: google.maps.DirectionsService)
     {
         super(api, native);
     }
@@ -56,11 +49,11 @@ export class GoogleMapsDirectionsService extends GoogleMapsNativeObjectWrapper<g
     {
         places = places || [];
 
-        if (places.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${places?.length} places. At least 2 places must be specified to retrieve directions.`);
+        if (places.length < 2) throw new Error(`[GoogleMapsDirectionsService] Received ${places.length} places. At least 2 places must be specified to retrieve directions.`);
 
-        const origin = this.transform.toNativePlace(places[0]);
+        const origin      = this.transform.toNativePlace(places[0]);
         const destination = this.transform.toNativePlace(places.slice(-1)[0]);
-        const waypoints = places.slice(1, -1).map(place => this.transform.toNativeWaypoint(place)); // This will return an empty array if out of bounds
+        const waypoints   = places.slice(1, -1).map(place => this.transform.toNativeWaypoint(place));  // This will return an empty array if out of bounds
 
         const request: google.maps.DirectionsRequest = {
             ...options,
@@ -158,7 +151,7 @@ export class GoogleMapsDirectionsService extends GoogleMapsNativeObjectWrapper<g
                     observer.complete();
                 }
                 else
-                    observer.error(`Failed to retrieve directions: ${status}.\nRefer to https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus for more information.`);
+                    observer.error(`${status} - Failed to retrieve directions\nRefer to https://developers.google.com/maps/documentation/javascript/directions#DirectionsStatus for more information.`);
             };
 
             // Wait for the native service to be assigned, then use it outside Angular
