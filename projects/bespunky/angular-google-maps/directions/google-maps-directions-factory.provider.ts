@@ -8,5 +8,5 @@ export const NativeGoogleMapsDirectionsFactoryProvider = createNativeFactoryProv
 /** Provides the factory used to create a directions wrapper for the `WrapperInstance` token. */
 export const GoogleMapsDirectionsFactoryProvider = createWrapperFactoryProvider(
     (api, native, map) => new GoogleMapsDirections(map, api, native as google.maps.DirectionsRenderer),
-    [GoogleMapComponent]
+    { deps: [GoogleMapComponent] }
 );

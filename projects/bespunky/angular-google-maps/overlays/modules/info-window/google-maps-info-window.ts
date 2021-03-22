@@ -3,7 +3,6 @@ import { Subject, of, Observable } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
 
 import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, GoogleMapsNativeObjectEmittingWrapper, BoundsLike, IGoogleMapsMouseEventsEmitter, IGoogleMapsEventData, IGoogleMapsMouseEvent, Delegation } from '@bespunky/angular-google-maps/core';
-import { OverlayType                                                          } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsInfoWindow, WrappedInfoWindowFunctions, InfoWindowTrigger } from './i-google-maps-info-window';
 
 type TriggerHandlersMap = Record<InfoWindowTrigger, {

@@ -9,4 +9,4 @@ export const NativeGoogleMapsCircleFactoryProvider = createNativeFactoryProvider
 export const GoogleMapsCircleFactoryProvider = createWrapperFactoryProvider<GoogleMapsCircle>((api, native, map: GoogleMapComponent) =>
 {
     return new GoogleMapsCircle(map.wrapper, api, native);
-}, [GoogleMapComponent]);
+}, { deps: [GoogleMapComponent] });

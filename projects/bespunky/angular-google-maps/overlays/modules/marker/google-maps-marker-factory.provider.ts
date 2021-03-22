@@ -9,4 +9,4 @@ export const NativeGoogleMapsMarkerFactoryProvider = createNativeFactoryProvider
 export const GoogleMapsMarkerFactoryProvider = createWrapperFactoryProvider<GoogleMapsMarker>((api, native, map: GoogleMapComponent) =>
 {
     return new GoogleMapsMarker(map.wrapper, api, native);
-}, [GoogleMapComponent]);
+}, { deps: [GoogleMapComponent] });

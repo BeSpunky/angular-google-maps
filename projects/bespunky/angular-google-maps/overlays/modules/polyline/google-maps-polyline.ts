@@ -1,6 +1,6 @@
-import { CoordPath, NativeObjectWrapper, OutsideAngular, GoogleMapsApiService, IGoogleMap, Delegation, Path } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay                   } from '../../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType                                 } from '../../abstraction/base/overlay-type.enum';
+import { NativeObjectWrapper, OutsideAngular, GoogleMapsApiService, IGoogleMap, Delegation, Path } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay                     } from '../../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType                                   } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsPolyline, WrappedPolylineFunctions } from './i-google-maps-polyline';
 
 /** Extends intellisense for `GoogleMapsPolyline` with native polyline functions. */
