@@ -118,6 +118,11 @@ export class GeometryTransformService
     {
         return path instanceof google.maps.MVCArray || path instanceof google.maps.Data.LinearRing;
     }
+
+    private isEmptyArray(value: any): boolean
+    {
+        return value && value instanceof Array && value.length === 0;
+    }
     
     /**
      * (Type Guard) Determines if the given path is a single path.
@@ -127,7 +132,14 @@ export class GeometryTransformService
      */
     public isSinglePath(path: CoordPath): path is Path
     {
-        return !this.isMultiPath(path) && (this.isNativePath(path) || this.isNativeCoordPath(path) || this.isFlatCoordPath(path));
+        return path &&
+            !this.isMultiPath(path) &&
+            (
+                   this.isEmptyArray(path)
+                || this.isNativePath(path)
+                || this.isNativeCoordPath(path)
+                || this.isFlatCoordPath(path)
+            );
     }
     
     /**
@@ -138,14 +150,15 @@ export class GeometryTransformService
      */
     public isMultiPath(path: CoordPath): path is MultiPath
     {
-        // This is an array of...
-        return (path instanceof Array &&
+        return path &&
+            // This is an array of...
+            (path instanceof Array &&
                  // 1. Arrays which are not flat coords (This is actually a multi-path and not a flat path like [[0, 0], [1, 1]])
-                    (path[0] instanceof Array && !this.isFlatCoord(path[0]))
+                (path[0] instanceof Array && !this.isFlatCoord(path[0]))
                  // 2. Native LinearRing objects
-                 || (path[0] instanceof google.maps.Data.LinearRing))
-        // This is an MVCArray of either MVCArrays or LinearRings                 
-            || (path instanceof google.maps.MVCArray && (path.getAt(0) instanceof google.maps.MVCArray || path.getAt(0) instanceof google.maps.Data.LinearRing));
+             || (path[0] instanceof google.maps.Data.LinearRing))
+         // This is an MVCArray of either MVCArrays or LinearRings                 
+         || (path instanceof google.maps.MVCArray && (path.getAt(0) instanceof google.maps.MVCArray || path.getAt(0) instanceof google.maps.Data.LinearRing));
     }
     
     /**
