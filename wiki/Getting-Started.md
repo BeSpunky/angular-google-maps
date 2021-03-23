@@ -1,6 +1,6 @@
 ## 1. Install the library
  
-    > npm install @bespunky/angular-google-maps
+    npm install @bespunky/angular-google-maps
 
 ## 2. Include the main module and start working
 
