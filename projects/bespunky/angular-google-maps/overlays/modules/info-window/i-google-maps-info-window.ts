@@ -1,27 +1,14 @@
 import { WrappedNativeFunctions, IGoogleMapsNativeObjectEmittingWrapper, BoundsLike, IGoogleMapsMouseEventsEmitter } from '@bespunky/angular-google-maps/core';
 
 /**
- * The supported triggers for opening the info window.
+ * The supported triggers for opening the info window:
+ * 
+ * `click`       - The info window will open when the user clicks the attached element.  
+ * `mouseOver`   - The info window will open when the user enters the attached element with the mouse and close when the user exists the attached element.  
+ * `doubleClick` - The info window will open when the user double clicks the attached element.  
+ * `rightClick`  - The info window will open when the user right clicks the attached element.
  */
-export enum InfoWindowTrigger
-{
-    /**
-     * The info window will open when the user clicks the attached element.
-     */
-    Click = 'click',
-    /**
-     * The info window will open when the user enters the attached element with the mouse and close when the user exists the attached element.
-     */
-    MouseOver = 'mouseOver',
-    /**
-     * The info window will open when the user double clicks the attached element.
-     */
-    DoubleClick = 'doubleClick',
-    /**
-     * The info window will open when the user right clicks the attached element.
-     */
-    RightClick = 'rightClick'
-};
+export type InfoWindowTrigger = 'click' | 'mouseOver' | 'doubleClick' | 'rightClick';
 
 /** A type for the native functions of an info window which should be wrapped. Used along with the extension interface for the wrapper. */
 export type WrappedInfoWindowFunctions = WrappedNativeFunctions<google.maps.InfoWindow, 'getPosition' | 'setPosition' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'get' | 'set' | 'changed' | 'open'>;
@@ -59,7 +46,7 @@ export interface IGoogleMapsInfoWindow extends IGoogleMapsNativeObjectEmittingWr
     getTrigger(): InfoWindowTrigger;
     /**
      * Sets the trigger for the info window when attaching to an element. This implies specifying an attached element using `setAttachedTo()`.
-     * Default is `InfoWindowTrigger.MouseOver`.
+     * Default is `mouseOver`.
      * 
      * @param {InfoWindowTrigger} trigger The event that will trigger the info window.
      */

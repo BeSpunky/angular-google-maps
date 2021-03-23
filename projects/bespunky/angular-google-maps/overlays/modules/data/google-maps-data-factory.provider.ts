@@ -9,4 +9,4 @@ export const NativeGoogleMapsDataFactoryProvider = createNativeFactoryProvider((
 export const GoogleMapsDataFactoryProvider = createWrapperFactoryProvider<GoogleMapsData>((api, native, map: GoogleMapComponent) =>
 {
     return new GoogleMapsData(map.wrapper, api, native);
-}, [GoogleMapComponent]);
+}, { deps: [GoogleMapComponent] });

@@ -1,15 +1,15 @@
 import { ɵPLATFORM_BROWSER_ID, ɵPLATFORM_SERVER_ID } from '@angular/common';
-import { FactoryProvider, Type                     } from '@angular/core';
+import { FactoryProvider, InjectionToken, Type     } from '@angular/core';
 
-import { Wrapper, WrapperInstance } from '@bespunky/angular-google-maps/core';
+import { Wrapper } from '@bespunky/angular-google-maps/core';
 
-function itShouldBeAFactoryProviderForWrapperInstance(provider: () => FactoryProvider)
+function itShouldBeAFactoryProviderForWrapperToken(provider: () => FactoryProvider, expectedToken: () => InjectionToken<Wrapper>)
 {
-    it('should be a `FactoryProvider` for the `WrapperInstance` token', () =>
+    it('should be a `FactoryProvider` for the expected token', () =>
     {
         const factoryProvider = provider();
         
-        expect(factoryProvider.provide   ).toBe(WrapperInstance);
+        expect(factoryProvider.provide   ).toBe(expectedToken());
         expect(factoryProvider.useFactory).toBeInstanceOf(Function);
     });
 }
@@ -24,9 +24,9 @@ function itShouldBeAFactoryProviderForWrapperInstance(provider: () => FactoryPro
  * @param {Type<Wrapper>} expectedWrapperType The type of wrapper object expected to be produced by the factory.
  * @param {*} expectedNative The native object expected to be wrapped in the produced wrapper object.
  */
-export function produceBrowserWrapperFactoryProviderSpecs(provider: () => FactoryProvider, producedWrapper: () => Wrapper, expectedWrapperType: Type<Wrapper>,  expectedNative: any)
+export function produceBrowserWrapperFactoryProviderSpecs(provider: () => FactoryProvider, producedWrapper: () => Wrapper, expectedToken: () => InjectionToken<Wrapper>, expectedWrapperType: Type<Wrapper>,  expectedNative: any)
 {
-    itShouldBeAFactoryProviderForWrapperInstance(provider);
+    itShouldBeAFactoryProviderForWrapperToken(provider, expectedToken);
 
     it('should return the correct wrapper type', () => expect(producedWrapper()).toBeInstanceOf(expectedWrapperType));
 
@@ -41,9 +41,9 @@ export function produceBrowserWrapperFactoryProviderSpecs(provider: () => Factor
  * @param {() => FactoryProvider} provider A function that returns the tested provider.
  * @param {() => Wrapper} producedWrapper A function that returns the value produced by the provider.
  */
-export function produceNonBrowserWrapperFactoryProviderSpecs(provider: () => FactoryProvider, producedWrapper: () => Wrapper)
+export function produceNonBrowserWrapperFactoryProviderSpecs(provider: () => FactoryProvider, producedWrapper: () => Wrapper, expectedToken: () => InjectionToken<Wrapper>)
 {
-    itShouldBeAFactoryProviderForWrapperInstance(provider);
+    itShouldBeAFactoryProviderForWrapperToken(provider, expectedToken);
     
     it('should returns null', () => expect(producedWrapper()).toBeNull());
 }
@@ -83,6 +83,7 @@ export function produceWrapperFactoryProviderSpecs(
     setup              : (platform: any) => any,
     provider           : () => FactoryProvider,
     producedWrapper    : () => Wrapper,
+    expectedToken      : () => InjectionToken<Wrapper>,
     expectedWrapperType: Type<Wrapper>,
     expectedNative     : any,
     additionalSpecs?   : AdditionalWrapperFactoryProviderSpecs
@@ -92,7 +93,7 @@ export function produceWrapperFactoryProviderSpecs(
     {
         beforeEach(() => setup(ɵPLATFORM_BROWSER_ID));
 
-        produceBrowserWrapperFactoryProviderSpecs(provider, producedWrapper, expectedWrapperType, expectedNative);
+        produceBrowserWrapperFactoryProviderSpecs(provider, producedWrapper, expectedToken, expectedWrapperType, expectedNative);
 
         if (additionalSpecs?.browser) additionalSpecs.browser(producedWrapper, provider);
     });
@@ -101,7 +102,7 @@ export function produceWrapperFactoryProviderSpecs(
     {
         beforeEach(() => setup(ɵPLATFORM_SERVER_ID));
 
-        produceNonBrowserWrapperFactoryProviderSpecs(provider, producedWrapper);
+        produceNonBrowserWrapperFactoryProviderSpecs(provider, producedWrapper, expectedToken);
 
         if (additionalSpecs?.nonBrowser) additionalSpecs.nonBrowser(producedWrapper, provider);
     });

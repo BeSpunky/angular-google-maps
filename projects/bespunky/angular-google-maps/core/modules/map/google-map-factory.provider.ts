@@ -1,3 +1,4 @@
+import { ElementRef  } from '@angular/core';
 import { DocumentRef } from '@bespunky/angular-zen/core';
 
 import { createAndAppendMapElement    } from '@bespunky/angular-google-maps/_internal'
@@ -18,10 +19,10 @@ export const NativeGoogleMapFactoryProvider = createNativeFactoryProvider((eleme
     };
 
     return new google.maps.Map(mapElement, options);
-}, [DocumentRef]);
+}, { deps: [ElementRef, DocumentRef] });
 
 /** Provides the factory used to create a map wrapper for the `WrapperInstance` token. */
 export const GoogleMapFactoryProvider = createWrapperFactoryProvider<GoogleMap>((api, native, superpowers: SuperpowersService) =>
 {
     return new GoogleMap(superpowers, api, native);
-}, [SuperpowersService]);
+}, { deps: [SuperpowersService] });

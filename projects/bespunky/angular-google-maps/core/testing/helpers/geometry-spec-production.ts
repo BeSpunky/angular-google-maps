@@ -4,6 +4,9 @@ import { MockBounds                                                             
 /** @ignore */
 const geometry = new GeometryTransformService();
 
+export type FlexibleDummy<T>   = { typeName: string, value: T };
+export type FlexibleDummies<T> = FlexibleDummy<T>[];
+
 /**
  * The following are the geometry types supported by the library.
  * They have been assigned with dummy values for testing.
@@ -54,8 +57,12 @@ export const allDummyMultiPaths = [flatMultiPath, literalMultiPath, latLngMultiP
 
 // IBounds
 /** Dummy bounds for testing. See `produceNativeBoundsSpecs()` and `produceIBoundsSpecs()`. */
-export const mockBounds  = new MockBounds();
-mockBounds.bounds = new google.maps.LatLngBounds(literalPath[0], literalPath[flatPath.length - 1]);
+export const latLngBounds  = new google.maps.LatLngBounds(literalPath[0], literalPath[flatPath.length - 1]);
+/** Dummy bounds for testing. See `produceNativeBoundsSpecs()` and `produceIBoundsSpecs()`. */
+export const literalBounds = latLngBounds.toJSON();
+/** Dummy bounds for testing. See `produceNativeBoundsSpecs()` and `produceIBoundsSpecs()`. */
+export const iBounds    = new MockBounds();
+       iBounds.bounds   = latLngBounds;
 
 /** The south-west coord of the dummy testing paths. */
 export const southWest = flatPath[0];
@@ -63,16 +70,46 @@ export const southWest = flatPath[0];
 export const northEast = flatPath[flatPath.length - 1];
 
 /** All dummy bounds for testing combined into an array. */
-export const allDummyBounds = [mockBounds];
+export const allDummyBounds = [literalBounds, latLngBounds, iBounds];
 
 // Data Layer Geometry
 /** Dummy geometry feature for testing. See `produceDataGeometrySpecs()`. */
 export const dataPoint   = new google.maps.Data.Point(literalCoord);
 /** Dummy geometry feature for testing. See `produceDataGeometrySpecs()`. */
-export const dataPolygon = new google.maps.Data.Polygon(linearRingMultiPath);
+export const dataPolygon = new google.maps.Data.Polygon(literalMultiPath);
 
 /** All dummy geometry features for testing combined into an array. */
 export const allDummyDataGeometries = [dataPoint, dataPolygon];
+
+/** All supported BoundsLike dummy values for testing combined into an array. */
+export const allBoundsLike: FlexibleDummies<BoundsLike> = [
+    { typeName: 'flat coord'            , value: flatCoord           },
+    { typeName: 'literal coord'         , value: literalCoord        },
+    { typeName: 'LatLng coord'          , value: latLngCoord         },
+
+    { typeName: 'flat path'             , value: flatPath            },
+    { typeName: 'literal path'          , value: literalPath         },
+    { typeName: 'LatLng path'           , value: latLngPath          },
+    { typeName: 'MVCArray path'         , value: mvcPath             },
+    { typeName: 'linear ring path'      , value: linearRingPath      },
+
+    { typeName: 'flat multi path'       , value: flatMultiPath       },
+    { typeName: 'literal multi path'    , value: literalMultiPath    },
+    { typeName: 'LatLng multi path'     , value: latLngMultiPath     },
+    { typeName: 'MVCArray multi path'   , value: mvcMultiPath        },
+    { typeName: 'linear ring multi path', value: linearRingMultiPath },
+
+    { typeName: 'literal bounds'        , value: literalBounds       },
+    { typeName: 'LatLangBounds'         , value: latLngBounds        },
+    { typeName: 'IBounds bounds'        , value: iBounds             },
+
+    { typeName: 'literal bounds'        , value: literalBounds       },
+    { typeName: 'LatLangBounds'         , value: latLngBounds        },
+    { typeName: 'IBounds bounds'        , value: iBounds             },
+    
+    { typeName: 'point feature'         , value: dataPoint           },
+    { typeName: 'polygon feature'       , value: dataPolygon         }
+];
 
 /**
  * Produces a spec for each supported coord type and runs the test against the coord.
@@ -143,8 +180,8 @@ export function producePathSpecs(expectation: string, test: (path: CoordPath) =>
  */
 export function produceNativeBoundsSpecs(expectation: string, test: (bounds: NativeBounds) => void): void
 {
-    it(`should ${expectation} for a LatLngBoundsLiteral`, () => test(mockBounds.bounds.toJSON()));
-    it(`should ${expectation} for a LatLngBounds`,        () => test(mockBounds.bounds));
+    it(`should ${expectation} for a LatLngBoundsLiteral`, () => test(literalBounds));
+    it(`should ${expectation} for a LatLngBounds`,        () => test(latLngBounds));
 }
 
 /**
@@ -156,7 +193,7 @@ export function produceNativeBoundsSpecs(expectation: string, test: (bounds: Nat
  */
 export function produceIBoundsSpecs(expectation: string, test: (boundable: IBounds) => void): void
 {
-    it(`should ${expectation} for IBounds implementors`, () => test(mockBounds));
+    it(`should ${expectation} for IBounds implementors`, () => test(iBounds));
 }
 
 /**
@@ -176,14 +213,17 @@ export function produceDataGeometrySpecs(expectation: string, test: (geo: google
  * Produces a spec for each supported BoundsLike geometry type and runs the test against the geometry.
  *
  * @export
- * @param {string} expectation
- * @param {(element: BoundsLike) => void} test
+ * @param {string} expectation Format is `should <expectation> for a <type name>`.
+ * @param {(element: BoundsLike) => void} test The test to perform on the bounds like element.
+ * @param {string[]} exclude (Optional) Type names of bounds like object to exclude from the specs. Example: `['literal coord', 'LatLng coord']`.
  */
-export function produceBoundsLikeSpecs(expectation: string, test: (element: BoundsLike) => void): void
+export function produceBoundsLikeSpecs(expectation: string, test: (value: BoundsLike) => void, exclude?: string[]): void
 {
-    produceCoordSpecs       (expectation, test);
-    producePathSpecs        (expectation, test);
-    produceNativeBoundsSpecs(expectation, test);
-    produceIBoundsSpecs     (expectation, test);
-    produceDataGeometrySpecs(expectation, test);
+    produceFlexibleDummiesSpecs(allBoundsLike, 'BoundsLike', expectation, test, exclude);
+}
+
+export function produceFlexibleDummiesSpecs<T>(flexibles: FlexibleDummies<T>, flexibleType: string, expectation: string, test: (value: T) => void, exclude: string[] = []): void
+{
+    flexibles.filter(flexible => !exclude.includes(flexible.typeName))
+             .forEach(flexible => it(`should ${expectation} for a ${flexibleType} of ${flexible.typeName}`, () => test(flexible.value)));
 }

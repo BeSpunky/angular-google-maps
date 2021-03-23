@@ -26,7 +26,7 @@ export interface WrapperProviderTestConfig extends ProviderTestConfig
  * @param {WrapperProviderTestConfig} config The configuration to which to apply default values.
  * @returns A full config object with default values for properties that were not specified.
  */
-export function configWrapperProviderTestDefaults(config: WrapperProviderTestConfig)
+export function configWrapperProviderTestDefaults(config: WrapperProviderTestConfig): Required<WrapperProviderTestConfig>
 {
     return {
         ...configTestDefaults(config),

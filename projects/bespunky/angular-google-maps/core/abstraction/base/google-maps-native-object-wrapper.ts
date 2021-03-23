@@ -17,6 +17,7 @@ export abstract class GoogleMapsNativeObjectWrapper<TNative extends IGoogleMapsN
 
     /**
      * Creates an instance of GoogleMapsNativeObjectWrapper.
+     * 
      * @param {GoogleMapsApiService} api The instance of the api service.
      * @param {TNative} native The instantiated native object to be wrapped.
      */

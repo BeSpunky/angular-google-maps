@@ -1,6 +1,6 @@
-import { ElementRef, FactoryProvider, Type } from '@angular/core';
+import { ElementRef, FactoryProvider, InjectionToken, Type } from '@angular/core';
 
-import { Native                                                                  } from '@bespunky/angular-google-maps/core';
+import { Native, NativeInstance                                                                  } from '@bespunky/angular-google-maps/core';
 import { setupNativeFactoryProviderTest, NativeProviderTestConfig                } from './setup/natives/native-factory-provider-test-setup';
 import { produceNativeFactoryProviderSpecs, AdditionalNativeFactoryProviderSpecs } from './specs/native-factory-provider-spec-production';
 
@@ -20,6 +20,7 @@ export interface NativeFactoryProviderTest
     provider          : FactoryProvider;
     /** The function that will setup the testing environment. */
     setup             : SetupFn;
+    expectedToken?    : InjectionToken<Native>;
     /** The type of the native object expected to be produced by the factory. */
     expectedNativeType: Type<Native>;
     /**
@@ -45,7 +46,7 @@ export interface NativeFactoryProviderTest
  * @export
  * @param {NativeFactoryProviderTest} config The configuration for the test.
  */
-export function testNativeFactoryProviderCore({providerName, provider, setup, expectedNativeType, providers, element, additionalSpecs }: NativeFactoryProviderTest)
+export function testNativeFactoryProviderCore({providerName, provider, setup, expectedToken, expectedNativeType, providers, element, additionalSpecs }: NativeFactoryProviderTest)
 {
     describe(providerName, () =>
     {
@@ -58,8 +59,10 @@ export function testNativeFactoryProviderCore({providerName, provider, setup, ex
             
             ({ producedValue: producedNative, runOutsideAngular } = await setup(provider, config));
         }
+
+        expectedToken = expectedToken || NativeInstance;
     
-        produceNativeFactoryProviderSpecs(runSetup, () => provider, () => producedNative, () => runOutsideAngular, expectedNativeType, additionalSpecs);
+        produceNativeFactoryProviderSpecs(runSetup, () => provider, () => producedNative, () => runOutsideAngular, () => expectedToken, expectedNativeType, additionalSpecs);
     });
 }
 

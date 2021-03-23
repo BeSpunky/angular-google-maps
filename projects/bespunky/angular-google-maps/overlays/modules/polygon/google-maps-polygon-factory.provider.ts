@@ -9,4 +9,4 @@ export const NativeGoogleMapsPolygonFactoryProvider = createNativeFactoryProvide
 export const GoogleMapsPolygonFactoryProvider = createWrapperFactoryProvider<GoogleMapsPolygon>((api, native, map: GoogleMapComponent) =>
 {
     return new GoogleMapsPolygon(map.wrapper, api, native);
-}, [GoogleMapComponent]);
+}, { deps: [GoogleMapComponent] });

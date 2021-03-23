@@ -1,7 +1,7 @@
 import {
     produceCoordSpecs, produceSinglePathSpecs, produceMultiPathSpecs, producePathSpecs, produceIBoundsSpecs,
     expectCoord, expectPath, expectBounds,
-    northEast, southWest, mockBounds, flatCoord, flatPath, allDummyCoords, allDummySinglePaths, allDummyMultiPaths, allDummyBounds
+    northEast, southWest, iBounds, flatCoord, flatPath, allDummyCoords, allDummySinglePaths, allDummyMultiPaths, allDummyBounds, literalPath, latLngPath, mvcPath, linearRingPath, mvcMultiLinearRingPath, mvcMultiPath, produceBoundsLikeSpecs, produceDataGeometrySpecs
 } from '@bespunky/angular-google-maps/core/testing';
 
 import { GeometryTransformService } from '@bespunky/angular-google-maps/core';
@@ -39,21 +39,83 @@ describe('GeometryTransformService', () =>
         produceMultiPathSpecs('return the multi-path as is',          (path) => expect(geometry.castMultiPath(path)).toBe(path));
     });
 
-    function testTypeGuardFalseAgainstStandardValues(guard: (value: any) => boolean)
+    function testTypeGuardFalseAgainstStandardValues(guard: (value: any) => boolean, config?: { skipArrays?: boolean })
     {
         expect(guard(null)).toBeFalsy();
         expect(guard(undefined)).toBeFalsy();
         expect(guard({})).toBeFalsy();
-        expect(guard([])).toBeFalsy();
-        expect(guard([[]])).toBeFalsy();
         expect(guard(10)).toBeFalsy();
         expect(guard('hello')).toBeFalsy();
+
+        if (!config?.skipArrays)
+        {
+            expect(guard([])).toBeFalsy();
+            expect(guard([[]])).toBeFalsy();
+        }
     }
+
+    describe('isFlatCoordPath', () =>
+    {
+        it('should return `false` for standard values', () => testTypeGuardFalseAgainstStandardValues((value) => geometry.isFlatCoordPath(value)));
+        
+        produceSinglePathSpecs('determine whether the path is flat coord path', (path) =>
+        {
+            const expectIsFlatCoordPath = expect(geometry.isFlatCoordPath(path));
+
+            path === flatPath ? expectIsFlatCoordPath.toBeTrue() : expectIsFlatCoordPath.toBeFalse();
+        });
+        produceMultiPathSpecs ('determine whether the path is flat coord path', (path) => expect(geometry.isFlatCoordPath(path)).toBeFalse());
+    });
+
+    describe('isNativeCoordPath', () =>
+    {
+        it('should return `false` for standard values', () => testTypeGuardFalseAgainstStandardValues((value) => geometry.isNativeCoordPath(value)));
+
+        produceSinglePathSpecs('determine whether the path is a native coord path', (path) =>
+        {
+            const expectIsNativeCoordPath = expect(geometry.isNativeCoordPath(path));
+
+            path === literalPath || path === latLngPath ? expectIsNativeCoordPath.toBeTrue() : expectIsNativeCoordPath.toBeFalse();
+        });
+        produceMultiPathSpecs ('determine whether the path is a native coord path', (path) => expect(geometry.isNativeCoordPath(path)).toBeFalse());
+    });
+
+    describe('isNativePath', () =>
+    {
+        it('should return `false` for standard values', () => testTypeGuardFalseAgainstStandardValues((value) => geometry.isNativePath(value)));
+
+        produceSinglePathSpecs('determine whether the path is a native path', (path) =>
+        {
+            const expectIsNativePath = expect(geometry.isNativePath(path));
+
+            path === mvcPath || path === linearRingPath ? expectIsNativePath.toBeTrue() : expectIsNativePath.toBeFalse();
+        });
+        produceMultiPathSpecs('determine whether the path is a native path', (path) =>
+        {
+            const expectIsNativePath = expect(geometry.isNativePath(path));
+
+            path === mvcMultiPath || path === mvcMultiLinearRingPath ? expectIsNativePath.toBeTrue() : expectIsNativePath.toBeFalse();
+        });
+    });
+        
+    describe('isSinglePath', () =>
+    {
+        produceSinglePathSpecs('determine whether the path is a single path', (path) => expect(geometry.isSinglePath(path)).toBeTrue());
+        produceMultiPathSpecs ('determine whether the path is a single path', (path) => expect(geometry.isSinglePath(path)).toBeFalse());
+    });
 
     describe('isMultiPath', () =>
     {
         produceSinglePathSpecs('determine whether the path is a multi-path', (path) => expect(geometry.isMultiPath(path)).toBeFalse());
         produceMultiPathSpecs ('determine whether the path is a multi-path', (path) => expect(geometry.isMultiPath(path)).toBeTrue());
+    });
+
+    describe('isCoordPath', () =>
+    {
+        it('should return `false` for standard values', () => testTypeGuardFalseAgainstStandardValues((value) => geometry.isCoordPath(value), { skipArrays: true }));
+        it('should return `true` for empty arrays', () => expect(geometry.isCoordPath([])).toBeTrue());
+
+        producePathSpecs('determine whether the path is a multi-path', (path) => expect(geometry.isCoordPath(path)).toBeTrue());
     });
     
     describe('isLiteralCoord', () =>
@@ -88,16 +150,24 @@ describe('GeometryTransformService', () =>
         });
     });
 
-    describe('isBounds', () =>
+    describe('isCoord', () =>
+    {
+        it('should return `false` for standard values', () => testTypeGuardFalseAgainstStandardValues((value) => geometry.isCoord(value)));
+        
+        produceCoordSpecs('determine whether the value is a coord', (value) => expect(geometry.isCoord(value)).toBeTrue());
+        producePathSpecs('determine whether the value is a coord' , (path ) => expect(geometry.isCoord(path)).toBeFalse());
+    });
+    
+    describe('isNativeBounds', () =>
     {
         it('should determine whether an object is a native bounds object', () =>
         {
-            testTypeGuardFalseAgainstStandardValues((value) => geometry.isBounds(value));
+            testTypeGuardFalseAgainstStandardValues((value) => geometry.isNativeBounds(value));
 
-            expect(geometry.isBounds({ north: 1, south: 1, east: 1 })).toBeFalse();
+            expect(geometry.isNativeBounds({ north: 1, south: 1, east: 1 })).toBeFalse();
 
-            expect(geometry.isBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeTrue();
-            expect(geometry.isBounds(new google.maps.LatLngBounds())).toBeTrue();
+            expect(geometry.isNativeBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeTrue();
+            expect(geometry.isNativeBounds(new google.maps.LatLngBounds())).toBeTrue();
         });
     });
 
@@ -123,8 +193,16 @@ describe('GeometryTransformService', () =>
             expect(geometry.isIBounds({ north: 1, south: 1, east: 1, west: 1 })).toBeFalse();
             expect(geometry.isIBounds(new google.maps.LatLngBounds())).toBeFalse();
 
-            expect(geometry.isIBounds(mockBounds)).toBeTrue();
+            expect(geometry.isIBounds(iBounds)).toBeTrue();
         });
+    });
+
+    describe('isBoundsLike', () =>
+    {
+        it('should return `false` for standard values', () => testTypeGuardFalseAgainstStandardValues((value) => geometry.isBoundsLike(value), { skipArrays: true }));
+        it('should return `true` for empty arrays', () => expect(geometry.isBoundsLike([])).toBeTrue());
+
+        produceBoundsLikeSpecs('determine whether the value is bounds like', (value) => expect(geometry.isBoundsLike(value)).toBeTrue());
     });
 
     describe('isDataLayerGeometry', () =>
@@ -155,10 +233,17 @@ describe('GeometryTransformService', () =>
     
     describe('defineBounds', () =>
     {
-        produceCoordSpecs  ('define the bounds', (coord)     => expectBounds(() => geometry.defineBounds(coord), coord, coord));
-        producePathSpecs   ('define the bounds', (path)      => expectBounds(() => geometry.defineBounds(path), northEast, southWest));
-        produceIBoundsSpecs('define the bounds', (boundable) => expectBounds(() => geometry.defineBounds(boundable), boundable.getBounds().getNorthEast(), boundable.getBounds().getSouthWest()));
+        produceCoordSpecs       ('define the bounds', (coord)     => expectBounds(() => geometry.defineBounds(coord), coord, coord));
+        producePathSpecs        ('define the bounds', (path)      => expectBounds(() => geometry.defineBounds(path), northEast, southWest));
+        produceIBoundsSpecs     ('define the bounds', (boundable) => expectBounds(() => geometry.defineBounds(boundable), boundable.getBounds().getNorthEast(), boundable.getBounds().getSouthWest()));
         
+        produceDataGeometrySpecs('define the bounds', (feature) =>
+        {
+            feature instanceof google.maps.Data.Point ?
+                expectBounds(() => geometry.defineBounds(feature), southWest, southWest) :
+                expectBounds(() => geometry.defineBounds(feature), northEast, southWest);
+        });
+
         it('should define the containing bounds of all specified elements combined', () =>
         {
             expectBounds(() => geometry.defineBounds(

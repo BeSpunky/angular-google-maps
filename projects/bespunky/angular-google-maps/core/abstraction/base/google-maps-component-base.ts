@@ -10,7 +10,7 @@ import { WrapperInstance               } from '../factories/tokens';
  * Extending this class will automatically:
  * - Create event emitters hooked to the native event raised by the native Google Maps object and assign them to members decorated with @Hook.
  * - Delegate any bound property changes to their corresponding native setter function on the native Google Maps object.
- * - Instantiate a new native wrapper object and expose it to the component's user.
+ * - Cause the injector to instantiate new wrapper and native objects and expose the wrapper to the component's user.
  * 
  * Requirements for the magic to happen:
  * --- Must ---
@@ -35,8 +35,9 @@ export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
 
     /**
      * Creates an instance of GoogleMapsComponentBase.
-     * 
+     *
      * @param {GoogleMapsComponentApiService} api The instance of the component api service.
+     * @param {TWrapper} wrapper The instance of the wrapper to use with this component. Should be provided at the extending component level using the `WrapperInstance` token.
      * @param {ElementRef} element The element created for the component.
      */
     constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperInstance) public readonly wrapper: TWrapper, protected element: ElementRef)

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { GoogleMapsMarkerDirective       } from './directive/google-maps-marker.directive';
+import { GoogleMapsMarkerDirective } from './directive/google-maps-marker.directive';
 
 @NgModule({
     declarations: [GoogleMapsMarkerDirective],

@@ -25,7 +25,7 @@ export interface ProviderTestConfig
  * @param {ProviderTestConfig} config The configuration to which to apply default values.
  * @returns A full config object with default values for properties that were not specified.
  */
-export function configTestDefaults(config: ProviderTestConfig)
+export function configTestDefaults(config: ProviderTestConfig): Required<ProviderTestConfig>
 {
     return {
         platform : config.platform  || ɵPLATFORM_BROWSER_ID,
@@ -49,13 +49,12 @@ export async function setupFactoryProviderTest(testedProvider: FactoryProvider, 
     const factory                 = testedProvider.useFactory;
     const { platform, providers } = configTestDefaults(config);
     
-    providers.push(
-        { provide: PLATFORM_ID, useValue: platform },
-        testedProvider,
-    );
-
     const { api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule({
-        customize: def => def.providers = providers
+        customize: def => def.providers.push(
+            { provide: PLATFORM_ID, useValue: platform },
+            testedProvider,
+            ...providers
+        )
     });
 
     const producedValue = TestBed.inject(testedProvider.provide);
