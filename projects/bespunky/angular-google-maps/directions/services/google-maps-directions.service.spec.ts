@@ -1,10 +1,10 @@
 import { Observable, of, PartialObserver, Subject } from 'rxjs';
-import { catchError, map, switchMap, take, tap    } from 'rxjs/operators';
+import { map, switchMap, take, tap                } from 'rxjs/operators';
 import { TestBed                                  } from '@angular/core/testing';
 
 import { configureGoogleMapsTestingModule                                                                                                               } from '@bespunky/angular-google-maps/testing';
-import { directionsResult, expectPlace, latLngCoordPlace, literalCoordPlace, nativePlace, producePlaceSpecs, stringPlace                                } from '@bespunky/angular-google-maps/directions/testing';
-import { GoogleMapsDirectionsService, NativeDirectionsService, DirectionsCallback, DirectionsTransformService, DirectionsPlace, DirectionsRequestConfig } from '@bespunky/angular-google-maps/directions';
+import { directionsResult, expectPlace, literalCoordPlace, nativePlace, producePlaceSpecs, stringPlace                                                  } from '@bespunky/angular-google-maps/directions/testing';
+import { GoogleMapsDirectionsService, DirectionsCallback, DirectionsTransformService, DirectionsPlace, DirectionsRequestConfig, NativeDirectionsService } from '@bespunky/angular-google-maps/directions';
 
 describe('GoogleMapsDirectionsService', () =>
 {

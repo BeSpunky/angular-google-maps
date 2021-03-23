@@ -35,7 +35,7 @@ describe('GoogleMapsDirectionsDirective', () =>
             componentType: TestHostComponent,
             customize: def =>
             {
-                def.imports.push(GoogleMapsDirectionsModule.forRoot());
+                def.imports.push(GoogleMapsDirectionsModule);
 
                 def.providers.push(
                     { provide: NativeDirectionsService, useValue: nativeDirectionsService }

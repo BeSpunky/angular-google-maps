@@ -1,8 +1,27 @@
-import { InjectionToken } from '@angular/core';
-import { createNativeFactoryProvider } from '@bespunky/angular-google-maps/core';
+import { Injectable } from '@angular/core';
+import { NativeServiceToken, WrappedNativeFunctions } from '@bespunky/angular-google-maps/core';
 
-/** An injection token used to provide the native `google.maps.DirectionsService`. Should be provided once, at root level. */
-export const NativeDirectionsService = new InjectionToken<google.maps.DirectionsService>('GoogleMaps.NativeDirectionsService');
+/** A type for the native functions of the directions service which should be wrapped. Used along with the extension interface for the wrapper. */
+export type WrappedGoogleMapsDirectionsServiceFunctions = WrappedNativeFunctions<google.maps.DirectionsService>;
 
-/** Provides the factory used to create a native `google.maps.DirectionsService` object the `NativeDirectionsService` token. Should be provided once, at root level. */
-export const NativeGoogleMapsDirectionsServiceProvider = createNativeFactoryProvider(() => new google.maps.DirectionsService(), { token: NativeDirectionsService });
+export interface NativeDirectionsService extends WrappedGoogleMapsDirectionsServiceFunctions { }
+
+/**
+ * A root injectable service to use as the native directions service. Injected by `GoogleMapsDirectionsService`.
+ * This service is actually constructed as `google.maps.DirectionsService`. See `NativeServiceToken` for more info.
+ * 
+ * @export
+ * @class NativeDirectionsService
+ * @extends {NativeServiceToken}
+ */
+@Injectable({ providedIn: 'root' })
+export class NativeDirectionsService extends NativeServiceToken
+{
+    constructor()
+    {
+        super();
+
+        return new google.maps.DirectionsService();
+    }
+}
+

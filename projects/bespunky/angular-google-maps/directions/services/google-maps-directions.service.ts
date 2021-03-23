@@ -1,6 +1,6 @@
 import { combineLatest, Observable } from 'rxjs';
 import { filter, mergeMap          } from 'rxjs/operators';
-import { Inject, Injectable                } from '@angular/core';
+import { Injectable                } from '@angular/core';
 
 import { Delegation, GoogleMapsApiService, GoogleMapsNativeObjectWrapper, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
 import { DirectionsRequestConfig                                                              } from '../abstraction/types/directions-request-config.type';
@@ -27,7 +27,7 @@ export type DirectionsCallback = (result: google.maps.DirectionsResult, status: 
 @NativeObjectWrapper<GoogleMapsDirectionsService>({ route: Delegation.OutsideAngular })
 export class GoogleMapsDirectionsService extends GoogleMapsNativeObjectWrapper<google.maps.DirectionsService>
 {
-    constructor(private transform: DirectionsTransformService, api: GoogleMapsApiService, @Inject(NativeDirectionsService) native: google.maps.DirectionsService)
+    constructor(private transform: DirectionsTransformService, api: GoogleMapsApiService, native: NativeDirectionsService)
     {
         super(api, native);
     }
