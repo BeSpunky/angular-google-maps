@@ -33,6 +33,8 @@ export abstract class GoogleMapsOverlayComponentBase<TWrapper extends DrawableOv
     ngOnDestroy()
     {
         this.wrapper.map.superpowers.use(OverlaysSuperpower).removeOverlay(this.wrapper);
+
+        super.ngOnDestroy();
     }
 
     public getBounds(): google.maps.LatLngBounds

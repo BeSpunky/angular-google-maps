@@ -66,9 +66,9 @@ export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoog
 
     ngOnDestroy()
     {
-        super.ngOnDestroy();
-
         this.wrapper.clearAttachedTo();
+        
+        super.ngOnDestroy();
     }
 
     private buildContentTemplate(): string

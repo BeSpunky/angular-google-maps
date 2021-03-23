@@ -65,6 +65,8 @@ export class GoogleMapsFeatureDirective extends GoogleMapsComponentBase<IGoogleM
     ngOnDestroy()
     {
         this.wrapper.data.removeFeature(this.wrapper);
+
+        super.ngOnDestroy();
     }
 
     protected initEmitters()
