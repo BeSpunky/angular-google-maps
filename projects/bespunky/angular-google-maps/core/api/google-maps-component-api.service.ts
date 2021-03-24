@@ -1,5 +1,5 @@
 import { fromEventPattern, Observable } from 'rxjs';
-import { filter, switchMap, pluck     } from 'rxjs/operators';
+import { filter, switchMap, pluck, map     } from 'rxjs/operators';
 import { Injectable, SimpleChanges    } from '@angular/core';
 
 import { camelCase                } from '@bespunky/angular-google-maps/_internal';
@@ -85,14 +85,15 @@ export class GoogleMapsComponentApiService
             (handler)                      => wrapper.listenTo(eventReference, handler),
             // Hook unregister function to observable unsubscribe
             (_, stopListening: () => void) => stopListening(),
+        ).pipe(
             // Map, simplify and storng-type event args
-            (...nativeArgs: any)           => new GoogleMapsEventData(eventName, wrapper, this.api.eventsData.auto(nativeArgs), nativeArgs, associatedWrapper)
+            map((...nativeArgs: any[]) => new GoogleMapsEventData(eventName, wrapper, this.api.eventsData.auto(nativeArgs), nativeArgs, associatedWrapper))
         );
         
         // If a filtering function was provided, pipe it in
         if (shouldEmit) emitter = emitter.pipe(
             // Determine if the event should be emitted. Wrapped in a Promise.resolve() call to avoid detecting the return type of the filter function
-            switchMap(event => Promise.resolve(shouldEmit(event)), (event, emit) => ({ event, emit })),
+            switchMap(event => Promise.resolve(shouldEmit(event)).then(emit => ({ event, emit }))),
             // Filter by the boolean result of the shouldEmit function
             filter(data => data.emit),
             // Get and pass along only the event object
