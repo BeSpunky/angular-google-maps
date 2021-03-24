@@ -26,6 +26,7 @@ import { WrapperInstance               } from '../factories/tokens';
  * 
  * @see GoogleMapComponent source code for an example.
  */
+/** @dynamic */
 @Directive()
 export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
               extends Destroyable
