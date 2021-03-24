@@ -2,7 +2,7 @@
 📦 `@bespunky/angular-google-maps/directions`  
 🧩 `GoogleMapsDirectionsModule`  
 
-[Live demo](TODO)
+[Live demos](https://bs-angular-g-maps.web.app/Directions)
 
 The directions module allows you to both calculate and render directions on your map (see [original docs](https://developers.google.com/maps/documentation/javascript/directions)).
 
