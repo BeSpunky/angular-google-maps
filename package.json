@@ -38,7 +38,7 @@
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
-    "@bespunky/angular-zen": "^3.0.0",
+    "@bespunky/angular-zen": "^3.1.0",
     "lodash-es": "^4.17.15",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
