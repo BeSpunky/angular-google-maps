@@ -1,16 +1,16 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { Component        } from '@angular/core';
 
-import { configureGoogleMapsTestingModule                                              } from '@bespunky/angular-google-maps/testing';
-import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost       } from '@bespunky/angular-google-maps/core/testing';
-import { MockMouseEventsEmitter                                                        } from '@bespunky/angular-google-maps/overlays/testing';
-import { GoogleMapsComponentApiService                                                 } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsInfoWindowDirective, GoogleMapsOverlaysModule, GoogleMapsInfoWindow } from '@bespunky/angular-google-maps/overlays';
+import { configureGoogleMapsTestingModule                                                                                                                              } from '@bespunky/angular-google-maps/testing';
+import { createLifecycleTestingHostComponentTemplate, LifecycleComponentTestHost                                                                                       } from '@bespunky/angular-google-maps/core/testing';
+import { MockMouseEventsEmitter                                                                                                                                        } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsComponentApiService                                                                                                                                 } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsInfoWindowDirective, GoogleMapsOverlaysModule, GoogleMapsInfoWindow, GoogleMapsInfoWindowFactoryProvider, NativeGoogleMapsInfoWindowFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
 /**
  * -- NOTE --
  * Events hooking and property delegation are not tested in components deriving from `GoogleMapsComponentBase`.
- * The appropriate tests are already done by `GoogleMapsComponentBase` and `GoogleMapsInternalApiService`/
+ * The appropriate tests are already done by `GoogleMapsComponentBase` and `GoogleMapsComponentApiService`/
  * 
  * @see `google-maps-internal-api.service.spec.ts` For testing of the hooking and delegation mechanisms.
  * @see `google-maps-component-base.spec.ts` For testing of the integration between the component and the internal API service.
@@ -27,7 +27,11 @@ describe('GoogleMapsInfoWindowDirective', () =>
     {
         ({ fixture: hostFixture, component: hostComponent, componentApi } = await configureGoogleMapsTestingModule({
             componentType: TestHostComponent,
-            customize: def => def.imports.push(GoogleMapsOverlaysModule)
+            customize: def =>
+            {
+                def.imports.push(GoogleMapsOverlaysModule);
+                def.providers = [GoogleMapsInfoWindowFactoryProvider, NativeGoogleMapsInfoWindowFactoryProvider]
+            }
         }));
         
         hostFixture.detectChanges();

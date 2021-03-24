@@ -15,20 +15,15 @@ export interface GoogleMapsCircle extends WrappedCircleFunctions { }
  * @implements {IGoogleMapsCircle}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Circle, GoogleMapsCircle>({
+@NativeObjectWrapper<GoogleMapsCircle>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })
 export class GoogleMapsCircle extends GoogleMapsDrawableOverlay<google.maps.Circle> implements IGoogleMapsCircle
 {
-    constructor(api: GoogleMapsApiService, map: IGoogleMap, ...nativeArgs: any[])
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.Circle)
     {
-        super(api, map, OverlayType.Circle, ...nativeArgs);
-    }
-    
-    protected createNativeObject(options?: google.maps.CircleOptions): google.maps.Circle
-    {
-        return new google.maps.Circle(options);
+        super(OverlayType.Circle, map, api, native);
     }
     
     public getCenter(): google.maps.LatLngLiteral

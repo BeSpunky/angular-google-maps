@@ -1,27 +1,12 @@
-import { FactoryProvider, ElementRef } from '@angular/core';
 
-import { GoogleMapsApiService, WrapperFactory, GoogleMapComponent } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsPolygon } from './google-maps-polygon';
+import { GoogleMapComponent, createNativeFactoryProvider, createWrapperFactoryProvider } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsPolygon                                                             } from './google-maps-polygon';
 
-/**
- * Produces a factory that can be used to create a new polygon wrapper for the specified map.
- *
- * @export
- * @param {GoogleMapsApiService} api The instance of the api service.
- * @param {GoogleMapComponent} mapComponent The map component the polygon was declared in.
- * @returns A factory function to use for creating a new polygon wrapper for the specified map.
- */
-export function NativePolygonWrapperFactoryProvider(api: GoogleMapsApiService, mapComponent: GoogleMapComponent)
+/** Provides the factory used to create a polygon native for the `NativeFactory` token. */
+export const NativeGoogleMapsPolygonFactoryProvider = createNativeFactoryProvider(() => new google.maps.Polygon());
+
+/** Provides the factory used to create a polygon wrapper for the `WrapperInstance` token. */
+export const GoogleMapsPolygonFactoryProvider = createWrapperFactoryProvider<GoogleMapsPolygon>((api, native, map: GoogleMapComponent) =>
 {
-    return function NativePolygonWrapperFactory(element: ElementRef, options?: google.maps.PolygonOptions)
-    {
-        return new GoogleMapsPolygon(api, mapComponent.wrapper, options);
-    };
-}
-
-/** Provides the factory used to create a polygon wrapper for the `WrapperFactory` token. */
-export const GoogleMapsPolygonFactoryProvider: FactoryProvider = {
-    provide   : WrapperFactory,
-    useFactory: NativePolygonWrapperFactoryProvider,
-    deps      : [GoogleMapsApiService, GoogleMapComponent]
-}
+    return new GoogleMapsPolygon(map.wrapper, api, native);
+}, { deps: [GoogleMapComponent] });

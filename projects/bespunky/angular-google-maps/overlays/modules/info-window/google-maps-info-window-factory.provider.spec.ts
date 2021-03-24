@@ -1,7 +1,14 @@
-import { itShouldCreateWrapper                                     } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapsInfoWindowFactoryProvider, GoogleMapsInfoWindow } from '@bespunky/angular-google-maps/overlays';
+import { testOverlayNativeFactoryProvider, testOverlayWrapperFactoryProvider                                  } from '@bespunky/angular-google-maps/overlays/testing';
+import { GoogleMapsInfoWindowFactoryProvider, GoogleMapsInfoWindow, NativeGoogleMapsInfoWindowFactoryProvider } from '@bespunky/angular-google-maps/overlays';
 
-describe('GoogleMapsInfoWindowFactoryProvider', () =>
-{
-    itShouldCreateWrapper(GoogleMapsInfoWindowFactoryProvider, GoogleMapsInfoWindow);
+testOverlayNativeFactoryProvider({
+    providerName      : 'NativeGoogleMapsInfoWindowFactoryProvider',
+    provider          : NativeGoogleMapsInfoWindowFactoryProvider,
+    expectedNativeType: google.maps.InfoWindow
+});
+
+testOverlayWrapperFactoryProvider({
+    providerName       : 'GoogleMapsInfoWindowFactoryProvider',
+    provider           : GoogleMapsInfoWindowFactoryProvider,
+    expectedWrapperType: GoogleMapsInfoWindow
 });

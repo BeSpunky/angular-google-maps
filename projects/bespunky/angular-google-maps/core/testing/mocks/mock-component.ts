@@ -1,26 +1,23 @@
 import { Component, Input, Output, EventEmitter, FactoryProvider } from '@angular/core';
 
-import { GoogleMapsComponentBase, WrapperFactory, Hook, IGoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
-import { WrappedNativeFunctions                                                                   } from '@bespunky/angular-google-maps/core';
-import { MockNative                                                                               } from './mock-native';
-import { MockEmittingWrapper                                                                      } from './mock-emitting-wrapper';
+import { GoogleMapsComponentBase, WrapperInstance, Hook, IGoogleMapsEventData, NativeObjectWrapper } from '@bespunky/angular-google-maps/core';
+import { WrappedNativeFunctions                                                                    } from '@bespunky/angular-google-maps/core';
+import { MockNative                                                                                } from './mock-native';
+import { MockEmittingWrapper                                                                       } from './mock-emitting-wrapper';
 
-@NativeObjectWrapper<MockNative, TestWrapper>()
+@NativeObjectWrapper<TestWrapper>()
 class     TestWrapper extends MockEmittingWrapper<MockNative> { }
 
 interface TestWrapper extends WrappedNativeFunctions<MockNative> { }
 
-export function WrapperFactoryProvider()
+export  function TestWrapperFactory()
 {
-    return function TestWrapperFactory()
-    {
-        return new TestWrapper(new MockNative());
-    };
+    return new TestWrapper(new MockNative());
 }
 
 export const TestWrapperFactoryProvider: FactoryProvider = {
-    provide   : WrapperFactory,
-    useFactory: WrapperFactoryProvider
+    provide   : WrapperInstance,
+    useFactory: TestWrapperFactory
 };
 
 // @dynamic

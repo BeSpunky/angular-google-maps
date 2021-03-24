@@ -1,5 +1,5 @@
 import { ReplaySubject } from 'rxjs';
-import { InjectionToken, Type, ValueProvider } from '@angular/core';
+import { FactoryProvider, InjectionToken, Type } from '@angular/core';
 
 import { ISuperpower } from './i-superpower';
 
@@ -14,11 +14,11 @@ export type ChargedSuperpowers = ReplaySubject<Type<ISuperpower>>;
 export const Superpowers = new InjectionToken<ChargedSuperpowers>('GoogleMaps.Superpowers');
 
 /** The default subject used to notify of loaded superpowers. */
-export const DefaultSuperpowersProvider = new ReplaySubject();
+export const DefaultSuperpowersFactory = () => new ReplaySubject();
 
 /**
  * Injected at root level and only holds the types of superpowers already loaded.
  * `SuperpowersChargerService` will feed the token with types of superpowers.
  * `SuperpowersService` will be instantiated for each map and consume the token to allow lazy loading of powers.
  */
-export const SuperpowersProvider: ValueProvider = { provide: Superpowers, useValue: DefaultSuperpowersProvider };
+export const SuperpowersProvider: FactoryProvider = { provide: Superpowers, useFactory: DefaultSuperpowersFactory };

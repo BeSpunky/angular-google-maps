@@ -9,7 +9,7 @@ export const OutsideAngularSymbol = Symbol('outsideAngular');
  * 
  * This should be used inside classes marked with `@NativeObjectWrapper`.
  * In general, methods that change the map, its configuration, or cause it to redraw, should be marked with `@OutsideAngular`.
- * This will prevent unnecessary change detection runs as native Google Maps code is not associated with angular.
+ * This will prevent unnecessary change detection runs as native Google Maps code is not associated with Angular.
  */
 export function OutsideAngular(target: Object, methodName: string, descriptor: PropertyDescriptor)
 {

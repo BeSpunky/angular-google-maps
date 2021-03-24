@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Coord, NativePath, NativeMultiPath, CoordPath, MultiPath, NativeGeometry, BoundsLike, FlatCoord, Path } from '../../abstraction/types/geometry.type';
-import { IBounds                                                                                         } from '../../abstraction/base/i-bounds';
+import { IBounds                                                                                               } from '../../abstraction/base/i-bounds';
 
 /**
  * Provides flexible methods for converting and analyzing geometry types.
@@ -86,6 +86,63 @@ export class GeometryTransformService
     }
 
     /**
+     * (Type Guard) Determines if the given path is a flat coord path (e.g. `[[0, 0], [1, 1]]`).
+     *
+     * @param {CoordPath} path The path to test.
+     * @returns {path is FlatCoord[]} `true` if the given path is a flat coord path; otherwise `false`.
+     */
+    public isFlatCoordPath(path: CoordPath): path is FlatCoord[]
+    {
+        // Relying on TS, if the first element is a flat coord, all are guaranteed to be flat coords
+        return path instanceof Array && this.isFlatCoord(path[0]);
+    }    
+
+    /**
+     * (Type Guard) Determines if the given path is a native coord path (i.e. `<LatLng | LatLngLiteral>[]`).
+     *
+     * @param {CoordPath} path The path to test.
+     * @returns {path is NativePath} `true` if the given path is a native coord path; otherwise `false`.
+     */
+    public isNativeCoordPath(path: CoordPath): path is Coord[]
+    {
+        return path instanceof Array && this.isNativeCoord(path[0]);
+    }
+
+    /**
+     * (Type Guard) Determines if the given path is a native path.
+     *
+     * @param {CoordPath} path The path to test.
+     * @returns {path is NativePath} `true` if the given path is a native path; otherwise `false`.
+     */
+    public isNativePath(path: CoordPath): path is NativePath
+    {
+        return path instanceof google.maps.MVCArray || path instanceof google.maps.Data.LinearRing;
+    }
+
+    private isEmptyArray(value: any): boolean
+    {
+        return value && value instanceof Array && value.length === 0;
+    }
+    
+    /**
+     * (Type Guard) Determines if the given path is a single path.
+     *
+     * @param {CoordPath} path The path to test.
+     * @returns {path is Path} `true` if the given path is a single path; otherwise `false`.
+     */
+    public isSinglePath(path: CoordPath): path is Path
+    {
+        return path &&
+            !this.isMultiPath(path) &&
+            (
+                   this.isEmptyArray(path)
+                || this.isNativePath(path)
+                || this.isNativeCoordPath(path)
+                || this.isFlatCoordPath(path)
+            );
+    }
+    
+    /**
      * (Type Guard) Determines if the given path is a multi-path.
      *
      * @param {CoordPath} path The path to test.
@@ -93,14 +150,26 @@ export class GeometryTransformService
      */
     public isMultiPath(path: CoordPath): path is MultiPath
     {
-        // This is an array of...
-        return (path instanceof Array &&
+        return path &&
+            // This is an array of...
+            (path instanceof Array &&
                  // 1. Arrays which are not flat coords (This is actually a multi-path and not a flat path like [[0, 0], [1, 1]])
-                    (path[0] instanceof Array && !this.isFlatCoord(path[0]))
+                (path[0] instanceof Array && !this.isFlatCoord(path[0]))
                  // 2. Native LinearRing objects
-                 || (path[0] instanceof google.maps.Data.LinearRing))
-        // This is an MVCArray of either MVCArrays or LinearRings                 
-            || (path instanceof google.maps.MVCArray && (path.getAt(0) instanceof google.maps.MVCArray || path.getAt(0) instanceof google.maps.Data.LinearRing));
+             || (path[0] instanceof google.maps.Data.LinearRing))
+         // This is an MVCArray of either MVCArrays or LinearRings                 
+         || (path instanceof google.maps.MVCArray && (path.getAt(0) instanceof google.maps.MVCArray || path.getAt(0) instanceof google.maps.Data.LinearRing));
+    }
+    
+    /**
+     * (Type Guard) Determines if the given object is any of the supported path types.
+     *
+     * @param {*} object The object to test.
+     * @returns {path is MultiPath} `true` if the given object is any of the supported path types; otherwise `false`.
+     */
+    public isCoordPath(object: any): object is CoordPath
+    {
+        return this.isSinglePath(object) || this.isMultiPath(object);
     }
 
     /**
@@ -111,7 +180,18 @@ export class GeometryTransformService
      */
     public isLiteralCoord(object: any): object is google.maps.LatLngLiteral
     {
-        return !!(object && object.lat && object.lng);
+        return !!(object && this.isLatitude(object.lat) && this.isLongitude(object.lng));
+    }
+
+    /**
+     * (Type Guard) Checks whether the given object is either a native literal coord object or a native coord object (i.e. `google.maps.LatLngLiteral` or `google.maps.LatLng`).
+     *
+     * @param {*} object The object to test.
+     * @returns {object is google.maps.LatLngLiteral} `true` if the object is either a native literal coord object or a native coord object; otherwise `false`.
+     */
+    public isNativeCoord(object: any): object is google.maps.LatLngLiteral | google.maps.LatLng
+    {
+        return object instanceof google.maps.LatLng || this.isLiteralCoord(object);
     }
 
     /**
@@ -124,10 +204,31 @@ export class GeometryTransformService
     {
         return coord instanceof Array 
             && coord.length === 2
-            // Latitude range
-            && coord[0] >= -90  && coord[0] <= 90
-            // Longitude range
-            && coord[1] >= -180 && coord[1] <= 180;
+            && this.isLatitude(coord[0])
+            && this.isLongitude(coord[1])
+    }
+
+    private isLatitude(value: any): boolean
+    {
+        // Latitude range
+        return typeof value === 'number' && value >= -90 && value <= 90;
+    }
+    
+    private isLongitude(value: any): boolean
+    {
+        // Longitude range
+        return typeof value === 'number' &&  value >= -180 && value <= 180;
+    }
+
+    /**
+     * (Type Guard) Checks whether the given object is any of the supported coord types.
+     *
+     * @param {*} object The object to test.
+     * @returns {object is Coord} `true` if the object is any of the supported coord types; otherwise `false`.
+     */
+    public isCoord(object: any): object is Coord
+    {
+        return object && (this.isFlatCoord(object) || this.isNativeCoord(object));
     }
 
     /**
@@ -136,7 +237,7 @@ export class GeometryTransformService
      * @param {*} object The object to test.
      * @returns {object is google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral} `true` if the object is a native bounds object; otherwise `false`.
      */
-    public isBounds(object: any): object is google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral
+    public isNativeBounds(object: any): object is google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral
     {
         return object instanceof google.maps.LatLngBounds || this.isBoundsLiteral(object);
     }
@@ -161,6 +262,24 @@ export class GeometryTransformService
     public isIBounds(object: any): object is IBounds
     {
         return object?.getBounds instanceof Function;
+    }
+
+    /**
+     * (Type Guard) Checks whether the object is supported by the `BoundsLike` type and its users.
+     *
+     * @param {*} object The object to test.
+     * @returns {object is IBounds} `true` if the object is supported by the `BoundsLike` type and its users; otherwise `false`.
+     */
+    public isBoundsLike(object: any): object is BoundsLike
+    {
+        return object && (
+            this.isIBounds(object) ||
+            this.isNativeBounds(object) ||
+            this.isCoord(object) ||
+            this.isCoordPath(object) ||
+            this.isDataLayerGeometry(object)
+            // TODO: Add here anything that is added to the `BoundsLike` type
+        );
     }
 
     /**
@@ -271,7 +390,7 @@ export class GeometryTransformService
             // Check for IBound implementation (e.g. GoogleMapsMarker, GoogleMapsPolygon...)
             else if (this.isIBounds(element)) elementBounds = element.getBounds();
             // Check for bounds object
-            else if (this.isBounds(element)) elementBounds = element as google.maps.LatLngBounds;
+            else if (this.isNativeBounds(element)) elementBounds = element as google.maps.LatLngBounds;
             // Check for data layer geometry object
             else if (this.isDataLayerGeometry(element)) elementBounds = this.defineGeometryBounds(element as NativeGeometry);
             // Nothing matched. This is a coordinate.

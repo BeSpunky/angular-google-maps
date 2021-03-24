@@ -14,7 +14,7 @@ describe('GoogleMapsCircle', () =>
     {
         ({ api, spies: { runOutsideAngular } } = await configureGoogleMapsTestingModule());
 
-        circle = new GoogleMapsCircle(api, new MockGoogleMap());
+        circle = new GoogleMapsCircle(new MockGoogleMap(), api, new google.maps.Circle());
 
         runOutsideAngular.calls.reset();
     });

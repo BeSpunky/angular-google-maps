@@ -1,5 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
-import { takeWhile       } from 'rxjs/operators';
+import { BehaviorSubject            } from 'rxjs';
+import { takeWhile                  } from 'rxjs/operators';
 import { Injectable, NgZone, Inject } from '@angular/core';
 
 import { GoogleMapsApiReadyPromise } from '@bespunky/angular-google-maps/_internal';

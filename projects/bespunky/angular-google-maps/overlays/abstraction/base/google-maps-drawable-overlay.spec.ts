@@ -19,7 +19,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
 
         mockMap           = new MockGoogleMap({ id: 1, zoom: 1 });
         mockNativeOverlay = new MockNativeDrawableOverlay();
-        mockOverlay       = new GoogleMapsDrawableOverlayTest(api, mockMap, 0, mockNativeOverlay);
+        mockOverlay       = new GoogleMapsDrawableOverlayTest(0, mockMap, api, mockNativeOverlay);
     });
 
     it('should be created', () => expect(mockOverlay).toBeTruthy());

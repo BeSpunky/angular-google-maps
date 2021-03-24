@@ -5,7 +5,7 @@ import { Component         } from '@angular/core';
 import { configureGoogleMapsTestingModule                                                                           } from '@bespunky/angular-google-maps/testing';
 import { MockGoogleMap                                                                                              } from '@bespunky/angular-google-maps/core/testing';
 import { MockDrawableOverlay, MockNativeDrawableOverlay                                                             } from '@bespunky/angular-google-maps/overlays/testing';
-import { WrapperFactory, SuperpowersService, GoogleMapsEventData                                                    } from '@bespunky/angular-google-maps/core';
+import { WrapperInstance, SuperpowersService, GoogleMapsEventData                                                   } from '@bespunky/angular-google-maps/core';
 import { GoogleMapsOverlayComponentBase, OverlayType, DrawableOverlay, GoogleMapsOverlaysModule, OverlaysSuperpower } from '@bespunky/angular-google-maps/overlays';
 
 describe('GoogleMapsOverlayComponentBase (abstract)', () =>
@@ -45,19 +45,16 @@ describe('GoogleMapsOverlayComponentBase (abstract)', () =>
 
 function OverlayFactoryProvider(superpowers)
 {
-    return () =>
-    {
-        const overlay = new MockDrawableOverlay(new MockGoogleMap(undefined, superpowers), new MockNativeDrawableOverlay());
+    const overlay = new MockDrawableOverlay(new MockGoogleMap(undefined, superpowers), new MockNativeDrawableOverlay());
 
-        overlay.type = OverlayType.Marker;
+    overlay.type = OverlayType.Marker;
 
-        return overlay;
-    };
+    return overlay;
 }
 
 @Component({
     providers: [
-        { provide: WrapperFactory, useFactory: OverlayFactoryProvider, deps: [SuperpowersService] },
+        { provide: WrapperInstance, useFactory: OverlayFactoryProvider, deps: [SuperpowersService] },
         SuperpowersService
     ]
 })

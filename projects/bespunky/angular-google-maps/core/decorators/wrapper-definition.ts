@@ -1,4 +1,4 @@
-import { Wrapper            } from '../abstraction/types/abstraction';
+import { NativeOf, Wrapper            } from '../abstraction/types/abstraction';
 import { FunctionProperties } from '../abstraction/types/utils';
 
 /**
@@ -37,17 +37,17 @@ export enum Delegation
  * 
  * Defined for scalability.
  */
-export type WrapperFunctionDefinition<TNative extends Object, TWrapper extends Wrapper> = Delegation;
+export type WrapperFunctionDefinition<TWrapper extends Wrapper> = Delegation;
 
 /**
  * The complete definition of function wrapping.
  * An object which keys are the names of native functions, and values are their delegation definition.
  * 
  * @example
- * const options: WrapperDefinition<google.maps.Map, GoogleMap> = {
+ * const options: WrapperDefinition<GoogleMap> = {
  *     panTo      : Delegation.Direct,
  *     getOptions : Delegation.Exclude,
  *     fitBounds  : Delegation.OutsideAngular
  * }
  */
-export type WrapperDefinition<TNative extends Object, TWrapper extends Wrapper> = Partial<Record<FunctionProperties<TNative>, WrapperFunctionDefinition<TNative, TWrapper>>>;
+export type WrapperDefinition<TWrapper extends Wrapper> = Partial<Record<FunctionProperties<NativeOf<TWrapper>>, WrapperFunctionDefinition<TWrapper>>>;

@@ -7,7 +7,7 @@ export type WrappedFeatureFunctions = WrappedNativeFunctions<google.maps.Data.Fe
 export interface MockGoogleMapsFeature extends WrappedFeatureFunctions { }
 
 // @dynamic
-@NativeObjectWrapper<google.maps.Data.Feature, MockGoogleMapsFeature>()
+@NativeObjectWrapper<MockGoogleMapsFeature>()
 export class MockGoogleMapsFeature extends MockEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
     private id = Math.random();

@@ -17,20 +17,21 @@ import { GoogleMapsModule, GoogleMapsApiService, GoogleMapsComponentApiService }
 export function createGoogleMapsTestModuleMetadata(): TestModuleMetadata
 {
     return {
-        imports: [GoogleMapsModule.forRoot()]
+        imports  : [GoogleMapsModule.forRoot()],
+        providers: []
     };
 }
 
 /**
- * Creates a jasmine spy on the `runOutsideAngular()` or `runInsideAngular()` method of the api which fakes its execution.
+ * Creates a jasmine spy on the `runOutsideAngular()`, `runInsideAngular()`, `runOutsideAngularWhenReady()` or `runInsideAngularWhenReady()` method of the api which fakes its execution.
  * The fake implementation skips actually running the code outside/outside of angular and proceeds with executing
- * it directly (when the api is ready to use).
+ * it directly.
  *
  * @export
  * @param {GoogleMapsApiService} api The api instance to spy on.
  * @returns {jasmine.Spy} A jasmine spy which can be used to count calls to `api.runOutsideAngular()`.
  */
-export function fakeTheRunXsideAngularMethod(api: GoogleMapsApiService, methodName: 'runInsideAngular' | 'runOutsideAngular'): jasmine.Spy
+export function fakeTheRunXsideAngularMethod(api: GoogleMapsApiService, methodName: 'runInsideAngular' | 'runOutsideAngular' | 'runInsideAngularWhenReady' | 'runOutsideAngularWhenReady'): jasmine.Spy
 {
     return spyOn(api, methodName).and.callFake((fn: () => any) => fn());
 }
@@ -61,9 +62,13 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
     /** (Optional) Configures the automation of jasmine spies. */
     spies?: {
         /** `true` to fake the execution of `api.runInsideAngular()` (@see `fakeTheRunXsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
-        fakeRunInsideAngular?: boolean
+        fakeRunInsideAngular?: boolean,
         /** `true` to fake the execution of `api.runOutsideAngular()` (@see `fakeTheRunXsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
-        fakeRunOutsideAngular?: boolean
+        fakeRunOutsideAngular?: boolean,
+        /** `true` to fake the execution of `api.runInsideAngularWhenReady()` (@see `fakeTheRunXsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
+        fakeRunInsideAngularWhenReady?: boolean,
+        /** `true` to fake the execution of `api.runOutsideAngularWhenReady()` (@see `fakeTheRunXsideAngularMethod()`); `false` to spy and call through. Default is `true`. */
+        fakeRunOutsideAngularWhenReady?: boolean
     }
 }
 
@@ -71,8 +76,10 @@ export interface IGoogleMapsTestingModuleConfigOptions<TComponent = any>
 const defaultModuleConfigOptions: IGoogleMapsTestingModuleConfigOptions = {
     createTestModuleMetadata: createGoogleMapsTestModuleMetadata,
     spies: {
-        fakeRunInsideAngular : true,
-        fakeRunOutsideAngular: true
+        fakeRunInsideAngular          : true,
+        fakeRunOutsideAngular         : true,
+        fakeRunInsideAngularWhenReady : true,
+        fakeRunOutsideAngularWhenReady: true
     }
 };
 
@@ -116,10 +123,12 @@ export async function configureGoogleMapsTestingModule<TComponent>(options?: IGo
     const api          = TestBed.inject(GoogleMapsApiService);
     const componentApi = TestBed.inject(GoogleMapsComponentApiService);
 
-    const runInsideAngular  = options.spies.fakeRunInsideAngular  ? fakeTheRunXsideAngularMethod(api, 'runInsideAngular')  : spyOn(api, 'runInsideAngular').and.callThrough();
-    const runOutsideAngular = options.spies.fakeRunOutsideAngular ? fakeTheRunXsideAngularMethod(api, 'runOutsideAngular') : spyOn(api, 'runOutsideAngular').and.callThrough();
+    const runInsideAngular           = options.spies.fakeRunInsideAngular  ? fakeTheRunXsideAngularMethod(api, 'runInsideAngular')  : spyOn(api, 'runInsideAngular').and.callThrough();
+    const runInsideAngularWhenReady  = options.spies.fakeRunInsideAngular  ? fakeTheRunXsideAngularMethod(api, 'runInsideAngularWhenReady')  : spyOn(api, 'runInsideAngularWhenReady').and.callThrough();
+    const runOutsideAngular          = options.spies.fakeRunOutsideAngular ? fakeTheRunXsideAngularMethod(api, 'runOutsideAngular') : spyOn(api, 'runOutsideAngular').and.callThrough();
+    const runOutsideAngularWhenReady = options.spies.fakeRunOutsideAngular ? fakeTheRunXsideAngularMethod(api, 'runOutsideAngularWhenReady') : spyOn(api, 'runOutsideAngularWhenReady').and.callThrough();
 
-    const spies = { runInsideAngular, runOutsideAngular };
+    const spies = { runInsideAngular, runOutsideAngular, runInsideAngularWhenReady, runOutsideAngularWhenReady };
 
     if (options.beforeComponentInit)
         options.beforeComponentInit(api, componentApi);

@@ -100,7 +100,7 @@ class Native extends MockNative
     public doNativeOutside(): any { }
 }
 
-@NativeObjectWrapper<Native, TestWrapper>({
+@NativeObjectWrapper<TestWrapper>({
     getExcluded    : Delegation.Exclude,
     doNativeInside : Delegation.Direct,
     doNativeOutside: Delegation.OutsideAngular

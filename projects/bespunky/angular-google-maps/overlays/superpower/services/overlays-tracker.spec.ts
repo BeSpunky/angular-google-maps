@@ -4,7 +4,9 @@ import { DrawableOverlay, OverlaysTracker } from '@bespunky/angular-google-maps/
 
 describe('OverlayTracker', () =>
 {
-    let overlays = new OverlaysTracker();
+    let overlays: OverlaysTracker;
+    
+    beforeEach(() => overlays = new OverlaysTracker());
 
     it('should create an instance', () => expect(overlays).toBeDefined());
 
@@ -22,7 +24,10 @@ describe('OverlayTracker', () =>
 
     it('should remove an overlay when calling the `remove()` method', () =>
     {
-        // As OverlayTracker is instantiated once globaly, there should be a marker from the previous test
+        const marker = new MockMarker(new MockGoogleMap());
+        
+        overlays.add(marker);
+        
         expect(overlays.markers.length).toBe(1);
   
         overlays.remove(overlays.markers[0]);

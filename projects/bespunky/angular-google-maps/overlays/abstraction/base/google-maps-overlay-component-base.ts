@@ -1,7 +1,7 @@
 import { Observable        } from 'rxjs';
 import { Directive, OnInit } from '@angular/core';
-import { GoogleMapsComponentBase, IGoogleMapsMouseEventsEmitter, IGoogleMapsEventData } from '@bespunky/angular-google-maps/core';
 
+import { GoogleMapsComponentBase, IGoogleMapsMouseEventsEmitter, IGoogleMapsEventData, IBounds } from '@bespunky/angular-google-maps/core';
 import { DrawableOverlay    } from '../types/abstraction';
 import { OverlaysSuperpower } from '../../superpower/services/overlays-superpower.service';
 
@@ -12,7 +12,7 @@ import { OverlaysSuperpower } from '../../superpower/services/overlays-superpowe
 @Directive()
 export abstract class GoogleMapsOverlayComponentBase<TWrapper extends DrawableOverlay>
               extends GoogleMapsComponentBase<TWrapper>
-           implements IGoogleMapsMouseEventsEmitter, OnInit
+           implements IGoogleMapsMouseEventsEmitter, IBounds, OnInit
 {
     abstract click      : Observable<IGoogleMapsEventData>;
     abstract doubleClick: Observable<IGoogleMapsEventData>;
@@ -21,7 +21,7 @@ export abstract class GoogleMapsOverlayComponentBase<TWrapper extends DrawableOv
     abstract mouseOver  : Observable<IGoogleMapsEventData>;
     abstract mouseUp    : Observable<IGoogleMapsEventData>;
     abstract rightClick : Observable<IGoogleMapsEventData>;
-    
+        
     ngOnInit()
     {
         // The map is attached to the overlay on overlay construction time. However, the overlay wrapper doesn't share the responsability of tracking.
@@ -33,5 +33,12 @@ export abstract class GoogleMapsOverlayComponentBase<TWrapper extends DrawableOv
     ngOnDestroy()
     {
         this.wrapper.map.superpowers.use(OverlaysSuperpower).removeOverlay(this.wrapper);
+
+        super.ngOnDestroy();
+    }
+
+    public getBounds(): google.maps.LatLngBounds
+    {
+        return this.wrapper.getBounds();
     }
 }

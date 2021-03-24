@@ -25,7 +25,7 @@ export class MockMouseEventsEmitter extends GoogleMapsOverlayComponentBase<MockD
     
     constructor(private componentApi: GoogleMapsComponentApiService, infoWindow: GoogleMapsInfoWindow)
     {
-        super(componentApi, () => new MockDrawableOverlay(infoWindow.map, new MockNativeDrawableOverlay()), new ElementRef(null));      
+        super(componentApi, new MockDrawableOverlay(infoWindow.map, new MockNativeDrawableOverlay()), new ElementRef(null));      
     }
 
     private emit(eventName: string, position: Coord)

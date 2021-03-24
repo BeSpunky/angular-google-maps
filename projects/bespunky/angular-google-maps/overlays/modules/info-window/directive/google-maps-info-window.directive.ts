@@ -2,9 +2,8 @@ import { Observable } from 'rxjs';
 import { Input, Output, Directive, AfterContentChecked } from '@angular/core';
 
 import { GoogleMapsComponentBase, IGoogleMapsEventData, Hook, BoundsLike, IGoogleMapsMouseEventsEmitter } from '@bespunky/angular-google-maps/core';
-import { IGoogleMapsInfoWindow               } from '../i-google-maps-info-window';
-import { GoogleMapsInfoWindowFactoryProvider } from '../google-maps-info-window-factory.provider';
-import { InfoWindowTrigger                   } from '../i-google-maps-info-window';
+import { GoogleMapsInfoWindowFactoryProvider, NativeGoogleMapsInfoWindowFactoryProvider                 } from '../google-maps-info-window-factory.provider';
+import { IGoogleMapsInfoWindow, InfoWindowTrigger                                                       } from '../i-google-maps-info-window';
 
 /**
  * Adds an info window to the containing map.
@@ -19,7 +18,7 @@ import { InfoWindowTrigger                   } from '../i-google-maps-info-windo
 @Directive({
     selector : 'bs-google-maps-info-window, [bsGoogleMapsInfoWindow]',
     exportAs : 'infoWindow',
-    providers: [GoogleMapsInfoWindowFactoryProvider]
+    providers: [GoogleMapsInfoWindowFactoryProvider, NativeGoogleMapsInfoWindowFactoryProvider]
 })
 export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoogleMapsInfoWindow> implements AfterContentChecked
 {
@@ -31,7 +30,7 @@ export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoog
     @Input() public maxWidth?      : number;
     @Input() public pixelOffset?   : google.maps.Size;
     
-    @Input() public trigger?   : InfoWindowTrigger;
+    @Input() public trigger?   : InfoWindowTrigger ;
     @Input() public closeAfter?: number;
     @Input() public attachedTo?: IGoogleMapsMouseEventsEmitter;
 
@@ -67,9 +66,9 @@ export class GoogleMapsInfoWindowDirective extends GoogleMapsComponentBase<IGoog
 
     ngOnDestroy()
     {
-        super.ngOnDestroy();
-
         this.wrapper.clearAttachedTo();
+        
+        super.ngOnDestroy();
     }
 
     private buildContentTemplate(): string

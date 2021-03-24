@@ -3,7 +3,7 @@ import { MockEmittingWrapper } from '../mock-emitting-wrapper';
 
 export interface MockGoogleMap extends WrappedNativeFunctions<google.maps.Map, 'fitBounds' | 'panToBounds'> { }
 
-@NativeObjectWrapper<google.maps.Map, MockGoogleMap>()
+@NativeObjectWrapper<MockGoogleMap>()
 export class MockGoogleMap extends MockEmittingWrapper<google.maps.Map> implements IGoogleMap
 {
     constructor(public native: any = new google.maps.Map(document.createElement('div')), public readonly superpowers: ISuperpowers = null)

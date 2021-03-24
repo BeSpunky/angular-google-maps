@@ -1,13 +1,13 @@
 ## 1. Install the library
  
-    > npm install @bespunky/angular-google-maps
+    npm install @bespunky/angular-google-maps
 
 ## 2. Include the main module and start working
 
 How are you planning on loading Google Maps API?
 <br/>
 <details>
-<summary markdown="span">Take care of it for me please</summary><br/>
+<summary markdown="span">👉 Take care of it for me please</summary><br/>
 <small>
 The library will load it for you asynchronously when you import the main module and ensure that map components will be rendered safely after the API is ready.
 </small>
@@ -18,7 +18,7 @@ The library will load it for you asynchronously when you import the main module 
 
 <br/>
 <details>
-<summary markdown="span">I have my own async loading strategy</summary><br/>
+<summary markdown="span">👉 I have my own async loading strategy</summary><br/>
 <small>
 In case you need to create a custom loader and integrate it with the library. The library will run your loader and ensure that map components will be rendered safely after the API is ready.
 </small>
@@ -28,7 +28,7 @@ In case you need to create a custom loader and integrate it with the library. Th
 </details>
 <br/>
 <details>
-<summary markdown="span">I'm gonna manually load it</summary><br/>
+<summary markdown="span">👉 I'm gonna manually load it</summary><br/>
 <small>
 In case you'll place a `script` tag manually and you can ensure that it will be loaded before your map component gets loaded.
 </small>

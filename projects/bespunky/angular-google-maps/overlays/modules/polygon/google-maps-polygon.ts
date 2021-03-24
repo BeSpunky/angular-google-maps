@@ -15,20 +15,15 @@ export interface GoogleMapsPolygon extends WrappedPolygonFunctions { }
  * @implements {IGoogleMapsPolygon}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Polygon, GoogleMapsPolygon>({
+@NativeObjectWrapper<GoogleMapsPolygon>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })
 export class GoogleMapsPolygon extends GoogleMapsDrawableOverlay<google.maps.Polygon> implements IGoogleMapsPolygon
 {
-    constructor(api: GoogleMapsApiService, map: IGoogleMap, ...nativeArgs: any[])
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.Polygon)
     {
-        super(api, map, OverlayType.Polygon, ...nativeArgs);
-    }
-
-    protected createNativeObject(options?: google.maps.PolygonOptions): google.maps.Polygon
-    {
-        return new google.maps.Polygon(options);
+        super(OverlayType.Polygon, map, api, native);
     }
 
     public getBounds(): google.maps.LatLngBounds

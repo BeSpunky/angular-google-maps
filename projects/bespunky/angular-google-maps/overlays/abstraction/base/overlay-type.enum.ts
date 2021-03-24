@@ -15,5 +15,7 @@ export enum OverlayType
     /** An overlay that looks like a bubble and is often connected to a marker. */
     InfoWindow,
     /** Data layer defining drawn features. Also allows loading features directly from a GeoJson. */
-    Data
+    Data,
+    /** Directions layer rendered using the `GoogleMapsDirectionsDirective` after getting the results using the `GoogleMapsDirectionsService`. */
+    Directions
 }

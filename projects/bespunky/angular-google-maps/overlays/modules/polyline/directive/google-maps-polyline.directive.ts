@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { Hook, IGoogleMapsEventData, Path  } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase    } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsPolyline               } from '../i-google-maps-polyline';
-import { GoogleMapsPolylineFactoryProvider } from '../google-maps-polyline-factory.provider';
+import { Hook, IGoogleMapsEventData, Path                                           } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase                                             } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { GoogleMapsPolylineFactoryProvider, NativeGoogleMapsPolylineFactoryProvider } from '../google-maps-polyline-factory.provider';
+import { IGoogleMapsPolyline                                                        } from '../i-google-maps-polyline';
 
 /**
  * Adds a polyline to the containing map.
@@ -18,7 +18,7 @@ import { GoogleMapsPolylineFactoryProvider } from '../google-maps-polyline-facto
 @Directive({    
     selector : 'bs-google-maps-polyline, [bsGoogleMapsPolyline]',
     exportAs : 'polyline',
-    providers: [GoogleMapsPolylineFactoryProvider]
+    providers: [GoogleMapsPolylineFactoryProvider, NativeGoogleMapsPolylineFactoryProvider]
 })
 export class GoogleMapsPolylineDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsPolyline>
 {

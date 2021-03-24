@@ -19,7 +19,7 @@ export interface GoogleMapsData extends WrappedDataFunctions { }
  * @implements {IGoogleMapsData}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Data, GoogleMapsData>({
+@NativeObjectWrapper<GoogleMapsData>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })
@@ -30,14 +30,9 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
      */
     public readonly features = new FeatureTracker();
 
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.Data.DataOptions)
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.Data)
     {
-        super(api, map, OverlayType.Data, options);
-    }
-
-    protected createNativeObject(options?: google.maps.Data.DataOptions): google.maps.Data
-    {
-        return new google.maps.Data(options);
+        super(OverlayType.Data, map, api, native);
     }
 
     public getBounds(): google.maps.LatLngBounds
@@ -116,7 +111,7 @@ export class GoogleMapsData extends GoogleMapsDrawableOverlay<google.maps.Data> 
     public addFeature(feature: google.maps.Data.FeatureOptions | IGoogleMapsFeature): IGoogleMapsFeature
     {
         if (isGoogleMapsFeatureOptions(feature))
-            feature = new GoogleMapsFeature(this.api, this, feature);
+            feature = new GoogleMapsFeature(this, this.api, new google.maps.Data.Feature(feature)); 
 
         this.native.add(feature.native);
         this.features.add(feature);

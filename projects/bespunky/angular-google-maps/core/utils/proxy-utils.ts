@@ -1,9 +1,7 @@
+import { Wrapper                                                  } from '../abstraction/types/abstraction';
 import { NativeObjectWrapperSymbol                                } from '../decorators/native-object-wrapper.decorator';
 import { OutsideAngularSymbol                                     } from '../decorators/outside-angular.decorator';
 import { Delegation, WrapperFunctionDefinition, WrapperDefinition } from '../decorators/wrapper-definition';
-import { Wrapper                                                  } from '../abstraction/types/abstraction';
-import { IGoogleMapsNativeObject                                  } from '../abstraction/native/i-google-maps-native-object';
-import { IGoogleMapsNativeObjectWrapper                           } from '../abstraction/base/i-google-maps-native-object-wrapper';
 
 /** Represents the metadata for a wrapper object defined by decorators. Use `extractWrapperMetadata()` to retreive. */
 export interface WrapperMetadata
@@ -20,12 +18,11 @@ export interface WrapperMetadata
  * Creates a proxy object trapping calls to the native object held by the wrapper.
  * Calls are delegated according to delegation rules and definitions. See `@NativeObjectWrapper()` decorator for default behavior.
  *
- * @template TNative The type of native object to proxy calls to.
- * @param {IGoogleMapsNativeObjectWrapper<TNative>} wrapper The wrapper which will be used to proxy calls to the native object.
+ * @param {Wrapper} wrapper The wrapper which will be used to proxy calls to the native object.
  * @returns A proxy object delegating calls from the wrapper to the native object according to the rules defined by the library.
  * See `@NativeObjectWrapper()` decorator for default behavior.
  */
-export function createNativeProxy<TWrapper extends IGoogleMapsNativeObjectWrapper<TNative>, TNative extends IGoogleMapsNativeObject = any>(wrapper: TWrapper)
+export function createNativeProxy<TWrapper extends Wrapper>(wrapper: TWrapper)
 {
     const { type, definition, outsideAngular } = extractWrapperMetadata(wrapper);
     
@@ -53,14 +50,13 @@ export function createNativeProxy<TWrapper extends IGoogleMapsNativeObjectWrappe
 /**
  * Extracts decorators metadata from a wrapper object.
  *
- * @template TNative The type of native object being wrapped.
  * @param {Wrapper} wrapper The wrapper object to extract metadata from.
  * @returns {WrapperMetadata} The metadata defined for that type of wrapper.
  */
-export function extractWrapperMetadata<TNative extends IGoogleMapsNativeObject>(wrapper: Wrapper): WrapperMetadata
+export function extractWrapperMetadata(wrapper: Wrapper): WrapperMetadata
 {
     const type           = (wrapper as object).constructor;
-    const definition     = Reflect.getMetadata(NativeObjectWrapperSymbol, type) as WrapperDefinition<TNative, Wrapper>                 || { };
+    const definition     = Reflect.getMetadata(NativeObjectWrapperSymbol, type) as WrapperDefinition<Wrapper>                 || { };
     const outsideAngular = Reflect.getMetadata(OutsideAngularSymbol     , type) as { [methodName: string]: Delegation.OutsideAngular } || { };
 
     return { type, definition, outsideAngular };
@@ -95,15 +91,14 @@ export function delegateWrapperMethod(wrapper: Wrapper, methodName: string, outs
  *
  * Note: This is defined here and not as a private method of the extending class to avoid exposing it to the object's user.
  * 
- * @template TNative The type of native object holding the function to execute.
  * @template TWrapper The type of wrapper pointing to the native object.
  * @param {Wrapper} wrapper The wrapper holding the native object.
  * @param {string} functionName The name of the function to delegate.
- * @param {WrapperFunctionDefinition<TNative, TWrapper>} wrappingDef The wrapping definition for the function.
+ * @param {WrapperFunctionDefinition<TWrapper>} wrappingDef The wrapping definition for the function.
  * @param {Type<Wrapper>} wrapperName The name of the wrapper class.
  * @returns {Function} A function that will execute the native function by its wrapping definition or by the defined default behaviour.
  */
-export function delegateNativeFunction<TNative extends Object, TWrapper extends Wrapper>(wrapper: Wrapper, functionName: string, wrappingDef: WrapperFunctionDefinition<TNative, TWrapper>, wrapperName: string): Function
+export function delegateNativeFunction<TWrapper extends Wrapper>(wrapper: Wrapper, functionName: string, wrappingDef: WrapperFunctionDefinition<TWrapper>, wrapperName: string): Function
 {
     const native = wrapper.native;
     const nativeFunction = native[functionName].bind(native);

@@ -13,8 +13,10 @@ describe('GoogleMapsApiService', () =>
     {
         ({ api } = await configureGoogleMapsTestingModule({
             spies: {
-                fakeRunInsideAngular : false,
-                fakeRunOutsideAngular: false
+                fakeRunInsideAngular          : false,
+                fakeRunOutsideAngular         : false,
+                fakeRunInsideAngularWhenReady : false,
+                fakeRunOutsideAngularWhenReady: false,
             }
         }));
         

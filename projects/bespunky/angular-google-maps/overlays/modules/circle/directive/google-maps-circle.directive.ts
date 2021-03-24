@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { BoundsLike, Hook, IGoogleMapsEventData } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase         } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsCircle                      } from '../i-google-maps-circle';
-import { GoogleMapsCircleFactoryProvider        } from '../google-maps-circle-factory.provider';
+import { BoundsLike, Hook, IGoogleMapsEventData                                 } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase                                         } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { GoogleMapsCircleFactoryProvider, NativeGoogleMapsCircleFactoryProvider } from '../google-maps-circle-factory.provider';
+import { IGoogleMapsCircle                                                      } from '../i-google-maps-circle';
 
 /**
  * Creates a circle and adds it to the containing map.
@@ -16,7 +16,7 @@ import { GoogleMapsCircleFactoryProvider        } from '../google-maps-circle-fa
 @Directive({    
     selector : 'bs-google-maps-circle, [bsGoogleMapsCircle]',
     exportAs : 'circle',
-    providers: [GoogleMapsCircleFactoryProvider]
+    providers: [GoogleMapsCircleFactoryProvider, NativeGoogleMapsCircleFactoryProvider]
 })
 export class GoogleMapsCircleDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsCircle>
 {

@@ -1,6 +1,6 @@
-import { CoordPath, NativeObjectWrapper, OutsideAngular, GoogleMapsApiService, IGoogleMap, Delegation, Path } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsDrawableOverlay                   } from '../../abstraction/base/google-maps-drawable-overlay';
-import { OverlayType                                 } from '../../abstraction/base/overlay-type.enum';
+import { NativeObjectWrapper, OutsideAngular, GoogleMapsApiService, IGoogleMap, Delegation, Path } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsDrawableOverlay                     } from '../../abstraction/base/google-maps-drawable-overlay';
+import { OverlayType                                   } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsPolyline, WrappedPolylineFunctions } from './i-google-maps-polyline';
 
 /** Extends intellisense for `GoogleMapsPolyline` with native polyline functions. */
@@ -15,20 +15,15 @@ export interface GoogleMapsPolyline extends WrappedPolylineFunctions { }
  * @implements {IGoogleMapsPolyline}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Polyline, GoogleMapsPolyline>({
+@NativeObjectWrapper<GoogleMapsPolyline>({
     getMap: Delegation.Exclude,
     setMap: Delegation.Exclude
 })
 export class GoogleMapsPolyline extends GoogleMapsDrawableOverlay<google.maps.Polyline> implements IGoogleMapsPolyline
 {
-    constructor(api: GoogleMapsApiService, map: IGoogleMap, ...nativeArgs: any[])
+    constructor(map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.Polyline)
     {
-        super(api, map, OverlayType.Polyline, ...nativeArgs);
-    }
-
-    protected createNativeObject(options?: google.maps.PolylineOptions): google.maps.Polyline
-    {
-        return new google.maps.Polyline(options);
+        super(OverlayType.Polyline, map, api, native);
     }
 
     public getBounds(): google.maps.LatLngBounds

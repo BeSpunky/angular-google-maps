@@ -6,6 +6,7 @@ import { InjectableServicesTopic  } from './04.injectable-services';
 import { GeometryTypesTopic       } from './05.geometry-types';
 import { BestPracticesTopic       } from './06.best-practices';
 import { OverlaysSuperpowerTopic  } from './07.overlays-superpower';
+import { DirectionsTopic          } from './08.directions';
 
 export const Topics: Topic[] = [
     GettingStartedTopic,
@@ -14,5 +15,6 @@ export const Topics: Topic[] = [
     InjectableServicesTopic,
     GeometryTypesTopic,
     BestPracticesTopic,
-    OverlaysSuperpowerTopic
+    OverlaysSuperpowerTopic,
+    DirectionsTopic
 ];

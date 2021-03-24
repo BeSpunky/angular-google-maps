@@ -3,12 +3,12 @@ import { Component        } from '@angular/core';
 
 import { configureGoogleMapsTestingModule                                        } from '@bespunky/angular-google-maps/testing';
 import { LifecycleComponentTestHost, createLifecycleTestingHostComponentTemplate } from '@bespunky/angular-google-maps/core/testing';
-import { GoogleMapComponent                                                      } from '@bespunky/angular-google-maps/core';
+import { GoogleMapComponent, GoogleMapFactoryProvider, NativeGoogleMapFactoryProvider } from '@bespunky/angular-google-maps/core';
 
 /**
  * -- NOTE --
  * Events hooking and property delegation are not tested in components deriving from `GoogleMapsComponentBase`.
- * The appropriate tests are already done by `GoogleMapsComponentBase` and `GoogleMapsInternalApiService`/
+ * The appropriate tests are already done by `GoogleMapsComponentBase` and `GoogleMapsComponentApiService`/
  * 
  * @see `google-maps-internal-api.service.spec.ts` For testing of the hooking and delegation mechanisms.
  * @see `google-maps-component-base.spec.ts` For testing of the integration between the component and the internal API service.
@@ -21,7 +21,10 @@ describe('GoogleMapComponent', () =>
 
     beforeEach(async () =>
     {
-        ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({ componentType: TestHostComponent }));
+        ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({
+            componentType: TestHostComponent,
+            customize: (def) => def.providers = [GoogleMapFactoryProvider, NativeGoogleMapFactoryProvider]
+        }));
         
         hostFixture.detectChanges();
 

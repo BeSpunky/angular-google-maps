@@ -14,17 +14,12 @@ export interface GoogleMapsFeature extends WrappedFeatureFunctions { }
  * @implements {IGoogleMapsFeature}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.Data.Feature, GoogleMapsFeature>()
+@NativeObjectWrapper<GoogleMapsFeature>()
 export class GoogleMapsFeature extends GoogleMapsNativeObjectEmittingWrapper<google.maps.Data.Feature> implements IGoogleMapsFeature
 {
-    constructor(protected api: GoogleMapsApiService, public readonly data: IGoogleMapsData, options?: google.maps.Data.FeatureOptions)
+    constructor(public readonly data: IGoogleMapsData, api: GoogleMapsApiService, native: google.maps.Data.Feature)
     {
-        super(api, options);
-    }
-   
-    protected createNativeObject(options?: google.maps.Data.FeatureOptions): google.maps.Data.Feature
-    {
-        return new google.maps.Data.Feature(options);
+        super(api, native);
     }
 
     public getBounds(): google.maps.LatLngBounds

@@ -1,3 +1,28 @@
+# **v0.20.0** <small>2021-03-24</small>
+➕ Implemented [directions](https://bs-angular-g-maps.web.app/docs/additional-documentation/directions.html) service, directive and flexible types.
+
+➕ Implemented new geometry transformations and type guards.
+
+♻ Restructured wrapper factories and added native factories to allow injection and mocking of native objects.
+
+♻ Simplified wrappers and base component classes.
+
+🚢 Replaced depracated RxJS `resultSelector` functions with mapping operators.
+
+✅ Fixed minor broken tests.
+
+🔧 Configured project to support wallaby.js.
+
+🎨 Automated native type inference out of wrapper types throughout codebase.
+
+🧪 Improved geometry testing suite and added support for more types.
+
+📃 Minor documentation improvements.
+
+📦 Updated Angular to v11.2.3.
+
+📦 Updated peer dependency [@bespunky/angular-zen](https://bs-angular-zen.web.app/) to v3.1.0.
+
 # **v0.19.1** <small>2021-01-23</small>
 📦 Updated Angular to v11.
 

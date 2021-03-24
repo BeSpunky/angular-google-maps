@@ -1,21 +1,22 @@
-import { Subject } from 'rxjs';
 import { OnChanges, SimpleChanges, Inject, Directive, ElementRef, Input, OnDestroy } from '@angular/core';
+import { Destroyable                                                               } from '@bespunky/angular-zen/core';
 
-import { GoogleMapsComponentApiService                 } from '../../api/google-maps-component-api.service';
-import { WrapperFactory                                } from '../tokens/wrapper-factory.token';
-import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstraction';
+import { GoogleMapsComponentApiService } from '../../api/google-maps-component-api.service';
+import { EmittingWrapper               } from '../types/abstraction';
+import { WrapperInstance               } from '../factories/tokens';
 
 /**
  * Provides the basic lifecycle functionality for components and directives that expose functionalities of Google Maps API and its elements.
  * Extending this class will automatically:
  * - Create event emitters hooked to the native event raised by the native Google Maps object and assign them to members decorated with @Hook.
  * - Delegate any bound property changes to their corresponding native setter function on the native Google Maps object.
- * - Instantiate a new native wrapper object and expose it to the component's user.
+ * - Cause the injector to instantiate new wrapper and native objects and expose the wrapper to the component's user.
  * 
  * Requirements for the magic to happen:
  * --- Must ---
  * 1. Create a component or a directive and extend `GoogleMapsComponentBase`.
- * 2. Define a factory provider for the `WrapperFactory` token on the new component / directive.
+ * 2. Define a factory provider for the `NativeInstance` token on the new component / directive.
+ * 2. Define a factory provider for the `WrapperInstance` token on the new component / directive.
  * 
  * --- To expose native events as bindable template events ---
  * 3. Add `@Hook('native_name') @Output()` marked event emitters to the component / directive.
@@ -25,62 +26,31 @@ import { EmittingWrapper, EmittingNativeWrapperFactory } from '../types/abstract
  * 
  * @see GoogleMapComponent source code for an example.
  */
+/** @dynamic */
 @Directive()
 export abstract class GoogleMapsComponentBase<TWrapper extends EmittingWrapper>
+              extends Destroyable
            implements OnChanges, OnDestroy
 {
     @Input() public custom: any;
 
-    protected destroyed: Subject<void> = new Subject();
-
-    private nativeWrapper: TWrapper;
-
     /**
      * Creates an instance of GoogleMapsComponentBase.
-     * 
+     *
      * @param {GoogleMapsComponentApiService} api The instance of the component api service.
-     * @param {EmittingNativeWrapperFactory<TWrapper>} createNativeWrapper The factory for creating the wrapper this component should work with. Must be provided by the component's providers.
+     * @param {TWrapper} wrapper The instance of the wrapper to use with this component. Should be provided at the extending component level using the `WrapperInstance` token.
      * @param {ElementRef} element The element created for the component.
      */
-    constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperFactory) protected createNativeWrapper: EmittingNativeWrapperFactory<TWrapper>, protected element: ElementRef)
+    constructor(protected api: GoogleMapsComponentApiService, @Inject(WrapperInstance) public readonly wrapper: TWrapper, protected element: ElementRef)
     {
-        this.initNativeWrapper();
+        super();
+
         this.initEmitters();
     }
 
     ngOnChanges(changes: SimpleChanges)
     {
         this.api.delegateInputChangesToNativeObject(changes, this.wrapper);
-    }
-
-    ngOnDestroy()
-    {
-        this.destroyed.next();
-        this.destroyed.complete();
-    }
-
-    /**
-     * The instance of the wrapper used by the component to delegate functionality to the native object.
-     *
-     * @readonly
-     * @type {TWrapper} The type of wrapper this component works with.
-     */
-    public get wrapper(): TWrapper
-    {
-        return this.nativeWrapper;
-    }
-
-    /**
-     * Creates the native wrapper instance for this component and sets it to the `wrapper` property.
-     * The default implementation simply calls the provided wrapper factory without specifying options.
-     * Override this method to change implementation.
-     * 
-     * @protected
-     * @virtual
-     */
-    protected initNativeWrapper(): void
-    {
-        this.nativeWrapper = this.createNativeWrapper(this.element);
     }
     
     /**

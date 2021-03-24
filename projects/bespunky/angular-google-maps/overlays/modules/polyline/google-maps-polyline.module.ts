@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { GoogleMapsPolylineDirective       } from './directive/google-maps-polyline.directive';
+import { GoogleMapsPolylineDirective } from './directive/google-maps-polyline.directive';
 
 @NgModule({
     declarations: [GoogleMapsPolylineDirective],

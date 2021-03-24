@@ -1,10 +1,14 @@
 
-import { Subject, of      } from 'rxjs';
+import { Subject, of, Observable } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
 
 import { GoogleMapsApiService, NativeObjectWrapper, IGoogleMap, OutsideAngular, GoogleMapsNativeObjectEmittingWrapper, BoundsLike, IGoogleMapsMouseEventsEmitter, IGoogleMapsEventData, IGoogleMapsMouseEvent, Delegation } from '@bespunky/angular-google-maps/core';
-import { OverlayType                                                          } from '../../abstraction/base/overlay-type.enum';
 import { IGoogleMapsInfoWindow, WrappedInfoWindowFunctions, InfoWindowTrigger } from './i-google-maps-info-window';
+
+type TriggerHandlersMap = Record<InfoWindowTrigger, {
+    emitter: () => Observable<IGoogleMapsEventData>;
+    handle : (event?: IGoogleMapsEventData) => void;
+}[]>;
 
 /** Extends intellisense for `GoogleMapsInfoWindow` with native info window functions. */
 export interface GoogleMapsInfoWindow extends WrappedInfoWindowFunctions { }
@@ -18,32 +22,27 @@ export interface GoogleMapsInfoWindow extends WrappedInfoWindowFunctions { }
  * @implements {IGoogleMapsInfoWindow}
  */
 // @dynamic
-@NativeObjectWrapper<google.maps.InfoWindow, GoogleMapsInfoWindow>({
+@NativeObjectWrapper<GoogleMapsInfoWindow>({
     close: Delegation.OutsideAngular
 })
 export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<google.maps.InfoWindow> implements IGoogleMapsInfoWindow
 {
     private attachedTo: IGoogleMapsMouseEventsEmitter;
-    private trigger   : InfoWindowTrigger = InfoWindowTrigger.MouseOver;
+    private trigger   : InfoWindowTrigger = 'mouseOver';
     private closeAfter: number = 0;
 
     private readonly detach: Subject<void> = new Subject();
 
-    private readonly triggerEvents = {
-        [InfoWindowTrigger.Click      ]: [{ emitter: () => this.attachedTo.click,       handle: this.onTriggered }],
-        [InfoWindowTrigger.MouseOver  ]: [{ emitter: () => this.attachedTo.mouseOver,   handle: this.onTriggered }, { emitter: () => this.attachedTo.mouseOut, handle: this.onTriggeredClose } ],
-        [InfoWindowTrigger.DoubleClick]: [{ emitter: () => this.attachedTo.doubleClick, handle: this.onTriggered }],
-        [InfoWindowTrigger.RightClick ]: [{ emitter: () => this.attachedTo.rightClick,  handle: this.onTriggered }],
+    private readonly triggerEvents: TriggerHandlersMap = {
+        ['click'      ]: [{ emitter: () => this.attachedTo.click,       handle: this.onTriggered }],
+        ['mouseOver'  ]: [{ emitter: () => this.attachedTo.mouseOver,   handle: this.onTriggered }, { emitter: () => this.attachedTo.mouseOut, handle: this.onTriggeredClose } ],
+        ['doubleClick']: [{ emitter: () => this.attachedTo.doubleClick, handle: this.onTriggered }],
+        ['rightClick' ]: [{ emitter: () => this.attachedTo.rightClick,  handle: this.onTriggered }],
     };
 
-    constructor(api: GoogleMapsApiService, public map: IGoogleMap, options?: google.maps.InfoWindowOptions)
+    constructor(public readonly map: IGoogleMap, api: GoogleMapsApiService, native: google.maps.InfoWindow)
     {
-        super(api, map, OverlayType.InfoWindow, options);
-    }
-
-    protected createNativeObject(options?: google.maps.InfoWindowOptions): google.maps.InfoWindow
-    {
-        return new google.maps.InfoWindow(options);
+        super(api, native);
     }
 
     /**
@@ -81,7 +80,7 @@ export class GoogleMapsInfoWindow extends GoogleMapsNativeObjectEmittingWrapper<
     
     /**
      * Sets the trigger for the info window when attaching to an element. This implies specifying an attached element using `setAttachedTo()`.
-     * Default is `InfoWindowTrigger.MouseOver`.
+     * Default is `mouseOver`.
      * 
      * @param {InfoWindowTrigger} trigger The event that will trigger the info window.
      */

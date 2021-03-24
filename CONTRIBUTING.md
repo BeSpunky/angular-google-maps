@@ -102,7 +102,6 @@ import { OnChanges, Input, OnDestroy } from '@angular/core';
 import { promiseLater                } from '@bespunky/angular-zen/async';
  
 import { GoogleMapsComponentApiService } from '../../api/google-maps-component-api.service';
-import { WrapperFactory                } from '../tokens/wrapper-factory.token';
 import { EmittingWrapper               } from '../types/abstraction';
 ```
 

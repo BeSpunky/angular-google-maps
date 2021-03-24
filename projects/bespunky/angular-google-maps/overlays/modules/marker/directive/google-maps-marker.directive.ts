@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { Directive, Input, Output } from '@angular/core';
 
-import { IGoogleMapsEventData, Hook, BoundsLike } from '@bespunky/angular-google-maps/core';
-import { GoogleMapsOverlayComponentBase         } from '../../../abstraction/base/google-maps-overlay-component-base';
-import { IGoogleMapsMarker                      } from '../i-google-maps-marker';
-import { GoogleMapsMarkerFactoryProvider        } from '../google-maps-marker-factory.provider';
+import { IGoogleMapsEventData, Hook, BoundsLike                                 } from '@bespunky/angular-google-maps/core';
+import { GoogleMapsOverlayComponentBase                                         } from '../../../abstraction/base/google-maps-overlay-component-base';
+import { GoogleMapsMarkerFactoryProvider, NativeGoogleMapsMarkerFactoryProvider } from '../google-maps-marker-factory.provider';
+import { IGoogleMapsMarker                                                      } from '../i-google-maps-marker';
 
 /**
  * Adds a marker to the containing map.
@@ -18,7 +18,7 @@ import { GoogleMapsMarkerFactoryProvider        } from '../google-maps-marker-fa
 @Directive({
     selector : 'bs-google-maps-marker, [bsGoogleMapsMarker]',
     exportAs : 'marker',
-    providers: [GoogleMapsMarkerFactoryProvider]
+    providers: [GoogleMapsMarkerFactoryProvider, NativeGoogleMapsMarkerFactoryProvider]
 })
 export class GoogleMapsMarkerDirective extends GoogleMapsOverlayComponentBase<IGoogleMapsMarker>
 {
