@@ -88,19 +88,3 @@ Issues, suggestions and pull requests are welcome. Please follow the [contrubuti
 # References
 - [Source Code](https://github.com/bespunky/angular-google-maps)
 - [npm package](https://www.npmjs.com/package/%40bespunky/angular-google-maps)
-
-<br/>
----
-
-# The Workspace
-[![Build status](https://dev.azure.com/BeSpunky/Libraries/_apis/build/status/angular-google-maps/Build%20angular-google-maps)](https://dev.azure.com/BeSpunky/Libraries/_build/latest?definitionId=29)
-
-This angular **workspace** provides:
-- The `@bespunky/angular-google-maps` library containing a set of **🌳 tree-shakable** tools to work with Google Maps API.
-- The app for the official site.
-
-# 📖 Documentation
-
-All modules / components / services are documented within the code. Some might have their own `Readme.md` file accessible at their folder.
-
-The complete documentation is found in the [wiki folder](https://github.com/BeSpunky/angular-google-maps/tree/master/wiki), and is also accessible online at [angular-google-maps wiki](https://bs-angular-g-maps.web.app/docs/index.html).
