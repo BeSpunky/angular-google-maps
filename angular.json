@@ -51,7 +51,7 @@
               "apps/official-site/src/favicon.ico",
               "apps/official-site/src/assets"
             ],
-            "styles": ["apps/official-site/src/styles.scss"],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/purple-green.css", "apps/official-site/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
