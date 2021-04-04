@@ -15,7 +15,7 @@
     "vpatch": "npm run lib-vpatch && npm run app-vpatch",
     "publish": "cd dist/libs/angular-google-maps && npm publish --access public",
     "publish-site": "firebase deploy --only hosting:bs-angular-g-maps",
-    "update-wiki-summary": "node generate-wiki-summary",
+    "update-wiki-summary": "node tools/generators/generate-wiki-summary",
     "generate-docs": "npm run update-wiki-summary -- ./wiki && cd libs/angular-google-maps && compodoc",
     "serve-docs": "npm run update-wiki-summary -- ./wiki && cd libs/angular-google-maps && compodoc -s",
 
