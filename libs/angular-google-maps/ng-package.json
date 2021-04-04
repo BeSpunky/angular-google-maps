@@ -9,5 +9,6 @@
       "@bespunky/angular-zen/async": "zenAsync",
       "@bespunky/angular-zen/universal": "zenUniversal"
     }
-  }
+  },
+  "allowedNonPeerDependencies": ["."]
 }
