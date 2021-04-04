@@ -1,0 +1,27 @@
+{
+    "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
+
+    "tsconfig": "./tsconfig.lib.json",
+    
+    "name": "@bespunky/angular-google-maps Official Docs",
+
+    "customLogo"   : "../apps/official-site/src/assets/logo.svg",
+    "customFavicon": "../apps/official-site/src/favicon.ico",
+
+    "extTheme"    : "../../compodoc/styles",
+    "templates"   : "../../compodoc/templates",
+    "assetsFolder": "../../wiki/.attachments",
+    "includes"    : "../../wiki",
+    "includesName": "Complete Documentation",
+
+    "theme"   : "material",
+    
+    "disablePrivate" : true,
+    "disableInternal": true,
+    
+    "gaID"  : "G-QRDRDXWTLP",
+    "gaSite": "angular-google-maps",
+
+    "output": "../../dist/official-site/docs",
+    "watch" : true
+}

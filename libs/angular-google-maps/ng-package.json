@@ -2,6 +2,12 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/angular-google-maps",
   "lib": {
-    "entryFile": "index.ts"
+    "entryFile": "index.ts",
+    "umdModuleIds": {
+      "@bespunky/angular-zen": "zen",
+      "@bespunky/angular-zen/core": "zenCore",
+      "@bespunky/angular-zen/async": "zenAsync",
+      "@bespunky/angular-zen/universal": "zenUniversal"
+    }
   }
 }
