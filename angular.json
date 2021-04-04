@@ -260,7 +260,7 @@
     "angular-google-maps": {
       "projectType": "library",
       "root": "libs/angular-google-maps",
-      "sourceRoot": "libs/angular-google-maps/src",
+      "sourceRoot": "libs/angular-google-maps",
       "prefix": "bs",
       "architect": {
         "build": {
@@ -279,8 +279,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/angular-google-maps/src/**/*.ts",
-              "libs/angular-google-maps/src/**/*.html"
+              "libs/angular-google-maps/**/*.ts",
+              "libs/angular-google-maps/**/*.html"
             ]
           }
         },
