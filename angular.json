@@ -256,6 +256,43 @@
           }
         }
       }
+    },
+    "angular-google-maps": {
+      "projectType": "library",
+      "root": "libs/angular-google-maps",
+      "sourceRoot": "libs/angular-google-maps/src",
+      "prefix": "bs",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/angular-google-maps/tsconfig.lib.json",
+            "project": "libs/angular-google-maps/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/angular-google-maps/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/angular-google-maps/src/**/*.ts",
+              "libs/angular-google-maps/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/angular-google-maps"],
+          "options": {
+            "jestConfig": "libs/angular-google-maps/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
