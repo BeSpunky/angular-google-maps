@@ -70,6 +70,7 @@
     "jest": "26.2.2",
     "jest-preset-angular": "8.3.2",
     "ng-packagr": "^11.0.0",
+    "ng-samurai": "^2.0.6",
     "prettier": "2.2.1",
     "ts-jest": "26.4.0",
     "ts-node": "~9.1.1",
