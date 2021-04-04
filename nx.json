@@ -13,7 +13,7 @@
   "affected": {
     "defaultBase": "master"
   },
-  "npmScope": "angular-google-maps",
+  "npmScope": "@bespunky",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
