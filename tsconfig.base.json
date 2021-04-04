@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@bespunky/angular-google-maps": ["libs/angular-google-maps/src/index.ts"]
+      "@bespunky/angular-google-maps": ["libs/angular-google-maps"],
+      "@bespunky/angular-google-maps/*": ["libs/angular-google-maps/*"]
     }
   },
   "angularCompilerOptions": {
