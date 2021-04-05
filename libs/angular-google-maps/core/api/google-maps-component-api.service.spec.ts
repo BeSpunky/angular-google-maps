@@ -149,12 +149,15 @@ describe('GoogleMapsComponentApiService', () =>
 @Component({
     template: '<test-lifecycle (click)="handleClick($event)"></test-lifecycle>'
 })
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 class TestHost
 {
     @ViewChild(MockComponent)
     public component: MockComponent;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public handleClick(e: IGoogleMapsEventData)
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     {
 
     }
