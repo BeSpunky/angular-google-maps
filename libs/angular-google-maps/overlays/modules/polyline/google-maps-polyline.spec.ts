@@ -8,7 +8,7 @@ describe('GoogleMapsPolyline', () =>
 {
     let api              : GoogleMapsApiService;
     let polyline         : GoogleMapsPolyline;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     beforeEach(async () =>
     {
@@ -16,7 +16,7 @@ describe('GoogleMapsPolyline', () =>
 
         polyline = new GoogleMapsPolyline(new MockGoogleMap(), api, new google.maps.Polyline());
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     describe('basically', () =>
@@ -29,7 +29,7 @@ describe('GoogleMapsPolyline', () =>
         // Also tests the getPath() method
         function testPath(makePath: () => Path)
         {
-            spyOn(polyline.native, 'setPath').and.callThrough();
+            jest.spyOn(polyline.native, 'setPath');
 
             const path    = makePath();
             const literal = api.geometry.toLiteralMultiPath(path)[0];

@@ -26,7 +26,7 @@ describe('GoogleMapsFeatureDirective', () =>
         const feature = directive.wrapper;
         const data    = feature.data as MockGoogleMapsData;
         
-        const handler = jasmine.createSpyObj('eventHandler', ['handle']);
+        const handler = { handle: jest.fn() };
 
         directive.click.subscribe(handler.handle);
 
@@ -39,7 +39,7 @@ describe('GoogleMapsFeatureDirective', () =>
 
     it('should add the feature to the containing data layer', () =>
     {
-        spyOn(directive.wrapper.data, 'addFeature').and.stub();
+        jest.spyOn(directive.wrapper.data, 'addFeature').mockImplementation();
 
         directive.ngOnInit();
 
@@ -48,7 +48,7 @@ describe('GoogleMapsFeatureDirective', () =>
 
     it('should remove itself from the containing data layer on destruction', () =>
     {
-        spyOn(directive.wrapper.data, 'removeFeature').and.stub();
+        jest.spyOn(directive.wrapper.data, 'removeFeature').mockImplementation();
 
         directive.ngOnDestroy();
 

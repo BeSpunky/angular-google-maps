@@ -20,14 +20,12 @@ import { MockNative } from './mock-native';
 export class MockWrapper<TNative extends IGoogleMapsNativeObject = MockNative>
   implements IGoogleMapsNativeObjectWrapper<TNative>
 {
-    public api = jasmine.createSpyObj('MockWrapperApiService', ['runOutsideAngular']);
+    public api = { runOutsideAngular: jest.fn().mockImplementation(fn => fn()) };
 
     custom: any;
 
     constructor(public native: TNative)
     {
-        this.api.runOutsideAngular.and.callFake(fn => fn());
-
         return createNativeProxy(this);
     }
 

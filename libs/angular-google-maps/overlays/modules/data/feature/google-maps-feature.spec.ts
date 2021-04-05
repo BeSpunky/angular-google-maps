@@ -7,7 +7,7 @@ import { GoogleMapsFeature                } from '@bespunky/angular-google-maps/
 describe('GoogleMapsFeature', () =>
 {
     let api              : GoogleMapsApiService;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
     let feature          : GoogleMapsFeature;
     let map              : MockGoogleMap;
     let data             : MockGoogleMapsData;
@@ -30,7 +30,7 @@ describe('GoogleMapsFeature', () =>
         data    = new MockGoogleMapsData(map);
         feature = new GoogleMapsFeature(data, api, nativeFeature);
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     describe('basically', () =>

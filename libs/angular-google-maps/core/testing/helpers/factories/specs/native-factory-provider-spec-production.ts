@@ -21,10 +21,10 @@ function itShouldBeAFactoryProviderForNative(provider: () => FactoryProvider, ex
  * @export
  * @param {() => FactoryProvider} provider A function that returns the tested provider.
  * @param {() => Native} producedNative A function that returns the value produced by the provider.
- * @param {() => jasmine.Spy} runOutsideAngular A function that returns the `runOutsideAngular` spy.
+ * @param {() => jest.SpyInstance} runOutsideAngular A function that returns the `runOutsideAngular` spy.
  * @param {Type<Native>} expectedNativeType The type of native object expected to be produced by the factory.
  */
-export function produceBrowserNativeFactoryProviderSpecs(provider: () => FactoryProvider, producedNative: () => Native, runOutsideAngular: () => jasmine.Spy, expectedToken: () => InjectionToken<Native>, expectedNativeType: Type<Native>)
+export function produceBrowserNativeFactoryProviderSpecs(provider: () => FactoryProvider, producedNative: () => Native, runOutsideAngular: () => jest.SpyInstance, expectedToken: () => InjectionToken<Native>, expectedNativeType: Type<Native>)
 {
     itShouldBeAFactoryProviderForNative(provider, expectedToken);
 
@@ -48,7 +48,7 @@ export function produceNonBrowserNativeFactoryProviderSpecs(provider: () => Fact
     it('should returns null', () => expect(producedNative()).toBeNull());
 }
 
-type AdditionalSpecDefinition = (producedNative: () => Native, provider: () => FactoryProvider, runOutsideAngular: () => jasmine.Spy) => void;
+type AdditionalSpecDefinition = (producedNative: () => Native, provider: () => FactoryProvider, runOutsideAngular: () => jest.SpyInstance) => void;
 
 /**
  * Represents additional specs that should be run after the automated specs provided by the spec production functions in this file.
@@ -75,7 +75,7 @@ export interface AdditionalNativeFactoryProviderSpecs
  * @param {(platform: any) => any} setup The function that will setup the testing environment.
  * @param {() => FactoryProvider} provider A function that returns the tested provider.
  * @param {() => Native} producedNative A function that returns the value produced by the factory.
- * @param {() => jasmine.Spy} runOutsideAngular A function that returns the `runOutsideAngular` spy.
+ * @param {() => jest.SpyInstance} runOutsideAngular A function that returns the `runOutsideAngular` spy.
  * @param {Type<Native>} expectedNativeType The type of native object expected to be produced by the factory.
  * @param {AdditionalNativeFactoryProviderSpecs} [additionalSpecs] (Optional) Additional specs that should be run after the automated specs provided by `produceBrowserNativeFactoryProviderSpecs()` and `produceNonBrowserNativeFactoryProviderSpecs()`.
  */
@@ -83,7 +83,7 @@ export function produceNativeFactoryProviderSpecs(
     setup             : (platform: any) => any,
     provider          : () => FactoryProvider,
     producedNative    : () => Native,
-    runOutsideAngular : () => jasmine.Spy,
+    runOutsideAngular : () => jest.SpyInstance,
     expectedToken     : () => InjectionToken<Native>,
     expectedNativeType: Type<Native>,
     additionalSpecs?  : AdditionalNativeFactoryProviderSpecs

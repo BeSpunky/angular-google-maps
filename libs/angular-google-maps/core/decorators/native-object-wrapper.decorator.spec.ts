@@ -8,7 +8,7 @@ import { WrappedNativeFunctions, NativeObjectWrapper, OutsideAngular, Delegation
 describe('@NativeObjectWrapper()', () =>
 {
     let wrapper          : TestWrapper;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     beforeEach(() =>
     {
@@ -19,7 +19,7 @@ describe('@NativeObjectWrapper()', () =>
         wrapper.native.setSomething(1);
         wrapper.native.setSomethingElse(2);
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     it('should wrap outside angular all manual wrapping implementations decorated with @OutsideAngular', () =>

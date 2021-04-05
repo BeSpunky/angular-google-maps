@@ -8,7 +8,7 @@ describe('GoogleMapsCircle', () =>
 {
     let api              : GoogleMapsApiService;
     let circle          : GoogleMapsCircle;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     beforeEach(async () =>
     {
@@ -16,7 +16,7 @@ describe('GoogleMapsCircle', () =>
 
         circle = new GoogleMapsCircle(new MockGoogleMap(), api, new google.maps.Circle());
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     describe('basically', () =>
@@ -29,7 +29,7 @@ describe('GoogleMapsCircle', () =>
         // Also tests the getCenter() method
         function testCenter(makeElement: () => BoundsLike)
         {
-            spyOn(circle.native, 'setCenter').and.callThrough();
+            jest.spyOn(circle.native, 'setCenter');
 
             const element = makeElement();
             const center  = api.geometry.centerOf(element);

@@ -20,7 +20,7 @@ describe('GoogleMapsInternalApiService', () =>
         loader = TestBed.inject(GoogleMapsApiLoader);
         api    = TestBed.inject(GoogleMapsInternalApiService);
 
-        spyOn(zone, 'runOutsideAngular').and.callFake(fn => fn());
+        jest.spyOn(zone, 'runOutsideAngular').mockImplementation(fn => fn());
     });
 
     describe('basically', () =>
@@ -46,7 +46,7 @@ describe('GoogleMapsInternalApiService', () =>
         {
             const error = 'Failed to load maps api';
 
-            spyOn(loader, 'load').and.returnValue(Promise.reject(new Error(error)));
+            jest.spyOn(loader, 'load').mockReturnValue(Promise.reject(new Error(error)));
 
             await expectAsync(api.load()).toBeRejectedWithError(error);
             

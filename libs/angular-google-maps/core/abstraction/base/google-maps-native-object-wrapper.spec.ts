@@ -6,7 +6,7 @@ import { GoogleMapsApiService, GoogleMapsNativeObjectWrapper } from '@bespunky/a
 describe('GoogleMapsNativeObjectWrapper (abstract)', () =>
 {
     let api              : GoogleMapsApiService;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
     let mockNative       : MockNative;
     let mockWrapper      : GoogleMapsNativeObjectWrapperTest;
 

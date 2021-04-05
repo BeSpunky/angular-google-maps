@@ -25,7 +25,7 @@ describe('GoogleMapsOverlayComponentBase (abstract)', () =>
         mockMap            = component.wrapper.map as MockGoogleMap;
         overlaysSuperpower = mockMap.superpowers.use(OverlaysSuperpower);
 
-        spyOn(overlaysSuperpower, 'removeOverlay').and.stub();
+        jest.spyOn(overlaysSuperpower, 'removeOverlay').mockImplementation();
 
         // Run ngOnInit() to allow the overlay component to add the wrapper to the overlays tracker
         component.ngOnInit();

@@ -11,7 +11,7 @@ describe('createWrapperFactoryProvider', () =>
     let api            : GoogleMapsApiService;
     let factoryProvider: FactoryProvider;
     let wrapperToken   : InjectionToken<Wrapper>;
-    let produceWrapper : jasmine.Spy;
+    let produceWrapper : jest.SpyInstance;
     let producedWrapper: any;
 
     async function setup(platform: any)

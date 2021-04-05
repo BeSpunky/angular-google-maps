@@ -8,7 +8,7 @@ import { GoogleMapsDrawableOverlay        } from '@bespunky/angular-google-maps/
 describe('GoogleMapsDrawableOverlay (abstract)', () =>
 {
     let api              : GoogleMapsApiService;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
     let mockMap          : MockGoogleMap;
     let mockNativeOverlay: MockNativeDrawableOverlay;
     let mockOverlay      : GoogleMapsDrawableOverlayTest;
@@ -28,7 +28,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
 
     it('should add the overlay to the map outside angular when calling `attach()`', () =>
     {
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
 
         const secondNativeMap = { id: 2, zoom: 2 };
         const secondMap = new MockGoogleMap(secondNativeMap); // First one was `mockMap`
@@ -44,7 +44,7 @@ describe('GoogleMapsDrawableOverlay (abstract)', () =>
 
     it('should remove the overlay from the map outside angular when calling `detach()`', () =>
     {
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
 
         expect(mockNativeOverlay.nativeMap).toBeDefined();
 

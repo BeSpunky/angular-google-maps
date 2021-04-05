@@ -4,7 +4,7 @@ import { Native, NativeInstance                                                 
 import { setupNativeFactoryProviderTest, NativeProviderTestConfig                } from './setup/natives/native-factory-provider-test-setup';
 import { produceNativeFactoryProviderSpecs, AdditionalNativeFactoryProviderSpecs } from './specs/native-factory-provider-spec-production';
 
-type SetupFn = (provider: FactoryProvider, config: NativeProviderTestConfig) => Promise<{ producedValue: any, runOutsideAngular: jasmine.Spy }>;
+type SetupFn = (provider: FactoryProvider, config: NativeProviderTestConfig) => Promise<{ producedValue: any, runOutsideAngular: jest.SpyInstance }>;
 
 /**
  * The configuration for a native factory provider test.
@@ -51,7 +51,7 @@ export function testNativeFactoryProviderCore({providerName, provider, setup, ex
     describe(providerName, () =>
     {
         let producedNative   : any;
-        let runOutsideAngular: jasmine.Spy;
+        let runOutsideAngular: jest.SpyInstance;
     
         async function runSetup(platform: any)
         {

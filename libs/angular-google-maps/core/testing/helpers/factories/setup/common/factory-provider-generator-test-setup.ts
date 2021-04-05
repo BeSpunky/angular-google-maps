@@ -4,7 +4,7 @@ import { FactoryGeneratorConfig                                           } from
 import { configTestDefaults, ProviderTestConfig, setupFactoryProviderTest } from './factory-provider-test-setup';
 
 /** Represents a function that creates a factory provider,  */
-export type FactoryProviderGenerator = (produceValue: jasmine.Spy, config?: FactoryGeneratorConfig<any>) => any;
+export type FactoryProviderGenerator = (produceValue: jest.SpyInstance, config?: FactoryGeneratorConfig<any>) => any;
 
 /** A dummy token to use for testing that the `deps` array is passed correctly. */
 export const SomeToken = new InjectionToken<any>('SomeToken');
@@ -70,7 +70,7 @@ export async function setupFactoryProviderGeneratorTest(createProvider: FactoryP
     config.providers = [...providers, SomeProvider];
     config.deps      = [...deps, SomeToken];
 
-    const produceValue    = jasmine.createSpy('produceValue').and.returnValue(mockValue);
+    const produceValue    = jest.fn().mockReturnValue(mockValue);
     const factoryProvider = createProvider(produceValue, { token, deps: config.deps });
 
     const { api, runOutsideAngular, factory, producedValue } = await setupFactoryProviderTest(factoryProvider, config);

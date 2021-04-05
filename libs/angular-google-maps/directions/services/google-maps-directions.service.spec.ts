@@ -10,9 +10,9 @@ describe('GoogleMapsDirectionsService', () =>
 {
     let service                   : GoogleMapsDirectionsService;
     let transform                 : DirectionsTransformService;
-    let runOutsideAngularWhenReady: jasmine.Spy;
-    let native                    : jasmine.Spy;
-    let nativeRouteFn             : jasmine.Spy;
+    let runOutsideAngularWhenReady: jest.SpyInstance;
+    let native                    : { route: jest.SpyInstance };
+    let nativeRouteFn             : jest.SpyInstance;
 
     const through = [literalCoordPlace, stringPlace, nativePlace];
 
@@ -20,7 +20,7 @@ describe('GoogleMapsDirectionsService', () =>
     {
         return (done: DoneFn) =>
         {
-            nativeRouteFn.and.callFake((_, handler: DirectionsCallback) => handler(fakeResult, fakeStatus));
+            nativeRouteFn.mockImplementation((_, handler: DirectionsCallback) => handler(fakeResult, fakeStatus));
 
             // Wrap the observer to automatically call the done() function
             const expectations: PartialObserver<google.maps.DirectionsResult> = {
@@ -70,8 +70,8 @@ describe('GoogleMapsDirectionsService', () =>
         {
             request().subscribe();
 
-            const routingCall    = nativeRouteFn.calls.mostRecent();
-            const createdRequest = routingCall?.args[0] as google.maps.DirectionsRequest;
+            const routingCall    = nativeRouteFn.mock.calls.slice(-1);
+            const createdRequest = routingCall[0] as google.maps.DirectionsRequest;
             
             runExpectations(createdRequest);
         };
@@ -79,7 +79,7 @@ describe('GoogleMapsDirectionsService', () =>
 
     beforeEach(async () =>
     {
-        native        = jasmine.createSpyObj('NativeDirectionsService', ['route']);
+        native        = { route: jest.fn() };
         nativeRouteFn = native['route'];
 
         ({ spies: { runOutsideAngularWhenReady } } = await configureGoogleMapsTestingModule({
@@ -139,14 +139,14 @@ describe('GoogleMapsDirectionsService', () =>
 
         it('should set a default driving mode when none is provided', testRequestData(
             () => service.through(through),
-            createdRequest => expect(createdRequest.travelMode in google.maps.TravelMode).toBeTrue()
+            createdRequest => expect(createdRequest.travelMode in google.maps.TravelMode).toBeTruthy()
         ));
 
         it('should assign the provided options to the request', testRequestData(
             () => service.through(through, { avoidTolls: true, region: 'cool place'}),
             createdRequest =>
             {
-                expect(createdRequest.avoidTolls).toBeTrue();
+                expect(createdRequest.avoidTolls).toBeTruthy();
                 expect(createdRequest.region).toBe('cool place');
             }
         ));
@@ -197,14 +197,14 @@ describe('GoogleMapsDirectionsService', () =>
 
         it('should set a default driving mode when none is provided', testRequestData(
             () => service.route(through[0], through[1]),
-            createdRequest => expect(createdRequest.travelMode in google.maps.TravelMode).toBeTrue()
+            createdRequest => expect(createdRequest.travelMode in google.maps.TravelMode).toBeTruthy()
         ));
 
         it('should assign the provided options to the request', testRequestData(
             () => service.route(through[0], through[1], { avoidTolls: true, region: 'cool place'}),
             createdRequest =>
             {
-                expect(createdRequest.avoidTolls).toBeTrue();
+                expect(createdRequest.avoidTolls).toBeTruthy();
                 expect(createdRequest.region).toBe('cool place');
             }
         ));

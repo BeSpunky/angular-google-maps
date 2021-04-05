@@ -13,7 +13,7 @@ describe('GoogleMapsDirections', () =>
     let api              : GoogleMapsApiService;
     let componentApi     : GoogleMapsComponentApiService;
     let directions       : GoogleMapsDirections;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     beforeEach(async () =>
     {
@@ -21,7 +21,7 @@ describe('GoogleMapsDirections', () =>
 
         directions = new GoogleMapsDirections(new MockGoogleMap(), api, new google.maps.DirectionsRenderer());
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     describe('basically', () =>
@@ -60,7 +60,7 @@ describe('GoogleMapsDirections', () =>
         {
             const panel = document.createElement('div');
 
-            spyOn(directions.native, 'setPanel').and.stub();
+            jest.spyOn(directions.native, 'setPanel').mockImplementation();
             
             directions.setPanel(createPanel(panel));
 
@@ -77,7 +77,7 @@ describe('GoogleMapsDirections', () =>
     {
         function testOption<T, E>(option: string, value: T, getExpected: (value: T) => T | E = (value) => value)
         {
-            runOutsideAngular.calls.reset();
+            runOutsideAngular.mockReset();
 
             const expected = getExpected(value);
 

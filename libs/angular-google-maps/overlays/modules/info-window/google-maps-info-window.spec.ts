@@ -12,7 +12,7 @@ describe('GoogleMapsInfoWindow', () =>
     let api              : GoogleMapsApiService;
     let componentApi     : GoogleMapsComponentApiService;
     let infoWindow       : GoogleMapsInfoWindow;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     function createEmitter(): MockMouseEventsEmitter
     {
@@ -25,7 +25,7 @@ describe('GoogleMapsInfoWindow', () =>
 
         infoWindow = new GoogleMapsInfoWindow(new MockGoogleMap(), api, new google.maps.InfoWindow());
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     describe('basically', () =>
@@ -63,14 +63,14 @@ describe('GoogleMapsInfoWindow', () =>
             infoWindow.setAttachedTo(emitter);
             
             // Depending on the trigger, at least one event should have subscribers
-            expect(emitter.isDetached).toBeFalse();
+            expect(emitter.isDetached).toBeFalsy();
             
             const firstTriggerListeners = Object.assign({}, emitter.listeners);
 
             // Replace the emitter
             infoWindow.setTrigger('rightClick');
 
-            expect(emitter.isDetached).toBeFalse();
+            expect(emitter.isDetached).toBeFalsy();
             expect(emitter.listeners).not.toEqual(firstTriggerListeners);
         });
     });
@@ -106,15 +106,15 @@ describe('GoogleMapsInfoWindow', () =>
             infoWindow.setAttachedTo(lastEmitter);
             
             // Depending on the trigger, at least one event should have subscribers
-            expect(lastEmitter.isDetached).toBeFalse();
+            expect(lastEmitter.isDetached).toBeFalsy();
 
             const newEmitter = createEmitter();
 
             // Replace the emitter
             infoWindow.setAttachedTo(newEmitter);
 
-            expect(lastEmitter.isDetached).toBeTrue();
-            expect(newEmitter .isDetached).toBeFalse();
+            expect(lastEmitter.isDetached).toBeTruthy();
+            expect(newEmitter .isDetached).toBeFalsy();
         });
 
         function testEventEmission(trigger: InfoWindowTrigger, emit: (emitter: MockMouseEventsEmitter, position: Coord) => void, expectedRun: 'open' | 'close' = 'open'): void
@@ -124,7 +124,7 @@ describe('GoogleMapsInfoWindow', () =>
             infoWindow.setTrigger(trigger);
             infoWindow.setAttachedTo(emitter);
 
-            const expectedRunSpy = spyOn(infoWindow.native, expectedRun).and.stub();
+            const expectedRunSpy = jest.spyOn(infoWindow.native, expectedRun).mockImplementation();
 
             const eventPosition: Coord = [1, 3];
 
@@ -170,12 +170,12 @@ describe('GoogleMapsInfoWindow', () =>
 
             infoWindow.setAttachedTo(emitter);
 
-            expect(emitter.isDetached).toBeFalse();
+            expect(emitter.isDetached).toBeFalsy();
 
             infoWindow.clearAttachedTo();
 
             expect(infoWindow.getAttachedTo()).toBeFalsy();
-            expect(emitter.isDetached).toBeTrue();
+            expect(emitter.isDetached).toBeTruthy();
         });
     });
 
@@ -183,7 +183,7 @@ describe('GoogleMapsInfoWindow', () =>
     {
         function testOpen(position: BoundsLike, shouldBe: Coord)
         {
-            const open = spyOn(infoWindow.native, 'open').and.stub();
+            const open = jest.spyOn(infoWindow.native, 'open').mockImplementation();
 
             infoWindow.open(position);
 
@@ -204,7 +204,7 @@ describe('GoogleMapsInfoWindow', () =>
 
         it('should open the info window at map center if no position specified and no position was previously assigned', () =>
         {
-            spyOn(infoWindow.map, 'getCenter').and.returnValue(new google.maps.LatLng(1, 2));
+            jest.spyOn(infoWindow.map, 'getCenter').mockReturnValue(new google.maps.LatLng(1, 2));
 
             testOpen(undefined, infoWindow.map.getCenter());
         });
@@ -213,7 +213,7 @@ describe('GoogleMapsInfoWindow', () =>
         {
             infoWindow.setCloseAfter(1500);
 
-            const close = spyOn(infoWindow.native, 'close').and.stub();
+            const close = jest.spyOn(infoWindow.native, 'close').mockImplementation();
 
             infoWindow.open();
 
@@ -224,7 +224,7 @@ describe('GoogleMapsInfoWindow', () =>
 
         it('should NOT auto close the info window if `closeAfter` is non-positive', fakeAsync(() =>
         {
-            const close = spyOn(infoWindow.native, 'close').and.stub();
+            const close = jest.spyOn(infoWindow.native, 'close').mockImplementation();
 
             infoWindow.open();
 

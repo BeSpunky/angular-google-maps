@@ -7,7 +7,7 @@ describe('GoogleMapsMarker', () =>
 {
     let api              : GoogleMapsApiService;
     let marker           : GoogleMapsMarker;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     beforeEach(async () =>
     {
@@ -15,7 +15,7 @@ describe('GoogleMapsMarker', () =>
 
         marker = new GoogleMapsMarker(new MockGoogleMap(), api, new google.maps.Marker());
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     describe('basically', () =>
@@ -25,7 +25,7 @@ describe('GoogleMapsMarker', () =>
         // Also tests the getPosition method
         function testPosition(makeCoord: () => BoundsLike)
         {
-            spyOn(marker.native, 'setPosition').and.callThrough();
+            jest.spyOn(marker.native, 'setPosition');
 
             const coord   = makeCoord();
             const literal = api.geometry.centerOf(coord);

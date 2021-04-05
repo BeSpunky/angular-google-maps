@@ -38,7 +38,7 @@ describe('DirectionsTransformService', () =>
         const native = directions.toNativePlace(place);
 
         // TODO: This only tests for types. Create a test that actually matches content to the expected content.
-        expect(directions.isNativePlace(native)).toBeTrue();
+        expect(directions.isNativePlace(native)).toBeTruthy();
     }));
     
     describe('isNativePlace', () =>
@@ -47,11 +47,11 @@ describe('DirectionsTransformService', () =>
         {
             testTypeGuardFalseAgainstStandardValues((value) => directions.isNativePlace(value));
             
-            expect(directions.isNativePlace({ location: 123 })).toBeFalse();
+            expect(directions.isNativePlace({ location: 123 })).toBeFalsy();
         });
 
         produceNativePlaceSpecs  ('determine whether the object is a native place', place => expect(directions.isNativePlace(place)).toBeTruthy());
-        produceFlexiblePlaceSpecs('determine whether the object is a native place', place => expect(directions.isNativePlace(place)).toBeFalse());
+        produceFlexiblePlaceSpecs('determine whether the object is a native place', place => expect(directions.isNativePlace(place)).toBeFalsy());
     });
     
     describe('isNativePlaceObject', () =>
@@ -60,7 +60,7 @@ describe('DirectionsTransformService', () =>
         {
             testTypeGuardFalseAgainstStandardValues((value) => directions.isNativePlaceObject(value));
             
-            expect(directions.isNativePlaceObject({ location: 123 })).toBeFalse();
+            expect(directions.isNativePlaceObject({ location: 123 })).toBeFalsy();
         });
 
         produceNativePlaceSpecs('determine whether the object is a native `google.maps.Place` object', place =>
@@ -68,11 +68,11 @@ describe('DirectionsTransformService', () =>
             const expectIsNativePlaceObject = expect(directions.isNativePlaceObject(place));
 
             typeof place === 'object' && 'location' in place && geometry.isNativeCoord(place.location) ?
-                expectIsNativePlaceObject.toBeTrue() :
-                expectIsNativePlaceObject.toBeFalse();
+                expectIsNativePlaceObject.toBeTruthy() :
+                expectIsNativePlaceObject.toBeFalsy();
         });
 
-        produceFlexiblePlaceSpecs('determine whether the object is a native `google.maps.Place` object', place => expect(directions.isNativePlaceObject(place)).toBeFalse());
+        produceFlexiblePlaceSpecs('determine whether the object is a native `google.maps.Place` object', place => expect(directions.isNativePlaceObject(place)).toBeFalsy());
     });
 
     // As toNativeWaypoint() recives a DirectionsPlace, this test runs on all PLACES, not waypoints.
@@ -82,7 +82,7 @@ describe('DirectionsTransformService', () =>
         const native = directions.toNativeWaypoint(waypoint);
 
         // TODO: This only tests for types. Create a test that actually matches content to the expected content.
-        expect(directions.isNativeWaypoint(native)).toBeTrue();
+        expect(directions.isNativeWaypoint(native)).toBeTruthy();
     }));
 
     describe('isNativeWaypoint', () =>
@@ -91,11 +91,11 @@ describe('DirectionsTransformService', () =>
         {
             testTypeGuardFalseAgainstStandardValues((value) => directions.isNativeWaypoint(value));
             
-            expect(directions.isNativeWaypoint({ location: 123 })).toBeFalse();
+            expect(directions.isNativeWaypoint({ location: 123 })).toBeFalsy();
         });
 
-        produceNativeWaypointSpecs  ('determine whether the object is a native waypoint', waypoint => expect(directions.isNativeWaypoint(waypoint)).toBeTrue());
-        produceFlexibleWaypointSpecs('determine whether the object is a native waypoint', waypoint => expect(directions.isNativeWaypoint(waypoint)).toBeFalse());
+        produceNativeWaypointSpecs  ('determine whether the object is a native waypoint', waypoint => expect(directions.isNativeWaypoint(waypoint)).toBeTruthy());
+        produceFlexibleWaypointSpecs('determine whether the object is a native waypoint', waypoint => expect(directions.isNativeWaypoint(waypoint)).toBeFalsy());
     });
 
     describe('isWaypoint', () =>
@@ -104,9 +104,9 @@ describe('DirectionsTransformService', () =>
         {
             testTypeGuardFalseAgainstStandardValues((value) => directions.isWaypoint(value));
             
-            expect(directions.isWaypoint({ location: 123 })).toBeFalse();
+            expect(directions.isWaypoint({ location: 123 })).toBeFalsy();
         });
 
-        produceWaypointSpecs('determine whether the object is a waypoint', waypoint => expect(directions.isWaypoint(waypoint)).toBeTrue());
+        produceWaypointSpecs('determine whether the object is a waypoint', waypoint => expect(directions.isWaypoint(waypoint)).toBeTruthy());
     });
 });

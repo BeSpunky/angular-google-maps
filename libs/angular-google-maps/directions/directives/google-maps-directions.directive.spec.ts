@@ -21,7 +21,7 @@ describe('GoogleMapsDirectionsDirective', () =>
     let hostComponent: TestHostComponent;
     let transform    : DirectionsTransformService;
     let directive    : GoogleMapsDirectionsDirective;
-    let nativeRouteFn: jasmine.Spy;
+    let nativeRouteFn: jest.SpyInstance;
     
     const from    = 'tel aviv';
     const to      = 'jerusalem';
@@ -29,7 +29,7 @@ describe('GoogleMapsDirectionsDirective', () =>
 
     beforeEach(async () =>
     {
-        const nativeDirectionsService = jasmine.createSpyObj('NativeDirectionsService', ['route']);
+        const nativeDirectionsService = { route: jest.fn() };
 
         ({ fixture: hostFixture, component: hostComponent } = await configureGoogleMapsTestingModule({
             componentType: TestHostComponent,
@@ -60,8 +60,8 @@ describe('GoogleMapsDirectionsDirective', () =>
         
             tick();
 
-            const routingCall    = nativeRouteFn.calls.mostRecent();
-            const createdRequest = routingCall?.args[0] as google.maps.DirectionsRequest;
+            const routingCall    = nativeRouteFn.mock.calls.slice(-1);
+            const createdRequest = routingCall[0] as google.maps.DirectionsRequest;
 
             runExpectations(createdRequest);
         });
@@ -100,7 +100,7 @@ describe('GoogleMapsDirectionsDirective', () =>
                 expect(createdRequest.destination).toBe(to);
                 expect(createdRequest.waypoints).toEqual([]);
                 expect(createdRequest.travelMode).toBe(google.maps.TravelMode.BICYCLING);
-                expect(createdRequest.avoidTolls).toBeTrue();
+                expect(createdRequest.avoidTolls).toBeTruthy();
             }
         ));
     });

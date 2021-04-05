@@ -6,7 +6,7 @@ import { GoogleMapsApiService, GoogleMapsNativeObjectEmittingWrapper } from '@be
 describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
 {
     let api                : GoogleMapsApiService;
-    let runInsideAngular   : jasmine.Spy;
+    let runInsideAngular   : jest.SpyInstance;
     let mockNative         : MockNative;
     let mockWrapper        : GoogleMapsNativeObjectEmittingWrapperTest;
     let listener           : any;
@@ -20,7 +20,7 @@ describe('GoogleMapsNativeObjectEmittingWrapper (abstract)', () =>
         mockNative  = new MockNative();
         mockWrapper = new GoogleMapsNativeObjectEmittingWrapperTest(api, mockNative);
         
-        listener            = jasmine.createSpyObj('listener', ['handleClick', 'handleMouse']);
+        listener = { handleClick: jest.fn(), handleMouse: jest.fn() };
         cancelClickListener = mockWrapper.listenTo('click', listener.handleClick);
         cancelMouseListener = mockWrapper.listenTo('mouseover', listener.handleMouse);
     });

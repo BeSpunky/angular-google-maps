@@ -14,7 +14,7 @@ describe('GoogleMap', () =>
     let api              : GoogleMapsApiService;
     // let mapElement       : ElementRef;
     let superpowers      : ISuperpowers
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     beforeEach(async () =>
     {
@@ -41,7 +41,7 @@ describe('GoogleMap', () =>
     {
         produceCoordSpecs('set the center outside angular', (coord) =>
         {
-            runOutsideAngular.calls.reset();
+            runOutsideAngular.mockReset();
 
             map.setCenter(coord);
 
@@ -53,12 +53,12 @@ describe('GoogleMap', () =>
 
     describe('calling `fitBounds()`', () =>
     {
-        let nativeFitBounds: jasmine.Spy;
+        let nativeFitBounds: jest.SpyInstance;
         
         beforeEach(() =>
         {
-            runOutsideAngular.calls.reset();
-            nativeFitBounds = spyOn(map.native, 'fitBounds').and.stub();
+            runOutsideAngular.mockReset();
+            nativeFitBounds = jest.spyOn(map.native, 'fitBounds').mockImplementation();
         });
         
         function expectFitBounds(boundsLike: BoundsLike, padding?: number | google.maps.Padding)
@@ -82,12 +82,12 @@ describe('GoogleMap', () =>
 
     describe('calling `panToBounds()`', () =>
     {
-        let nativePanToBounds: jasmine.Spy;
+        let nativePanToBounds: jest.SpyInstance;
         
         beforeEach(() =>
         {
-            runOutsideAngular.calls.reset();
-            nativePanToBounds = spyOn(map.native, 'panToBounds').and.stub();
+            runOutsideAngular.mockReset();
+            nativePanToBounds = jest.spyOn(map.native, 'panToBounds').mockImplementation();
         });
         
         function expectPanToBounds(boundsLike: BoundsLike, padding?: number | google.maps.Padding)
@@ -111,12 +111,12 @@ describe('GoogleMap', () =>
 
     describe('calling `panTo()`', () =>
     {
-        let nativePanTo: jasmine.Spy;
+        let nativePanTo: jest.SpyInstance;
         
         beforeEach(() =>
         {
-            runOutsideAngular.calls.reset();
-            nativePanTo = spyOn(map.native, 'panTo').and.stub();
+            runOutsideAngular.mockReset();
+            nativePanTo = jest.spyOn(map.native, 'panTo').mockImplementation();
         });
 
         produceCoordSpecs('pan to a coord outside angular', (coord) =>
@@ -132,7 +132,7 @@ describe('GoogleMap', () =>
     {
         it('should fetch the map type id', () =>
         {
-            const nativeGetMapTypeId = spyOn(map.native, 'getMapTypeId').and.stub();
+            const nativeGetMapTypeId = jest.spyOn(map.native, 'getMapTypeId').mockImplementation();
             
             map.getMapType();
 
@@ -144,8 +144,8 @@ describe('GoogleMap', () =>
     {
         it('should set the map type id outside angular', () =>
         {
-            const nativeSetMapTypeId = spyOn(map.native, 'setMapTypeId').and.stub();
-            runOutsideAngular.calls.reset();
+            const nativeSetMapTypeId = jest.spyOn(map.native, 'setMapTypeId').mockImplementation();
+            runOutsideAngular.mockReset();
 
             map.setMapType(google.maps.MapTypeId.SATELLITE);
 

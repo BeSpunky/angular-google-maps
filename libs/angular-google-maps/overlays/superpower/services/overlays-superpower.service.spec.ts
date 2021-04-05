@@ -14,7 +14,7 @@ describe('OverlaysSuperpower', () =>
     let map              : GoogleMap;
     let api              : GoogleMapsApiService;
     let mapElement       : ElementRef;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
 
     beforeEach(async () =>
     {
@@ -39,7 +39,7 @@ describe('OverlaysSuperpower', () =>
         
         // Overlay creation ends up in more than one calls to runOutsideAngular().
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
-        expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsMarker)).toBeTruthy();
+        expect(runOutsideAngular.mock.results.some(result => result instanceof GoogleMapsMarker)).toBeTruthy();
 
         expect(marker).toBeInstanceOf(GoogleMapsMarker);
         expectPositionEquals(marker.getPosition(), Defaults.Center);
@@ -52,7 +52,7 @@ describe('OverlaysSuperpower', () =>
         
         // Overlay creation ends up in more than one calls to runOutsideAngular().
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
-        expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsPolygon)).toBeTruthy();
+        expect(runOutsideAngular.mock.results.some(result => result instanceof GoogleMapsPolygon)).toBeTruthy();
 
         expect(polygon).toBeInstanceOf(GoogleMapsPolygon);
         expect(polygon.getPath()).toEqual(api.geometry.toLiteralMultiPath(flatPath));
@@ -65,7 +65,7 @@ describe('OverlaysSuperpower', () =>
         
         // Overlay creation ends up in more than one calls to runOutsideAngular().
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
-        expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsPolyline)).toBeTruthy();
+        expect(runOutsideAngular.mock.results.some(result => result instanceof GoogleMapsPolyline)).toBeTruthy();
 
         expect(polyline).toBeInstanceOf(GoogleMapsPolyline);
         expect(polyline.getPath()).toEqual(api.geometry.toLiteralMultiPath(flatPath)[0]);
@@ -79,7 +79,7 @@ describe('OverlaysSuperpower', () =>
         
         // Overlay creation ends up in more than one calls to runOutsideAngular().
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
-        expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsCircle)).toBeTruthy();
+        expect(runOutsideAngular.mock.results.some(result => result instanceof GoogleMapsCircle)).toBeTruthy();
 
         expect(circle).toBeInstanceOf(GoogleMapsCircle);
         expect(circle.getCenter()).toEqual(api.geometry.toLiteralCoord(center));
@@ -92,7 +92,7 @@ describe('OverlaysSuperpower', () =>
 
         // Overlay creation ends up in more than one calls to runOutsideAngular().
         // In order to avoid changing the test when changing implementations, call count is avoided and this is used instead.
-        expect(runOutsideAngular.calls.all().some(call => call.returnValue instanceof GoogleMapsData)).toBeTruthy();
+        expect(runOutsideAngular.mock.results.some(result => result instanceof GoogleMapsData)).toBeTruthy();
 
         expect(data).toBeInstanceOf(GoogleMapsData);
         expect((data.getStyle() as any).title).toBe('awesome');
@@ -104,11 +104,11 @@ describe('OverlaysSuperpower', () =>
 
         expect(power.tracker.markers.includes(marker)).toBeTruthy();
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
 
         power.removeOverlay(marker);
 
-        expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+        expect(runOutsideAngular.mock.calls.length).toBeGreaterThan(0);
         expect(power.tracker.markers.includes(marker)).toBeFalsy();
     });
 });

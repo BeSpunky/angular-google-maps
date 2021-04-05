@@ -22,8 +22,8 @@ describe('GoogleMapsApiService', () =>
         
         zone = TestBed.inject(NgZone);
 
-        spyOn(zone, 'run').and.callFake(fn => fn());
-        spyOn(zone, 'runOutsideAngular').and.callFake(fn => fn());
+        jest.spyOn(zone, 'run').mockImplementation(fn => fn());
+        jest.spyOn(zone, 'runOutsideAngular').mockImplementation(fn => fn());
     });
 
     it('should create an instance', () => expect(api).toBeTruthy());

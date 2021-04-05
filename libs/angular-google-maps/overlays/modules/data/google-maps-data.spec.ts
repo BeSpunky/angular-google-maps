@@ -7,7 +7,7 @@ import { GoogleMapsData, IGoogleMapsFeature } from '@bespunky/angular-google-map
 describe('GoogleMapsData', () =>
 {
     let api              : GoogleMapsApiService;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
     let map              : MockGoogleMap;
     let data             : GoogleMapsData;
 
@@ -18,7 +18,7 @@ describe('GoogleMapsData', () =>
         map  = new MockGoogleMap();
         data = new GoogleMapsData(map, api, new google.maps.Data());
 
-        runOutsideAngular.calls.reset();
+        runOutsideAngular.mockReset();
     });
 
     describe('basically', () =>
@@ -30,11 +30,11 @@ describe('GoogleMapsData', () =>
     {
         function testAdd(featureData: () => any)
         {
-            spyOn(data.native, 'add');
+            jest.spyOn(data.native, 'add');
 
             const feature = data.addFeature(featureData());
 
-            expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+            expect(runOutsideAngular.mock.calls.length).toBeGreaterThan(0);
             expect(data.native.add).toHaveBeenCalledTimes(1);
             expect(data.native.add).toHaveBeenCalledWith(feature.native);
         }
@@ -57,11 +57,11 @@ describe('GoogleMapsData', () =>
     {
         function testRemove(removeBy: (feature: IGoogleMapsFeature) => any)
         {
-            spyOn(data.native, 'remove');
+            jest.spyOn(data.native, 'remove');
 
             const feature = data.addFeature({ id: 'tested', geometry: new google.maps.Data.Point({ lat: 20, lng: 20 }) });
             
-            runOutsideAngular.calls.reset();
+            runOutsideAngular.mockReset();
 
             const removed = data.removeFeature(removeBy(feature));
 
@@ -98,16 +98,16 @@ describe('GoogleMapsData', () =>
             const options: google.maps.Data.GeoJsonOptions = { idPropertyName: 'id' };
             const native = data.native;
     
-            const loadSpy = spyOn(native, 'loadGeoJson').and.callFake((url, options, callback) => callback([]));
+            const loadSpy = jest.spyOn(native, 'loadGeoJson').mockImplementation((url, options, callback) => callback([]));
     
-            runOutsideAngular.calls.reset();
+            runOutsideAngular.mockReset();
     
             await data.loadGeoJson(url, options);
     
             expect(runOutsideAngular).toHaveBeenCalledTimes(1);
             expect(loadSpy).toHaveBeenCalledTimes(1);
-            expect(loadSpy.calls.argsFor(0)[0]).toBe(url);
-            expect(loadSpy.calls.argsFor(0)[1]).toBe(options);
+            expect(loadSpy.mock.calls[0][0]).toBe(url);
+            expect(loadSpy.mock.calls[0][1]).toBe(options);
         });
 
         it('should convert and return the data in its GeoJson representation when calling `toGeoJson()`', async () =>
@@ -129,7 +129,7 @@ describe('GoogleMapsData', () =>
 
             const geoJson = await feature.toGeoJson();
             
-            expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+            expect(runOutsideAngular.mock.calls.length).toBeGreaterThan(0);
             expect(geoJson.id).toBe('bombom');
             expect(geoJson.geometry.type).toBe('Point');
             expect(geoJson.geometry.coordinates).toEqual([21, 20]);
@@ -146,7 +146,7 @@ describe('GoogleMapsData', () =>
 
             const geoJson = await feature.toGeoJson();
             
-            expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+            expect(runOutsideAngular.mock.calls.length).toBeGreaterThan(0);
             expect(geoJson.id).toBe('bombom');
             expect(geoJson.geometry.type).toBe('Polygon');
             expect(geoJson.geometry.coordinates).toEqual([[[21, 20],[22,21],[23,22],[21,20]]]);
@@ -163,7 +163,7 @@ describe('GoogleMapsData', () =>
 
             const geoJson = await feature.toGeoJson();
             
-            expect(runOutsideAngular.calls.count()).toBeGreaterThan(0);
+            expect(runOutsideAngular.mock.calls.length).toBeGreaterThan(0);
             expect(geoJson.id).toBe('bombom');
             expect(geoJson.geometry.type).toBe('LineString');
             expect(geoJson.geometry.coordinates).toEqual([[21, 20],[22,21],[23,22]]);

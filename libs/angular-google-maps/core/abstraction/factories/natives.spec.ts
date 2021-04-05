@@ -8,9 +8,9 @@ const mockNative  = new MockNative();
 describe('createNativeFactoryProvider', () =>
 {
     let factoryProvider  : FactoryProvider;
-    let runOutsideAngular: jasmine.Spy;
+    let runOutsideAngular: jest.SpyInstance;
     let nativeToken      : InjectionToken<Native>;
-    let produceNative    : jasmine.Spy;
+    let produceNative    : jest.SpyInstance;
     let producedNative   : any;
 
     async function setup(platform: any)

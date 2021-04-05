@@ -12,7 +12,7 @@ describe('GoogleMapsComponentApiService', () =>
     let fixture    : ComponentFixture<TestHost>;
     let testHost   : TestHost;
     let component  : MockComponent;
-    let handleClick: jasmine.Spy;
+    let handleClick: jest.SpyInstance;
 
     beforeEach(async () =>
     {
@@ -25,7 +25,7 @@ describe('GoogleMapsComponentApiService', () =>
         fixture.detectChanges();
 
         component   = testHost.component;
-        handleClick = spyOn(testHost, 'handleClick');
+        handleClick = jest.spyOn(testHost, 'handleClick');
     });
 
     describe('basically', () =>
@@ -45,7 +45,7 @@ describe('GoogleMapsComponentApiService', () =>
             
             component.wrapper.events.raise(component.NativeClickEventName);
             
-            const event = handleClick.calls.mostRecent().args[0] as IGoogleMapsEventData;
+            const event = handleClick.mock.calls.slice(-1)[0] as IGoogleMapsEventData;
 
             expect(event.nativeEmitter).toBe(component.wrapper.native);
         });
@@ -72,7 +72,7 @@ describe('GoogleMapsComponentApiService', () =>
             const shouldEmitArgs    = { shouldEmit: true };
             const shouldNotEmitArgs = { shouldEmit: false };
 
-            const handler = jasmine.createSpyObj('eventHandler', ['handle']);
+            const handler = { handle: jest.fn() };
 
             api.hookAndSetEmitters(component, null, (event) => event.nativeArgs[0].shouldEmit);
 
@@ -110,14 +110,14 @@ describe('GoogleMapsComponentApiService', () =>
                 
             component.wrapper.events.raise(component.NativeClickEventName, nativeArgs);
             
-            const event = handleClick.calls.mostRecent().args[0] as IGoogleMapsEventData;
+            const event = handleClick.mock.calls.slice(-1)[0] as IGoogleMapsEventData;
 
-            expect(event.eventName        ).toBe   ('click',                     'wrong event name');
-            expect(event.emitter          ).toBe   (component.wrapper,           'wrong emitter');
-            expect(event.associatedEmitter).toBe   (component.wrapper,           'wrong delegated emitter');
-            expect(event.nativeEmitter    ).toBe   (component.wrapper.native,    'wrong native emitter');
-            expect(event.nativeArgs[0]    ).toBe   (nativeArgs,                  'wrong native event args');
-            expect(event.args[0]          ).toEqual({ position: latLngLiteral }, 'wrong event args');
+            expect(event.eventName        ).toBe   ('click');
+            expect(event.emitter          ).toBe   (component.wrapper);
+            expect(event.associatedEmitter).toBe   (component.wrapper);
+            expect(event.nativeEmitter    ).toBe   (component.wrapper.native);
+            expect(event.nativeArgs[0]    ).toBe   (nativeArgs);
+            expect(event.args[0]          ).toEqual({ position: latLngLiteral });
         });
     });
 
@@ -125,7 +125,7 @@ describe('GoogleMapsComponentApiService', () =>
     {        
         it('should delegate input changes to their corresponding native setter', () =>
         {
-            spyOn(component.wrapper, 'setSomething').and.callThrough();
+            jest.spyOn(component.wrapper, 'setSomething');
 
             const newValue = 10;
             const changes: SimpleChanges = { something: new SimpleChange(1, newValue, true) };

@@ -6,15 +6,15 @@ import { LazyGoogleMapsApiLoader, GoogleMapsConfig, GoogleMapsLibrary, DefaultAp
 describe('LazyGoogleMapsApiLoader', () =>
 {
     let config         : GoogleMapsConfig;
-    let scriptLoaderSpy: jasmine.SpyObj<LazyLoaderService>;
+    let scriptLoaderSpy: any;
     let lazyApiLoader  : LazyGoogleMapsApiLoader;
-    let buildApiUrlSpy : jasmine.Spy;
+    let buildApiUrlSpy : jest.SpyInstance;
 
     function initLazyApiLoader()
     {
         lazyApiLoader = new LazyGoogleMapsApiLoader(config, scriptLoaderSpy);
 
-        buildApiUrlSpy = spyOn<any>(lazyApiLoader, 'buildApiUrl').and.callThrough();
+        buildApiUrlSpy = jest.spyOn<any, any>(lazyApiLoader, 'buildApiUrl');
     }
 
     beforeEach(() =>
@@ -30,9 +30,7 @@ describe('LazyGoogleMapsApiLoader', () =>
 
         const loadedFile: LazyLoadedFile = { completed: true, type: 'script', url: 'maps-url', element: null };
 
-        scriptLoaderSpy = jasmine.createSpyObj('lazyApiLoader', ['loadScript']);
-
-        scriptLoaderSpy.loadScript.and.returnValue(of(loadedFile));
+        scriptLoaderSpy = { loadScript: jest.fn().mockReturnValue(of(loadedFile)) };
 
         initLazyApiLoader();
     });
@@ -45,7 +43,7 @@ describe('LazyGoogleMapsApiLoader', () =>
     {
         lazyApiLoader.load();
 
-        expect(buildApiUrlSpy.calls.mostRecent().returnValue).toBe(`https://${DefaultApiLocation}?key=dummykey&libraries=drawing,geometry&language=en&region=region`);
+        expect(buildApiUrlSpy.mock.results.slice(-1)).toBe(`https://${DefaultApiLocation}?key=dummykey&libraries=drawing,geometry&language=en&region=region`);
     });
 
     it('should allow overriding url parts', () =>
@@ -56,8 +54,8 @@ describe('LazyGoogleMapsApiLoader', () =>
         initLazyApiLoader();
 
         lazyApiLoader.load();
-
-        expect(buildApiUrlSpy.calls.mostRecent().returnValue).toBe(`http://dummy.maps.com/api?key=dummykey&libraries=drawing,geometry&language=en&region=region`);
+        
+        expect(buildApiUrlSpy.mock.results.slice(-1)).toBe(`http://dummy.maps.com/api?key=dummykey&libraries=drawing,geometry&language=en&region=region`);
     });
 
     it('should allow overriding the url with a complete one', () =>
@@ -68,6 +66,6 @@ describe('LazyGoogleMapsApiLoader', () =>
 
         lazyApiLoader.load();
 
-        expect(buildApiUrlSpy.calls.mostRecent().returnValue).toBe(config.apiUrl);
+        expect(buildApiUrlSpy.mock.results.slice(-1)).toBe(config.apiUrl);
     });
 });
