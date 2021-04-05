@@ -28,7 +28,7 @@ describe('OverlaysDirective', () =>
 
     it('should create an instance', () => expect(testHost.overlaysDirective).toBeTruthy());
 
-    it('should output the superpower to the given parent variable', (done: DoneFn) =>
+    it('should output the superpower to the given parent variable', (done: jest.DoneCallback) =>
     {
         // The change is emitted by the directive on a second change detection cycle to prevent the ExpressionChangedAfterItWasCheckedError.
         setTimeout(() =>

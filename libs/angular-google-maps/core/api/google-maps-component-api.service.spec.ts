@@ -50,7 +50,7 @@ describe('GoogleMapsComponentApiService', () =>
             expect(event.nativeEmitter).toBe(component.wrapper.native);
         });
 
-        it('should allow hooking events to a wrapper external to the component', (done: DoneFn) =>
+        it('should allow hooking events to a wrapper external to the component', (done: jest.DoneCallback) =>
         {
             const secondWrapper = new MockEmittingWrapper(new MockNative());
 

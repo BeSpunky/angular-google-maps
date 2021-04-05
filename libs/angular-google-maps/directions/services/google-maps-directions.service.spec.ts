@@ -18,7 +18,7 @@ describe('GoogleMapsDirectionsService', () =>
 
     function testDirectionsRequest(request: () => Observable<google.maps.DirectionsResult>, fakeResult: google.maps.DirectionsResult, fakeStatus: google.maps.DirectionsStatus, observer: PartialObserver<google.maps.DirectionsResult>)
     {
-        return (done: DoneFn) =>
+        return (done: jest.DoneCallback) =>
         {
             nativeRouteFn.mockImplementation((_, handler: DirectionsCallback) => handler(fakeResult, fakeStatus));
 
@@ -211,13 +211,13 @@ describe('GoogleMapsDirectionsService', () =>
     });
 
     function testFeed(
-        observeRequests: (directions: Observable<google.maps.DirectionsResult>) => (done: DoneFn) => void,
+        observeRequests: (directions: Observable<google.maps.DirectionsResult>) => (done: jest.DoneCallback) => void,
         createFeed     : (places: Subject<DirectionsPlace[]>, config: Subject<DirectionsRequestConfig>) => Observable<google.maps.DirectionsResult>,
         triggerRequests: (places: Subject<DirectionsPlace[]>, config: Subject<DirectionsRequestConfig>) => void,
         requestCount   : number = 1
     )
     {
-        return (done: DoneFn) =>
+        return (done: jest.DoneCallback) =>
         {
             const places = new Subject<DirectionsPlace[]>();
             const config = new Subject<DirectionsRequestConfig>();
