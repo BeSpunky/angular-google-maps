@@ -12,6 +12,7 @@
         "project": ["libs/angular-google-maps/tsconfig.*?.json"]
       },
       "rules": {
+        "max-len": "off",
         "@angular-eslint/directive-selector": [
           "error",
           { "type": "attribute", "prefix": "bs", "style": "camelCase" }
