@@ -288,7 +288,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/angular-google-maps"],
           "options": {
-            "scripts": ["projects/bespunky/angular-google-maps/testing/google-maps-api.js"],
+            "scripts": ["libs/angular-google-maps/testing/google-maps-api.js"],
             "jestConfig": "libs/angular-google-maps/jest.config.js",
             "passWithNoTests": true
           }
