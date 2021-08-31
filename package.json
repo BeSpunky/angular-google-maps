@@ -3,7 +3,7 @@
   "version": "0.20.0",
   "license": "MIT",
   "scripts": {
-    "build-site": "ng build --prod --project official-site && npm run generate-docs",
+    "build-site": "ng build --configuration production --project official-site && npm run generate-docs",
     "lib-vmajor": "git stash && cd libs/angular-google-maps && (for /F %m in ('npm version major') do git commit --all -m \"Bumped library version to %m\") && git stash pop",
     "lib-vminor": "git stash && cd libs/angular-google-maps && (for /F %m in ('npm version minor') do git commit --all -m \"Bumped library version to %m\") && git stash pop",
     "lib-vpatch": "git stash && cd libs/angular-google-maps && (for /F %m in ('npm version patch') do git commit --all -m \"Bumped library version to %m\") && git stash pop",
@@ -61,7 +61,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
-    "zone.js": "0.11.4"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "12.1.4",

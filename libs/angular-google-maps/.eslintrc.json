@@ -8,18 +8,23 @@
         "plugin:@nrwl/nx/angular",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
-      "parserOptions": {
-        "project": ["libs/angular-google-maps/tsconfig.*?.json"]
-      },
       "rules": {
         "max-len": "off",
         "@angular-eslint/directive-selector": [
           "error",
-          { "type": "attribute", "prefix": "bs", "style": "camelCase" }
+          {
+            "type": "attribute",
+            "prefix": "bs",
+            "style": "camelCase"
+          }
         ],
         "@angular-eslint/component-selector": [
           "error",
-          { "type": "element", "prefix": "bs", "style": "kebab-case" }
+          {
+            "type": "element",
+            "prefix": "bs",
+            "style": "kebab-case"
+          }
         ]
       }
     },
