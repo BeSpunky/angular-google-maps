@@ -79,7 +79,7 @@
     "@nrwl/nx-cloud": "12.3.10",
     "@nrwl/tao": "12.8.0",
     "@nrwl/workspace": "12.8.0",
-    "@types/google-maps": "^3.2.2",
+    "@types/google.maps": "^3.45.6",
     "@types/jest": "26.0.8",
     "@types/node": "14.14.33",
     "@typescript-eslint/eslint-plugin": "4.28.5",
