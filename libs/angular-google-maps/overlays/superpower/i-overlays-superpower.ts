@@ -18,10 +18,10 @@ export interface IOverlaysSuperpower extends ISuperpower
      * Creates a marker with the specified properties and adds it to the map.
      *
      * @param {BoundsLike} position The position at which the marker should be added.
-     * @param {google.maps.ReadonlyMarkerOptions} [options] (Optional) Any native options to assign to the marker.
+     * @param {google.maps.MarkerOptions} [options] (Optional) Any native options to assign to the marker.
      * @returns {GoogleMapsMarker} The wrapper object created for the new marker.
      */
-    createMarker    (position: BoundsLike, options?: google.maps.ReadonlyMarkerOptions)      : IGoogleMapsMarker;
+    createMarker    (position: BoundsLike, options?: google.maps.MarkerOptions)              : IGoogleMapsMarker;
     /**
      * Creates a polygon with the specified properties and adds it to the map.
      *

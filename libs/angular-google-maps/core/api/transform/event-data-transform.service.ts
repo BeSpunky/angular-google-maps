@@ -51,10 +51,10 @@ export class EventDataTransformService
     /**
      * Transforms a native mouse event into a nicer type.
      *
-     * @param {google.maps.MouseEvent} event
+     * @param {google.maps.MapMouseEvent} event
      * @returns {IGoogleMapsMouseEvent}
      */
-    public mouseEvent(event: google.maps.MouseEvent): IGoogleMapsMouseEvent
+    public mouseEvent(event: google.maps.MapMouseEvent): IGoogleMapsMouseEvent
     {
         return {
             position: this.geometry.toLiteralCoord(event.latLng)

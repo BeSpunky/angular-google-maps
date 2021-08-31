@@ -38,10 +38,10 @@ export class OverlaysSuperpower extends Superpower implements IOverlaysSuperpowe
      * Creates a marker with the specified properties and adds it to the map.
      *
      * @param {BoundsLike} position The position at which the marker should be added.
-     * @param {google.maps.ReadonlyMarkerOptions} [options] (Optional) Any native options to assign to the marker.
+     * @param {google.maps.MarkerOptions} [options] (Optional) Any native options to assign to the marker.
      * @returns {GoogleMapsMarker} The wrapper object created for the new marker.
      */
-    public createMarker(position: BoundsLike, options?: google.maps.ReadonlyMarkerOptions): GoogleMapsMarker
+    public createMarker(position: BoundsLike, options?: google.maps.MarkerOptions): GoogleMapsMarker
     {
         options = { ...options, position: this.api.geometry.centerOf(position) };
 

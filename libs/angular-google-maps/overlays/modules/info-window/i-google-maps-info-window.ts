@@ -11,7 +11,7 @@ import { WrappedNativeFunctions, IGoogleMapsNativeObjectEmittingWrapper, BoundsL
 export type InfoWindowTrigger = 'click' | 'mouseOver' | 'doubleClick' | 'rightClick';
 
 /** A type for the native functions of an info window which should be wrapped. Used along with the extension interface for the wrapper. */
-export type WrappedInfoWindowFunctions = WrappedNativeFunctions<google.maps.InfoWindow, 'getPosition' | 'setPosition' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'get' | 'set' | 'changed' | 'open'>;
+export type WrappedInfoWindowFunctions = WrappedNativeFunctions<google.maps.InfoWindow, 'getPosition' | 'setPosition' | 'addListener' | 'bindTo' | 'unbind' | 'unbindAll' | 'notify' | 'get' | 'set' | 'open'>;
 
 /**
  * Represents the functionality that an info window should provide.

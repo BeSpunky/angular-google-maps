@@ -290,7 +290,7 @@ export class GeometryTransformService
      */
     public isDataLayerGeometry(object: any): object is google.maps.Data.Geometry
     {
-        return object instanceof google.maps.Data.Geometry;
+        return object instanceof google.maps.Data.GeometryCollection;
     }
 
     /**

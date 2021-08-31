@@ -3,9 +3,9 @@
  *
  * @export
  * @param {*} event The value to test.
- * @returns {event is google.maps.MouseEvent} `true` if the object is a native map mouse event; otherwise `false`.
+ * @returns {event is google.maps.MapMouseEvent} `true` if the object is a native map mouse event; otherwise `false`.
  */
-export function isGoogleMapsMouseEvent(event: any): event is google.maps.MouseEvent
+export function isGoogleMapsMouseEvent(event: any): event is google.maps.MapMouseEvent
 {
-    return (event as google.maps.MouseEvent).latLng !== undefined;
+    return (event as google.maps.MapMouseEvent).latLng !== undefined;
 }
