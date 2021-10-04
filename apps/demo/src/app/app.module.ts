@@ -1,16 +1,18 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { GoogleMapsModule } from '@bespunky/angular-google-maps/async';
 
 import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
         RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+        GoogleMapsModule.forRoot({ apiUrl: { key: '' } })
     ],
-    providers: [],
     bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
