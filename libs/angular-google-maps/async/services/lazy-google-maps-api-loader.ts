@@ -36,18 +36,18 @@ export class LazyGoogleMapsApiLoader extends GoogleMapsApiLoader
         if (typeof apiUrl === 'string') return apiUrl;
 
         // Build the url
-        const settings = [];
+        const settings = new Map<string, string>();
 
-        if (apiUrl.libraries) settings.push({ key: 'libraries', value: apiUrl.libraries.join(',') });
-        if (apiUrl.language)  settings.push({ key: 'language',  value: apiUrl.language });
-        if (apiUrl.region)    settings.push({ key: 'region',    value: apiUrl.region });
+        if (apiUrl.libraries) settings.set('libraries', apiUrl.libraries.join(','));
+        if (apiUrl.language)  settings.set('language',  apiUrl.language);
+        if (apiUrl.region)    settings.set('region',    apiUrl.region);
 
         // If settings were specified, join them with '&' signs
-        const settingsString = settings.length ? '&' + settings.map(setting => `${setting.key}=${setting.value}`).join('&') : '';
+        const queryParams = settings.size ? '&' + Array.from(settings).map(([key, value]) => `${key}=${value}`).join('&') : '';
 
         return DefaultApiUrlFormat.replace('{protocol}',  apiUrl.protocol || 'https')
                                   .replace('{location}',  apiUrl.location || DefaultApiLocation)
                                   .replace('{key}',       apiUrl.key)
-                                  .replace('{settings}',  settingsString);
+                                  .replace('{settings}',  queryParams);
     }
 }
